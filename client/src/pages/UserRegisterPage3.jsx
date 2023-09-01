@@ -1,4 +1,4 @@
-import ProfessionalInfo from "../components/ProfessionalInfo.jsx";
+import {ProfessionalInfo} from "../components/ProfessionalInfo.jsx";
 
 import React from 'react'
 
