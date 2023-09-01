@@ -21,8 +21,8 @@ function LogInInfo () {
         password,
         confirmedPassword,
     };
-    register(data);
-    //navigate("/เตรียมใส่ชื่อรูท")
+    // register(data);
+    navigate("/user/register2");
   };
 
   return (
