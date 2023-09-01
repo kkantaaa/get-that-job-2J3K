@@ -13,6 +13,9 @@ function LogInInfo () {
 
   const handlerSubmit = (event) => {
     event.preventDefault();
+    if (confirmedPassword !== password){
+      alert("Error: The confirmed Password is not matched");
+    }
     const data = {
         email,
         password,
