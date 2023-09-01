@@ -1,6 +1,5 @@
 import ProfessionalInfo from "../components/ProfessionalInfo.jsx";
 
-import React from 'react'
 
 function UserRegisterPage3() {
   return (
