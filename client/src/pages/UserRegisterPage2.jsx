@@ -1,4 +1,4 @@
-import PersonalInformation from '../components/PersonalInformation.jsx';
+import { PersonalInformation } from '../components/PersonalInformation.jsx';
 
 function UserRegisterPage2() {
   return (
@@ -6,4 +6,4 @@ function UserRegisterPage2() {
   )
 }
 
-export default UserRegisterPage2
+export default UserRegisterPage2;

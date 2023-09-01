@@ -1,4 +1,4 @@
-import ProfessionalInfo from "../components/ProfessionalInfo.jsx";
+import { ProfessionalInfo }  from "../components/ProfessionalInfo.jsx"
 
 
 function UserRegisterPage3() {
@@ -7,4 +7,4 @@ function UserRegisterPage3() {
   )
 }
 
-export default UserRegisterPage3
+export default UserRegisterPage3;
