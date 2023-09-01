@@ -9,7 +9,7 @@ function LogInInfo () {
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
 
-  const {register} = useAuth();
+  // const {register} = useAuth();
 
   const handlerSubmit = (event) => {
     event.preventDefault();
