@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from "react";
 // import { useAuth } from ""
 
@@ -73,3 +74,14 @@ function LoginPage() {
 }
 
 export default LoginPage;
+=======
+import React from 'react'
+
+function LoginPage() {
+  return (
+    <div>LoginPage</div>
+  )
+}
+
+export default LoginPage
+>>>>>>> jajha/feat/user-registration
