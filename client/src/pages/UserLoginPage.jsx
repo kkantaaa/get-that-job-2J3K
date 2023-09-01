@@ -66,7 +66,7 @@ function LoginPage() {
             </div>
           </form>
         </div>
-        {/* <img src=""/> */}
+        {/* <img src="/image/GTJimage1.png" /> */}
       </div>
     </>
   );

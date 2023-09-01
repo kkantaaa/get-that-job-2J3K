@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserRegisterPage1 from "./pages/UserRegisterPage1.jsx";
 import "./App.css";
-import LoginPage from "./pages/LoginPage.jsx";
+import LoginPage from "./pages/UserLoginPage.jsx";
 
 function App() {
   const NoMatch = () => <h1>Page Not Found.</h1>;
