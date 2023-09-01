@@ -17,5 +17,5 @@ function AuthProvider() {
   );
 }
 
-export const useAuth = () => React.useContext(AuthContext);
-
+const useAuth = () => React.useContext(AuthContext);
+export {useAuth, AuthProvider};
