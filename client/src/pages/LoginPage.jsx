@@ -1,15 +1,15 @@
 import { useState } from "react";
-// import { useAuth } from ""
+import { useAuth } from "../contexts/authentication";
 
 function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, state } = useAuth();
+  // const { login, state } = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     login({
-      username,
+      email,
       password,
     });
   };
@@ -35,7 +35,7 @@ function LoginPage() {
                   type="email"
                   placeholder="some.user@mail.com"
                   onChange={(event) => {
-                    setUsername(event.target.value);
+                    setEmail(event.target.value);
                   }}
                   value={email}
                 />
@@ -56,9 +56,9 @@ function LoginPage() {
                 />
               </label>
             </div>
-            {state.error && (
+            {/* {state.error && (
               <h1 className="error-message">Error: {state.error}</h1>
-            )}
+            )} */}
             <div className="form-actions">
               <button className="login-button" type="submit">
                 LOGIN

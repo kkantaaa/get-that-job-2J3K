@@ -1,20 +1,22 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import UserRegisterPage1 from './pages/UserRegisterPage1.jsx'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import UserRegisterPage1 from "./pages/UserRegisterPage1.jsx";
+import "./App.css";
+import LoginPage from "./pages/LoginPage.jsx";
 
 function App() {
-  const NoMatch = () => <h1>Page Not Found.</h1>
+  const NoMatch = () => <h1>Page Not Found.</h1>;
 
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path ="/user/register1" element={<UserRegisterPage1/>}/>
-        <Route path ="*" element={<NoMatch/>}/>
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/user/register1" element={<UserRegisterPage1 />} />
+          <Route path="/user/login" element={<LoginPage />} />
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
