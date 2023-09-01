@@ -1,22 +1,25 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/authentication.jsx";
 
-function LogInInfo() {
+function LogInInfo () {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
 
-  const register = async (data) => {
-    await axios.post("ใส่ localhost ยังไม่ได้เซต", data)
-  }
+  const {register} = useAuth();
 
   const handlerSubmit = (event) => {
     event.preventDefault();
-    register();
-    //navigate("/ชื่อรูท")
+    const data = {
+        email,
+        password,
+        confirmedPassword,
+    };
+    register(data);
+    //navigate("/เตรียมใส่ชื่อรูท")
   };
 
   return (
@@ -24,7 +27,7 @@ function LogInInfo() {
       <form className="login-info">
         <div className="input-container">
           <div className="email-input">
-            <label>
+            <label htmlFor="email">
               EMAIL
               <input
                 id="email"
@@ -66,7 +69,7 @@ function LogInInfo() {
             </label>
           </div>
           <div className="next-button">
-            <button onSubmit={handlerSubmit}>NEXT</button>
+          <button onClick={handlerSubmit}>NEXT</button>
           </div>
         </div>
       </form>
