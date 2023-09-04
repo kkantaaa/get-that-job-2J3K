@@ -15,7 +15,13 @@ function ProfessionalInfo() {
       ...file,
       [uniqueId]: event.target.files[0],
     });
-  }
+  };
+
+  const handlerRemoveFile = (event, fileKey) => {
+    event.preventDefault();
+    delete file[fileKey];
+    setFile({...file});
+  };
 
   const handlerPrevious = (event) => {
     event.preventDefault();
@@ -84,17 +90,31 @@ function ProfessionalInfo() {
             </label>
           </div>
           <div className="file-upload-container">
+            UPLOAD / UPDATE YOUR CV
+            <br/>
             <label htmlFor="upload">
-              UPLOAD / UPDATE YOUR CV
               <input
                 id="upload"
                 name="file"
                 type="file"
-                placeholder="choose a file"
+                accept=".pdf, .doc, .docx"
                 onChange={handlerFileChange}
-                hidden
               />
             </label>
+          </div>
+          <div className="file-list-preview-container">
+            {Object.keys(file).map((fileKey) => {
+              const uploadedFile = file[fileKey];
+              return (
+                <div key={fileKey} className="file-preview-container">
+                <p>{uploadedFile.name}</p>
+                <button className="file-remove-button"
+                onClick={(event)=> handlerRemoveFile(event, fileKey)}>
+                  x
+                </button>
+                </div>
+              );
+            })}
           </div>
           <div className="previous-button">
             <button onClick={handlerPrevious}>PREVIOUS</button>
