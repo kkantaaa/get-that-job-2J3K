@@ -1,5 +1,4 @@
 import { useState } from "react";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 
 function PersonalInformation() {
@@ -99,12 +98,3 @@ function PersonalInformation() {
 }
 
 export default PersonalInformation;
-=======
-
-
-export function PersonalInformation() {
-  return (
-    <div>PersonalInformation</div>
-  )
-};
->>>>>>> sub-main
