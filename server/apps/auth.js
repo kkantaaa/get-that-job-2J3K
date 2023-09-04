@@ -2,12 +2,14 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 // import { db } from "../utils/db.js";
+// import { pool } from "../utils/db.js";
 
 const authRouter = Router();
 
 authRouter.post("/login", async (req, res) => {
+  //รอเปลี่ยน db
   const user = await db.collection("users").findOne({
-    username: req.body.username,
+    email: req.body.email,
   });
 
   if (!user) {
@@ -28,7 +30,7 @@ authRouter.post("/login", async (req, res) => {
   }
 
   const token = jwt.sign(
-    { id: user._id, firstName: user.firstName, lastName: user.lastName },
+    { id: user.email, firstName: user.firstName, lastName: user.lastName },
     process.env.SECRET_KEY,
     {
       expiresIn: "900000",
