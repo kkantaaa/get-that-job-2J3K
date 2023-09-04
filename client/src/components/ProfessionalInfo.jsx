@@ -7,17 +7,26 @@ function ProfessionalInfo() {
   const [title, setTitle] = useState("");
   const [jobExp, setJobExp] = useState("");
   const [education, setEducation] = useState("");
+  const [file, setFile] = useState({});
 
-  const handlerPrevious = (event) =>{
+  const handlerFileChange = (event) => {
+    const uniqueId = Date.now();
+    setFile({
+      ...file,
+      [uniqueId]: event.target.files[0],
+    });
+  }
+
+  const handlerPrevious = (event) => {
     event.preventDefault();
-    navigate("/user/register2")
+    navigate("/user/register2");
   };
 
-  const handlerSkip = (event) =>{
+  const handlerSkip = (event) => {
     event.preventDefault();
-    navigate("/path หน้า job listing")
+    navigate("/path หน้า job listing");
   };
-  
+
   const handlerSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -74,6 +83,19 @@ function ProfessionalInfo() {
               />
             </label>
           </div>
+          <div className="file-upload-container">
+            <label htmlFor="upload">
+              UPLOAD / UPDATE YOUR CV
+              <input
+                id="upload"
+                name="file"
+                type="file"
+                placeholder="choose a file"
+                onChange={handlerFileChange}
+                hidden
+              />
+            </label>
+          </div>
           <div className="previous-button">
             <button onClick={handlerPrevious}>PREVIOUS</button>
           </div>
@@ -90,4 +112,3 @@ function ProfessionalInfo() {
 }
 
 export default ProfessionalInfo;
-
