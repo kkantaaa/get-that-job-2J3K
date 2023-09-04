@@ -1,4 +1,5 @@
 import { useState } from "react";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 
 function ProfessionalInfo() {
@@ -132,3 +133,12 @@ function ProfessionalInfo() {
 }
 
 export default ProfessionalInfo;
+=======
+
+export function ProfessionalInfo() {
+  return (
+    <div>ProfessionalInfo</div>
+  )
+};
+
+>>>>>>> sub-main

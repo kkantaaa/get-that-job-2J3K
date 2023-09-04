@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import React from 'react';
 import PersonalInformation  from '../components/PersonalInformation.jsx';
+=======
+import { PersonalInformation } from '../components/PersonalInformation.jsx';
+>>>>>>> sub-main
 
 function UserRegisterPage2() {
   return (
@@ -8,4 +12,4 @@ function UserRegisterPage2() {
   )
 }
 
-export default UserRegisterPage2
+export default UserRegisterPage2;
