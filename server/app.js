@@ -1,51 +1,34 @@
 import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import authRouter from "./apps/auth.js";
+// import { client } from "./utils/db.js";
+import dotenv from "dotenv";
 
-const app = express();
-const port = 3000;
+async function init() {
+  dotenv.config();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+  const app = express();
+  const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello User!");
-});
+  //   await client.connect();
 
-app.post("/login", async (req, res) => {
-  const user = await db.collection("users").findOne({
-    username: req.body.username,
+  app.use(cors());
+  app.use(bodyParser.json());
+
+  app.use("/auth", authRouter);
+
+  app.get("/", (req, res) => {
+    res.send("Hello World!");
   });
 
-  if (!user) {
-    return res.status(404).json({
-      message: "user not found",
-    });
-  }
-
-  const isValidPassword = await bcrypt.compare(
-    req.body.password,
-    user.password
-  );
-
-  if (!isValidPassword) {
-    return res.status(400).json({
-      message: "password not valid",
-    });
-  }
-
-  const token = jwt.sign(
-    { id: user._id, firstName: user.firstName, lastName: user.lastName },
-    process.env.SECRET_KEY,
-    {
-      expiresIn: 900000,
-    }
-  );
-
-  return res.json({
-    message: "login succesfully",
-    token,
+  app.get("*", (req, res) => {
+    res.status(404).send("Not found");
   });
-});
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
+
+init();
