@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/authentication.jsx";
 
 function LogInInfo () {
   const navigate = useNavigate();
@@ -8,8 +7,6 @@ function LogInInfo () {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
-
-  // const {register} = useAuth();
 
   const handlerSubmit = (event) => {
     event.preventDefault();
@@ -21,8 +18,7 @@ function LogInInfo () {
         password,
         confirmedPassword,
     };
-    register(data);
-    //navigate("/เตรียมใส่ชื่อรูท")
+    navigate("/user/register2");
   };
 
   return (

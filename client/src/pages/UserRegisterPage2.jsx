@@ -1,8 +1,10 @@
-import { PersonalInformation } from '../components/PersonalInformation.jsx';
+import React from 'react';
+import PersonalInformation  from '../components/PersonalInformation.jsx';
 
 function UserRegisterPage2() {
   return (
-    <div><PersonalInformation/></div>
+    <><h2>PROFESSIONAL</h2>
+    <div><PersonalInformation /></div></>
   )
 }
 
