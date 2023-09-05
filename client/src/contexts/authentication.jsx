@@ -45,6 +45,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const RecruiterRegister = async (data) => {
+    try {
+      await axios.post("http://localhost:your-port/register", data);
+      console.log("Registration successful");
+
+      setUserData(data);
+    } catch (error) {
+      console.error("Error: unable to register the account", error);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     setState({ ...state, user: null, error: null });
