@@ -48,7 +48,6 @@ function PersonalInformation() {
               />
             )}
           />
-          <span className="error">{errors.name && errors.name.message}</span>
         </div>
 
         <div className="flex flex-col">
@@ -74,9 +73,6 @@ function PersonalInformation() {
               />
             )}
           />
-          <span className="error">
-            {errors.phoneNumber && errors.phoneNumber.message}
-          </span>
         </div>
 
         <div className="flex flex-col">
@@ -95,6 +91,7 @@ function PersonalInformation() {
             defaultValue=""
             rules={{ required: "Birthdate is required" }}
             render={({ field }) => (
+<<<<<<< HEAD
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="birthdate"
@@ -102,6 +99,9 @@ function PersonalInformation() {
                 type="date"
                 {...field}
               />
+=======
+              <input id="birthdate" name="birthdate" type="date" {...field} />
+>>>>>>> 6d7ffd5 (fix: edit PersonalInformation logic)
             )}
           />
         </div>
@@ -129,9 +129,6 @@ function PersonalInformation() {
               />
             )}
           />
-          <span className="error">
-            {errors.linkedInUrl && errors.linkedInUrl.message}
-          </span>
         </div>
         <div className="flex flex-row">
           <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
