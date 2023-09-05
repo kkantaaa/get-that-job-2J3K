@@ -9,7 +9,7 @@ function RecruitLogInInfo() {
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", { type: "manual", message: "The confirmed Password is not matched" });
     } else {
-      navigate("/รอใส่ path");
+      navigate("/recruiter/register2");
     }
   };
 

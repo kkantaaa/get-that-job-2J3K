@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function ProfessionalInfo() {
+function RecruitCompanyInfo() {
   const navigate = useNavigate();
   const { handleSubmit, control, setValue, watch } = useForm();
 
@@ -102,7 +102,7 @@ function ProfessionalInfo() {
         </div>
 
         <div className="previous-button">
-          <button onClick={() => navigate("/user/register2")}>PREVIOUS</button>
+          <button onClick={() => navigate("/recruiter/register1")}>PREVIOUS</button>
         </div>
 
         <div className="skip-button">
@@ -117,4 +117,4 @@ function ProfessionalInfo() {
   );
 }
 
-export default ProfessionalInfo;
+export default RecruitCompanyInfo;
