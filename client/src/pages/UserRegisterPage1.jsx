@@ -4,6 +4,7 @@ import happyGirl from "../images/landing-page/discussing.png";
 function UserRegisterPage1() {
   return (
     <>
+<<<<<<< HEAD
       <div className="bg-Background min-h-screen flex flex-col">
       <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
         <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
@@ -34,12 +35,39 @@ function UserRegisterPage1() {
             <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
             <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Professional</p>
             <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
+=======
+      <div className="input-container">
+        <h1 className="text-8xl, font-light, tracking-tighter, leading-normal"> Good choice!</h1>
+        <p>Create a new account as...</p>
+        <div className="user-type-container">
+          <h2>PROFESSIONAL</h2>
+          <h2>RECRUITER</h2>
+        </div>
+        <div className="steps-container">
+          <div className="login-information">
+            <p>IN PROGRESS</p>
+            <p>Login</p>
+            <p>information</p>
+          </div>
+          <div className="personal-information">
+            <p>PENDING</p>
+            <p>Personal</p>
+            <p>information</p>
+          </div>
+          <div className="professional-information">
+            <p>PENDING</p>
+            <p>Professional</p>
+            <p>information</p>
+>>>>>>> 79885fe (feat: styling user regis page1)
           </div>
         </div>
         <LogInInfo />
       </div>
+<<<<<<< HEAD
       <img className="fixed bottom-0 right-[120px] object-cover" src={happyGirl} alt="image-of-young-girl"/>
       </div>
+=======
+>>>>>>> 79885fe (feat: styling user regis page1)
     </>
   );
 }
