@@ -1,28 +1,42 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/authentication.jsx";
 
-function LogInInfo() {
+function RecruitLogInInfo() {
   const navigate = useNavigate();
   const { handleSubmit, control, setError, formState: { errors } } = useForm();
-  const {userRegister} = useAuth();
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", { type: "manual", message: "The confirmed Password is not matched" });
     } else {
-      try {
-        await userRegister(data);
-        navigate("/user/register2");
-      } catch (error) {
-        console.error("Error during registration", error)
-      }
+      navigate("/recruiter/register2");
     }
   };
 
   return (
     <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
+      <div className="company-name-input">
+          <label htmlFor="company-name">
+            COMPANY NAME
+            <Controller
+              name="companyname"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Company name is required" }}
+              render={({ field }) => (
+                <input
+                  id="companyname"
+                  type="text"
+                  placeholder="My Company S.A"
+                  {...field}
+                />
+              )}
+            />
+          </label>
+          <span>{errors.companyname && errors.companyname.message}</span>
+        </div>
+
         <div className="email-input">
           <label htmlFor="email">
             EMAIL
@@ -96,5 +110,4 @@ function LogInInfo() {
   );
 }
 
-export default LogInInfo;
-
+export default RecruitLogInInfo;
