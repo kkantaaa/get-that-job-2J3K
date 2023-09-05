@@ -3,6 +3,8 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import authRouter from "./apps/auth.js";
 import dotenv from "dotenv";
+import registRouter from "./Website_Router/registRouter.js";
+
 
 async function init() {
   dotenv.config();
@@ -12,17 +14,20 @@ async function init() {
   //   api_secret: process.env.API_SECRET,
   //   secure: true,
   // });
-
   const app = express();
-  const port = 3000;
-
+  const port = 4000;
   app.use(cors());
   app.use(bodyParser.json());
 
-  app.use("/auth", authRouter);
+  // router
+  app.use("/regist", registRouter);
+    app.use("/auth", authRouter);
 
+  // router
+
+  // test route
   app.get("/", (req, res) => {
-    res.send("Hello GET THAT JOB!");
+    res.send("Hello World!");
   });
 
   app.get("*", (req, res) => {
@@ -31,6 +36,7 @@ async function init() {
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
+    // test route
   });
 }
 
