@@ -5,6 +5,7 @@ function UserRegisterPage1() {
   return (
     <>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="bg-Background min-h-screen flex flex-col">
       <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
         <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
@@ -38,6 +39,11 @@ function UserRegisterPage1() {
 =======
       <div className="input-container">
         <h1 className="text-8xl, font-light, tracking-tighter, leading-normal"> Good choice!</h1>
+=======
+      <body className="bg-[#F5F5F6] h-screen w-screen">
+      <div className="inut-container">
+        <h1 className="text-8xl font-light tracking-tighter leading-normal"> Good choice!</h1>
+>>>>>>> 1e83859 (stlyling UserRegisterPage 1)
         <p>Create a new account as...</p>
         <div className="user-type-container">
           <h2>PROFESSIONAL</h2>
@@ -64,10 +70,14 @@ function UserRegisterPage1() {
         <LogInInfo />
       </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <img className="fixed bottom-0 right-[120px] object-cover" src={happyGirl} alt="image-of-young-girl"/>
       </div>
 =======
 >>>>>>> 79885fe (feat: styling user regis page1)
+=======
+      </body>
+>>>>>>> 1e83859 (stlyling UserRegisterPage 1)
     </>
   );
 }
