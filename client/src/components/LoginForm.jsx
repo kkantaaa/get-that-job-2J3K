@@ -2,6 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginForm() {
+<<<<<<< HEAD
   const navigate = useNavigate();
   const {
     control,
@@ -11,6 +12,14 @@ export default function LoginForm() {
   const onSubmit = () => {
     console.log(control._fields.email._f.value); //not yet assign path to next page
   };
+=======
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+  };
+  //ยังไม่ได้เขียน function หลัง submit ให้กดแล้วไป fetch data login จากไหน
+>>>>>>> b2fe173 (fix: eslint)
 
   return (
     <>
@@ -20,6 +29,7 @@ export default function LoginForm() {
             <Link to="/user/login">PROFESSIONAL</Link>
           </button>
 
+<<<<<<< HEAD
           <button className="mr-4 underline decoration-LightGray underline-offset-8">
             <Link to="/recruiter/login">RECRUITER</Link>
           </button>
@@ -89,5 +99,29 @@ export default function LoginForm() {
         </form>
       </div>
     </>
+=======
+      <div>
+        <label htmlFor="email">EMAIL</label>
+        <input
+          {...register("professional.email")}
+          id="email"
+          placeholder="some.user@mail.com"
+          type="email"
+          // eslint-disable-next-line no-undef
+          onChange={(event)=> email(event.target.value)}
+        />
+        <label htmlFor="password">PASSWORD</label>
+        <input
+          {...register("professtional.password")}
+          id="password"
+          placeholder="******"
+          type="password"
+          // eslint-disable-next-line no-undef
+          onChange={(event)=> password(event.target.value)}
+        />
+      </div>
+      <input type="submit" />
+    </form>
+>>>>>>> b2fe173 (fix: eslint)
   );
 }
