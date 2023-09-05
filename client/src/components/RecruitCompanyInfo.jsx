@@ -1,15 +1,21 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/authentication.jsx";
 
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
   const { handleSubmit, control, setValue, watch } = useForm();
   const [logoPreview, setLogoPreview] = useState(null);
+  const { RecruiterRegister } = useAuth();
 
-  const onSubmit = (data) => {
-    // put form submission logic later
-    navigate("/path to job listing");
+  const onSubmit = async (data) => {
+    try {
+      await RecruiterRegister(data);
+      navigate("/path to job listing");
+    } catch (error) {
+      console.error("Error during registration", error);
+    }
   };
 
   useEffect(() => {

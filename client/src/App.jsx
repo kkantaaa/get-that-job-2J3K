@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AuthProvider } from './contexts/authentication.jsx'
+import React from 'react'
 import UserRegisterPage1 from './pages/UserRegisterPage1.jsx'
 import UserRegisterPage2 from './pages/UserRegisterPage2.jsx'
 import UserRegisterPage3 from './pages/UserRegisterPage3.jsx'
@@ -11,6 +13,7 @@ function App() {
 
   return (
     <>
+    <AuthProvider>
     <BrowserRouter>
       <Routes>
         <Route path ="/user/register1" element={<UserRegisterPage1/>}/>
@@ -21,6 +24,7 @@ function App() {
         <Route path ="*" element={<NoMatch/>}/>
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
     </>
   )
 }
