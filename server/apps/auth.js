@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 const authRouter = Router();
 
 authRouter.post("/login", async (req, res) => {
+
   const user = await db.collection("users").findOne({
     username: req.body.username,
   });
