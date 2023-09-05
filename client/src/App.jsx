@@ -7,6 +7,7 @@ import RecruitRegisterPage1 from "./pages/RecruitRegisterPage1.jsx";
 import RecruitRegisterPage2 from "./pages/RecruitRegisterPage2.jsx";
 import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
+import Homepage from "@/pages/HomePage.jsx";
 import "./App.css";
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/user/login" element={<UserLoginPage />} />
+            <Route path="/" element={<UserLoginPage />} />
+            <Route path="/user/login" element={<Homepage />} />
             <Route path="/recruiter/login" element={<RecruiterLoginPage />} />
             <Route path="/user/register1" element={<UserRegisterPage1 />} />
             <Route path="/user/register2" element={<UserRegisterPage2 />} />
