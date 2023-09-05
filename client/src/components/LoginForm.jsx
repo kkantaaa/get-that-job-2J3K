@@ -11,9 +11,15 @@ export default function LoginForm() {
   const onSubmit = () => {
     navigate("/"); //user go to /user/findjob recruiter go to /recruiter/jobpost
   };
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+  };
+  //ยังไม่ได้เขียน function หลัง submit ให้กดแล้วไป fetch data login จากไหน
 
   return (
-    <div className="login_box">
+    <><div className="login_box">
       <div className="role">
         <button value="professional">
           <Link to="/user/login">PROFESSIONAL</Link>
@@ -36,10 +42,8 @@ export default function LoginForm() {
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
-                  {...field}
-                />
-              )}
-            />
+                  {...field} />
+              )} />
           </label>
           <span>{errors.email && errors.email.message}</span>
         </div>
@@ -57,16 +61,32 @@ export default function LoginForm() {
                   id="password"
                   type="password"
                   placeholder="******"
-                  {...field}
-                />
-              )}
-            />
+                  {...field} />
+              )} />
           </label>
           <span>{errors.password && errors.password.message}</span>
         </div>
 
         <input type="submit" />
       </form>
-    </div>
+    </div><div>
+        <label htmlFor="email">EMAIL</label>
+        <input
+          {...register("professional.email")}
+          id="email"
+          placeholder="some.user@mail.com"
+          type="email"
+          // eslint-disable-next-line no-undef
+          onChange={(event) => email(event.target.value)} />
+        <label htmlFor="password">PASSWORD</label>
+        <input
+          {...register("professtional.password")}
+          id="password"
+          placeholder="******"
+          type="password"
+          // eslint-disable-next-line no-undef
+          onChange={(event) => password(event.target.value)} />
+      </div><input type="submit" /></>
+    </form>
   );
 }
