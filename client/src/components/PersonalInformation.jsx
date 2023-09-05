@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function PersonalInformation() {
   const navigate = useNavigate();
-  const { handleSubmit, control, errors } = useForm();
+  const { handleSubmit, control} = useForm();
 
   const handlerSkip = (event) => {
     event.preventDefault();
