@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './contexts/authentication.jsx'
-import React from 'react'
 import UserRegisterPage1 from './pages/UserRegisterPage1.jsx'
 import UserRegisterPage2 from './pages/UserRegisterPage2.jsx'
 import UserRegisterPage3 from './pages/UserRegisterPage3.jsx'
