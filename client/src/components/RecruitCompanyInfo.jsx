@@ -1,31 +1,48 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
   const { handleSubmit, control, setValue, watch } = useForm();
+  const [logoPreview, setLogoPreview] = useState(null);
 
   const onSubmit = (data) => {
     // put form submission logic later
     navigate("/path to job listing");
   };
 
+  useEffect(() => {
+    const logoFile = watch("file");
+    console.log("Logo File:", logoFile);
+    if (logoFile) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        console.log("Logo Preview Data URL:", e.target.result);
+        setLogoPreview(e.target.result);
+      };
+      reader.readAsDataURL(logoFile);
+    } else {
+      setLogoPreview(null);
+    }
+  }, [watch]);
+
   return (
-    <form className="professional-info" onSubmit={handleSubmit(onSubmit)}>
+    <form className="companyname-info" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
-        <div className="title-input">
-          <label htmlFor="title">
-            TITLE
+        <div className="company-website-input">
+          <label htmlFor="company-website">
+            COMPANY WEBSITE
             <Controller
-              name="title"
+              name="company-website"
               control={control}
               defaultValue=""
-              rules={{ required: "Title is required" }}
+              //   rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
                   id="title"
                   type="text"
-                  placeholder="Example: Mechanical administrator"
+                  placeholder="http://www.mycompany.sa"
                   {...field}
                 />
               )}
@@ -33,19 +50,19 @@ function RecruitCompanyInfo() {
           </label>
         </div>
 
-        <div className="job-exp-input">
-          <label htmlFor="jobExp">
-            PROFESSIONAL EXPERIENCE
+        <div className="about-company-input">
+          <label htmlFor="abtcompany">
+            ABOUT COMPANY
             <Controller
-              name="jobExp"
+              name="abtcompany"
               control={control}
               defaultValue=""
-              rules={{ required: "Professional experience is required" }}
+              //   rules={{ required: "About company experience is required" }}
               render={({ field }) => (
                 <input
-                  id="jobExp"
+                  id="abtcompany"
                   type="text"
-                  placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
+                  placeholder="My Company SA has the vision to change the way how..."
                   {...field}
                 />
               )}
@@ -53,32 +70,12 @@ function RecruitCompanyInfo() {
           </label>
         </div>
 
-        <div className="education-input">
-          <label htmlFor="education">
-            EDUCATION
-            <Controller
-              name="education"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Education is required" }}
-              render={({ field }) => (
-                <input
-                  id="education"
-                  type="text"
-                  placeholder="Major in life experiences with a PHD in procrastination"
-                  {...field}
-                />
-              )}
-            />
-          </label>
-        </div>
-
-        <div className="file-upload-container">
-          UPLOAD / UPDATE YOUR CV
+        <div className="logo-upload-container">
+          UPLOAD THE COMPANY LOGO
           <br />
           <input
             type="file"
-            accept=".pdf, .doc, .docx"
+            accept=".jpg, .png, .gif, .jpeg"
             onChange={(e) => {
               if (e.target.files.length > 0) {
                 setValue("file", e.target.files[0]);
@@ -87,12 +84,13 @@ function RecruitCompanyInfo() {
           />
         </div>
 
-        <div className="file-list-preview-container">
-          {watch("file") && (
-            <div className="file-preview-container">
-              <p>{watch("file").name}</p>
+        <div className="logo-list-preview-container">
+          {logoPreview && (
+            <div className="logo-preview-container">
+              <img src={logoPreview} alt="Logo Preview" />
+              {/* <p>{watch("file").name}</p> */}
               <button
-                className="file-remove-button"
+                className="logo-remove-button"
                 onClick={() => setValue("file", null)}
               >
                 x
@@ -102,11 +100,15 @@ function RecruitCompanyInfo() {
         </div>
 
         <div className="previous-button">
-          <button onClick={() => navigate("/recruiter/register1")}>PREVIOUS</button>
+          <button onClick={() => navigate("/recruiter/register1")}>
+            PREVIOUS
+          </button>
         </div>
 
         <div className="skip-button">
-          <button onClick={() => navigate("/path to job listing")}>SKIP THIS!</button>
+          <button onClick={() => navigate("/path to job listing")}>
+            SKIP THIS!
+          </button>
         </div>
 
         <div className="next-button">
