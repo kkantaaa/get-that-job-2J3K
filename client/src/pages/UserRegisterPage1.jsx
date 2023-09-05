@@ -2,8 +2,35 @@ import LogInInfo from "../components/LogInInfo.jsx";
 
 function UserRegisterPage1() {
   return (
-    <><h2>PROFESSIONAL</h2><LogInInfo /></>
-  )
+    <>
+      <div className="input-container">
+        <h1 className="text-8xl, font-light, tracking-tighter, leading-normal"> Good choice!</h1>
+        <p>Create a new account as...</p>
+        <div className="user-type-container">
+          <h2>PROFESSIONAL</h2>
+          <h2>RECRUITER</h2>
+        </div>
+        <div className="steps-container">
+          <div className="login-information">
+            <p>IN PROGRESS</p>
+            <p>Login</p>
+            <p>information</p>
+          </div>
+          <div className="personal-information">
+            <p>PENDING</p>
+            <p>Personal</p>
+            <p>information</p>
+          </div>
+          <div className="professional-information">
+            <p>PENDING</p>
+            <p>Professional</p>
+            <p>information</p>
+          </div>
+        </div>
+        <LogInInfo />
+      </div>
+    </>
+  );
 }
 
-export default UserRegisterPage1
+export default UserRegisterPage1;
