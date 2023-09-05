@@ -1,6 +1,9 @@
 import ProfessionalInfo from "../components/ProfessionalInfo.jsx";
+<<<<<<< HEAD
 import happyGirl from "../images/landing-page/discussing.png";
 
+=======
+>>>>>>> 6e9ac10 (fix: remove React)
 
 function UserRegisterPage3() {
   return (
