@@ -1,22 +1,31 @@
+import { createContext, useContext, useState } from "react";
 import axios from "axios";
-import React from "react";
-// แก้ไข authentication 
+
+const AuthContext = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
-const AuthContext = React.createContext();
-
-function AuthProvider() {
-  const logInInfoRegister = async (data) => {
-    try {
-        await axios.post("/รอ localhost", data);
-    } catch (error) {
-    console.log("Error: unable to register the account")
-    }
-  };
-  return (
-    <AuthContext.Provider value={{ logInInfoRegister }}></AuthContext.Provider>
-  );
+export function useAuth() {
+  return useContext(AuthContext);
 }
 
-const useAuth = () => React.useContext(AuthContext);
-export {useAuth, AuthProvider};
+// eslint-disable-next-line react/prop-types
+export const AuthProvider = ({ children }) => {
+  const [userData, setUserData] = useState(null);
+
+  const UserRegister = async (data) => {
+    try {
+      await axios.post("http://localhost:your-port/register", data);
+      console.log("Registration successful");
+
+      setUserData(data);
+    } catch (error) {
+      console.error("Error: unable to register the account", error);
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ userData, UserRegister }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
