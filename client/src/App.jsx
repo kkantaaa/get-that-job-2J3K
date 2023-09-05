@@ -8,8 +8,7 @@ import RecruitRegisterPage2 from './pages/RecruitRegisterPage2.jsx'
 import './App.css'
 
 function App() {
-  const NoMatch = () => <h1>Page Not Found.</h1>
-
+  const NoMatch = () => <h1>Page Not Found.</h1>;
   return (
     <>
     <AuthProvider>
@@ -25,7 +24,6 @@ function App() {
     </BrowserRouter>
     </AuthProvider>
     </>
-  )
+  );
 }
-
-export default App
+export default App;
