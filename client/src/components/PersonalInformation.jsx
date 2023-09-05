@@ -36,29 +36,25 @@ function PersonalInformation() {
               />
             )}
           />
-          <span className="error">{errors.name && errors.name.message}</span>
         </div>
 
         <div className="phone-input">
           <label htmlFor="phone">PHONE</label>
           <Controller
-            name="phoneNumber" 
+            name="phoneNumber"
             control={control}
             defaultValue=""
             rules={{ required: "Phone number is required" }}
             render={({ field }) => (
               <input
                 id="phone"
-                name="phoneNumber" 
+                name="phoneNumber"
                 type="text"
                 placeholder="+XXXXXXXX"
                 {...field}
               />
             )}
           />
-          <span className="error">
-            {errors.phoneNumber && errors.phoneNumber.message}
-          </span>
         </div>
 
         <div className="birthdate-input">
@@ -69,14 +65,9 @@ function PersonalInformation() {
             defaultValue=""
             rules={{ required: "Birthdate is required" }}
             render={({ field }) => (
-              <input id="birthdate" 
-              name="birthdate" 
-              type="date" {...field} /> 
+              <input id="birthdate" name="birthdate" type="date" {...field} />
             )}
           />
-          <span className="error">
-            {errors.birthdate && errors.birthdate.message}
-          </span>
         </div>
 
         <div className="linkedin-input">
@@ -89,16 +80,13 @@ function PersonalInformation() {
             render={({ field }) => (
               <input
                 id="linkedin"
-                name="linkedInUrl" 
+                name="linkedInUrl"
                 type="text"
                 placeholder="https://www.linkedin.com/in/username"
                 {...field}
               />
             )}
           />
-          <span className="error">
-            {errors.linkedInUrl && errors.linkedInUrl.message}
-          </span>
         </div>
 
         <div className="skip-button">
