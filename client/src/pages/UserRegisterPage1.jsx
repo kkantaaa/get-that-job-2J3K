@@ -3,8 +3,9 @@ import LogInInfo from "../components/LogInInfo.jsx";
 function UserRegisterPage1() {
   return (
     <>
-      <div className="input-container">
-        <h1 className="text-8xl, font-light, tracking-tighter, leading-normal"> Good choice!</h1>
+      <body className="bg-[#F5F5F6] h-screen w-screen">
+      <div className="inut-container">
+        <h1 className="text-8xl font-light tracking-tighter leading-normal"> Good choice!</h1>
         <p>Create a new account as...</p>
         <div className="user-type-container">
           <h2>PROFESSIONAL</h2>
@@ -29,6 +30,7 @@ function UserRegisterPage1() {
         </div>
         <LogInInfo />
       </div>
+      </body>
     </>
   );
 }
