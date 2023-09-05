@@ -2,10 +2,11 @@ import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (event)) => {
+  const onSubmit = (event) => {
     event.preventDefault();
 
-  };//ยังไม่ได้เขียน function หลัง submit ให้กดแล้วไป fetch data login จากไหน
+  };
+  //ยังไม่ได้เขียน function หลัง submit ให้กดแล้วไป fetch data login จากไหน
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -21,6 +22,7 @@ export default function LoginForm() {
           id="email"
           placeholder="some.user@mail.com"
           type="email"
+          // eslint-disable-next-line no-undef
           onChange={(event)=> email(event.target.value)}
         />
         <label htmlFor="password">PASSWORD</label>
@@ -29,10 +31,10 @@ export default function LoginForm() {
           id="password"
           placeholder="******"
           type="password"
+          // eslint-disable-next-line no-undef
           onChange={(event)=> password(event.target.value)}
         />
       </div>
-
       <input type="submit" />
     </form>
   );
