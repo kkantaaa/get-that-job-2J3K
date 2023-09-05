@@ -6,7 +6,7 @@ function RecruitCompanyInfo() {
   const { handleSubmit, control, setValue, watch } = useForm();
 
   const onSubmit = (data) => {
-    // put form submission logic here
+    // put form submission logic later
     navigate("/path to job listing");
   };
 
