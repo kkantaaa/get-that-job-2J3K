@@ -5,15 +5,12 @@ import React from "react";
 // import jwtDecode from "jwt-decode";
 // แก้ไข authentication
 
-
 const AuthContext = createContext();
-
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   return useContext(AuthContext);
 }
-
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
@@ -25,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   //   const userDataFromToken = jwtDecode(token);
   //   setState({ ...state, user: userDataFromToken });
   // };
-  
+
   const UserRegister = async (data) => {
     try {
       await axios.post("http://localhost:your-port/register", data);
@@ -34,7 +31,6 @@ export const AuthProvider = ({ children }) => {
       setUserData(data);
     } catch (error) {
       console.error("Error: unable to register the account", error);
-
     }
   };
 
@@ -43,3 +39,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
