@@ -1,133 +1,119 @@
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
+  const { handleSubmit, control, setValue, watch } = useForm();
 
-  const [title, setTitle] = useState("");
-  const [jobExp, setJobExp] = useState("");
-  const [education, setEducation] = useState("");
-  const [file, setFile] = useState({});
-
-  const handlerFileChange = (event) => {
-    const uniqueId = Date.now();
-    setFile({
-      ...file,
-      [uniqueId]: event.target.files[0],
-    });
-  };
-
-  const handlerRemoveFile = (event, fileKey) => {
-    event.preventDefault();
-    delete file[fileKey];
-    setFile({...file});
-  };
-
-  const handlerPrevious = (event) => {
-    event.preventDefault();
-    navigate("/user/register2");
-  };
-
-  const handlerSkip = (event) => {
-    event.preventDefault();
-    navigate("/path หน้า job listing");
-  };
-
-  const handlerSubmit = (event) => {
-    event.preventDefault();
-    const data = {
-      title,
-      jobExp,
-      education,
-    };
-    navigate("/path หน้า job listing");
+  const onSubmit = (data) => {
+    // put form submission logic here
+    navigate("/path to job listing");
   };
 
   return (
-    <>
-      <form className="professional-info">
-        <div className="input-container">
-          <div className="title-input">
-            <label htmlFor="title">
-              TITLE
-              <input
-                id="title"
-                name="title"
-                type="text"
-                placeholder="Example: Mechanical administrator"
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
-                required
-              />
-            </label>
-          </div>
-          <div className="job-exp-input">
-            <label>
-              PROFESSIONAL EXPERIENCE
-              <input
-                id="jobexp"
-                name="jobexp"
-                type="text"
-                placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
-                value={jobExp}
-                onChange={(event) => setJobExp(event.target.value)}
-                required
-              />
-            </label>
-          </div>
-          <div className="education-input">
-            <label>
-              EDUCATION
-              <input
-                id="education"
-                name="education"
-                type="text"
-                placeholder="Major in life experiences with a PHD in procrastination"
-                value={education}
-                onChange={(event) => setEducation(event.target.value)}
-                required
-              />
-            </label>
-          </div>
-          <div className="file-upload-container">
-            UPLOAD / UPDATE YOUR CV
-            <br/>
-            <label htmlFor="upload">
-              <input
-                id="upload"
-                name="file"
-                type="file"
-                accept=".pdf, .doc, .docx"
-                onChange={handlerFileChange}
-              />
-            </label>
-          </div>
-          <div className="file-list-preview-container">
-            {Object.keys(file).map((fileKey) => {
-              const uploadedFile = file[fileKey];
-              return (
-                <div key={fileKey} className="file-preview-container">
-                <p>{uploadedFile.name}</p>
-                <button className="file-remove-button"
-                onClick={(event)=> handlerRemoveFile(event, fileKey)}>
-                  x
-                </button>
-                </div>
-              );
-            })}
-          </div>
-          <div className="previous-button">
-            <button onClick={handlerPrevious}>PREVIOUS</button>
-          </div>
-          <div className="skip-button">
-            <button onClick={handlerSkip}>SKIP THIS!</button>
-          </div>
-          <div className="next-button">
-            <button onClick={handlerSubmit}>NEXT</button>
-          </div>
+    <form className="professional-info" onSubmit={handleSubmit(onSubmit)}>
+      <div className="input-container">
+        <div className="title-input">
+          <label htmlFor="title">
+            TITLE
+            <Controller
+              name="title"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Title is required" }}
+              render={({ field }) => (
+                <input
+                  id="title"
+                  type="text"
+                  placeholder="Example: Mechanical administrator"
+                  {...field}
+                />
+              )}
+            />
+          </label>
         </div>
-      </form>
-    </>
+
+        <div className="job-exp-input">
+          <label htmlFor="jobExp">
+            PROFESSIONAL EXPERIENCE
+            <Controller
+              name="jobExp"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Professional experience is required" }}
+              render={({ field }) => (
+                <input
+                  id="jobExp"
+                  type="text"
+                  placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
+                  {...field}
+                />
+              )}
+            />
+          </label>
+        </div>
+
+        <div className="education-input">
+          <label htmlFor="education">
+            EDUCATION
+            <Controller
+              name="education"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Education is required" }}
+              render={({ field }) => (
+                <input
+                  id="education"
+                  type="text"
+                  placeholder="Major in life experiences with a PHD in procrastination"
+                  {...field}
+                />
+              )}
+            />
+          </label>
+        </div>
+
+        <div className="file-upload-container">
+          UPLOAD / UPDATE YOUR CV
+          <br />
+          <input
+            type="file"
+            accept=".pdf, .doc, .docx"
+            onChange={(e) => {
+              if (e.target.files.length > 0) {
+                setValue("file", e.target.files[0]);
+              }
+            }}
+          />
+        </div>
+
+        <div className="file-list-preview-container">
+          {watch("file") && (
+            <div className="file-preview-container">
+              <p>{watch("file").name}</p>
+              <button
+                className="file-remove-button"
+                onClick={() => setValue("file", null)}
+              >
+                x
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="previous-button">
+          <button onClick={() => navigate("/user/register2")}>PREVIOUS</button>
+        </div>
+
+        <div className="skip-button">
+          <button onClick={() => navigate("/path to job listing")}>SKIP THIS!</button>
+        </div>
+
+        <div className="next-button">
+          <button type="submit">NEXT</button>
+        </div>
+      </div>
+    </form>
   );
 }
 

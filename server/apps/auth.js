@@ -6,6 +6,7 @@ import { pool } from "../utils/db.js";
 const authRouter = Router();
 
 authRouter.post("/login", async (req, res) => {
+
   const { email, password } = req.body;
 
   try {
