@@ -1,5 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm();
   const onSubmit = () => {
-    navigate("/"); //not yet assign path to next page
+    navigate("/"); //user go to /user/findjob recruiter go to /recruiter/jobpost
   };
 
   return (
@@ -19,7 +19,7 @@ export default function LoginForm() {
           <Link to="/user/login">PROFESSIONAL</Link>
         </button>
         <button value="recuiter">
-          <Link to="/recuiter/login">RECRUITER</Link>
+          <Link to="/recruiter/login">RECRUITER</Link>
         </button>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
