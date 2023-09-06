@@ -24,7 +24,7 @@ function PersonalInformation() {
         <div className="flex flex-col">
           <label
             htmlFor="name"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             NAME
           </label>
@@ -49,7 +49,7 @@ function PersonalInformation() {
         <div className="flex flex-col">
           <label
             htmlFor="phone"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             PHONE
           </label>
@@ -74,7 +74,7 @@ function PersonalInformation() {
         <div className="flex flex-col">
           <label
             htmlFor="birthdate"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             BIRTHDATE
           </label>
@@ -98,7 +98,7 @@ function PersonalInformation() {
         <div className="flex flex-col">
           <label
             htmlFor="linkedin"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             LINKEDIN URL
           </label>
@@ -121,7 +121,7 @@ function PersonalInformation() {
         </div>
 
         <div className="flex flex-row">
-        <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
+        <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
           <button onClick={handlerSkip}>SKIP THIS!</button>
         </div>
         <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
