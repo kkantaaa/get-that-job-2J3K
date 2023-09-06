@@ -1,6 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "description": "",
   "main": "app.js",
   "type": "module",
   "scripts": {
@@ -10,7 +11,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -20,6 +20,8 @@
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
-    "react-router-dom": "^6.15.0"
+    "react-router-dom": "^6.15.0",
+    "@supabase/supabase-js": "^2.33.1",
+    "multer": "^1.4.5-lts.1"
   }
 }
