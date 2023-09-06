@@ -23,15 +23,16 @@ export const AuthProvider = ({ children }) => {
   // };
 
   const RecruiterLogin = async (data) => {
-    const result = await axios.post(
-      "http://localhost:3000/auth/recruiter/login",
-      data
-    );
-    const token = result.data.token;
-    localStorage.setItem("token", token);
-    const userDataFromToken = jwtDecode(token);
-    setState({ ...state, user: userDataFromToken });
-    navigate("/recuiter/jobpost");
+    console.log(data); //อัพเดท http ของ db ก่อน
+    // const result = await axios.post(
+    //   "http://localhost:3000/auth/recruiter/login",
+    //   data
+    // );
+    // const token = result.data.token;
+    // localStorage.setItem("token", token);
+    // const userDataFromToken = jwtDecode(token);
+    // setState({ ...state, user: userDataFromToken });
+    // navigate("/recuiter/jobpost");
   };
 
   const UserRegister = async (data) => {

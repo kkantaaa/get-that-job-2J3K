@@ -1,4 +1,4 @@
-import LoginForm from "../components/LoginForm";
+import RecruiterLoginForm from "@/components/RecruiterLoginForm";
 
 function RecruiterLoginPage() {
   return (
@@ -8,8 +8,7 @@ function RecruiterLoginPage() {
         <div className="loginForm">
           <div className="greeting">Welcome back</div>
           <div>Login to you account as...</div>
-          {/* ยังใช้ loginForm ของ user */}
-          <LoginForm />
+          <RecruiterLoginForm />
         </div>
       </div>
     </div>
