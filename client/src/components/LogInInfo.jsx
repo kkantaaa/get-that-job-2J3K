@@ -25,7 +25,8 @@ function LogInInfo() {
       <div className="input-container">
         <div className="email-input">
           <label htmlFor="email">
-            EMAIL
+            <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+              EMAIL</div>
             <Controller
               name="email"
               control={control}
@@ -33,6 +34,7 @@ function LogInInfo() {
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
@@ -46,7 +48,7 @@ function LogInInfo() {
 
         <div className="password-input">
           <label htmlFor="password">
-            PASSWORD
+          <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">PASSWORD</div>
             <Controller
               name="password"
               control={control}
@@ -54,6 +56,7 @@ function LogInInfo() {
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="password"
                   type="password"
                   placeholder="******"
@@ -67,7 +70,7 @@ function LogInInfo() {
 
         <div className="confirmed-password-input">
           <label htmlFor="confirmed-password">
-            PASSWORD CONFIRMATION
+          <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">PASSWORD CONFIRMATION</div>
             <Controller
               name="confirmedPassword"
               control={control}
@@ -77,6 +80,7 @@ function LogInInfo() {
               }}
               render={({ field }) => (
                 <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="confirmed-password"
                   type="password"
                   placeholder="******"
@@ -88,7 +92,7 @@ function LogInInfo() {
           <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
         </div>
 
-        <div className="next-button">
+        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button type="submit">NEXT</button>
         </div>
       </div>

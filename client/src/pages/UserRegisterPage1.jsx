@@ -3,7 +3,7 @@ import LogInInfo from "../components/LogInInfo.jsx";
 function UserRegisterPage1() {
   return (
     <>
-      <body className="bg-[#F5F5F6] h-screen w-screen">
+      <body>
       <div className="inut-container">
         <h1 className="text-8xl font-light tracking-tighter leading-normal"> Good choice!</h1>
         <p>Create a new account as...</p>
