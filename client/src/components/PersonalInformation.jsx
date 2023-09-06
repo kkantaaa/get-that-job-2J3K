@@ -35,7 +35,7 @@ function PersonalInformation() {
             rules={{ required: "Name is required" }}
             render={({ field }) => (
               <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="name"
                 name="name"
                 type="text"
@@ -60,7 +60,7 @@ function PersonalInformation() {
             rules={{ required: "Phone number is required" }}
             render={({ field }) => (
               <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="phone"
                 name="phoneNumber"
                 type="text"
@@ -85,7 +85,7 @@ function PersonalInformation() {
             rules={{ required: "Birthdate is required" }}
             render={({ field }) => (
               <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="birthdate"
                 name="birthdate"
                 type="date"
@@ -109,7 +109,7 @@ function PersonalInformation() {
             rules={{ required: "LinkedIn URL is required" }}
             render={({ field }) => (
               <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="linkedin"
                 name="linkedInUrl"
                 type="text"
@@ -121,10 +121,10 @@ function PersonalInformation() {
         </div>
 
         <div className="flex flex-row">
-        <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-black rounded-[16px] text-black text-center text-sm tracking-[1.25px]">
+        <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
           <button onClick={handlerSkip}>SKIP THIS!</button>
         </div>
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button type="submit">NEXT</button>
         </div>
         </div>
