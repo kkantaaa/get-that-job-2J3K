@@ -1,12 +1,11 @@
 import LogInInfo from "../components/LogInInfo.jsx";
-// import girl from './src/assets/girl-model.svg';
+import happyGirl from "../images/landing-page/discussing.png";
 
 function UserRegisterPage1() {
   return (
     <>
       <div className="bg-Background h-screen">
-      <div className="flex flex-row">
-      <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
+      <div className="fixed flex flex-col ml-[220px] mt-[96px] mr-[776px]">
         <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
         <p className="font-Montserrat text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
         <div className="flex flex-row">
@@ -39,8 +38,7 @@ function UserRegisterPage1() {
         </div>
         <LogInInfo />
       </div>
-      <img src="client\src\assets\discussing.png" alt="image-of-young-girl"/>
-      </div>
+      <img className="fixed bottom-0 right-[120px] object-cover" src={happyGirl} alt="image-of-young-girl"/>
       </div>
     </>
   );
