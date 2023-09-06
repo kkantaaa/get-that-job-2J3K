@@ -21,7 +21,7 @@ function LogInInfo() {
   };
 
   return (
-    <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div className="email-input">
           <label htmlFor="email">
