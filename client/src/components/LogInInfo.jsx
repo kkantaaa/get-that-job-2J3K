@@ -1,18 +1,18 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/authentication.jsx";
+// import { useAuth } from "@/contexts/authentication.jsx";
 
 function LogInInfo() {
   const navigate = useNavigate();
   const { handleSubmit, control, setError, formState: { errors } } = useForm();
-  const {userRegister} = useAuth();
+  // const {userRegister} = useAuth();
 
   const onSubmit = async (data) => {
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", { type: "manual", message: "The confirmed Password is not matched" });
     } else {
       try {
-        await userRegister(data);
+        // await userRegister(data);
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error)

@@ -122,20 +122,14 @@ function RecruitCompanyInfo() {
             </div>
           )}
         </div>
-
-        <div className="previous-button">
-          <button onClick={() => navigate("/recruiter/register1")}>
-            PREVIOUS
-          </button>
-        </div>
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button onClick={() => navigate("/user/register2")}>
+            <button onClick={() => navigate("/recruiter/register1")}>
               PREVIOUS
             </button>
           </div>
 
-          <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
+          <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[12px] tracking-[1.25px]">
             <button onClick={() => navigate("/path to job listing")}>
               SKIP THIS!
             </button>

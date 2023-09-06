@@ -120,7 +120,7 @@ function ProfessionalInfo() {
           <button onClick={() => navigate("/user/register2")}>PREVIOUS</button>
         </div>
 
-        <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
+        <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
           <button onClick={() => navigate("/path to job listing")}>SKIP THIS!</button>
         </div>
 
