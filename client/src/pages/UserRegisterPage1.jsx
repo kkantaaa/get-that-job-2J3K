@@ -1,9 +1,10 @@
 import LogInInfo from "../components/LogInInfo.jsx";
+// import girl from './src/assets/girl-model.svg';
 
 function UserRegisterPage1() {
   return (
     <>
-      <body>
+      <div className="flex flex-row">
       <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
         <h1 className="text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
         <p className="text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
@@ -37,7 +38,8 @@ function UserRegisterPage1() {
         </div>
         <LogInInfo />
       </div>
-      </body>
+      <img src="client\src\assets\discussing.png" alt="image-of-young-girl"/>
+      </div>
     </>
   );
 }
