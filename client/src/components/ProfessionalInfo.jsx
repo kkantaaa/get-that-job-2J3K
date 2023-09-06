@@ -11,7 +11,7 @@ function ProfessionalInfo() {
   };
 
   return (
-    <form className="professional-info" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
       <p className="text-[10px] font-normal tracking-[1.5px] uppercase">You can complete this information later</p>        
         <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">but we reccomend you to do it now</p>

@@ -14,7 +14,7 @@ function RecruitLogInInfo() {
   };
 
   return (
-    <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
       <div className="company-name-input">
           <label htmlFor="company-name" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">

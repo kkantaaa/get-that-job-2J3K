@@ -90,8 +90,8 @@ export default {
       },
     },
     fontFamily: {
-      Inter: ["Inter"],
-      Montserrat: ["Montserrat"],
+      Inter: ["Inter", "sans"],
+      Montserrat: ["Montserrat", "sans"],
     },
     fontSize: {
       Headline1: ["97px", "118.24px"],
@@ -109,5 +109,6 @@ export default {
       Overline: ["10px", "12.1px"],
     },
   },
+  // eslint-disable-next-line no-undef
   plugins: [require("tailwindcss-animate")],
 };
