@@ -9,7 +9,9 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm();
   const onSubmit = () => {
+
     console.log(control._fields.email._f.value); //not yet assign path to next page
+
   };
  
   return (
@@ -18,8 +20,10 @@ export default function LoginForm() {
         <button className="mr-4 underline decoration-sky-500 underline-offset-8">
           <Link to="/user/login">PROFESSIONAL</Link>
         </button>
+
         <button className="mr-4 underline decoration-sky-500 underline-offset-8">
-          <Link to="/recuiter/login">RECRUITER</Link>
+          <Link to="/recruiter/login">RECRUITER</Link>
+
         </button>
       </div>
 
