@@ -22,7 +22,7 @@ function LogInInfo() {
 
   return (
     <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
-      <div className="input-container">
+      <div>
         <div className="email-input">
           <label htmlFor="email">
             <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
@@ -92,7 +92,7 @@ function LogInInfo() {
           <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
         </div>
 
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button type="submit">NEXT</button>
         </div>
       </div>
