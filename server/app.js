@@ -5,7 +5,6 @@ import authRouter from "./apps/auth.js";
 import dotenv from "dotenv";
 import registRouter from "./Website_Router/registRouter.js";
 
-
 async function init() {
   dotenv.config();
   // cloudinary.config({
@@ -21,13 +20,13 @@ async function init() {
 
   // router
   app.use("/regist", registRouter);
-    app.use("/auth", authRouter);
+  app.use("/auth", authRouter);
 
   // router
 
   // test route
   app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("Hello Get That Job!");
   });
 
   app.get("*", (req, res) => {
