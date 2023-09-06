@@ -21,7 +21,11 @@ function LogInInfo() {
   };
 
   return (
+<<<<<<< HEAD
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
+=======
+    <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
+>>>>>>> 0897c21 (edit form regis layout)
       <div>
         <div className="email-input">
           <label htmlFor="email">
@@ -105,10 +109,14 @@ function LogInInfo() {
         </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
 =======
         <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
 >>>>>>> f6faba3 (feat: style the regis form input)
+=======
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+>>>>>>> 0897c21 (edit form regis layout)
           <button type="submit">NEXT</button>
         </div>
       </div>
