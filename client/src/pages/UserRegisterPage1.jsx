@@ -4,18 +4,19 @@ import LogInInfo from "../components/LogInInfo.jsx";
 function UserRegisterPage1() {
   return (
     <>
+      <div className="bg-Background h-screen">
       <div className="flex flex-row">
       <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
-        <h1 className="text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
+        <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
         <p className="text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
         <div className="flex flex-row">
           <div className="flex flex-col">
           <h2 className="text-[14px] font-medium leading-5 tracking-[1.25px] mr-[12px]">PROFESSIONAL</h2>
-          <div className="w-[115px] h-[2px] bg-black mt-[6px]"></div>
+          <div className="w-[115px] h-[2px] bg-Pink mt-[6px]"></div>
           </div>
           <div className="flex flex-col">
           <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]">RECRUITER</h2>
-          <div className="w-[80px] h-[2px] bg-black mt-[6px]"></div>
+          <div className="w-[80px] h-[2px] bg-Pink mt-[6px]"></div>
           </div>
         </div>
 
@@ -39,6 +40,7 @@ function UserRegisterPage1() {
         <LogInInfo />
       </div>
       <img src="client\src\assets\discussing.png" alt="image-of-young-girl"/>
+      </div>
       </div>
     </>
   );
