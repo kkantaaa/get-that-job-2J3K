@@ -33,6 +33,22 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    --Pink: 340, 82%, 76%, 1;
+    --LightPink: 327, 100%, 88%, 1;
+    --DarkPink: 338, 43%, 56%, 1;
+
+    --Gray: 0, 0%, 38%, 1;
+    --LightGray: 0, 0%, 56%, 1;
+    --DarkGray: 0, 0%, 22%, 1;
+
+    --Content: 0, 0%, 12%, 1;
+    --ContentSecondary: 0, 0%, 36%, 1;
+    --White: 0, 0%, 100%, 1;
+
+    --Background: 240, 5%, 96%, 1;
+    --BackgroundDark: 120, 2%, 88%, 1;
+    --Background-foreground: 0, 0%, 90%, 1;
   }
 
   .dark {
