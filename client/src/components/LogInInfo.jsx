@@ -21,7 +21,11 @@ function LogInInfo() {
   };
 
   return (
+<<<<<<< HEAD
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
+=======
+    <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
+>>>>>>> fc04ed924bf872b813d37288e6b4485449356e6f
       <div>
         <div className="email-input">
           <label htmlFor="email">
@@ -34,7 +38,11 @@ function LogInInfo() {
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> fc04ed924bf872b813d37288e6b4485449356e6f
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
@@ -56,7 +64,11 @@ function LogInInfo() {
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> fc04ed924bf872b813d37288e6b4485449356e6f
                   id="password"
                   type="password"
                   placeholder="******"
@@ -80,7 +92,11 @@ function LogInInfo() {
               }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> fc04ed924bf872b813d37288e6b4485449356e6f
                   id="confirmed-password"
                   type="password"
                   placeholder="******"
@@ -92,7 +108,11 @@ function LogInInfo() {
           <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
         </div>
 
+<<<<<<< HEAD
         <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+=======
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+>>>>>>> fc04ed924bf872b813d37288e6b4485449356e6f
           <button type="submit">NEXT</button>
         </div>
       </div>

@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
   const RecruiterRegister = async (data) => {
     try {
       await axios.post("http://localhost:your-port/register", data);

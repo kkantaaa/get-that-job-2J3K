@@ -5,7 +5,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const {
     control,
-    handleSubmit,
+    handleSubmit: handleSubmit1, // Rename the handleSubmit function to avoid conflicts
     formState: { errors },
   } = useForm();
 
@@ -14,6 +14,8 @@ export default function LoginForm() {
     console.log(data); // Replace with your API call logic
     navigate("/"); // Redirect after successful login
   };
+
+  // Remove the duplicate useForm() call
 
   return (
     <div className="login_box">
@@ -25,7 +27,7 @@ export default function LoginForm() {
           <Link to="/recruiter/login">RECRUITER</Link>
         </button>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit1(onSubmit)}>
         <div className="email_input">
           <label htmlFor="email">EMAIL</label>
           <Controller
@@ -69,3 +71,4 @@ export default function LoginForm() {
     </div>
   );
 }
+
