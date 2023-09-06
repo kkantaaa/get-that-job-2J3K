@@ -25,7 +25,11 @@ function ProfessionalInfo() {
               rules={{ required: "Title is required" }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> fc04ed9 (create layout on ProfessionalInformation component)
                   id="title"
                   type="text"
                   placeholder="Example: Mechanical administrator"
@@ -46,7 +50,11 @@ function ProfessionalInfo() {
               rules={{ required: "Professional experience is required" }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                 className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                className="flex w-[600px] h-[112px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> fc04ed9 (create layout on ProfessionalInformation component)
                   id="jobExp"
                   type="text"
                   placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
@@ -70,7 +78,11 @@ function ProfessionalInfo() {
               rules={{ required: "Education is required" }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                 className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                className="flex w-[600px] h-[76px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> fc04ed9 (create layout on ProfessionalInformation component)
                   id="education"
                   type="text"
                   placeholder="Major in life experiences with a PHD in procrastination"
@@ -116,6 +128,7 @@ function ProfessionalInfo() {
           )}
         </div>
         <div className="mt-[16px] flex flex-row">
+<<<<<<< HEAD
         <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button onClick={() => navigate("/user/register2")}>PREVIOUS</button>
         </div>
@@ -125,6 +138,17 @@ function ProfessionalInfo() {
         </div>
 
         <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+=======
+        <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+          <button onClick={() => navigate("/user/register2")}>PREVIOUS</button>
+        </div>
+
+        <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-black rounded-[16px] text-black text-center text-sm tracking-[1.25px]">
+          <button onClick={() => navigate("/path to job listing")}>SKIP THIS!</button>
+        </div>
+
+        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+>>>>>>> fc04ed9 (create layout on ProfessionalInformation component)
           <button type="submit">NEXT</button>
         </div>
         </div>
