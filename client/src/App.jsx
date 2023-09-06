@@ -14,8 +14,8 @@ function App() {
   const NoMatch = () => <h1>Page Not Found.</h1>;
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/user/login" element={<UserLoginPage />} />
@@ -33,8 +33,8 @@ function App() {
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </>
   );
 }
