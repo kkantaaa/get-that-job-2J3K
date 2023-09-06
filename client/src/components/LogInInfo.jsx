@@ -34,7 +34,11 @@ function LogInInfo() {
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> f6faba3 (feat: style the regis form input)
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
@@ -56,7 +60,11 @@ function LogInInfo() {
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> f6faba3 (feat: style the regis form input)
                   id="password"
                   type="password"
                   placeholder="******"
@@ -80,7 +88,11 @@ function LogInInfo() {
               }}
               render={({ field }) => (
                 <input
+<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> f6faba3 (feat: style the regis form input)
                   id="confirmed-password"
                   type="password"
                   placeholder="******"
@@ -92,7 +104,11 @@ function LogInInfo() {
           <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
         </div>
 
+<<<<<<< HEAD
         <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+=======
+        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+>>>>>>> f6faba3 (feat: style the regis form input)
           <button type="submit">NEXT</button>
         </div>
       </div>

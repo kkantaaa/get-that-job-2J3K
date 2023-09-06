@@ -6,6 +6,7 @@ function UserRegisterPage1() {
     <>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="bg-Background min-h-screen flex flex-col">
       <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
         <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
@@ -41,6 +42,9 @@ function UserRegisterPage1() {
         <h1 className="text-8xl, font-light, tracking-tighter, leading-normal"> Good choice!</h1>
 =======
       <body className="bg-[#F5F5F6] h-screen w-screen">
+=======
+      <body>
+>>>>>>> f6faba3 (feat: style the regis form input)
       <div className="inut-container">
         <h1 className="text-8xl font-light tracking-tighter leading-normal"> Good choice!</h1>
 >>>>>>> 1e83859 (stlyling UserRegisterPage 1)
