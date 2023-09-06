@@ -157,6 +157,6 @@ registRouter.post("/user/recruiter", async (req, res) => {
 //test upload image to database
 // Upload file using standard upload
 // registRouter.post("/upload", async (req, res) => {
-//   try {
+//   try {}
 
 export default registRouter;
