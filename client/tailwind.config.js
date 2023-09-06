@@ -90,8 +90,8 @@ export default {
       },
     },
     fontFamily: {
-      Inter: ["Inter", "sans"],
-      Montserrat: ["Montserrat", "sans"],
+      Inter: ["Inter", "sans-serif"],
+      Montserrat: ["Montserrat", "sans-serif"],
     },
     fontSize: {
       Headline1: ["97px", "118.24px"],
