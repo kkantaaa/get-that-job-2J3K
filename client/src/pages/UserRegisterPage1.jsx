@@ -1,9 +1,14 @@
 import LogInInfo from "../components/LogInInfo.jsx";
+<<<<<<< HEAD
 import happyGirl from "../images/landing-page/discussing.png";
+=======
+// import girl from './src/assets/girl-model.svg';
+>>>>>>> d8a49aa (create layout on PersonalInformation component)
 
 function UserRegisterPage1() {
   return (
     <>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -54,6 +59,9 @@ function UserRegisterPage1() {
           <h2>PROFESSIONAL</h2>
           <h2>RECRUITER</h2>
 =======
+=======
+      <div className="flex flex-row">
+>>>>>>> d8a49aa (create layout on PersonalInformation component)
       <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
         <h1 className="text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
         <p className="text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
@@ -98,6 +106,7 @@ function UserRegisterPage1() {
       </div>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <img className="fixed bottom-0 right-[120px] object-cover" src={happyGirl} alt="image-of-young-girl"/>
       </div>
 =======
@@ -105,6 +114,10 @@ function UserRegisterPage1() {
 =======
       </body>
 >>>>>>> 1e83859 (stlyling UserRegisterPage 1)
+=======
+      <img src="client\src\assets\discussing.png" alt="image-of-young-girl"/>
+      </div>
+>>>>>>> d8a49aa (create layout on PersonalInformation component)
     </>
   );
 }
