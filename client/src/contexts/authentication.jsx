@@ -1,8 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
-
 import React from "react";
-import { constants } from "buffer";
 // import jwtDecode from "jwt-decode";
 // แก้ไข authentication
 
@@ -26,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const RecruiterLogin = async (data) => {
     const result = await axios.post(
-      "http://localhost:3000/recruiter/login",
+      "http://localhost:3000/auth/recruiter/login",
       data
     );
     const token = result.data.token;
@@ -53,7 +51,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userData, UserRegister, logout }}>
+    <AuthContext.Provider
+      value={{ userData, RecruiterLogin, UserRegister, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
