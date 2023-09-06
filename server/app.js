@@ -31,7 +31,7 @@ async function init() {
   });
 
   app.get("*", (req, res) => {
-    res.status(404).send("Not found");
+    res.status(404).send("Not found, Check route");
   });
 
   app.listen(port, () => {
