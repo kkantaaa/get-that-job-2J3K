@@ -2,7 +2,9 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 
+
 function ProfessionalInfo() {
+
   const navigate = useNavigate();
   const {UserRegister} = useAuth();
   const { handleSubmit, control, setValue, watch } = useForm();
