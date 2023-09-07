@@ -68,7 +68,7 @@ registRouter.get("/professional", async (req, res) => {
 });
 //Postman - "Post" "localhost:4000/regist/professional"
 registRouter.post("/professional", async (req, res) => {
-  console.log("check table");
+  console.log(req.body);
   try {
     const user = {
       email: req.body.email,
@@ -81,12 +81,17 @@ registRouter.post("/professional", async (req, res) => {
       jobexp: req.body.jobexp,
       education: req.body.education,
       havefile: req.body.havefile,
+      confirmedpassword: req.body.confirmedpassword,
     };
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
+<<<<<<< HEAD
       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+=======
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+>>>>>>> 7ee33a7 (commit changes)
 
       [
         user.email,
@@ -101,6 +106,7 @@ registRouter.post("/professional", async (req, res) => {
         user.jobexp,
         user.education,
         user.havefile,
+        user.confirmedpassword,
       ]
     );
     console.log(user);
