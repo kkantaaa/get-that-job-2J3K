@@ -6,38 +6,14 @@ import member3 from "@/images/landing-page/member3.png";
 import member4 from "@/images/landing-page/member4.png";
 import githubIconButton from "@/images/landing-page/githubIconButton.png";
 import linkinIconButton from "@/images/landing-page/linkinIconButton.png";
-import navLogo1 from "@/images/landing-page/navLogo1.png";
-import signupIcon from "@/images/landing-page/signupIcon.png";
-import loginIcon from "@/images/landing-page/loginIcon.png";
 import { Button } from "@/components/ui/button";
+import NavBar from "@/components/NavBar.jsx";
+import { Link } from "react-router-dom";
 
 function Homepage() {
   return (
     <>
-      <nav className="bg-White h-[64px] flex justify-center drop-shadow-nav">
-        <div className="w-full h-full mx-[8.333%] flex flex-row  justify-between items-center ">
-          <img src={navLogo1} className="w-[136px] h-[40px] " />
-          <div className=" w-[257px] h-[40px] flex  flex-row  justify-between">
-            <Button variant="secondary" size="secondary" className="w-[129px] ">
-              <div className=" w-full flex flex-row justify-between">
-                <img src={signupIcon} className="w-[24px] h-[24px] " />
-                <div className="font-Inter text-Button font-medium tracking-[1.25px] ">
-                  SIGN UP
-                </div>
-              </div>
-            </Button>
-            <Button variant="secondary" size="secondary" className="w-[112px]">
-              <div className=" w-full flex flex-row justify-between">
-                <img src={loginIcon} className="w-[24px] h-[24px]" />
-                <div className="font-Inter text-Button font-medium tracking-[1.25px] ">
-                  LOGIN
-                </div>
-              </div>
-            </Button>
-          </div>
-        </div>
-      </nav>
-
+      <NavBar />
       <div className="bg-Background h-[833px] py-[10px] flex flex-col justify-center items-center">
         <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline2 font-light">
           The place where
@@ -52,9 +28,12 @@ function Homepage() {
           will take care of it.
         </div>
         <Button className="my-[16px] w-[264px]">
-          <div className="font-Inter text-Button  font-medium tracking-[1px]">
+          <Link
+            to="/user/register1"
+            className="font-Inter text-Button  font-medium tracking-[1px]"
+          >
             CREATE AN ACCOUNT NOW
-          </div>
+          </Link>
         </Button>
         <img src={landingPage1} className="w-[1062px] h-[350px] my-[16px] " />
       </div>
