@@ -84,11 +84,11 @@ function Homepage() {
         </div>
       </div>
 
-      <div className=" bg-Background-foreground w-full flex justify-center">
+      <footer className=" bg-Background-foreground w-full flex justify-center">
         <div className=" h-[537px] w-full mx-[8.333%] flex flex-col justify-around items-center divide-y-[1px] divide-DarkPink">
           <div className=" h-[486px] w-full flex justify-center items-center">
-            <div className="w-[80%]">
-              <div className=" text-DarkPink text-Headline3 font-normal font-Montserratflex">
+            <div className="w-[80%] flex flex-col items-center">
+              <div className=" text-DarkPink text-Headline3 font-normal font-Montserrat ">
                 Meet the team
               </div>
               <div className=" h-[273px] flex flex-row justify-center items-center">
@@ -176,7 +176,7 @@ function Homepage() {
             </div>
           </div>
         </div>
-      </div>
+      </footer>
     </>
   );
 }
