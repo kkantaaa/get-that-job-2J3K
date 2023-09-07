@@ -1,14 +1,18 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/authentication";
 
 function RecruitLogInInfo() {
   const navigate = useNavigate();
+  const {RecruiterRegister} = useAuth();
   const { handleSubmit, control, setError, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", { type: "manual", message: "The confirmed Password is not matched" });
     } else {
+      await RecruiterRegister(data)
+      console.log(data);
       navigate("/recruiter/register2");
     }
   };
