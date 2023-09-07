@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
 
   const RecruiterRegister = async (data) => {
     try {
-      await axios.post("http://localhost:your-port/register", data); // ควรเปลี่ยนจาก "http://localhost:your-port/register" เป็น URL ที่ถูกต้อง
+      await axios.post("http://localhost:4000/regist/recruiter", data); 
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ userData, UserLogin, RecruiterLogin, UserRegister, logout }}
+      value={{ userData, UserLogin, RecruiterLogin, UserRegister, logout, RecruiterRegister }}
     >
       {children}
     </AuthContext.Provider>
