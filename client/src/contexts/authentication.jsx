@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   const UserLogin = async (data) => {
     const result = await axios.post(
-      "http://localhost:3000/auth/user/login", //รออัพเดท http ของ db
+      "http://localhost:4000/auth/user/login", //รออัพเดท http ของ db
       data
     );
     const token = result.data.token;
@@ -28,9 +28,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const RecruiterLogin = async (data) => {
+    console.log("from authentication");
     console.log(data);
     const result = await axios.post(
-      "http://localhost:3000/auth/recruiter/login", //รออัพเดท http ของ db
+      "http://localhost:4000/auth/recruiter/login", //รออัพเดท http ของ db
       data
     );
     const token = result.data.token;
