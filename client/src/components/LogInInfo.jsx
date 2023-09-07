@@ -3,12 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function LogInInfo() {
   const navigate = useNavigate();
-  const {
-    handleSubmit,
-    control,
-    setError,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, control, setError, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     if (data.confirmedPassword !== data.password) {
@@ -31,9 +26,7 @@ function LogInInfo() {
       <div>
         <div className="email-input">
           <label htmlFor="email">
-            <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
-              EMAIL
-            </div>
+            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">EMAIL</div>
             <Controller
               name="email"
               control={control}
@@ -58,9 +51,7 @@ function LogInInfo() {
 
         <div className="password-input">
           <label htmlFor="password">
-            <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
-              PASSWORD
-            </div>
+            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">PASSWORD</div>
             <Controller
               name="password"
               control={control}
@@ -85,9 +76,7 @@ function LogInInfo() {
 
         <div className="confirmed-password-input">
           <label htmlFor="confirmed-password">
-            <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
-              PASSWORD CONFIRMATION
-            </div>
+            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">PASSWORD CONFIRMATION</div>
             <Controller
               name="confirmedPassword"
               control={control}
@@ -120,4 +109,5 @@ function LogInInfo() {
 }
 
 export default LogInInfo;
+
 

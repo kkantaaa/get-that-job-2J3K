@@ -19,12 +19,8 @@ function PersonalInformation() {
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
-        <p className="text-[10px] font-normal tracking-[1.5px] uppercase">
-          You can complete this information later
-        </p>
-        <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">
-          but we recommend you to do it now
-        </p>
+        <p className="text-[10px] font-normal tracking-[1.5px] uppercase">You can complete this information later</p>        
+        <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">but we reccomend you to do it now</p>
         <div className="flex flex-col">
           <label
             htmlFor="name"
@@ -123,13 +119,14 @@ function PersonalInformation() {
             )}
           />
         </div>
+
         <div className="flex flex-row">
-          <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
-            <button onClick={handlerSkip}>SKIP THIS!</button>
-          </div>
-          <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button type="submit">NEXT</button>
-          </div>
+        <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
+          <button onClick={handlerSkip}>SKIP THIS!</button>
+        </div>
+        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+          <button type="submit">NEXT</button>
+        </div>
         </div>
       </div>
     </form>

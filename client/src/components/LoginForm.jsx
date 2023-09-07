@@ -5,14 +5,17 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const {
     control,
-    handleSubmit,
+    handleSubmit: handleSubmit1, // Rename the handleSubmit function to avoid conflicts
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    // You can navigate or perform other actions here
+    // Handle form submission here, e.g., make an API call
+    console.log(data); // Replace with your API call logic
+    navigate("/"); // Redirect after successful login
   };
+
+  // Remove the duplicate useForm() call
 
   return (
     <>
@@ -93,3 +96,4 @@ export default function LoginForm() {
     </>
   );
 }
+
