@@ -2,6 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
+import React, { useEffect } from "react";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
@@ -16,21 +17,16 @@ function LogInInfo() {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    // Log the updated userData after the state has been updated
+    console.log("Updated userData:", userData);
+  }, [userData]);
+
   const onSubmit = async (data) => {
-    // let userInfo = {
-    //   email: "control._fields.email._f.value",
-    //   password: control._fields.password._f.value,
-    // };
     console.log({
       email: control._fields.email._f.value,
       password: control._fields.password._f.value,
     });
-    setUserData({
-      email: control._fields.email._f.value,
-      password: control._fields.password._f.value,
-    });
-
-    console.log(userData);
 
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", {
@@ -39,7 +35,13 @@ function LogInInfo() {
       });
     } else {
       try {
-        // await UserRegister(data);
+        //
+        await UserRegister(data);
+        //
+        await setUserData({
+          email: control._fields.email._f.value,
+          password: control._fields.password._f.value,
+        });
 
         navigate("/user/register2");
       } catch (error) {

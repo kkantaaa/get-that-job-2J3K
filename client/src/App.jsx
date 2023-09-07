@@ -21,7 +21,6 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <ContextProvider>
-            {" "}
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/user/login" element={<UserLoginPage />} />
