@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 function Homepage() {
   return (
     <>
-      <nav className="bg-White h-[64px] flex justify-center">
+      <nav className="bg-White h-[64px] flex justify-center drop-shadow-nav">
         <div className="w-full h-full mx-[8.333%] flex flex-row  justify-between items-center ">
           <img src={navLogo1} className="w-[136px] h-[40px] " />
           <div className=" w-[257px] h-[40px] flex  flex-row  justify-between">
@@ -38,25 +38,25 @@ function Homepage() {
         </div>
       </nav>
 
-      <div className="bg-Background h-[833px] flex flex-col justify-around items-center">
-        <div className=" text-DarkGray font-Montserrat text-Headline2 font-light">
+      <div className="bg-Background h-[833px] py-[10px] flex flex-col justify-center items-center">
+        <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline2 font-light">
           The place where
           <br />
           you get <span className="text-Pink">that</span> job
         </div>
-        <div className="text-black font-Montserrat text-Headline5 font-normal ">
+        <div className="my-[16px]  text-black font-Montserrat text-Headline5 font-normal text-center">
           With our Machine Learning algorithm you will get that job
           <br />
           in no time. We promise you! Just give us the money and we
           <br />
           will take care of it.
         </div>
-        <Button className="w-[264px]">
-          <div className="font-Inter text-Button font-medium tracking-[1px]">
+        <Button className="my-[16px] w-[264px]">
+          <div className="font-Inter text-Button  font-medium tracking-[1px]">
             CREATE AN ACCOUNT NOW
           </div>
         </Button>
-        <img src={landingPage1} className="w-[1062px] h-[350px]" />
+        <img src={landingPage1} className="w-[1062px] h-[350px] my-[16px] " />
       </div>
 
       <div className=" w-full flex  flex-row h-[472px]">
