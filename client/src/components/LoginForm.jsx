@@ -42,26 +42,24 @@ export default function LoginForm() {
             <label className="w-fit text-[10px]" htmlFor="email">
               EMAIL
             </label>
-            <label>
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required:
-                    "The email address you entered isn't connected to an account.",
-                }}
-                render={({ field }) => (
-                  <input
-                    className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-                    id="email"
-                    type="email"
-                    placeholder="some.user@mail.com"
-                    {...field}
-                  />
-                )}
-              />
-            </label>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required:
+                  "The email address you entered isn't connected to an account.",
+              }}
+              render={({ field }) => (
+                <input
+                  className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
+                  id="email"
+                  type="email"
+                  placeholder="some.user@mail.com"
+                  {...field}
+                />
+              )}
+            />
             <span>{errors.email && errors.email.message}</span>
           </div>
           <div className="flex flex-col">
@@ -88,10 +86,7 @@ export default function LoginForm() {
             <span>{errors.password && errors.password.message}</span>
           </div>
           <div className="text-right">
-            <button
-              className="w-[80px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-[14px] text-White"
-              type="submit"
-            >
+            <button className="w-[80px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-[14px] text-White" type="submit">
               LOGIN
             </button>
           </div>
