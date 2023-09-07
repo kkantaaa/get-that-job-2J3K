@@ -1,50 +1,50 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import jwtDecode from "jwt-decode";
-// แก้ไข authentication
+import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
 
 const AuthContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
-// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
   const UserLogin = async (data) => {
-    const result = await axios.post(
-      "http://localhost:3000/auth/user/login", //รออัพเดท http ของ db
-      data
-    );
-    const token = result.data.token;
-    const userDataFromToken = jwtDecode(token);
-    setUserData({ userDataFromToken });
-    navigate("/user/findjob");
+    try {
+      const result = await axios.post(
+        "http://localhost:3000/auth/user/login",
+        data
+      );
+      const token = result.data.token;
+      const userDataFromToken = jwtDecode(token);
+      setUserData(userDataFromToken);
+      localStorage.setItem("token", token);
+      navigate("/user/findjob");
+    } catch (error) {
+      console.error("Error: unable to login", error);
+    }
   };
 
   const RecruiterLogin = async (data) => {
-    console.log(data);
-    const result = await axios.post(
-      "http://localhost:3000/auth/recruiter/login", //รออัพเดท http ของ db
-      data
-    );
-    const token = result.data.token;
-    localStorage.setItem("token", token);
-    const userDataFromToken = jwtDecode(token);
-    setUserData({ userDataFromToken });
-    navigate("/recuiter/jobpost");
+    try {
+      const result = await axios.post(
+        "http://localhost:3000/auth/recruiter/login",
+        data
+      );
+      const token = result.data.token;
+      const userDataFromToken = jwtDecode(token);
+      setUserData(userDataFromToken);
+      localStorage.setItem("token", token);
+      navigate("/recruiter/jobpost"); // ควรเปลี่ยนจาก "/recuiter/jobpost" เป็น "/recruiter/jobpost" ในกรณีที่เป็นคำสะกดไม่ถูก
+    } catch (error) {
+      console.error("Error: unable to login", error);
+    }
   };
 
   const UserRegister = async (data) => {
     try {
-      await axios.post("http://localhost:your-port/register", data);
+      await axios.get("http://localhost:4000/regist/professional", data);
       console.log("Registration successful");
-
       setUserData(data);
     } catch (error) {
       console.error("Error: unable to register the account", error);
@@ -53,9 +53,8 @@ export const AuthProvider = ({ children }) => {
 
   const RecruiterRegister = async (data) => {
     try {
-      await axios.post("http://localhost:your-port/register", data);
+      await axios.post("http://localhost:your-port/register", data); // ควรเปลี่ยนจาก "http://localhost:your-port/register" เป็น URL ที่ถูกต้อง
       console.log("Registration successful");
-
       setUserData(data);
     } catch (error) {
       console.error("Error: unable to register the account", error);
@@ -75,4 +74,13 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+// ปรับปรุง useAuth ให้เป็น arrow function
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };

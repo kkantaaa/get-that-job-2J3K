@@ -9,7 +9,7 @@ import { supabase } from "../utils/supabaseClient.js";
 const uploadRouter = Router();
 
 // Set up an endpoint for file uploads
-registRouter.post("/upload", async (req, res) => {
+uploadRouter.post("/upload", async (req, res) => {
   try {
     // test req if not have file
     const file = req.files.file;  
