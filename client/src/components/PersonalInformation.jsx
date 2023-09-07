@@ -12,8 +12,8 @@ function PersonalInformation() {
     navigate("/path หน้า job listing");
   };
 
-  const onSubmit = (data) => {
-    UserRegister(data);
+  const onSubmit = async (data) => {
+    await UserRegister(data);
     console.log(data);
     navigate("/user/register3");
   };
