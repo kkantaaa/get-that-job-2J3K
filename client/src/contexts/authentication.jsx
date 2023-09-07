@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   const UserRegister = async (data) => {
     try {
-      await axios.post("http://localhost:4000/regist/professional", data);
+      await axios.get("http://localhost:4000/regist/professional", data);
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {

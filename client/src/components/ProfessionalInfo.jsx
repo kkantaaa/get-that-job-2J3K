@@ -1,13 +1,16 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/authentication";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
+  const {UserRegister} = useAuth();
   const { handleSubmit, control, setValue, watch } = useForm();
 
-  const onSubmit = (data) => {
-    // Handle form submission here
-    // await userRegister(data);
+  const onSubmit = async (data) => {
+    await UserRegister(data);
+    console.log(data)
+    console.log(data);
     navigate("/path to job listing");
   };
 
