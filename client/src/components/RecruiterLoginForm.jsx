@@ -15,8 +15,7 @@ export default function RecruiterLoginForm() {
     console.log("from login form");
     console.log(data);
     await RecruiterLogin(data);
-
-    // navigate("/recruiter/jobpost");
+    // navigate("/");
   };
 
   return (
