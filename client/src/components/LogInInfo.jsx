@@ -5,17 +5,6 @@ import { useEffect } from "react";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
-<<<<<<< HEAD
-=======
-// import { useAuth } from "@/contexts/authentication";
-
-function LogInInfo() {
-  const navigate = useNavigate();
-  // const { UserRegister } = useAuth();
->>>>>>> 093724e (feat: commit changes)
-=======
->>>>>>> 3a3fda3 (fix: merge conflict)
-
   const navigate = useNavigate();
 
   const {
@@ -39,7 +28,7 @@ function LogInInfo() {
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", {
         type: "manual",
-        message: "The confirmed Password is not matched",
+        message: "The confirmed Password does not match",
       });
     } else {
       try {
@@ -48,13 +37,8 @@ function LogInInfo() {
           password: control._fields.password._f.value,
         });
         console.log(data);
-<<<<<<< HEAD
-=======
         // await UserRegister(data);
-        console.log(data)
->>>>>>> 093724e (feat: commit changes)
-=======
->>>>>>> 3a3fda3 (fix: merge conflict)
+        console.log(data);
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
@@ -67,7 +51,7 @@ function LogInInfo() {
       <div>
         <div className="email-input">
           <label htmlFor="email">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+            <div className="mb-2 text-xs font-normal tracking-[1.5px]">
               EMAIL
             </div>
             <Controller
@@ -77,7 +61,7 @@ function LogInInfo() {
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="input-field"
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
@@ -87,14 +71,14 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="email-error" className="error-message">
+          <span className="error-message" id="email-error">
             {errors.email && errors.email.message}
           </span>
         </div>
 
         <div className="password-input">
           <label htmlFor="password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+            <div className="mb-2 text-xs font-normal tracking-[1.5px]">
               PASSWORD
             </div>
             <Controller
@@ -104,7 +88,7 @@ function LogInInfo() {
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="input-field"
                   id="password"
                   type="password"
                   placeholder="******"
@@ -114,14 +98,14 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="password-error" className="error-message">
+          <span className="error-message" id="password-error">
             {errors.password && errors.password.message}
           </span>
         </div>
 
         <div className="confirmed-password-input">
           <label htmlFor="confirmed-password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+            <div className="mb-2 text-xs font-normal tracking-[1.5px]">
               PASSWORD CONFIRMATION
             </div>
             <Controller
@@ -133,7 +117,7 @@ function LogInInfo() {
               }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="input-field"
                   id="confirmedpassword"
                   type="password"
                   placeholder="******"
@@ -143,12 +127,15 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="confirmed-password-error" className="error-message">
+          <span className="error-message" id="confirmed-password-error">
             {errors.confirmedPassword && errors.confirmedPassword.message}
           </span>
         </div>
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button type="submit">NEXT</button>
+
+        <div className="button-container">
+          <button type="submit" className="submit-button">
+            NEXT
+          </button>
         </div>
       </div>
     </form>
