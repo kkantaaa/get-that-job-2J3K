@@ -9,6 +9,7 @@ import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
+import JobPostings from "./pages/JobPostingsPage.jsx";
 import "./App.css";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               element={<RecruitRegisterPage2 />}
             />
             <Route path="/user/findthatjob" element={<FindThatJobPage />} />
+            <Route path="/user/jobpostings" element={<JobPostings />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </AuthProvider>

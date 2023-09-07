@@ -1,8 +1,8 @@
 import Logo from "../images/landing-page/navlogo1.png";
 
-export default function Sidebar() {
+export default function RecruiterSidebar() {
   return (
-    <div className="w-[240px] h-screen bg-BackgroundDark flex flex-col">
+    <div className="w-[240px] h-screen bg-BackgroundDark flex flex-col relative">
       <div className="w-[168px] h-fit px-[16px] py-[32px]">
         <img src={Logo} />
       </div>
@@ -17,48 +17,22 @@ export default function Sidebar() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_2951_1739)">
+              <g clip-path="url(#clip0_2951_696)">
                 <path
-                  d="M18.031 16.617L22.314 20.899L20.899 22.314L16.617 18.031C15.0237 19.3082 13.042 20.0029 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20.0029 13.042 19.3082 15.0237 18.031 16.617ZM16.025 15.875C17.2941 14.5699 18.0029 12.8204 18 11C18 7.132 14.867 4 11 4C7.132 4 4 7.132 4 11C4 14.867 7.132 18 11 18C12.8204 18.0029 14.5699 17.2941 15.875 16.025L16.025 15.875Z"
-                  fill="#373737"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_2951_1739">
-                  <rect width="24" height="24" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-
-          <span className=" h-fit">Find that job</span>
-        </button>
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
-          <div className=" h-fit mr-[8px]">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_2951_1745)">
-                <path
-                  d="M20 22H4C3.73478 22 3.48043 21.8946 3.29289 21.7071C3.10536 21.5196 3 21.2652 3 21V3C3 2.73478 3.10536 2.48043 3.29289 2.29289C3.48043 2.10536 3.73478 2 4 2H20C20.2652 2 20.5196 2.10536 20.7071 2.29289C20.8946 2.48043 21 2.73478 21 3V21C21 21.2652 20.8946 21.5196 20.7071 21.7071C20.5196 21.8946 20.2652 22 20 22ZM19 20V4H5V20H19ZM7 6H11V10H7V6ZM7 12H17V14H7V12ZM7 16H17V18H7V16ZM13 7H17V9H13V7Z"
+                  d="M7 5V2C7 1.73478 7.10536 1.48043 7.29289 1.29289C7.48043 1.10536 7.73478 1 8 1H16C16.2652 1 16.5196 1.10536 16.7071 1.29289C16.8946 1.48043 17 1.73478 17 2V5H21C21.2652 5 21.5196 5.10536 21.7071 5.29289C21.8946 5.48043 22 5.73478 22 6V20C22 20.2652 21.8946 20.5196 21.7071 20.7071C21.5196 20.8946 21.2652 21 21 21H3C2.73478 21 2.48043 20.8946 2.29289 20.7071C2.10536 20.5196 2 20.2652 2 20V6C2 5.73478 2.10536 5.48043 2.29289 5.29289C2.48043 5.10536 2.73478 5 3 5H7ZM4 16V19H20V16H4ZM4 14H20V7H4V14ZM9 3V5H15V3H9ZM11 11H13V13H11V11Z"
                   fill="#616161"
                 />
               </g>
               <defs>
-                <clipPath id="clip0_2951_1745">
+                <clipPath id="clip0_2951_696">
                   <rect width="24" height="24" fill="white" />
                 </clipPath>
               </defs>
             </svg>
           </div>
 
-          <span className=" h-fit">Your application</span>
+          <span className=" h-fit">Job Postings</span>
         </button>
-
         <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
           <div className=" h-fit mr-[8px]">
             <svg
@@ -68,14 +42,21 @@ export default function Sidebar() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M13 1L13.001 4.062C14.7632 4.28479 16.4013 5.08743 17.6572 6.34351C18.9131 7.5996 19.7155 9.23775 19.938 11H23V13L19.938 13.001C19.7153 14.7631 18.9128 16.401 17.6569 17.6569C16.401 18.9128 14.7631 19.7153 13.001 19.938L13 23H11V19.938C9.23775 19.7155 7.5996 18.9131 6.34351 17.6572C5.08743 16.4013 4.28479 14.7632 4.062 13.001L1 13V11H4.062C4.28459 9.23761 5.08713 7.59934 6.34324 6.34324C7.59934 5.08713 9.23761 4.28459 11 4.062V1H13ZM12 6C10.4087 6 8.88258 6.63214 7.75736 7.75736C6.63214 8.88258 6 10.4087 6 12C6 13.5913 6.63214 15.1174 7.75736 16.2426C8.88258 17.3679 10.4087 18 12 18C13.5913 18 15.1174 17.3679 16.2426 16.2426C17.3679 15.1174 18 13.5913 18 12C18 10.4087 17.3679 8.88258 16.2426 7.75736C15.1174 6.63214 13.5913 6 12 6ZM12 10C12.5304 10 13.0391 10.2107 13.4142 10.5858C13.7893 10.9609 14 11.4696 14 12C14 12.5304 13.7893 13.0391 13.4142 13.4142C13.0391 13.7893 12.5304 14 12 14C11.4696 14 10.9609 13.7893 10.5858 13.4142C10.2107 13.0391 10 12.5304 10 12C10 11.4696 10.2107 10.9609 10.5858 10.5858C10.9609 10.2107 11.4696 10 12 10Z"
-                fill="#616161"
-              />
+              <g clip-path="url(#clip0_2951_702)">
+                <path
+                  d="M15 4H5V20H19V8H15V4ZM3 2.992C3 2.444 3.447 2 3.999 2H16L21 7V20.993C21.0009 21.1243 20.976 21.2545 20.9266 21.3762C20.8772 21.4979 20.8043 21.6087 20.7121 21.7022C20.6199 21.7957 20.5101 21.8701 20.3892 21.9212C20.2682 21.9723 20.1383 21.9991 20.007 22H3.993C3.73038 21.9982 3.47902 21.8931 3.29322 21.7075C3.10742 21.5219 3.00209 21.2706 3 21.008V2.992ZM11 11V8H13V11H16V13H13V16H11V13H8V11H11Z"
+                  fill="#616161"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_2951_702">
+                  <rect width="24" height="24" fill="white" />
+                </clipPath>
+              </defs>
             </svg>
           </div>
 
-          <span className=" h-fit">Following</span>
+          <span className=" h-fit">Create New Job</span>
         </button>
 
         <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
@@ -129,6 +110,9 @@ export default function Sidebar() {
 
           <span className=" h-fit">Log out</span>
         </button>
+      </div>
+      <div className="w-full absolute bottom-[30px] text-[12px] text-Gray">
+        <span className="px-[16px]">© 2021 - Get That Job</span>
       </div>
     </div>
   );

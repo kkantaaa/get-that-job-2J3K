@@ -1,7 +1,5 @@
-import Sidebar from "@/components/SidebarProfessional";
+import ProfessionalSidebar from "@/components/ProfessionalSidebar";
 function FindThatJobPage() {
-    return (
-        <Sidebar/>
-    )
+  return <ProfessionalSidebar />;
 }
 export default FindThatJobPage;
