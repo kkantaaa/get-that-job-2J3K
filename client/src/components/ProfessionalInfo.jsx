@@ -9,7 +9,6 @@ function ProfessionalInfo() {
 
   const onSubmit = async (data) => {
     await UserRegister(data);
-    console.log(data)
     console.log(data);
     navigate("/path to job listing");
   };
