@@ -59,9 +59,15 @@ registRouter.post("/test/post_tabledata", async (req, res) => {
 });
 //registRouter.post("/test/post_tabledata") - test insert data to database
 
-//registRouter.post("/user/professional") - insert data to database // usertype = professional
-//Postman - "Post" "localhost:4000/regist/user/professional"
-registRouter.post("/user/professional", async (req, res) => {
+//registRouter.post("/professional") - insert data to database // usertype = professional
+registRouter.get("/professional", async (req, res) => {
+  const result = await pool.query("select * from UserTable");
+  return res.json({
+    message: result.rows,
+  });
+});
+//Postman - "Post" "localhost:4000/regist/professional"
+registRouter.post("/professional", async (req, res) => {
   console.log("check table");
   try {
     const user = {
@@ -75,13 +81,12 @@ registRouter.post("/user/professional", async (req, res) => {
       experience: req.body.experience,
       education: req.body.education,
       havefile: req.body.havefile,
-      Isprofessional: "truetrue",
-    };
+     };
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
-      "insert into testregist (email,password,name,phone,birthdate,url,title,experience,education,havefile,Isprofessional) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+      "insert into UserTable (email,password,name,phone,birthdate,url,title,experience,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
 
       [
         user.email,
@@ -94,7 +99,6 @@ registRouter.post("/user/professional", async (req, res) => {
         user.experience,
         user.education,
         user.havefile,
-        user.Isprofessional,
       ]
     );
     return res.json({
@@ -109,9 +113,15 @@ registRouter.post("/user/professional", async (req, res) => {
 });
 //registRouter.post("/user/professional") - insert data to database // usertype = professional
 
-//registRouter.post("/user/recruiter") - insert data to database // usertype = recruiter
-//Postman - "Post" "localhost:4000/regist/user/recruiter"
-registRouter.post("/user/recruiter", async (req, res) => {
+//registRouter.post("/recruiter") - insert data to database // usertype = recruiter
+registRouter.get("/recruiter", async (req, res) => {
+  const result = await pool.query("select * from recruitertable");
+  return res.json({
+    message: result.rows,
+  });
+});
+//Postman - "Post" "localhost:4000/regist/recruiter"
+registRouter.post("/recruiter", async (req, res) => {
   console.log("check table");
   try {
     const user = {
@@ -121,13 +131,12 @@ registRouter.post("/user/recruiter", async (req, res) => {
       companywebsite: req.body.companywebsite,
       aboutcompany: req.body.aboutcompany,
       havefile: req.body.Ishavefile,
-      Isrecruiter: "truetrue",
-    };
+     };
     const salt = await bcrypt.genSalt(14);
     user.companypassword = await bcrypt.hash(user.companypassword, salt);
 
     await pool.query(
-      "insert into testregist (companyemail,companypassword,companyname,companywebsite,aboutcompany,havefile,Isrecruiter) values ($1,$2,$3,$4,$5,$6,$7)",
+      "insert into recruitertable (companyemail,companypassword,companyname,companywebsite,aboutcompany,havefile) values ($1,$2,$3,$4,$5,$6)",
       [
         user.companyemail,
         user.companypassword,
@@ -135,7 +144,6 @@ registRouter.post("/user/recruiter", async (req, res) => {
         user.companywebsite,
         user.aboutcompany,
         user.havefile,
-        user.Isrecruiter,
       ]
     );
     return res.json({
@@ -148,15 +156,6 @@ registRouter.post("/user/recruiter", async (req, res) => {
     });
   }
 });
-//registRouter.post("/user/recruiter") - insert data to database // usertype = recruiter
-
-
-
-
-
-//test upload image to database
-// Upload file using standard upload
-// registRouter.post("/upload", async (req, res) => {
-//   try {}
+//registRouter.post("/recruiter") - insert data to database // usertype = recruiter
 
 export default registRouter;
