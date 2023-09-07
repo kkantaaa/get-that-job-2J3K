@@ -1,6 +1,8 @@
 import Logo from "../images/landing-page/navlogo1.png";
+import { useAuth } from "@/contexts/authentication";
 
 export default function RecruiterSidebar() {
+  const { logout } = useAuth();
   return (
     <div className="w-[240px] h-screen bg-BackgroundDark flex flex-col relative">
       <div className="w-[168px] h-fit px-[16px] py-[32px]">
@@ -85,7 +87,12 @@ export default function RecruiterSidebar() {
           <span className=" h-fit">Profile</span>
         </button>
 
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
+        <button
+          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background"
+          onClick={() => {
+            logout();
+          }}
+        >
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"

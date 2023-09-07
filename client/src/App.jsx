@@ -12,8 +12,12 @@ import FindThatJobPage from "./pages/FindThatJobPage.jsx";
 import JobPostings from "./pages/JobPostingsPage.jsx";
 import "./App.css";
 
+
+
+
 function App() {
   const NoMatch = () => <h1>Page Not Found.</h1>;
+ 
   return (
     <>
       <BrowserRouter>
@@ -34,7 +38,7 @@ function App() {
               element={<RecruitRegisterPage2 />}
             />
             <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-            <Route path="/user/jobpostings" element={<JobPostings />} />
+            <Route path="/recruiter/jobpostings" element={<JobPostings />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </AuthProvider>
