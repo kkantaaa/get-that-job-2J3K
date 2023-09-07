@@ -1,123 +1,45 @@
 import LogInInfo from "../components/LogInInfo.jsx";
-<<<<<<< HEAD
 import happyGirl from "../images/landing-page/discussing.png";
-=======
-// import girl from './src/assets/girl-model.svg';
->>>>>>> d8a49aa (create layout on PersonalInformation component)
 
 function UserRegisterPage1() {
   return (
     <>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       <div className="bg-Background min-h-screen flex flex-col">
-      <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
-        <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
-        <p className="font-Montserrat text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
-        <div className="flex flex-row">
-          <div className="flex flex-col font-Inter">
-          <h2 className="text-[14px] font-medium leading-5 tracking-[1.25px] mr-[12px]">PROFESSIONAL</h2>
-          <div className="w-[115px] h-[2px] bg-Pink mt-[6px]"></div>
+        <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
+          <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
+          <p className="font-Montserrat text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
+          <div className="flex flex-row">
+            <div className="flex flex-col font-Inter">
+              <h2 className="text-[14px] font-medium leading-5 tracking-[1.25px] mr-[12px]">PROFESSIONAL</h2>
+              <div className="w-[115px] h-[2px] bg-Pink mt-[6px]"></div>
+            </div>
+            <div className="flex flex-col font-Inter text-LightGray">
+              <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]">RECRUITER</h2>
+              <div className="w-[80px] h-[2px] bg-LightGray mt-[6px]"></div>
+            </div>
           </div>
-          <div className="flex flex-col font-Inter text-LightGray">
-          <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]">RECRUITER</h2>
-          <div className="w-[80px] h-[2px] bg-LightGray mt-[6px]"></div>
-          </div>
-        </div>
 
-        <div className="flex flex-row mb-[32px] font-Inter">
-          <div className="flex flex-col mt-[32px] mr-[16px]">
-            <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">IN PROGRESS</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Login</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
+          <div className="flex flex-row mb-[32px] font-Inter">
+            <div className="flex flex-col mt-[32px] mr-[16px]">
+              <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">IN PROGRESS</p>
+              <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Login</p>
+              <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
+            </div>
+            <div className="flex flex-col mt-[32px] mr-[16px] text-LightGray">
+              <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
+              <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Personal</p>
+              <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
+            </div>
+            <div className="flex flex-col mt-[32px] mr-[16px] text-LightGray">
+              <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
+              <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Professional</p>
+              <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
+            </div>
           </div>
-          <div className="flex flex-col mt-[32px] mr-[16px] text-LightGray">
-            <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Personal</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
-          </div>
-          <div className="flex flex-col mt-[32px] mr-[16px] text-LightGray">
-            <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Professional</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
-=======
-      <div className="input-container">
-        <h1 className="text-8xl, font-light, tracking-tighter, leading-normal"> Good choice!</h1>
-=======
-      <body className="bg-[#F5F5F6] h-screen w-screen">
-=======
-      <body>
-<<<<<<< HEAD
->>>>>>> f6faba3 (feat: style the regis form input)
-      <div className="inut-container">
-        <h1 className="text-8xl font-light tracking-tighter leading-normal"> Good choice!</h1>
->>>>>>> 1e83859 (stlyling UserRegisterPage 1)
-        <p>Create a new account as...</p>
-        <div className="user-type-container">
-          <h2>PROFESSIONAL</h2>
-          <h2>RECRUITER</h2>
-=======
-=======
-      <div className="flex flex-row">
->>>>>>> d8a49aa (create layout on PersonalInformation component)
-      <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
-        <h1 className="text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
-        <p className="text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
-        <div className="flex flex-row">
-          <div className="flex flex-col">
-          <h2 className="text-[14px] font-medium leading-5 tracking-[1.25px] mr-[12px]">PROFESSIONAL</h2>
-          <div className="w-[115px] h-[2px] bg-black mt-[6px]"></div>
-          </div>
-          <div className="flex flex-col">
-          <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]">RECRUITER</h2>
-          <div className="w-[80px] h-[2px] bg-black mt-[6px]"></div>
-          </div>
->>>>>>> 0897c21 (edit form regis layout)
+          <LogInInfo />
         </div>
-
-        <div className="flex flex-row mb-[32px]">
-          <div className="flex flex-col mt-[32px] mr-[16px]">
-            <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">IN PROGRESS</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Login</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
-          </div>
-          <div className="flex flex-col mt-[32px] mr-[16px]">
-            <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Personal</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
-          </div>
-<<<<<<< HEAD
-          <div className="professional-information">
-            <p>PENDING</p>
-            <p>Professional</p>
-            <p>information</p>
->>>>>>> 79885fe (feat: styling user regis page1)
-=======
-          <div className="flex flex-col mt-[32px] mr-[16px]">
-            <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">Professional</p>
-            <p className="text-[16px] font-normal tracking[0.5px] leading-[24px]">information</p>
->>>>>>> 0897c21 (edit form regis layout)
-          </div>
-        </div>
-        <LogInInfo />
+        <img className="fixed bottom-0 right-[120px] object-cover" src={happyGirl} alt="image-of-young-girl"/>
       </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <img className="fixed bottom-0 right-[120px] object-cover" src={happyGirl} alt="image-of-young-girl"/>
-      </div>
-=======
->>>>>>> 79885fe (feat: styling user regis page1)
-=======
-      </body>
->>>>>>> 1e83859 (stlyling UserRegisterPage 1)
-=======
-      <img src="client\src\assets\discussing.png" alt="image-of-young-girl"/>
-      </div>
->>>>>>> d8a49aa (create layout on PersonalInformation component)
     </>
   );
 }

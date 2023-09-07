@@ -3,33 +3,37 @@ import { useNavigate } from "react-router-dom";
 
 function LogInInfo() {
   const navigate = useNavigate();
-  const { handleSubmit, control, setError, formState: { errors } } = useForm();
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = async (data) => {
     if (data.confirmedPassword !== data.password) {
-      setError("confirmedPassword", { type: "manual", message: "The confirmed Password is not matched" });
+      setError("confirmedPassword", {
+        type: "manual",
+        message: "The confirmed Password is not matched",
+      });
     } else {
       try {
         // await userRegister(data);
         navigate("/user/register2");
       } catch (error) {
-        console.error("Error during registration", error)
+        console.error("Error during registration", error);
       }
     }
   };
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
-<<<<<<< HEAD
-=======
-    <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
->>>>>>> 0897c21 (edit form regis layout)
-=======
->>>>>>> bfbfcdc (fix LoginInfo component)
       <div>
         <div className="email-input">
           <label htmlFor="email">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">EMAIL</div>
+            <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+              EMAIL
+            </div>
             <Controller
               name="email"
               control={control}
@@ -38,26 +42,25 @@ function LogInInfo() {
               render={({ field }) => (
                 <input
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-<<<<<<< HEAD
-=======
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> f6faba3 (feat: style the regis form input)
-=======
->>>>>>> bfbfcdc (fix LoginInfo component)
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
                   {...field}
+                  aria-describedby="email-error"
                 />
               )}
             />
           </label>
-          <span>{errors.email && errors.email.message}</span>
+          <span id="email-error" className="error-message">
+            {errors.email && errors.email.message}
+          </span>
         </div>
 
         <div className="password-input">
           <label htmlFor="password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">PASSWORD</div>
+            <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+              PASSWORD
+            </div>
             <Controller
               name="password"
               control={control}
@@ -65,29 +68,26 @@ function LogInInfo() {
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
-<<<<<<< HEAD
-<<<<<<< HEAD
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-=======
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> f6faba3 (feat: style the regis form input)
-=======
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> bfbfcdc (fix LoginInfo component)
                   id="password"
                   type="password"
                   placeholder="******"
                   {...field}
+                  aria-describedby="password-error"
                 />
               )}
             />
           </label>
-          <span>{errors.password && errors.password.message}</span>
+          <span id="password-error" className="error-message">
+            {errors.password && errors.password.message}
+          </span>
         </div>
 
         <div className="confirmed-password-input">
           <label htmlFor="confirmed-password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">PASSWORD CONFIRMATION</div>
+            <div className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+              PASSWORD CONFIRMATION
+            </div>
             <Controller
               name="confirmedPassword"
               control={control}
@@ -97,39 +97,21 @@ function LogInInfo() {
               }}
               render={({ field }) => (
                 <input
-<<<<<<< HEAD
-<<<<<<< HEAD
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-=======
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-input bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> f6faba3 (feat: style the regis form input)
-=======
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> bfbfcdc (fix LoginInfo component)
                   id="confirmed-password"
                   type="password"
                   placeholder="******"
                   {...field}
+                  aria-describedby="confirmed-password-error"
                 />
               )}
             />
           </label>
-          <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
+          <span id="confirmed-password-error" className="error-message">
+            {errors.confirmedPassword && errors.confirmedPassword.message}
+          </span>
         </div>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-=======
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
->>>>>>> f6faba3 (feat: style the regis form input)
-=======
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-black rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
->>>>>>> 0897c21 (edit form regis layout)
-=======
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
->>>>>>> bfbfcdc (fix LoginInfo component)
           <button type="submit">NEXT</button>
         </div>
       </div>
@@ -138,5 +120,4 @@ function LogInInfo() {
 }
 
 export default LogInInfo;
-
 
