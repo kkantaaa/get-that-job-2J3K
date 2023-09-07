@@ -1,5 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/authentication";
@@ -8,6 +9,13 @@ function PersonalInformation() {
   const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
   const navigate = useNavigate();
+=======
+// import { useAuth } from "@/contexts/authentication";
+
+function PersonalInformation() {
+  const navigate = useNavigate();
+  // const {UserRegister} = useAuth();
+>>>>>>> c141703 (feat: commit changes)
   const { handleSubmit, control } = useForm();
 
   useEffect(() => {
@@ -25,6 +33,7 @@ function PersonalInformation() {
   };
 
   const onSubmit = async (data) => {
+<<<<<<< HEAD
     const { name, phone, birthdate, linkedin } = data;
     setUserData({...userData,
       name,
@@ -45,6 +54,11 @@ function PersonalInformation() {
     } catch (error) {
       console.error("Error during registration", error);
     }
+=======
+    // await UserRegister(data);
+    console.log(data);
+    navigate("/user/register3");
+>>>>>>> c141703 (feat: commit changes)
   };
 
   return (
