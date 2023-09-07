@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
       setUserData({ userDataFromToken });
       console.log("this is userData");
       console.log(userData);
-      navigate("/");
+      navigate("/user/findthatjob");
     } catch (error) {
       console.error("Error: unable to login the account", error);
     }
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       setUserData({ userDataFromToken });
       console.log("this is userData");
       console.log(userData);
-      navigate("/");
+      navigate("/recruiter/jobpostings");
     } catch (error) {
       console.error("Error: unable to login the account", error);
     }
