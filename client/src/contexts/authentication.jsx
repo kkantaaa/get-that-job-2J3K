@@ -9,49 +9,41 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
-  try {
-    const UserLogin = async (data) => {
-      console.log("from authentication");
-      console.log(data);
-      const result = await axios.post(
-        "http://localhost:4000/auth/user/login",
-        data
-      );
-      const token = result.data.token;
-      localStorage.setItem("token", token);
-      const userDataFromToken = jwtDecode(token);
-      console.log("this is token");
-      console.log(token);
-      setUserData({ userDataFromToken });
-      console.log("this is userData");
-      console.log(userData);
-      navigate("/");
-    };
-  } catch (error) {
-    console.error("Error: unable to login", error);
-  }
+  const UserLogin = async (data) => {
+    console.log("from authentication");
+    console.log(data);
+    const result = await axios.post(
+      "http://localhost:4000/auth/user/login",
+      data
+    );
+    const token = result.data.token;
+    localStorage.setItem("token", token);
+    const userDataFromToken = jwtDecode(token);
+    console.log("this is token");
+    console.log(token);
+    setUserData({ userDataFromToken });
+    console.log("this is userData");
+    console.log(userData);
+    navigate("/");
+  };
 
-  try {
-    const RecruiterLogin = async (data) => {
-      console.log("from authentication");
-      console.log(data);
-      const result = await axios.post(
-        "http://localhost:4000/auth/recruiter/login",
-        data
-      );
-      const token = result.data.token;
-      localStorage.setItem("token", token);
-      const userDataFromToken = jwtDecode(token);
-      console.log("this is token");
-      console.log(token);
-      setUserData({ userDataFromToken });
-      console.log("this is userData");
-      console.log(userData);
-      navigate("/");
-    };
-  } catch (error) {
-    console.error("Error: unable to login", error);
-  }
+  const RecruiterLogin = async (data) => {
+    console.log("from authentication");
+    console.log(data);
+    const result = await axios.post(
+      "http://localhost:4000/auth/recruiter/login",
+      data
+    );
+    const token = result.data.token;
+    localStorage.setItem("token", token);
+    const userDataFromToken = jwtDecode(token);
+    console.log("this is token");
+    console.log(token);
+    setUserData({ userDataFromToken });
+    console.log("this is userData");
+    console.log(userData);
+    navigate("/");
+  };
 
   const UserRegister = async (data) => {
     try {
