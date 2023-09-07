@@ -1,18 +1,22 @@
+import { useAuth } from "@/contexts/authentication";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { UserLogin } = useAuth();
   const {
     control,
-    handleSubmit: handleSubmit1, // Rename the handleSubmit function to avoid conflicts
+    handleSubmit, // Rename the handleSubmit function to avoid conflicts
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // Handle form submission here, e.g., make an API call
+    console.log("data from login form");
     console.log(data); // Replace with your API call logic
-    navigate("/"); // Redirect after successful login
+    await UserLogin(data);
+    // navigate("/"); // Redirect after successful login
   };
 
   // Remove the duplicate useForm() call
@@ -96,4 +100,3 @@ export default function LoginForm() {
     </>
   );
 }
-

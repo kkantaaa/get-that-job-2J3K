@@ -3,22 +3,19 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function RecruiterLoginForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { RecruiterLogin } = useAuth();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = () => {
-    const email = control._fields.email._f.value;
-    const password = control._fields.password._f.value;
-    RecruiterLogin({
-      email,
-      password,
-    });
 
-    // navigate("/recruiter/jobpost");
+  const onSubmit = async (data) => {
+    console.log("from login form");
+    console.log(data);
+    await RecruiterLogin(data);
+    // navigate("/");
   };
 
   return (

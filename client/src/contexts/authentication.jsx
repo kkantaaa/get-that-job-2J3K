@@ -6,39 +6,52 @@ import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใ
 const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
+
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
   const UserLogin = async (data) => {
+    console.log("data from authentication");
+    console.log(data);
     try {
       const result = await axios.post(
-        "http://localhost:3000/auth/user/login",
+        "http://localhost:4000/auth/user/login",
         data
       );
       const token = result.data.token;
-      const userDataFromToken = jwtDecode(token);
-      setUserData(userDataFromToken);
       localStorage.setItem("token", token);
-      navigate("/user/findjob");
+      const userDataFromToken = jwtDecode(token);
+      console.log("this is token");
+      console.log(token);
+      setUserData({ userDataFromToken });
+      console.log("this is userData");
+      console.log(userData);
+      navigate("/");
     } catch (error) {
-      console.error("Error: unable to login", error);
+      console.error("Error: unable to login the account", error);
     }
   };
 
   const RecruiterLogin = async (data) => {
+    console.log("data from authentication");
+    console.log(data);
     try {
       const result = await axios.post(
-        "http://localhost:3000/auth/recruiter/login",
+        "http://localhost:4000/auth/recruiter/login",
         data
       );
       const token = result.data.token;
-      const userDataFromToken = jwtDecode(token);
-      setUserData(userDataFromToken);
       localStorage.setItem("token", token);
-      navigate("/recruiter/jobpost"); // ควรเปลี่ยนจาก "/recuiter/jobpost" เป็น "/recruiter/jobpost" ในกรณีที่เป็นคำสะกดไม่ถูก
+      const userDataFromToken = jwtDecode(token);
+      console.log("this is token");
+      console.log(token);
+      setUserData({ userDataFromToken });
+      console.log("this is userData");
+      console.log(userData);
+      navigate("/");
     } catch (error) {
-      console.error("Error: unable to login", error);
+      console.error("Error: unable to login the account", error);
     }
   };
 
@@ -70,7 +83,14 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ userData, UserLogin, RecruiterLogin, UserRegister, logout, RecruiterRegister }}
+      value={{
+        userData,
+        UserLogin,
+        RecruiterLogin,
+        UserRegister,
+        logout,
+        RecruiterRegister,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -78,11 +98,10 @@ export const AuthProvider = ({ children }) => {
 };
 
 // ปรับปรุง useAuth ให้เป็น arrow function
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
