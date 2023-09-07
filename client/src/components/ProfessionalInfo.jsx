@@ -4,7 +4,9 @@ import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 
+
 function ProfessionalInfo() {
+
   const navigate = useNavigate();
   const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
