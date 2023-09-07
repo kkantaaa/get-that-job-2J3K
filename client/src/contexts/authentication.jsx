@@ -1,7 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import React from "react";
 // import jwtDecode from "jwt-decode";
 // แก้ไข authentication
 
@@ -42,6 +41,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const UserRegister = async (data) => {
+    try {
+      await axios.post("http://localhost:your-port/register", data);
+      console.log("Registration successful");
+
+      setUserData(data);
+    } catch (error) {
+      console.error("Error: unable to register the account", error);
+    }
+  };
+
+  const RecruiterRegister = async (data) => {
     try {
       await axios.post("http://localhost:your-port/register", data);
       console.log("Registration successful");

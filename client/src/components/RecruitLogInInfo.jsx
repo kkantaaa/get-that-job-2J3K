@@ -14,10 +14,10 @@ function RecruitLogInInfo() {
   };
 
   return (
-    <form className="login-info" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
       <div className="company-name-input">
-          <label htmlFor="company-name">
+          <label htmlFor="company-name" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
             COMPANY NAME
             <Controller
               name="companyname"
@@ -26,6 +26,7 @@ function RecruitLogInInfo() {
               rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="companyname"
                   type="text"
                   placeholder="My Company S.A"
@@ -38,7 +39,7 @@ function RecruitLogInInfo() {
         </div>
 
         <div className="email-input">
-          <label htmlFor="email">
+          <label htmlFor="email" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
             EMAIL
             <Controller
               name="email"
@@ -47,6 +48,7 @@ function RecruitLogInInfo() {
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
@@ -59,7 +61,7 @@ function RecruitLogInInfo() {
         </div>
 
         <div className="password-input">
-          <label htmlFor="password">
+          <label htmlFor="password" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
             PASSWORD
             <Controller
               name="password"
@@ -68,6 +70,7 @@ function RecruitLogInInfo() {
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="password"
                   type="password"
                   placeholder="******"
@@ -80,7 +83,7 @@ function RecruitLogInInfo() {
         </div>
 
         <div className="confirmed-password-input">
-          <label htmlFor="confirmed-password">
+          <label htmlFor="confirmed-password" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
             PASSWORD CONFIRMATION
             <Controller
               name="confirmedPassword"
@@ -91,6 +94,7 @@ function RecruitLogInInfo() {
               }}
               render={({ field }) => (
                 <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="confirmed-password"
                   type="password"
                   placeholder="******"
@@ -102,7 +106,7 @@ function RecruitLogInInfo() {
           <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
         </div>
 
-        <div className="next-button">
+        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button type="submit">NEXT</button>
         </div>
       </div>
