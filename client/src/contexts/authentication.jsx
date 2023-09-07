@@ -1,8 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
-// แก้ไข authenticatio
+import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
 
 const AuthContext = createContext();
 
@@ -48,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
   const UserRegister = async (data) => {
     try {
-      await axios.get("http://localhost:4000/regist/professional", data);
+      await axios.post("http://localhost:4000/regist/professional", data);
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {
