@@ -1,10 +1,10 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 
 function PersonalInformation() {
   const navigate = useNavigate();
-  const {UserRegister} = useAuth();
+  // const {UserRegister} = useAuth();
   const { handleSubmit, control } = useForm();
 
   const handlerSkip = (event) => {
@@ -13,7 +13,7 @@ function PersonalInformation() {
   };
 
   const onSubmit = async (data) => {
-    await UserRegister(data);
+    // await UserRegister(data);
     console.log(data);
     navigate("/user/register3");
   };

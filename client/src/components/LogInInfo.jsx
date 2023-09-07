@@ -1,10 +1,10 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 
 function LogInInfo() {
   const navigate = useNavigate();
-  const { UserRegister } = useAuth();
+  // const { UserRegister } = useAuth();
 
   const { handleSubmit, control, setError, formState: { errors } } = useForm();
 
@@ -16,7 +16,7 @@ function LogInInfo() {
       });
     } else {
       try {
-        await UserRegister(data);
+        // await UserRegister(data);
         console.log(data)
         navigate("/user/register2");
       } catch (error) {
