@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/contexts/authentication.jsx";
+import { useAuth } from "@/contexts/authentication";
 
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ function RecruitCompanyInfo() {
   const onSubmit = async (data) => {
     try {
       await RecruiterRegister(data);
+      console.log(data);
       navigate("/path to job listing");
     } catch (error) {
       console.error("Error during registration", error);
