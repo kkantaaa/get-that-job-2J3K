@@ -4,6 +4,7 @@ import cors from "cors";
 import authRouter from "./apps/auth.js";
 import dotenv from "dotenv";
 import registRouter from "./Website_Router/registRouter.js";
+import uploadRouter from "./Website_Router/uploadRouter.js";
 
 async function init() {
   dotenv.config();
@@ -21,6 +22,7 @@ async function init() {
   // router
   app.use("/regist", registRouter);
   app.use("/auth", authRouter);
+  app.use("/upload", uploadRouter);
 
   // router
 
