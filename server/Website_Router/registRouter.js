@@ -101,6 +101,7 @@ registRouter.post("/professional", async (req, res) => {
         user.havefile,
       ]
     );
+    console.log(user);
     return res.json({
       message: "Get that job account created!,  welcome professional user!",
     });
