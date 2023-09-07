@@ -86,7 +86,7 @@ registRouter.post("/professional", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
-      "insert into UserTable (email,password,name,phone,birthdate,url,title,experience,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
 
       [
         user.email,
@@ -126,13 +126,13 @@ registRouter.post("/recruiter", async (req, res) => {
   console.log("check table");
   try {
     const user = {
-      companyemail:  req.body.companyemail,
+      companyemail: req.body.companyemail,
       companypassword: req.body.companypassword,
       companyname: req.body.companyname,
       companywebsite: req.body.companywebsite,
       aboutcompany: req.body.aboutcompany,
-      havefile: req.body.Ishavefile,
-     };
+      havefile: req.body.havefile, 
+    };    
     const salt = await bcrypt.genSalt(14);
     user.companypassword = await bcrypt.hash(user.companypassword, salt);
 

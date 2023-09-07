@@ -17,6 +17,7 @@ function LogInInfo() {
     } else {
       try {
         await UserRegister(data);
+        console.log(data)
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);

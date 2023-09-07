@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใ
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 
   const UserRegister = async (data) => {
     try {
-      await axios.get("http://localhost:4000/regist/professional", data);
+      await axios.post("http://localhost:4000/regist/professional", data);
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {
@@ -77,6 +78,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 // ปรับปรุง useAuth ให้เป็น arrow function
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
