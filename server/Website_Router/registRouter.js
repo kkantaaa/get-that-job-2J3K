@@ -76,12 +76,12 @@ registRouter.post("/professional", async (req, res) => {
       name: req.body.name,
       phone: req.body.phone,
       birthdate: req.body.birthdate,
-      url: req.body.url,
+      linkedin: req.body.linkedin,
       title: req.body.title,
-      experience: req.body.experience,
+      jobExp: req.body.jobExp,
       education: req.body.education,
       havefile: req.body.havefile,
-     };
+    };
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
 
