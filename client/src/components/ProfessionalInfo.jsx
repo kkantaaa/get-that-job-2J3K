@@ -5,6 +5,7 @@ import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 
 
+
 function ProfessionalInfo() {
 
   const navigate = useNavigate();
