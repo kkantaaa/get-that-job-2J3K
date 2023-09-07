@@ -36,7 +36,7 @@ export default function LoginForm() {
 
         <form
           className="h-5/6 flex flex-col justify-between"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit1(onSubmit)}
         >
           <div className="flex flex-col ">
             <label className="w-fit text-[10px]" htmlFor="email">
