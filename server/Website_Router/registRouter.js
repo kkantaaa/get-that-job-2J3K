@@ -94,9 +94,9 @@ registRouter.post("/professional", async (req, res) => {
         user.name,
         user.phone,
         user.birthdate,
-        user.url,
+        user.linkedin,
         user.title,
-        user.experience,
+        user.jobExp,
         user.education,
         user.havefile,
       ]
