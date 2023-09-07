@@ -19,26 +19,37 @@ export default function RecruiterLoginForm() {
   };
 
   return (
-    <div className="login_box">
-      <div className="role">
-        <button value="professional">
-          <Link to="/user/login">PROFESSIONAL</Link>
-        </button>
-        <button value="recuiter">
-          <Link to="/recruiter/login">RECRUITER</Link>
-        </button>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="email_input">
-          <label htmlFor="email">
-            EMAIL
+    <>
+      <div className="font-Inter flex flex-col justify-between text-left text-[12px] h-2/3">
+        <div className="text-[14px] text-LightGray w-fit ">
+          <button className="mr-4 underline decoration-LightGray underline-offset-8">
+            <Link to="/user/login">PROFESSIONAL</Link>
+          </button>
+
+          <button className="mr-4 underline text-DarkGray decoration-Pink underline-offset-8">
+            <Link to="/recruiter/login">RECRUITER</Link>
+          </button>
+        </div>
+
+        <form
+          className="h-5/6 flex flex-col justify-between"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="flex flex-col ">
+            <label className="w-fit text-[10px]" htmlFor="email">
+              EMAIL
+            </label>
             <Controller
               name="email"
               control={control}
               defaultValue=""
-              rules={{ required: "Email is required" }}
+              rules={{
+                required:
+                  "The email address you entered isn't connected to an account.",
+              }}
               render={({ field }) => (
                 <input
+                  className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
                   id="email"
                   type="email"
                   placeholder="some.user@mail.com"
@@ -46,20 +57,22 @@ export default function RecruiterLoginForm() {
                 />
               )}
             />
-          </label>
-          <span>{errors.email && errors.email.message}</span>
-        </div>
-
-        <div className="password_input">
-          <label htmlFor="password">
-            PASSWORD
+            <span>{errors.email && errors.email.message}</span>
+          </div>
+          <div className="flex flex-col">
+            <label className="w-fit text-[10px]" htmlFor="password">
+              PASSWORD
+            </label>
             <Controller
               name="password"
               control={control}
               defaultValue=""
-              rules={{ required: "Password is required" }}
+              rules={{
+                required: "The password that you've entered is incorrect.",
+              }}
               render={({ field }) => (
                 <input
+                  className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
                   id="password"
                   type="password"
                   placeholder="******"
@@ -67,12 +80,18 @@ export default function RecruiterLoginForm() {
                 />
               )}
             />
-          </label>
-          <span>{errors.password && errors.password.message}</span>
-        </div>
-
-        <input type="submit" />
-      </form>
-    </div>
+            <span>{errors.password && errors.password.message}</span>
+          </div>
+          <div className="text-right">
+            <button
+              className="w-[80px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-[14px] text-White"
+              type="submit"
+            >
+              LOGIN
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
