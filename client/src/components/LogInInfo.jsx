@@ -1,8 +1,11 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/authentication";
 
 function LogInInfo() {
   const navigate = useNavigate();
+  const { UserRegister } = useAuth();
+
   const { handleSubmit, control, setError, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
@@ -13,7 +16,7 @@ function LogInInfo() {
       });
     } else {
       try {
-        // await userRegister(data);
+        await UserRegister(data);
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
