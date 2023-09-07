@@ -5,6 +5,8 @@ import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใ
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
+
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
@@ -65,7 +67,7 @@ export const AuthProvider = ({ children }) => {
 
   const RecruiterRegister = async (data) => {
     try {
-      await axios.post("http://localhost:4000/regist/recruiter", data);
+      await axios.post("http://localhost:4000/regist/recruiter", data); 
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {

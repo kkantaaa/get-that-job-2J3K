@@ -6,12 +6,7 @@ function LogInInfo() {
   const navigate = useNavigate();
   const { UserRegister } = useAuth();
 
-  const {
-    handleSubmit,
-    control,
-    setError,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, control, setError, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     if (data.confirmedPassword !== data.password) {
@@ -22,6 +17,7 @@ function LogInInfo() {
     } else {
       try {
         await UserRegister(data);
+
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
