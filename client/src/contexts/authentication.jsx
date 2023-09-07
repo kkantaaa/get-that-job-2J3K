@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
 
   const RecruiterRegister = async (data) => {
     try {
-      await axios.post("http://localhost:4000/regist/recruiter", data); 
+      await axios.post("http://localhost:4000/regist/recruiter", data);
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {
@@ -74,7 +74,14 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ userData, UserLogin, RecruiterLogin, UserRegister, logout, RecruiterRegister }}
+      value={{
+        userData,
+        UserLogin,
+        RecruiterLogin,
+        UserRegister,
+        logout,
+        RecruiterRegister,
+      }}
     >
       {children}
     </AuthContext.Provider>
