@@ -9,15 +9,15 @@ import { supabase } from "../utils/supabaseClient.js";
 const uploadRouter = Router();
 
 // Set up an endpoint for file uploads
-registRouter.post("/upload", async (req, res) => {
+uploadRouter.post("/upload", async (req, res) => {
   try {
     // test req if not have file
-    const file = req.files.file;  
+    const file = req.files.file;
     if (!file) {
       return res.status(400).send("No file uploaded.");
     }
 
-    // Upload the file 
+    // Upload the file
     const uploadResult = await supabase.storage
       .from("testbucket")
       .upload(`public/${file.name}`, file.data, {
@@ -27,13 +27,11 @@ registRouter.post("/upload", async (req, res) => {
 
     console.log(uploadResult);
 
-  
     res.status(200).send("File uploaded successfully to supabase.");
   } catch (error) {
     console.error(error);
     res.status(500).send("can't upload file to supabase");
   }
 });
-
 
 export default uploadRouter;

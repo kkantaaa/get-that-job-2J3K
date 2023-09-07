@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 // แก้ไข authentication
 
 const AuthContext = createContext();
@@ -17,28 +17,39 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
 
   const UserLogin = async (data) => {
+    console.log("from authentication");
+    console.log(data);
     const result = await axios.post(
-      "http://localhost:4000/auth/user/login", //รออัพเดท http ของ db
+      "http://localhost:4000/auth/user/login",
       data
     );
     const token = result.data.token;
+    localStorage.setItem("token", token);
     const userDataFromToken = jwtDecode(token);
+    console.log("this is token");
+    console.log(token);
     setUserData({ userDataFromToken });
-    navigate("/user/findjob");
+    console.log("this is userData");
+    console.log(userData);
+    navigate("/");
   };
 
   const RecruiterLogin = async (data) => {
     console.log("from authentication");
     console.log(data);
     const result = await axios.post(
-      "http://localhost:4000/auth/recruiter/login", //รออัพเดท http ของ db
+      "http://localhost:4000/auth/recruiter/login",
       data
     );
     const token = result.data.token;
     localStorage.setItem("token", token);
     const userDataFromToken = jwtDecode(token);
+    console.log("this is token");
+    console.log(token);
     setUserData({ userDataFromToken });
-    navigate("/recuiter/jobpost");
+    console.log("this is userData");
+    console.log(userData);
+    navigate("/");
   };
 
   const UserRegister = async (data) => {

@@ -10,9 +10,8 @@ authRouter.post("/user/login", async (req, res) => {
 
   try {
     const client = await pool.connect();
-
     const result = await client.query(
-      "SELECT * FROM [table_name_user] WHERE [column_name_email] = $1",
+      "SELECT * FROM testregist WHERE email = $1",
       [
         // รอเปลี่ยนชื่อ column email , user
         email,
@@ -34,8 +33,6 @@ authRouter.post("/user/login", async (req, res) => {
       {
         id: user._id, //รอเปลี่ยนชื่อ column ของ user
         email: user.email, //รอเปลี่ยนชื่อ column ของ user
-        firstName: user.firstName, //รอเปลี่ยนชื่อ column ของ user
-        lastName: user.lastName, //รอเปลี่ยนชื่อ column ของ user
       },
       process.env.SECRET_KEY,
       {
@@ -58,17 +55,16 @@ authRouter.post("/recruiter/login", async (req, res) => {
 
   try {
     const client = await pool.connect();
-
     const result = await client.query(
-      "SELECT * FROM recruiter WHERE email = $1",
+      "SELECT * FROM testregist WHERE email = $1",
       [
         // รอเปลี่ยนชื่อ column email , recruiter
         email,
       ]
     );
-    const user = result.rows[0];
+    const recruiter = result.rows[0];
 
-    if (!user) {
+    if (!recruiter) {
       return res.status(404).json({ message: "user not found" });
     }
 
@@ -80,10 +76,8 @@ authRouter.post("/recruiter/login", async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user._id, //รอเปลี่ยนชื่อ column ของ recruiter
-        email: user.email, //รอเปลี่ยนชื่อ column ของ recruiter
-        firstName: user.firstName, //รอเปลี่ยนชื่อ column ของ recruiter
-        lastName: user.lastName, //รอเปลี่ยนชื่อ column ของ recruiter
+        id: recruiter._id, //รอเปลี่ยนชื่อ column ของ recruiter
+        email: recruiter.email, //รอเปลี่ยนชื่อ column ของ recruiter
       },
       process.env.SECRET_KEY,
       {

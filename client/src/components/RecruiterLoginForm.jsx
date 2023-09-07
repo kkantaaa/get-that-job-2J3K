@@ -1,5 +1,4 @@
 import { useAuth } from "@/contexts/authentication";
-import { data } from "autoprefixer";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -11,10 +10,11 @@ export default function RecruiterLoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data) => {
     console.log("from login form");
     console.log(data);
-    RecruiterLogin(data);
+    await RecruiterLogin(data);
 
     // navigate("/recruiter/jobpost");
   };
