@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใ
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
@@ -81,6 +82,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 // ปรับปรุง useAuth ให้เป็น arrow function
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
