@@ -1,11 +1,19 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
+=======
+// import { useAuth } from "@/contexts/authentication";
+>>>>>>> 093724e (feat: commit changes)
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
   const navigate = useNavigate();
+<<<<<<< HEAD
+=======
+  // const { UserRegister } = useAuth();
+>>>>>>> 093724e (feat: commit changes)
 
   const {
     handleSubmit,
@@ -27,12 +35,17 @@ function LogInInfo() {
       });
     } else {
       try {
+<<<<<<< HEAD
         // Update userData after successful registration
         await setUserData({
           email: data.email,
           password: data.password,
         });
 
+=======
+        // await UserRegister(data);
+        console.log(data)
+>>>>>>> 093724e (feat: commit changes)
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
