@@ -1,8 +1,13 @@
 import RecruitLogInInfo from "@/components/RecruitLogInInfo.jsx"
 import happyGirl from "../images/landing-page/discussing.png";
+import { useNavigate } from "react-router-dom";
 
 
 function RecruitRegisterPage1() {
+  const navigate = useNavigate();
+  const handleProfessionalClick = ()=>{
+    navigate("/user/register1");
+  }
   return (
     <>
     <div className="bg-Background min-h-screen flex flex-col">
@@ -11,7 +16,9 @@ function RecruitRegisterPage1() {
       <p className="font-Montserrat text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
       <div className="flex flex-row">
         <div className="flex flex-col font-Inter text-LightGray">
-        <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px] mr-[12px]">PROFESSIONAL</h2>
+        <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px] mr-[12px]"
+        onClick={handleProfessionalClick}
+        style={{cursor: "pointer"}}>PROFESSIONAL</h2>
         <div className="w-[115px] h-[2px] bg-LightGray mt-[6px]"></div>
         </div>
         <div className="flex flex-col font-Inter">
