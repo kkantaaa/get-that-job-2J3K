@@ -1,14 +1,33 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
+import { useGlobalContext } from "@/contexts/registerContexts";
+import React, { useEffect } from "react";
 
 function LogInInfo() {
+  const { userData, setUserData } = useGlobalContext();
+
   const navigate = useNavigate();
   const { UserRegister } = useAuth();
 
-  const { handleSubmit, control, setError, formState: { errors } } = useForm();
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    // Log the updated userData after the state has been updated
+    console.log("Updated userData:", userData);
+  }, [userData]);
 
   const onSubmit = async (data) => {
+    console.log({
+      email: control._fields.email._f.value,
+      password: control._fields.password._f.value,
+    });
+
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", {
         type: "manual",
@@ -16,7 +35,13 @@ function LogInInfo() {
       });
     } else {
       try {
+        //
         await UserRegister(data);
+        //
+        await setUserData({
+          email: control._fields.email._f.value,
+          password: control._fields.password._f.value,
+        });
 
         navigate("/user/register2");
       } catch (error) {

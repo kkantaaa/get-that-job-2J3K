@@ -50,14 +50,15 @@ function RecruitCompanyInfo() {
           >
             COMPANY WEBSITE
             <Controller
-              name="company-website"
+              name="companywebsite"
               control={control}
               defaultValue=""
               //   rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="title"
+                  id="companywebsite"
+                  name="companywebsite"
                   type="text"
                   placeholder="http://www.mycompany.sa"
                   {...field}
@@ -74,14 +75,15 @@ function RecruitCompanyInfo() {
           >
             ABOUT COMPANY
             <Controller
-              name="abtcompany"
+              name="aboutcompany"
               control={control}
               defaultValue=""
               //   rules={{ required: "About company experience is required" }}
               render={({ field }) => (
                 <input
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="abtcompany"
+                  id="aboutcompany"
+                  name="aboutcompany"
                   type="text"
                   placeholder="My Company SA has the vision to change the way how..."
                   {...field}
@@ -99,6 +101,8 @@ function RecruitCompanyInfo() {
           </p>
           <input
             className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
+            name="havefile"
+            id="havefile"
             type="file"
             accept=".jpg, .png, .gif, .jpeg"
             onChange={(e) => {

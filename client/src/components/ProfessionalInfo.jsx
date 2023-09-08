@@ -1,16 +1,45 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
+import { useGlobalContext } from "@/contexts/registerContexts";
+import { useEffect } from "react";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
+  const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
   const { handleSubmit, control, setValue, watch } = useForm();
 
+  useEffect(() => {
+    console.log("Updated userData:", userData);
+  }, [userData]);
+
+  const handlerSkip = async (event) => {
+    event.preventDefault();
+    try {
+      await UserRegister(userData);
+      navigate("/path to job listing");
+    } catch (error){
+      console.error("Error during registration", error);
+    }
+  };
+
   const onSubmit = async (data) => {
-    await UserRegister(data);
-    console.log(data);
-    navigate("/path to job listing");
+    const { title, jobExp, education, havefile} = data;
+    setUserData({
+      ...userData,
+      title,
+      jobExp,
+      education,
+      havefile,
+    });
+
+    try {
+      await UserRegister(userData, data);
+      navigate("/path to job listing");
+    } catch (error){
+      console.error("Error during registration", error);
+    }
   };
 
   return (
@@ -35,6 +64,7 @@ function ProfessionalInfo() {
               rules={{ required: "Title is required" }}
               render={({ field }) => (
                 <input
+                  name="title"
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="title"
                   type="text"
@@ -60,6 +90,7 @@ function ProfessionalInfo() {
               render={({ field }) => (
                 <input
                   className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="jobExp"
                   id="jobExp"
                   type="text"
                   placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
@@ -87,6 +118,7 @@ function ProfessionalInfo() {
               render={({ field }) => (
                 <input
                   className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="education"
                   id="education"
                   type="text"
                   placeholder="Major in life experiences with a PHD in procrastination"
@@ -104,9 +136,12 @@ function ProfessionalInfo() {
           <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
             UPLOAD / UPDATE YOUR CV
           </p>
+          
           <input
             className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
+            name="havefile"
             type="file"
+            id="havefile"
             accept=".pdf"
             onChange={(e) => {
               if (e.target.files.length > 0) {
@@ -141,7 +176,7 @@ function ProfessionalInfo() {
           </div>
 
           <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
-            <button onClick={() => navigate("/path to job listing")}>
+            <button onClick={handlerSkip}>
               SKIP THIS!
             </button>
           </div>

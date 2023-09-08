@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {
-      console.error("Error: unable to register the account", error);
+      console.error("Error: unable to register the account 9", error);
     }
   };
 
