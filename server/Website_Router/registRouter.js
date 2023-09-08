@@ -78,7 +78,7 @@ registRouter.post("/professional", async (req, res) => {
       birthdate: req.body.birthdate,
       linkedin: req.body.linkedin,
       title: req.body.title,
-      jobExp: req.body.jobExp,
+      jobexp: req.body.jobexp,
       education: req.body.education,
       havefile: req.body.havefile,
     };
@@ -86,7 +86,7 @@ registRouter.post("/professional", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
 
       [
         user.email,
@@ -98,7 +98,7 @@ registRouter.post("/professional", async (req, res) => {
         user.linkedin,
         
         user.title,
-        user.jobExp,
+        user.jobexp,
         user.education,
         user.havefile,
       ]
