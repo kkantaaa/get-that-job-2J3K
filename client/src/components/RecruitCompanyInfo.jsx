@@ -1,20 +1,44 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useGlobalContext } from "@/contexts/registerContexts";
 import { useAuth } from "@/contexts/authentication";
 
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
+  const { recruiterData, setRecruiterData } = useGlobalContext();
   const { handleSubmit, control, setValue, watch } = useForm();
   const [logoPreview, setLogoPreview] = useState(null);
   const { RecruiterRegister } = useAuth();
 
-  const onSubmit = async (data) => {
+  useEffect(() => {
+    console.log("Updated RecruiterData:", recruiterData);
+  }, [recruiterData]);
+
+  const handlerSkip = async (event) => {
+    event.preventDefault();
     try {
-      await RecruiterRegister(data);
-      console.log(data);
+      await RecruiterRegister(recruiterData);
+      navigate("/path to job post");
+    } catch (error){
+      console.error("Error during registration", error);
+    }
+  };
+
+
+  const onSubmit = async (data) => {
+    const { companywebsite, aboutcompany, havefile} = data;
+    setRecruiterData({
+      ...recruiterData,
+      companywebsite,
+      aboutcompany,
+      havefile,
+    });
+
+    try {
+      await RecruiterRegister(recruiterData, data);
       navigate("/path to job listing");
-    } catch (error) {
+    } catch (error){
       console.error("Error during registration", error);
     }
   };
@@ -135,7 +159,7 @@ function RecruitCompanyInfo() {
           </div>
 
           <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[12px] tracking-[1.25px]">
-            <button onClick={() => navigate("/path to job listing")}>
+            <button onClick={handlerSkip}>
               SKIP THIS!
             </button>
           </div>
