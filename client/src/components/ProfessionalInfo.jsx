@@ -83,15 +83,15 @@ function ProfessionalInfo() {
           >
             PROFESSIONAL EXPERIENCE
             <Controller
-              name="jobExp"
+              name="jobexp"
               control={control}
               defaultValue=""
               rules={{ required: "Professional experience is required" }}
               render={({ field }) => (
                 <input
                   className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  name="jobExp"
-                  id="jobExp"
+                  name="jobexp"
+                  id="jobexp"
                   type="text"
                   placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
                   {...field}
