@@ -20,7 +20,6 @@ function LogInInfo() {
   }, [userData]);
 
   const onSubmit = async (data) => {
-    // Remove unnecessary console.log
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", {
         type: "manual",
@@ -28,16 +27,12 @@ function LogInInfo() {
       });
     } else {
       try {
-        // Call UserRegister function (assuming it's defined elsewhere)
-        await UserRegister(data);
-
         // Update userData after successful registration
         await setUserData({
           email: data.email,
           password: data.password,
         });
 
-        // Remove duplicate console.log
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
@@ -142,4 +137,5 @@ function LogInInfo() {
 }
 
 export default LogInInfo;
+
 
