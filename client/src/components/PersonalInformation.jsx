@@ -1,25 +1,50 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
+import { useEffect } from "react";
+import { useAuth } from "@/contexts/authentication";
 
 function PersonalInformation() {
   const { userData, setUserData } = useGlobalContext();
+  const {UserRegister} = useAuth();
   const navigate = useNavigate();
-  const { UserRegister } = useAuth();
   const { handleSubmit, control } = useForm();
 
-  const handlerSkip = (event) => {
+  useEffect(() => {
+    console.log("Updated userData:", userData);
+  }, [userData]);
+
+  const handlerSkip = async (event) => {
     event.preventDefault();
-    navigate("/path หน้า job listing");
+    try {
+      await UserRegister(...userData);
+      navigate("/path to job listing");
+    } catch (error){
+      console.error("Error during registration", error);
+    }
   };
 
   const onSubmit = async (data) => {
-    setUserData(...userData, data);
-    console.log(userData);
-    // await UserRegister(data);
-    console.log(data);
-    navigate("/user/register3");
+    const { name, phone, birthdate, linkedin } = data;
+    setUserData({...userData,
+      name,
+      phone,
+      birthdate,
+      linkedin
+    });
+
+    try {
+      await setUserData({
+        ...userData,
+      name,
+      phone,
+      birthdate,
+      linkedin,
+      });
+      navigate("/user/register3");
+    } catch (error) {
+      console.error("Error during registration", error);
+    }
   };
 
   return (

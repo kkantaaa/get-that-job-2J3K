@@ -1,16 +1,43 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
+import { useGlobalContext } from "@/contexts/registerContexts";
+import { useEffect } from "react";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
+  const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
   const { handleSubmit, control, setValue, watch } = useForm();
 
+  useEffect(() => {
+    console.log("Updated userData:", userData);
+  }, [userData]);
+
+  const handlerSkip = async (event) => {
+    event.preventDefault();
+    try {
+      await UserRegister(...userData);
+      navigate("/path to job listing");
+    } catch (error){
+      console.error("Error during registration", error);
+    }
+  };
+
   const onSubmit = async (data) => {
-    await UserRegister(data);
-    console.log(data);
-    navigate("/path to job listing");
+    const { title, jobExp, education, havefile} = data;
+    setUserData({...userData,
+      title,
+      jobExp,
+      education,
+      havefile,
+    })
+    try {
+      await UserRegister(...userData, data);
+      navigate("/path to job listing");
+    } catch (error){
+      console.error("Error during registration", error);
+    }
   };
 
   return (
@@ -107,6 +134,7 @@ function ProfessionalInfo() {
           <input
             className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
             type="file"
+            id="havefile"
             accept=".pdf"
             onChange={(e) => {
               if (e.target.files.length > 0) {
@@ -141,7 +169,7 @@ function ProfessionalInfo() {
           </div>
 
           <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
-            <button onClick={() => navigate("/path to job listing")}>
+            <button onClick={handlerSkip}>
               SKIP THIS!
             </button>
           </div>
