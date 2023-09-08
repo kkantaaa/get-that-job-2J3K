@@ -17,7 +17,7 @@ function PersonalInformation() {
   const handlerSkip = async (event) => {
     event.preventDefault();
     try {
-      await UserRegister(...userData);
+      await UserRegister(userData);
       navigate("/path to job listing");
     } catch (error){
       console.error("Error during registration", error);
@@ -89,7 +89,7 @@ function PersonalInformation() {
             PHONE
           </label>
           <Controller
-            name="phoneNumber"
+            name="phone"
             control={control}
             defaultValue=""
             rules={{ required: "Phone number is required" }}
@@ -138,7 +138,7 @@ function PersonalInformation() {
             LINKEDIN URL
           </label>
           <Controller
-            name="linkedInUrl"
+            name="linkedin"
             control={control}
             defaultValue=""
             rules={{ required: "LinkedIn URL is required" }}
@@ -146,7 +146,7 @@ function PersonalInformation() {
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="linkedin"
-                name="linkedInUrl"
+                name="linkedin"
                 type="text"
                 placeholder="https://www.linkedin.com/in/username"
                 {...field}

@@ -17,7 +17,7 @@ function ProfessionalInfo() {
   const handlerSkip = async (event) => {
     event.preventDefault();
     try {
-      await UserRegister(...userData);
+      await UserRegister(userData);
       navigate("/path to job listing");
     } catch (error){
       console.error("Error during registration", error);
@@ -26,14 +26,16 @@ function ProfessionalInfo() {
 
   const onSubmit = async (data) => {
     const { title, jobExp, education, havefile} = data;
-    setUserData({...userData,
+    setUserData({
+      ...userData,
       title,
       jobExp,
       education,
       havefile,
-    })
+    });
+
     try {
-      await UserRegister(...userData, data);
+      await UserRegister(userData, data);
       navigate("/path to job listing");
     } catch (error){
       console.error("Error during registration", error);
@@ -62,6 +64,7 @@ function ProfessionalInfo() {
               rules={{ required: "Title is required" }}
               render={({ field }) => (
                 <input
+                  name="title"
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="title"
                   type="text"
@@ -87,6 +90,7 @@ function ProfessionalInfo() {
               render={({ field }) => (
                 <input
                   className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="jobExp"
                   id="jobExp"
                   type="text"
                   placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
@@ -114,6 +118,7 @@ function ProfessionalInfo() {
               render={({ field }) => (
                 <input
                   className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="education"
                   id="education"
                   type="text"
                   placeholder="Major in life experiences with a PHD in procrastination"
@@ -131,8 +136,10 @@ function ProfessionalInfo() {
           <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
             UPLOAD / UPDATE YOUR CV
           </p>
+          
           <input
             className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
+            name="havefile"
             type="file"
             id="havefile"
             accept=".pdf"
