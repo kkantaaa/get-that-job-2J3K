@@ -10,6 +10,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+  const [errorState, setErrorState] = useState(null);
   const [userData, setUserData] = useState(null);
 
   const UserLogin = async (data) => {
@@ -21,12 +22,12 @@ export const AuthProvider = ({ children }) => {
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
-      console.log("this is token");
-      console.log(token);
+      console.log(`this is token : ${token}`);
       setUserData({ userDataFromToken });
       navigate("/user/findthatjob");
     } catch (error) {
-      console.error("Error: unable to login the account", error);
+      // console.error("Error: unable to login the account", error);
+      setErrorState(error.response.data.message);
     }
   };
 
@@ -39,12 +40,12 @@ export const AuthProvider = ({ children }) => {
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
-      console.log("this is token");
-      console.log(token);
+      console.log(`this is token : ${token}`);
       setUserData({ userDataFromToken });
       navigate("/recruiter/jobpostings");
     } catch (error) {
-      console.error("Error: unable to login the account", error);
+      // console.error("Error: unable to login the account", error);
+      setErrorState(error.response.data.message);
     }
   };
 
@@ -71,6 +72,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUserData(null);
+    setErrorState(null);
     navigate("/");
   };
 
@@ -87,6 +89,7 @@ export const AuthProvider = ({ children }) => {
         UserRegister,
         logout,
         RecruiterRegister,
+        errorState,
       }}
     >
       {children}
