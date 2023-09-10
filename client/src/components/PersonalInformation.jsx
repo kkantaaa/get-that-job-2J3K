@@ -1,6 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/authentication";
@@ -16,6 +17,13 @@ function PersonalInformation() {
   const navigate = useNavigate();
   // const {UserRegister} = useAuth();
 >>>>>>> c141703 (feat: commit changes)
+=======
+// import { useAuth } from "@/contexts/authentication";
+
+function PersonalInformation() {
+  const navigate = useNavigate();
+  // const {UserRegister} = useAuth();
+>>>>>>> 495dbdbe5f7277d49d3ccc88d4e8841b2de7b095
   const { handleSubmit, control } = useForm();
 
   useEffect(() => {
@@ -33,6 +41,7 @@ function PersonalInformation() {
   };
 
   const onSubmit = async (data) => {
+<<<<<<< HEAD
 <<<<<<< HEAD
     const { name, phone, birthdate, linkedin } = data;
     setUserData({...userData,
@@ -55,6 +64,8 @@ function PersonalInformation() {
       console.error("Error during registration", error);
     }
 =======
+=======
+>>>>>>> 495dbdbe5f7277d49d3ccc88d4e8841b2de7b095
     // await UserRegister(data);
     console.log(data);
     navigate("/user/register3");
