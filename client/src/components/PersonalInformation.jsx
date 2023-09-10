@@ -79,6 +79,9 @@ function PersonalInformation() {
         </div>
 
         {/* Add similar sections for other input fields (phone, birthdate, linkedin) here */}
+        <div className="flex flex-col">
+          {/* Add your other form fields here */}
+        </div>
 
         <div className="flex flex-row">
           <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
