@@ -134,7 +134,7 @@ function ProfessionalInfo() {
         <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
           Between 100 and 2000 characters
         </p>
-
+      
         <div className="file-upload-container">
           <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
             UPLOAD / UPDATE YOUR CV
@@ -153,6 +153,7 @@ function ProfessionalInfo() {
             }}
           />
         </div>
+        
 
         <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
           Only PDF. Max size 5MB
