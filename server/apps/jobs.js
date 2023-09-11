@@ -3,6 +3,58 @@ import { pool } from "../utils/db_connection.js";
 
 const jobRouter = Router();
 
+jobRouter.get("/", async (req, res) => {
+  try {
+    const keywords = req.query.keywords || "";
+    // const category = req.query.category || "";
+
+    let query = "";
+    let values = [];
+
+    if (keywords) {
+      query = `select * from jobs
+    where title ilike $1`;
+      values = [keywords];
+    } else {
+      query = `select * from posts`;
+    }
+
+    const results = await pool.query(query, values);
+
+    return res.json({
+      data: results.rows,
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
+jobRouter.get("/:id", async (req, res) => {
+  const jobId = req.params.id;
+
+  if (!jobId) {
+    return res.status(401).json({
+      message: "Please specified post id in order to get the post",
+    });
+  }
+
+  let result;
+
+  try {
+    result = await pool.query("select * from posts where post_id=$1", [jobId]);
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+
+  return res.json({
+    data: result?.rows?.[0] ?? [],
+  });
+});
+
 jobRouter.post("/", async (req, res) => {
   try {
     const job = {
