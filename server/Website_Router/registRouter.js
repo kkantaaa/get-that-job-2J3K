@@ -88,10 +88,14 @@ registRouter.post("/professional", async (req, res) => {
 
     await pool.query(
 <<<<<<< HEAD
+<<<<<<< HEAD
       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
 =======
       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
 >>>>>>> 7ee33a7 (commit changes)
+=======
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+>>>>>>> 35f86b0 (commit changes)
 
       [
         user.email,
