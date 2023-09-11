@@ -1,73 +1,44 @@
-<<<<<<< HEAD
-import { useForm, Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '@/contexts/registerContexts';
-import { useAuth } from '@/contexts/authentication';
-=======
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
-import { useAuth } from "@/contexts/authentication";
->>>>>>> 3a3fda3 (fix: merge conflict)
 
-function PersonalInformation() {
-  const { userData, setUserData } = useGlobalContext();
-  const { UserRegister } = useAuth();
+function ProfessionalInfo() {
   const navigate = useNavigate();
-<<<<<<< HEAD
+  const { userData, setUserData } = useGlobalContext();
+  const {UserRegister} = useAuth();
+  const { handleSubmit, control, setValue, watch } = useForm();
 
-=======
->>>>>>> 3a3fda3 (fix: merge conflict)
-  const { handleSubmit, control } = useForm();
+  useEffect(() => {
+    console.log("Updated userData:", userData);
+  }, [userData]);
 
   const handlerSkip = async (event) => {
     event.preventDefault();
     try {
       await UserRegister(userData);
-<<<<<<< HEAD
-      navigate('/path-to-job-listing');
-    } catch (error) {
-      console.error('Error during registration', error);
-      // You can provide user feedback here, e.g., show an error message.
-=======
       navigate("/path to job listing");
-    } catch (error) {
+    } catch (error){
       console.error("Error during registration", error);
->>>>>>> 3a3fda3 (fix: merge conflict)
     }
   };
 
   const onSubmit = async (data) => {
-    const { name, phone, birthdate, linkedin } = data;
+    const { title, jobExp, education, havefile} = data;
     setUserData({
       ...userData,
-      name,
-      phone,
-      birthdate,
-      linkedin,
+      title,
+      jobExp,
+      education,
+      havefile,
     });
 
     try {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      await UserRegister(userData);
-      navigate('/user/register3');
-=======
-=======
->>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
-      await UserRegister({
-        ...userData,
-        name,
-        phone,
-        birthdate,
-        linkedin,
-      });
-      navigate("/user/register3");
->>>>>>> 3a3fda3 (fix: merge conflict)
-    } catch (error) {
-      console.error('Error during registration', error);
-      // You can provide user feedback here, e.g., show an error message.
+      await UserRegister(userData, data);
+      navigate("/path to job listing");
+    } catch (error){
+      console.error("Error during registration", error);
     }
   };
 
@@ -78,50 +49,138 @@ function PersonalInformation() {
           You can complete this information later
         </p>
         <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">
-          but we recommend you to do it now
+          but we reccomend you to do it now
         </p>
-        <div className="flex flex-col">
+        <div className="title-input">
           <label
-            htmlFor="name"
-            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+            htmlFor="title"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
           >
-            NAME
+            TITLE
+            <Controller
+              name="title"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Title is required" }}
+              render={({ field }) => (
+                <input
+                  name="title"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="title"
+                  type="text"
+                  placeholder="Example: Mechanical administrator"
+                  {...field}
+                />
+              )}
+            />
           </label>
-          <Controller
-            name="name"
-            control={control}
-            defaultValue=""
-            rules={{ required: 'Name is required' }}
-            render={({ field }) => (
-              <input
-<<<<<<< HEAD
-<<<<<<< HEAD
-                {...field}
-=======
->>>>>>> 3a3fda3 (fix: merge conflict)
-=======
->>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                id="name"
-                type="text"
-                placeholder="John Doe"
-              />
-            )}
+        </div>
+
+        <div className="job-exp-input">
+          <label
+            htmlFor="jobExp"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
+            PROFESSIONAL EXPERIENCE
+            <Controller
+              name="jobexp"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Professional experience is required" }}
+              render={({ field }) => (
+                <input
+                  className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="jobexp"
+                  id="jobexp"
+                  type="text"
+                  placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
+                  {...field}
+                />
+              )}
+            />
+          </label>
+        </div>
+        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+          Between 300 and 2000 characters
+        </p>
+
+        <div className="education-input">
+          <label
+            htmlFor="education"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
+            EDUCATION
+            <Controller
+              name="education"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Education is required" }}
+              render={({ field }) => (
+                <input
+                  className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="education"
+                  id="education"
+                  type="text"
+                  placeholder="Major in life experiences with a PHD in procrastination"
+                  {...field}
+                />
+              )}
+            />
+          </label>
+        </div>
+        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+          Between 100 and 2000 characters
+        </p>
+
+        <div className="file-upload-container">
+          <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
+            UPLOAD / UPDATE YOUR CV
+          </p>
+          
+          <input
+            className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
+            name="havefile"
+            type="file"
+            id="havefile"
+            accept=".pdf"
+            onChange={(e) => {
+              if (e.target.files.length > 0) {
+                setValue("file", e.target.files[0]);
+              }
+            }}
           />
         </div>
 
-<<<<<<< HEAD
-        {/* Add similar sections for other input fields (phone, birthdate, linkedin) here */}
-=======
-        <div className="flex flex-col">
-          {/* Add your other form fields here */}
-        </div>
->>>>>>> 3a3fda3 (fix: merge conflict)
+        <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
+          Only PDF. Max size 5MB
+        </p>
 
-        <div className="flex flex-row">
-          <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
-            <button onClick={handlerSkip}>SKIP THIS!</button>
+        <div className="file-list-preview-container">
+          {watch("file") && (
+            <div className="file-preview-container">
+              <p>{watch("file").name}</p>
+              <button
+                className="file-remove-button"
+                onClick={() => setValue("file", null)}
+              >
+                x
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="mt-[16px] flex flex-row">
+          <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+            <button onClick={() => navigate("/user/register2")}>
+              PREVIOUS
+            </button>
           </div>
+
+          <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
+            <button onClick={handlerSkip}>
+              SKIP THIS!
+            </button>
+          </div>
+
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
             <button type="submit">NEXT</button>
           </div>
@@ -131,4 +190,5 @@ function PersonalInformation() {
   );
 }
 
-export default PersonalInformation;
+export default ProfessionalInfo;
+
