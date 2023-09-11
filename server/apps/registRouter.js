@@ -94,24 +94,8 @@ registRouter.post("/professional", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
-<<<<<<< HEAD
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
-=======
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
->>>>>>> 7ee33a7 (commit changes)
-=======
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-<<<<<<< HEAD
->>>>>>> 35f86b0 (commit changes)
-=======
->>>>>>> 495dbdbe5f7277d49d3ccc88d4e8841b2de7b095
->>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
 
->>>>>>> 4250ea12fd57a0798123a10ead9dd12d120df66a
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
       [
         user.email,
         user.password,

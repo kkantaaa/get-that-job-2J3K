@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 
-export default function ApplicationCompleting() {
+export default function ApplicationCompleting({ companyName }) {
   const { control, handleSubmit } = useForm();
   const [currentCV, setCurrentCV] = useState(null);
   const [showUploadButton, setShowUploadButton] = useState(false);
@@ -10,7 +10,6 @@ export default function ApplicationCompleting() {
   useEffect(() => {
     const fetchCurrentCV = async () => {
       try {
-        //1
         const response = await axios.get("");
         setCurrentCV(response.data);
       } catch (error) {
@@ -37,7 +36,7 @@ export default function ApplicationCompleting() {
       <h1>Complete your application</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label>Send your CV Updated</label>
+          <label htmlFor="cvChoice">Send your CV Updated</label>
           <div>
             <label>
               <Controller
@@ -49,6 +48,7 @@ export default function ApplicationCompleting() {
                     {...field}
                     type="radio"
                     value="useCurrent"
+                    id="useCurrent"
                     onChange={() => handleCVChoiceChange("useCurrent")}
                   />
                 )}
@@ -65,6 +65,7 @@ export default function ApplicationCompleting() {
                     {...field}
                     type="radio"
                     value="uploadNew"
+                    id="uploadNew"
                     onChange={() => handleCVChoiceChange("uploadNew")}
                   />
                 )}
@@ -76,10 +77,43 @@ export default function ApplicationCompleting() {
         {showUploadButton && (
           <div>
             <button type="button">Upload New CV</button>
+            <span>Only PDF. Max size 5 MB</span>
           </div>
         )}
+
         <div>
-          <button type="submit">Send Applicaiton</button>   
+          <label htmlFor="experience">
+            Professional experience(TAKEN FROM YOUR PROFILE)
+          </label>
+          <Controller
+            name="experience"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input {...field} type="text" id="experience" />
+            )}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="WHY ARE YOU INTERESTED">
+            WHY ARE YOU INTERESTED IN WORKING AT THE {companyName}
+          </label>
+          <Controller
+            name="WHY ARE YOU INTERESTED"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input {...field} type="text" id="WHY ARE YOU INTERESTED" />
+            )}
+          />
+          <span className="input-description">
+            Between 50 and 1000 characters.
+          </span>
+        </div>
+
+        <div>
+          <button type="submit">Send Application</button>
         </div>
       </form>
     </>
