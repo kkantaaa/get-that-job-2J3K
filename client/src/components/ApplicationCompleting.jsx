@@ -117,9 +117,7 @@ export default function ApplicationCompleting({ companyName }) {
           <button type="submit">Send Application</button>
           </div>
         )
-        <div>
-          <button type="submit">Send Applicaiton</button>   
-        </div>
+         )
       </form>
     </>
   );
