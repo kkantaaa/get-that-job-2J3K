@@ -1,14 +1,14 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
+import { useAuth } from "@/contexts/authentication";
 
-function ProfessionalInfo() {
-  const navigate = useNavigate();
+function PersonalInformation() {
   const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
-  const { handleSubmit, control, setValue, watch } = useForm();
+  const navigate = useNavigate();
+  const { handleSubmit, control } = useForm();
 
   useEffect(() => {
     console.log("Updated userData:", userData);
@@ -25,19 +25,24 @@ function ProfessionalInfo() {
   };
 
   const onSubmit = async (data) => {
-    const { title, jobExp, education, havefile} = data;
-    setUserData({
-      ...userData,
-      title,
-      jobExp,
-      education,
-      havefile,
+    const { name, phone, birthdate, linkedin } = data;
+    setUserData({...userData,
+      name,
+      phone,
+      birthdate,
+      linkedin
     });
 
     try {
-      await UserRegister(userData, data);
-      navigate("/path to job listing");
-    } catch (error){
+      await setUserData({
+        ...userData,
+      name,
+      phone,
+      birthdate,
+      linkedin,
+      });
+      navigate("/user/register3");
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
@@ -51,160 +56,109 @@ function ProfessionalInfo() {
         <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">
           but we reccomend you to do it now
         </p>
-        <div className="title-input">
+        <div className="flex flex-col">
           <label
-            htmlFor="title"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            htmlFor="name"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
-            TITLE
-            <Controller
-              name="title"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Title is required" }}
-              render={({ field }) => (
-                <input
-                  name="title"
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="title"
-                  type="text"
-                  placeholder="Example: Mechanical administrator"
-                  {...field}
-                />
-              )}
-            />
+            NAME
           </label>
-<<<<<<< HEAD
           <Controller
             name="name"
             control={control}
             defaultValue=""
-            rules={{ required: 'Name is required' }}
+            rules={{ required: "Name is required" }}
             render={({ field }) => (
               <input
-                {...field}
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="name"
+                name="name"
                 type="text"
                 placeholder="John Doe"
+                {...field}
               />
             )}
           />
         </div>
 
-        {/* Add similar sections for other input fields (phone, birthdate, linkedin) here */}
         <div className="flex flex-col">
-          {/* Add your other form fields here */}
-        </div>
-=======
-        </div>
-
-        <div className="job-exp-input">
           <label
-            htmlFor="jobExp"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            htmlFor="phone"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
-            PROFESSIONAL EXPERIENCE
-            <Controller
-              name="jobexp"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Professional experience is required" }}
-              render={({ field }) => (
-                <input
-                  className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  name="jobexp"
-                  id="jobexp"
-                  type="text"
-                  placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
-                  {...field}
-                />
-              )}
-            />
+            PHONE
           </label>
-        </div>
-        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
-          Between 300 and 2000 characters
-        </p>
-
-        <div className="education-input">
-          <label
-            htmlFor="education"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
-          >
-            EDUCATION
-            <Controller
-              name="education"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Education is required" }}
-              render={({ field }) => (
-                <input
-                  className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  name="education"
-                  id="education"
-                  type="text"
-                  placeholder="Major in life experiences with a PHD in procrastination"
-                  {...field}
-                />
-              )}
-            />
-          </label>
-        </div>
-        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
-          Between 100 and 2000 characters
-        </p>
-
-        <div className="file-upload-container">
-          <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
-            UPLOAD / UPDATE YOUR CV
-          </p>
-          
-          <input
-            className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
-            name="havefile"
-            type="file"
-            id="havefile"
-            accept=".pdf"
-            onChange={(e) => {
-              if (e.target.files.length > 0) {
-                setValue("file", e.target.files[0]);
-              }
-            }}
+          <Controller
+            name="phone"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Phone number is required" }}
+            render={({ field }) => (
+              <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id="phone"
+                name="phoneNumber"
+                type="text"
+                placeholder="+XXXXXXXX"
+                {...field}
+              />
+            )}
           />
         </div>
 
-        <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
-          Only PDF. Max size 5MB
-        </p>
->>>>>>> 4250ea12fd57a0798123a10ead9dd12d120df66a
-
-        <div className="file-list-preview-container">
-          {watch("file") && (
-            <div className="file-preview-container">
-              <p>{watch("file").name}</p>
-              <button
-                className="file-remove-button"
-                onClick={() => setValue("file", null)}
-              >
-                x
-              </button>
-            </div>
-          )}
+        <div className="flex flex-col">
+          <label
+            htmlFor="birthdate"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
+            BIRTHDATE
+          </label>
+          <Controller
+            name="birthdate"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Birthdate is required" }}
+            render={({ field }) => (
+              <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id="birthdate"
+                name="birthdate"
+                type="date"
+                {...field}
+              />
+            )}
+          />
         </div>
-        <div className="mt-[16px] flex flex-row">
-          <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button onClick={() => navigate("/user/register2")}>
-              PREVIOUS
-            </button>
-          </div>
 
-          <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
-            <button onClick={handlerSkip}>
-              SKIP THIS!
-            </button>
-          </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="linkedin"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
+            LINKEDIN URL
+          </label>
+          <Controller
+            name="linkedin"
+            control={control}
+            defaultValue=""
+            rules={{ required: "LinkedIn URL is required" }}
+            render={({ field }) => (
+              <input
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id="linkedin"
+                name="linkedin"
+                type="text"
+                placeholder="https://www.linkedin.com/in/username"
+                {...field}
+              />
+            )}
+          />
+        </div>
 
+        <div className="flex flex-row">
+          <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
+            <button onClick={handlerSkip}>SKIP THIS!</button>
+          </div>
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
             <button type="submit">NEXT</button>
           </div>
@@ -214,5 +168,5 @@ function ProfessionalInfo() {
   );
 }
 
-export default ProfessionalInfo;
+export default PersonalInformation;
 
