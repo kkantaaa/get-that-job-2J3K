@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
 
-jwtInterceptor();
+jwtInterceptor(); 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
