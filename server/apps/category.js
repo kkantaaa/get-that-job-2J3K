@@ -16,7 +16,7 @@ categoryRouter.post("/", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(504).json({
+    return res.status(511).json({
       message: err,
     });
   }
@@ -24,8 +24,8 @@ categoryRouter.post("/", async (req, res) => {
 categoryRouter.get("/", async (req, res) => {
     const result = await pool.query("SELECT * FROM job_categories ")
     return res.json({
-        message: result.rows,
-      });
-})
+        result: result.rows,
+    });
+});
 
 export default categoryRouter;

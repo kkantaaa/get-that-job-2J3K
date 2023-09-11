@@ -76,7 +76,8 @@ jobRouter.post("/", async (req, res) => {
     
 
   try {
-    const job = {
+      const job = {
+        //use param to get recruiter_id
       job_title: req.body.job_title,
       category: req.body.category, //use category replace category_name
       //type
@@ -93,7 +94,7 @@ jobRouter.post("/", async (req, res) => {
     );
     console.log("Category Query Result:", categoryQuery.rows);
     if (categoryQuery.rows.length === 0) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(410).json({ message: "Category not found" });
     }
 
     await pool.query(
@@ -113,7 +114,7 @@ jobRouter.post("/", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(503).json({
+    return res.status(510).json({
       message: " error! please try create job again!",
     });
   }
