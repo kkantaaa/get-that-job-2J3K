@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { pool } from "../utils/db_connection.js";
+import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
+jobRouter.use(protect);
 
 jobRouter.get("/", async (req, res) => {
   try {
@@ -73,10 +75,12 @@ jobRouter.get("/:id", async (req, res) => {
 
 jobRouter.post("/", async (req, res) => {
   console.log("Request Body:", req.body);
-
+  console.log("req: ", req.user.id);
+  const hasClosed = req.body.status === "closed"
   try {
     const job = {
-      //use param to get recruiter_id
+   
+      recruiter_id: req.user.id,
       job_title: req.body.job_title,
       category: req.body.category, //use category replace category_name
       type: req.body.type, //use type replace type_name
@@ -85,6 +89,9 @@ jobRouter.post("/", async (req, res) => {
       about_job_position: req.body.about_job_position,
       mandatory_requirement: req.body.mandatory_requirement,
       optional_requirement: req.body.optional_requirement,
+      opened_at: new Date(),
+      updated_at: new Date(),
+      closed_at: hasClosed ? new Date() : null,
     };
     console.log("Category Name:", job.category);
     const categoryQuery = await pool.query(
@@ -106,8 +113,9 @@ jobRouter.post("/", async (req, res) => {
     }
 
     await pool.query(
-      "insert into jobs (job_title,job_category_id,job_type_id,salary_min,salary_max,about_job_position,mandatory_requirement,optional_requirement) values ($1,$2,$3,$4,$5,$6,$7,$8)",
+      "insert into jobs (recruiter_id,job_title,job_category_id,job_type_id,salary_min,salary_max,about_job_position,mandatory_requirement,optional_requirement,closed_at) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
       [
+        job.recruiter_id,
         job.job_title,
         parseInt(categoryQuery.rows[0].job_category_id, 10),
         parseInt(typeQuery.rows[0].job_type_id, 10),
@@ -116,6 +124,7 @@ jobRouter.post("/", async (req, res) => {
         job.about_job_position,
         job.mandatory_requirement,
         job.optional_requirement,
+        job.closed_at,
       ]
     );
     return res.json({
