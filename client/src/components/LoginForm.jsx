@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginForm() {
   // const navigate = useNavigate();
-  const { UserLogin } = useAuth();
+  const { UserLogin, errorState } = useAuth();
   const {
     control,
     handleSubmit, // Rename the handleSubmit function to avoid conflicts
@@ -47,8 +47,7 @@ export default function LoginForm() {
               control={control}
               defaultValue=""
               rules={{
-                required:
-                  "The email address you entered isn't connected to an account.",
+                required: "Please insert login email.",
               }}
               render={({ field }) => (
                 <input
@@ -71,7 +70,7 @@ export default function LoginForm() {
               control={control}
               defaultValue=""
               rules={{
-                required: "The password that you've entered is incorrect.",
+                required: "Please insert password.",
               }}
               render={({ field }) => (
                 <input
@@ -84,9 +83,15 @@ export default function LoginForm() {
               )}
             />
             <span>{errors.password && errors.password.message}</span>
+            {errorState && (
+              <h1 className="text-red-500">Error: {errorState}</h1>
+            )}
           </div>
           <div className="text-right">
-            <button className="w-[80px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-[14px] text-White" type="submit">
+            <button
+              className="w-[80px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-[14px] text-White"
+              type="submit"
+            >
               LOGIN
             </button>
           </div>

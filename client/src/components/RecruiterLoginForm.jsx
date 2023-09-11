@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function RecruiterLoginForm() {
   // const navigate = useNavigate();
-  const { RecruiterLogin } = useAuth();
+  const { RecruiterLogin, errorState } = useAuth();
   const {
     control,
     handleSubmit,
@@ -81,6 +81,9 @@ export default function RecruiterLoginForm() {
               )}
             />
             <span>{errors.password && errors.password.message}</span>
+            {errorState && (
+              <h1 className="text-red-500">Error: {errorState}</h1>
+            )}
           </div>
           <div className="text-right">
             <button

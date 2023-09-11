@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
 
@@ -9,11 +10,10 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+  const [errorState, setErrorState] = useState(null);
   const [userData, setUserData] = useState(null);
 
   const UserLogin = async (data) => {
-    console.log("data from authentication");
-    console.log(data);
     try {
       const result = await axios.post(
         "http://localhost:4000/auth/user/login",
@@ -22,20 +22,16 @@ export const AuthProvider = ({ children }) => {
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
-      console.log("this is token");
-      console.log(token);
+      console.log(`this is token : ${token}`);
       setUserData({ userDataFromToken });
-      console.log("this is userData");
-      console.log(userData);
       navigate("/user/findthatjob");
     } catch (error) {
-      console.error("Error: unable to login the account", error);
+      // console.error("Error: unable to login the account", error);
+      setErrorState(error.response.data.message);
     }
   };
 
   const RecruiterLogin = async (data) => {
-    console.log("data from authentication");
-    console.log(data);
     try {
       const result = await axios.post(
         "http://localhost:4000/auth/recruiter/login",
@@ -44,14 +40,12 @@ export const AuthProvider = ({ children }) => {
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
-      console.log("this is token");
-      console.log(token);
+      console.log(`this is token : ${token}`);
       setUserData({ userDataFromToken });
-      console.log("this is userData");
-      console.log(userData);
       navigate("/recruiter/jobpostings");
     } catch (error) {
-      console.error("Error: unable to login the account", error);
+      // console.error("Error: unable to login the account", error);
+      setErrorState(error.response.data.message);
     }
   };
 
@@ -67,7 +61,7 @@ export const AuthProvider = ({ children }) => {
 
   const RecruiterRegister = async (data) => {
     try {
-      await axios.post("http://localhost:4000/regist/recruiter", data); 
+      await axios.post("http://localhost:4000/regist/recruiter", data);
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {
@@ -78,8 +72,13 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUserData(null);
+    setErrorState(null);
     navigate("/");
   };
+
+  useEffect(() => {
+    console.log("Updated userData:", userData);
+  }, [userData]);
 
   return (
     <AuthContext.Provider
@@ -90,6 +89,7 @@ export const AuthProvider = ({ children }) => {
         UserRegister,
         logout,
         RecruiterRegister,
+        errorState,
       }}
     >
       {children}
