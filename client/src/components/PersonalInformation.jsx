@@ -3,16 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
-<<<<<<< HEAD
-import { useAuth } from "@/contexts/authentication";
-=======
->>>>>>> a12ecf1 (fix PersonalInformation components)
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
-<<<<<<< HEAD
-  const { handleSubmit, control } = useForm();
-=======
   const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
   const { handleSubmit, control, setValue, watch } = useForm();
@@ -20,7 +13,6 @@ function ProfessionalInfo() {
   useEffect(() => {
     console.log("Updated userData:", userData);
   }, [userData]);
->>>>>>> a12ecf1 (fix PersonalInformation components)
 
   const handlerSkip = async (event) => {
     event.preventDefault();
@@ -43,24 +35,10 @@ function ProfessionalInfo() {
     });
 
     try {
-<<<<<<< HEAD
-      await UserRegister({
-        ...userData,
-        name,
-        phone,
-        birthdate,
-        linkedin,
-      });
-      navigate("/user/register3");
-    } catch (error) {
-      console.error('Error during registration', error);
-      // You can provide user feedback here, e.g., show an error message.
-=======
       await UserRegister(userData, data);
       navigate("/path to job listing");
     } catch (error){
       console.error("Error during registration", error);
->>>>>>> a12ecf1 (fix PersonalInformation components)
     }
   };
 
