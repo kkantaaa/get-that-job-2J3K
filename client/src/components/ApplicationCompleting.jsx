@@ -10,6 +10,7 @@ export default function ApplicationCompleting({ companyName }) {
   useEffect(() => {
     const fetchCurrentCV = async () => {
       try {
+        //1
         const response = await axios.get("");
         setCurrentCV(response.data);
       } catch (error) {
@@ -114,6 +115,10 @@ export default function ApplicationCompleting({ companyName }) {
 
         <div>
           <button type="submit">Send Application</button>
+          </div>
+        )
+        <div>
+          <button type="submit">Send Applicaiton</button>   
         </div>
       </form>
     </>
