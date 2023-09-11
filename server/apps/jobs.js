@@ -4,31 +4,45 @@ import { pool } from "../utils/db_connection.js";
 const jobRouter = Router();
 
 jobRouter.post("/", async (req, res) => {
+  console.log("Request Body:", req.body);
+
   try {
     const job = {
+      //use param to get recruiter_id
       job_title: req.body.job_title,
-      category: req.body.category_name,
-      //type
+      category: req.body.category, //use category replace category_name
+      type: req.body.type, //use type replace type_name
       salary_min: req.body.salary_min,
       salary_max: req.body.salary_max,
       about_job_position: req.body.about_job_position,
       mandatory_requirement: req.body.mandatory_requirement,
       optional_requirement: req.body.optional_requirement,
     };
+    console.log("Category Name:", job.category);
     const categoryQuery = await pool.query(
       "SELECT * FROM job_categories WHERE category_name = $1",
-      [job.category_name]
+      [job.category]
     );
-
+    console.log("Category Query Result:", categoryQuery.rows);
     if (categoryQuery.rows.length === 0) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(410).json({ message: "Category not found" });
+    }
+
+    const typeQuery = await pool.query(
+      "SELECT * FROM job_types WHERE type_name = $1",
+      [job.type]
+    );
+    console.log("type Query Result:", typeQuery.rows);
+    if (typeQuery.rows.length === 0) {
+      return res.status(411).json({ message: "type not found" });
     }
 
     await pool.query(
-      "insert into jobs (job_title,job_category_id,salary_min,salary_max,about_job_position,mandatory_requirement,optional_requirement) values ($1,$2,$3,$4,$5,$6,$7)",
+      "insert into jobs (job_title,job_category_id,job_type_id,salary_min,salary_max,about_job_position,mandatory_requirement,optional_requirement) values ($1,$2,$3,$4,$5,$6,$7,$8)",
       [
         job.job_title,
-        categoryQuery.rows[0].job_category_id,
+        parseInt(categoryQuery.rows[0].job_category_id, 10),
+        parseInt(typeQuery.rows[0].job_type_id, 10),
         job.salary_min,
         job.salary_max,
         job.about_job_position,
@@ -41,7 +55,7 @@ jobRouter.post("/", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(503).json({
+    return res.status(510).json({
       message: " error! please try create job again!",
     });
   }
