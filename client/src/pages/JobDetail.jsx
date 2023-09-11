@@ -1,6 +1,7 @@
 import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
 
 function JobDetail() {
+
   return (
     <>
       <div className="bg-Background">
@@ -77,12 +78,7 @@ function JobDetail() {
                 augue vehicula. Donec viverra luctus nisl, sed vehicula ligula.
                 Vivamus maximus metus a magna fermentum ullamcorper. Phasellus
                 ultrices vestibulum ligula ut pellentesque. Quisque quis congue
-                quam. Nunc porttitor risus lorem, in blandit augue iaculis
-                vitae. Cras sit amet fringilla neque. Fusce ac elit ut quam
-                ultrices bibendum. Curabitur vitae dignissim quam. Suspendisse
-                aliquet massa id orci volutpat ullamcorper. Nunc at ante sem.
-                Etiam elementum, mi eget aliquam lobortis, elit libero tempus
-                ex, vel pretium nisi risus ac augue.
+                quam. 
               </p>
             </div>
             <div className="mt-[16px]">
