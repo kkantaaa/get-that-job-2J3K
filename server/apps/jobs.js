@@ -8,8 +8,8 @@ jobRouter.get("/", async (req, res) => {
     const keywords = req.query.keywords || null;
     const category = req.query.category || null;
     const type = req.query.type || null;
-    const max_salary = req.query.max_salary || null;
-    const min_salary = req.query.min_salary || null;
+    const maxSalary = req.query.maxSalary || null;
+    const minSalary = req.query.minSalary || null;
 
     let query = "";
     let values = [];
@@ -22,7 +22,7 @@ jobRouter.get("/", async (req, res) => {
           (category = $2 OR $2 IS NULL) AND
           (type = $3 OR $3 IS NULL) AND
           (salary_max <= $4 AND salary_min >= $5 OR $4 IS NULL OR $5 IS NULL)`;
-      values = [keywords, category, type, max_salary, min_salary];
+      values = [keywords, category, type, maxSalary, minSalary];
     }
 
     // if (keywords) {
@@ -32,7 +32,7 @@ jobRouter.get("/", async (req, res) => {
     //   values = [keywords];
     // }
     else {
-      query = `select * from posts`;
+      query = `select * from jobs`;
     }
 
     const results = await pool.query(query, values);
