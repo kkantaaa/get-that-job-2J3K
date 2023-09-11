@@ -50,9 +50,12 @@ function PersonalInformation() {
 
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
       await UserRegister(userData);
       navigate('/user/register3');
 =======
+=======
+>>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
       await UserRegister({
         ...userData,
         name,
@@ -92,9 +95,12 @@ function PersonalInformation() {
             render={({ field }) => (
               <input
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {...field}
 =======
 >>>>>>> 3a3fda3 (fix: merge conflict)
+=======
+>>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 id="name"
                 type="text"

@@ -49,12 +49,15 @@ function LogInInfo() {
         });
         console.log(data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // await UserRegister(data);
         console.log(data)
 >>>>>>> 093724e (feat: commit changes)
 =======
 >>>>>>> 3a3fda3 (fix: merge conflict)
+=======
+>>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
