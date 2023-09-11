@@ -2,25 +2,10 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
-=======
-// import { useAuth } from "@/contexts/authentication";
->>>>>>> 093724e (feat: commit changes)
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
-<<<<<<< HEAD
-<<<<<<< HEAD
   const navigate = useNavigate();
-<<<<<<< HEAD
-=======
-  // const { UserRegister } = useAuth();
->>>>>>> 093724e (feat: commit changes)
-=======
-
-=======
->>>>>>> 4250ea1 (commit changes)
-  const navigate = useNavigate();
->>>>>>> 3a3fda3 (fix: merge conflict)
 
   const {
     handleSubmit,
@@ -42,28 +27,12 @@ function LogInInfo() {
       });
     } else {
       try {
-<<<<<<< HEAD
-<<<<<<< HEAD
         // Update userData after successful registration
-=======
->>>>>>> 3a3fda3 (fix: merge conflict)
         await setUserData({
           email: data.email,
           password: data.password,
         });
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-        // await UserRegister(data);
-        console.log(data)
->>>>>>> 093724e (feat: commit changes)
-=======
-        console.log(data);
->>>>>>> 3a3fda3 (fix: merge conflict)
-=======
-        console.log(data);
->>>>>>> 4250ea1 (commit changes)
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
