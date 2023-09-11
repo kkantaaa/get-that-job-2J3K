@@ -7,7 +7,10 @@ import registRouter from "./Website_Router/registRouter.js";
 import uploadRouter from "./Website_Router/uploadRouter.js";
 import jobRouter from "./apps/jobs.js"
 import categoryRouter from "./apps/category.js";
+<<<<<<< HEAD
 import typeRouter from "./apps/type.js";
+=======
+>>>>>>> f7ec238 (feat(application-findjob/maintain):complete UI for applicaitoncompleting / also relocate files to appropriate dir)
 import findthatjob from "./apps/findthatjob.js";
 
 async function init() {
@@ -29,7 +32,10 @@ async function init() {
   app.use("/upload", uploadRouter);
   app.use("/jobs", jobRouter)
   app.use("/category", categoryRouter);
+<<<<<<< HEAD
   app.use("/type", typeRouter);
+=======
+>>>>>>> f7ec238 (feat(application-findjob/maintain):complete UI for applicaitoncompleting / also relocate files to appropriate dir)
   app.use("/findthatjob", findthatjob);
 
   // router

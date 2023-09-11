@@ -10,7 +10,6 @@ export default function ApplicationCompleting({ companyName }) {
   useEffect(() => {
     const fetchCurrentCV = async () => {
       try {
-        //1
         const response = await axios.get("");
         setCurrentCV(response.data);
       } catch (error) {
@@ -94,6 +93,27 @@ export default function ApplicationCompleting({ companyName }) {
               <input {...field} type="text" id="experience" />
             )}
           />
+        </div>
+
+        <div>
+          <label htmlFor="WHY ARE YOU INTERESTED">
+            WHY ARE YOU INTERESTED IN WORKING AT THE {companyName}
+          </label>
+          <Controller
+            name="WHY ARE YOU INTERESTED"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input {...field} type="text" id="WHY ARE YOU INTERESTED" />
+            )}
+          />
+          <span className="input-description">
+            Between 50 and 1000 characters.
+          </span>
+        </div>
+
+        <div>
+          <button type="submit">Send Application</button>
         </div>
 
         <div>
