@@ -1,27 +1,27 @@
 import { Router } from "express";
 import { pool } from "../utils/db_connection.js";
 import bcrypt from "bcrypt";
-import { supabase } from "../utils/supabaseClient.js";
 import multer from "multer";
 
 const registRouter = Router();
 const multerUpload = multer({ dest: "../uploads/" });
-const avatarUpload = multerUpload.fields([{ name: "avatar", maxCount: 3 }]);
 
-//test database connection
+// Routes for testing database connection
 registRouter.get("/test/get_tabledata", async (req, res) => {
-  console.log("check table");
-  const result = await pool.query("select * from testregist");
-  return res.json({
-    message: result.rows,
-  });
+  try {
+    const result = await pool.query("SELECT * FROM testregist");
+    return res.json({
+      message: result.rows,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Error fetching data from the database",
+    });
+  }
 });
-//test database connection
 
-//registRouter.post("/test/post_tabledata") - test insert data to database
-//Postman - "Post" "localhost:4000/regist/test/post_tabledata"
 registRouter.post("/test/post_tabledata", async (req, res) => {
-  console.log("check table");
   try {
     const user = {
       email: req.body.email,
@@ -36,7 +36,7 @@ registRouter.post("/test/post_tabledata", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
-      "insert into testregist (email,password,name,phone,url,title,experience) values ($1,$2,$3,$4,$5,$6,$7)",
+      "INSERT INTO testregist (email, password, name, phone, url, title, experience) VALUES ($1, $2, $3, $4, $5, $6, $7)",
       [
         user.email,
         user.password,
@@ -47,28 +47,35 @@ registRouter.post("/test/post_tabledata", async (req, res) => {
         user.experience,
       ]
     );
+    
     return res.json({
       message: "Get that job account created!",
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({
-      message: " error! please try register server again!",
+      message: "Error! Please try registering again.",
     });
   }
 });
-//registRouter.post("/test/post_tabledata") - test insert data to database
 
-//registRouter.post("/professional") - insert data to database // usertype = professional
+// Routes for professional users
 registRouter.get("/professional", async (req, res) => {
-  const result = await pool.query("select * from UserTable");
-  return res.json({
-    message: result.rows,
-  });
+  try {
+    const result = await pool.query("SELECT * FROM UserTable");
+    return res.json({
+      message: result.rows,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Error fetching data from the database",
+    });
+  }
 });
-//Postman - "Post" "localhost:4000/regist/professional"
+
 registRouter.post("/professional", async (req, res) => {
-  console.log("check table");
+  console.log(req.body);
   try {
     const user = {
       email: req.body.email,
@@ -81,51 +88,72 @@ registRouter.post("/professional", async (req, res) => {
       jobexp: req.body.jobexp,
       education: req.body.education,
       havefile: req.body.havefile,
+      confirmedpassword: req.body.confirmedpassword,
     };
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
+<<<<<<< HEAD
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+=======
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+>>>>>>> 7ee33a7 (commit changes)
+=======
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+<<<<<<< HEAD
+>>>>>>> 35f86b0 (commit changes)
+=======
+>>>>>>> 495dbdbe5f7277d49d3ccc88d4e8841b2de7b095
+>>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
 
+>>>>>>> 4250ea12fd57a0798123a10ead9dd12d120df66a
       [
         user.email,
         user.password,
-
         user.name,
         user.phone,
         user.birthdate,
         user.linkedin,
-        
         user.title,
         user.jobexp,
         user.education,
         user.havefile,
+        user.confirmedpassword,
       ]
     );
-    console.log(user);
+
     return res.json({
-      message: "Get that job account created!,  welcome professional user!",
+      message: "Get that job account created! Welcome professional user!",
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({
-      message: err ,
+      message: "Error! Please try registering again.",
     });
   }
 });
-//registRouter.post("/user/professional") - insert data to database // usertype = professional
 
-//registRouter.post("/recruiter") - insert data to database // usertype = recruiter
+// Routes for recruiter users
 registRouter.get("/recruiter", async (req, res) => {
-  const result = await pool.query("select * from recruitertable");
-  return res.json({
-    message: result.rows,
-  });
+  try {
+    const result = await pool.query("SELECT * FROM recruitertable");
+    return res.json({
+      message: result.rows,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Error fetching data from the database",
+    });
+  }
 });
-//Postman - "Post" "localhost:4000/regist/recruiter"
+
 registRouter.post("/recruiter", async (req, res) => {
-  console.log("check table");
   try {
     const user = {
       companyemail: req.body.companyemail,
@@ -133,13 +161,13 @@ registRouter.post("/recruiter", async (req, res) => {
       companyname: req.body.companyname,
       companywebsite: req.body.companywebsite,
       aboutcompany: req.body.aboutcompany,
-      havefile: req.body.havefile, 
-    };    
+      havefile: req.body.havefile,
+    };
     const salt = await bcrypt.genSalt(14);
     user.companypassword = await bcrypt.hash(user.companypassword, salt);
 
     await pool.query(
-      "insert into recruitertable (companyemail,companypassword,companyname,companywebsite,aboutcompany,havefile) values ($1,$2,$3,$4,$5,$6)",
+      "INSERT INTO recruitertable (companyemail, companypassword, companyname, companywebsite, aboutcompany, havefile) VALUES ($1, $2, $3, $4, $5, $6)",
       [
         user.companyemail,
         user.companypassword,
@@ -149,16 +177,16 @@ registRouter.post("/recruiter", async (req, res) => {
         user.havefile,
       ]
     );
+
     return res.json({
-      message: "Get that job account created!,  welcome recruiter user!",
+      message: "Get that job account created! Welcome recruiter user!",
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({
-      message: err ,
+      message: "Error! Please try registering again.",
     });
   }
 });
-//registRouter.post("/recruiter") - insert data to database // usertype = recruiter
 
 export default registRouter;
