@@ -10,7 +10,7 @@ export default function ProfessionalSidebar() {
         <img src={Logo} />
       </div>
 
-      <div className="w-full h-fit font=Inter text-DarkGray ">
+      <div className="w-full h-fit font-Inter text-DarkGray ">
         <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background ">
           <div className=" h-fit mr-[8px]">
             <svg

@@ -5,17 +5,6 @@ import { useEffect } from "react";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
-<<<<<<< HEAD
-=======
-// import { useAuth } from "@/contexts/authentication";
-
-function LogInInfo() {
-  const navigate = useNavigate();
-  // const { UserRegister } = useAuth();
->>>>>>> 093724e (feat: commit changes)
-=======
->>>>>>> 3a3fda3 (fix: merge conflict)
-
   const navigate = useNavigate();
 
   const {
@@ -48,16 +37,6 @@ function LogInInfo() {
           password: control._fields.password._f.value,
         });
         console.log(data);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        // await UserRegister(data);
-        console.log(data)
->>>>>>> 093724e (feat: commit changes)
-=======
->>>>>>> 3a3fda3 (fix: merge conflict)
-=======
->>>>>>> 3a3fda3b2063b25da881cbdfdaa1106d13d7ed1e
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
