@@ -74,6 +74,7 @@ function ProfessionalInfo() {
               )}
             />
           </label>
+<<<<<<< HEAD
           <Controller
             name="name"
             control={control}
@@ -95,6 +96,88 @@ function ProfessionalInfo() {
         <div className="flex flex-col">
           {/* Add your other form fields here */}
         </div>
+=======
+        </div>
+
+        <div className="job-exp-input">
+          <label
+            htmlFor="jobExp"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
+            PROFESSIONAL EXPERIENCE
+            <Controller
+              name="jobexp"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Professional experience is required" }}
+              render={({ field }) => (
+                <input
+                  className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="jobexp"
+                  id="jobexp"
+                  type="text"
+                  placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
+                  {...field}
+                />
+              )}
+            />
+          </label>
+        </div>
+        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+          Between 300 and 2000 characters
+        </p>
+
+        <div className="education-input">
+          <label
+            htmlFor="education"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
+            EDUCATION
+            <Controller
+              name="education"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Education is required" }}
+              render={({ field }) => (
+                <input
+                  className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="education"
+                  id="education"
+                  type="text"
+                  placeholder="Major in life experiences with a PHD in procrastination"
+                  {...field}
+                />
+              )}
+            />
+          </label>
+        </div>
+        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+          Between 100 and 2000 characters
+        </p>
+
+        <div className="file-upload-container">
+          <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
+            UPLOAD / UPDATE YOUR CV
+          </p>
+          
+          <input
+            className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
+            name="havefile"
+            type="file"
+            id="havefile"
+            accept=".pdf"
+            onChange={(e) => {
+              if (e.target.files.length > 0) {
+                setValue("file", e.target.files[0]);
+              }
+            }}
+          />
+        </div>
+
+        <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
+          Only PDF. Max size 5MB
+        </p>
+>>>>>>> 4250ea12fd57a0798123a10ead9dd12d120df66a
 
         <div className="file-list-preview-container">
           {watch("file") && (

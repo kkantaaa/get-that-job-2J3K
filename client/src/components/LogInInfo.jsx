@@ -1,14 +1,11 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
-
   const navigate = useNavigate();
-  const { UserRegister } = useAuth();
 
   const {
     handleSubmit,
@@ -35,14 +32,11 @@ function LogInInfo() {
       });
     } else {
       try {
-        //
-        await UserRegister(data);
-        //
         await setUserData({
           email: control._fields.email._f.value,
           password: control._fields.password._f.value,
         });
-
+        console.log(data);
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
@@ -122,7 +116,7 @@ function LogInInfo() {
               render={({ field }) => (
                 <input
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="confirmed-password"
+                  id="confirmedpassword"
                   type="password"
                   placeholder="******"
                   {...field}
