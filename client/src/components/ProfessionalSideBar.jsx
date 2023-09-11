@@ -5,7 +5,7 @@ export default function ProfessionalSidebar() {
   const { logout } = useAuth();
 
   return (
-    <div className="w-[240px] h-screen bg-BackgroundDark flex flex-col relative">
+    <div className="w-[240px] h-screen bg-BackgroundDark flex flex-col">
       <div className="w-[168px] h-fit px-[16px] py-[32px]">
         <img src={Logo} />
       </div>
