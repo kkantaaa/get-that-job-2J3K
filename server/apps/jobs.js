@@ -5,17 +5,33 @@ const jobRouter = Router();
 
 jobRouter.get("/", async (req, res) => {
   try {
-    const keywords = req.query.keywords || "";
-    // const category = req.query.category || "";
+    const keywords = req.query.keywords || null;
+    const category = req.query.category || null;
+    const type = req.query.type || null;
+    const max_salary = req.query.max_salary || null;
+    const min_salary = req.query.min_salary || null;
 
     let query = "";
     let values = [];
 
-    if (keywords) {
-      query = `select * from jobs
-    where title ilike $1`;
-      values = [keywords];
-    } else {
+    if (keywords && category && type) {
+      query = `SELECT *
+    FROM jobs
+    WHERE (job_title ilike $1 or job_title IS NULL) AND
+          (recruiter_profile.companyname ilike $1 or recruiter_profile.companyname IS NULL) AND
+          (category = $2 OR $2 IS NULL) AND
+          (type = $3 OR $3 IS NULL) AND
+          (salary_max <= $4 AND salary_min >= $5 OR $4 IS NULL OR $5 IS NULL)`;
+      values = [keywords, category, type, max_salary, min_salary];
+    }
+
+    // if (keywords) {
+    //   query = `select * from jobs
+    // where title ilike $1
+    // or recruiter.companyname ilike $1`;
+    //   values = [keywords];
+    // }
+    else {
       query = `select * from posts`;
     }
 
