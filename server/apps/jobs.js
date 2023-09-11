@@ -3,6 +3,74 @@ import { pool } from "../utils/db_connection.js";
 
 const jobRouter = Router();
 
+jobRouter.get("/", async (req, res) => {
+  try {
+    const keywords = req.query.keywords || null;
+    const category = req.query.category || null;
+    const type = req.query.type || null;
+    const maxSalary = req.query.maxSalary || null;
+    const minSalary = req.query.minSalary || null;
+
+    let query = "";
+    let values = [];
+
+    if (keywords && category && type) {
+      query = `SELECT *
+    FROM jobs
+    WHERE (job_title ilike $1 or job_title IS NULL) AND
+          (recruiter_profile.companyname ilike $1 or recruiter_profile.companyname IS NULL) AND
+          (category = $2 OR $2 IS NULL) AND
+          (type = $3 OR $3 IS NULL) AND
+          (salary_max <= $4 AND salary_min >= $5 OR $4 IS NULL OR $5 IS NULL)`;
+      values = [keywords, category, type, maxSalary, minSalary];
+    }
+
+    // if (keywords) {
+    //   query = `select * from jobs
+    // where title ilike $1
+    // or recruiter.companyname ilike $1`;
+    //   values = [keywords];
+    // }
+    else {
+      query = `select * from jobs`;
+    }
+
+    const results = await pool.query(query, values);
+
+    return res.json({
+      data: results.rows,
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
+jobRouter.get("/:id", async (req, res) => {
+  const jobId = req.params.id;
+
+  if (!jobId) {
+    return res.status(401).json({
+      message: "Please specified job id in order to get the job",
+    });
+  }
+
+  let result;
+
+  try {
+    result = await pool.query("select * from jobs where job_id=$1", [jobId]);
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+
+  return res.json({
+    data: result?.rows?.[0] ?? [],
+  });
+});
+
 jobRouter.post("/", async (req, res) => {
   console.log("Request Body:", req.body);
 
