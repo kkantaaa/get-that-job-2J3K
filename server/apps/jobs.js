@@ -36,14 +36,14 @@ jobRouter.get("/:id", async (req, res) => {
 
   if (!jobId) {
     return res.status(401).json({
-      message: "Please specified post id in order to get the post",
+      message: "Please specified job id in order to get the job",
     });
   }
 
   let result;
 
   try {
-    result = await pool.query("select * from posts where post_id=$1", [jobId]);
+    result = await pool.query("select * from jobs where job_id=$1", [jobId]);
   } catch (error) {
     return res.json({
       message: `${error}`,
