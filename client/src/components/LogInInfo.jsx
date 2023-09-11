@@ -9,6 +9,7 @@ import { useEffect } from "react";
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
 <<<<<<< HEAD
+<<<<<<< HEAD
   const navigate = useNavigate();
 <<<<<<< HEAD
 =======
@@ -16,6 +17,8 @@ function LogInInfo() {
 >>>>>>> 093724e (feat: commit changes)
 =======
 
+=======
+>>>>>>> 4250ea1 (commit changes)
   const navigate = useNavigate();
 >>>>>>> 3a3fda3 (fix: merge conflict)
 
@@ -49,6 +52,7 @@ function LogInInfo() {
           password: data.password,
         });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
         // await UserRegister(data);
@@ -57,6 +61,9 @@ function LogInInfo() {
 =======
         console.log(data);
 >>>>>>> 3a3fda3 (fix: merge conflict)
+=======
+        console.log(data);
+>>>>>>> 4250ea1 (commit changes)
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
