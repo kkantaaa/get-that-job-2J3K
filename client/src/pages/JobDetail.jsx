@@ -5,24 +5,25 @@ import axios from "axios";
 
 function JobDetail() {
   const navigate = useNavigate();
-  const [jobDetail, setJobDetail] = useState({}); // Initialize as an object for jobDetail
-  const {jobId} = useParams();
+  const [jobDetail, setJobDetail] = useState({}); // สร้าง state และกำหนดค่าเริ่มต้นเป็น obj ว่างๆ ที่ใช้เก็บข้อมูลขอดีเทลงาน
+  const {jobId} = useParams(); // ใช้ useParams เพื่อดึงค่า jobId ออกมาจาก URL ซึ่งเป็นส่วนหนึ่งของ path
 
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getJobDetail = async () => {
     try {
       const result = await axios.get(`endpoint/${jobId}`);
-      setJobDetail(result.data);
+      setJobDetail(result.data); // อัพเดต state jobDetail เพื่อเก็บข้อมูลดีเทลงานที่ได้รับจาก API
       console.log(result.data);
     } catch (error) {
       console.error("Error: failed to fetch Job data", error);
     }
   };
 
+  // ใช้ useEffect เพื่อรัน getJobDetail เมื่อ jobId เปลี่ยนแปลง 
   useEffect(()=>{
     getJobDetail();
-  },[getJobDetail, jobId]); //  Added jobId as a dependency
+  },[getJobDetail, jobId]); //  Added jobId โดยระบุ [jobId] เป็น dependency เพื่อให้ getJobDetail re-render เมื่อ jobId เปลี่ยนแปลง
 
   const handleBack = (event) => {
     event.preventDefault();
