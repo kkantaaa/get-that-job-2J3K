@@ -1,5 +1,4 @@
 import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
-
 function JobDetail() {
   return (
     <>

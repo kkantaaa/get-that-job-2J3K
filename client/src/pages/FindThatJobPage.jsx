@@ -1,4 +1,4 @@
-import ProfessionalSidebar from "@/components/ProfessionalSidebar.jsx";
+import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
 function FindThatJobPage() {
   return <ProfessionalSidebar />;
 }
