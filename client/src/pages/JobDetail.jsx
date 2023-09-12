@@ -1,5 +1,6 @@
 import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function JobDetail() {
   const navigate = useNavigate();
