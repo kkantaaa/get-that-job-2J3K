@@ -80,7 +80,6 @@ export default function ApplicationCompleting({ companyName }) {
             <span>Only PDF. Max size 5 MB</span>
           </div>
         )}
-
         <div>
           <label htmlFor="experience">
             Professional experience(TAKEN FROM YOUR PROFILE)
@@ -94,7 +93,6 @@ export default function ApplicationCompleting({ companyName }) {
             )}
           />
         </div>
-
         <div>
           <label htmlFor="WHY ARE YOU INTERESTED">
             WHY ARE YOU INTERESTED IN WORKING AT THE {companyName}
@@ -111,11 +109,9 @@ export default function ApplicationCompleting({ companyName }) {
             Between 50 and 1000 characters.
           </span>
         </div>
-
         <div>
           <button type="submit">Send Application</button>
         </div>
-
         <div>
           <label htmlFor="WHY ARE YOU INTERESTED">
             WHY ARE YOU INTERESTED IN WORKING AT THE {companyName}
@@ -132,12 +128,10 @@ export default function ApplicationCompleting({ companyName }) {
             Between 50 and 1000 characters.
           </span>
         </div>
-
         <div>
           <button type="submit">Send Application</button>
-          </div>
-        )
-         )
+        </div>
+        ) )
       </form>
     </>
   );
