@@ -1,7 +1,8 @@
-import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
+
 
 function JobDetail() {
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ function JobDetail() {
               </div>
             </div>
             <h1 className="text-[48px] mt-[16px] text-center font-Montserrat font-normal leading-normal">
-              The Job Title
+              The Job Title 
             </h1>
             <div className="flex flex-row uppercase justify-center">
               <svg
