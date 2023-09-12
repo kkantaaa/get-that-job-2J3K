@@ -4,13 +4,10 @@ import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 
-
-
 function ProfessionalInfo() {
-
   const navigate = useNavigate();
   const { userData, setUserData } = useGlobalContext();
-  const {UserRegister} = useAuth();
+  const { UserRegister } = useAuth();
   const { handleSubmit, control, setValue, watch } = useForm();
 
   useEffect(() => {
@@ -22,13 +19,13 @@ function ProfessionalInfo() {
     try {
       await UserRegister(userData);
       navigate("/path to job listing");
-    } catch (error){
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
 
   const onSubmit = async (data) => {
-    const { title, jobExp, education, havefile} = data;
+    const { title, jobExp, education, havefile } = data;
     setUserData({
       ...userData,
       title,
@@ -40,7 +37,7 @@ function ProfessionalInfo() {
     try {
       await UserRegister(userData, data);
       navigate("/user/findthatjob");
-    } catch (error){
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
@@ -57,7 +54,7 @@ function ProfessionalInfo() {
         <div className="title-input">
           <label
             htmlFor="title"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             TITLE
             <Controller
@@ -82,7 +79,7 @@ function ProfessionalInfo() {
         <div className="job-exp-input">
           <label
             htmlFor="jobExp"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             PROFESSIONAL EXPERIENCE
             <Controller
@@ -103,14 +100,14 @@ function ProfessionalInfo() {
             />
           </label>
         </div>
-        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+        <p className="mb-[16px] text-[10px] font-normal leading-[16px] tracking-[0.4px]">
           Between 300 and 2000 characters
         </p>
 
         <div className="education-input">
           <label
             htmlFor="education"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             EDUCATION
             <Controller
@@ -131,15 +128,15 @@ function ProfessionalInfo() {
             />
           </label>
         </div>
-        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+        <p className="mb-[16px] text-[10px] font-normal leading-[16px] tracking-[0.4px]">
           Between 100 and 2000 characters
         </p>
-      
+
         <div className="file-upload-container">
           <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
             UPLOAD / UPDATE YOUR CV
           </p>
-          
+
           <input
             className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
             name="havefile"
@@ -153,7 +150,6 @@ function ProfessionalInfo() {
             }}
           />
         </div>
-        
 
         <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
           Only PDF. Max size 5MB
@@ -173,20 +169,53 @@ function ProfessionalInfo() {
           )}
         </div>
         <div className="mt-[16px] flex flex-row">
-          <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button onClick={() => navigate("/user/register2")}>
-              PREVIOUS
+          <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+            <button
+              onClick={() => navigate("/user/register2")}
+              className="flex flex-row"
+              type="submit"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M10.828 12L15.778 16.95L14.364 18.364L8 12L14.364 5.63599L15.778 7.04999L10.828 12Z"
+                  fill="white"
+                />
+              </svg>
+              <div className="ml-[4px]">PREVIOUS</div>
             </button>
           </div>
 
-          <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
-            <button onClick={handlerSkip}>
-              SKIP THIS!
-            </button>
+          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
+            <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
 
-          <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button type="submit">NEXT</button>
+          <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+            <button
+              className="flex flex-row"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              <div className="ml-[10px]">FINISH</div>
+              <svg
+                className="ml-[8px]"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
