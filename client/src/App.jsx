@@ -7,13 +7,13 @@ import RecruitRegisterPage1 from "./pages/RecruitRegisterPage1.jsx";
 import RecruitRegisterPage2 from "./pages/RecruitRegisterPage2.jsx";
 import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
+import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
 import JobPostings from "./pages/JobPostingsPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
-
 
 function App() {
   const NoMatch = () => <h1>Page Not Found.</h1>;
@@ -42,6 +42,10 @@ function App() {
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
               <Route path="/recruiter/jobpostings" element={<JobPostings />} />
               <Route path="/user/jobdetail" element={<JobDetail />} />
+              <Route
+                path="/recruiter/createjobposting"
+                element={<CreateJobPosting />}
+              />
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </ContextProvider>
