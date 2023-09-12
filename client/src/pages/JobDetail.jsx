@@ -96,6 +96,7 @@ function JobDetail() {
                 Posted 2 Days Ago
               </p>
             </div>
+<<<<<<< HEAD
             <div className="mt-[16px] font-Montserrat flex flex-row justify-center">
               <div className="w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
@@ -165,6 +166,9 @@ function JobDetail() {
                 </div>
               </div>
             </div>
+=======
+            <div className="mt-[16px]">Category Type Salary</div>
+>>>>>>> 970a73ac7a24537321ec6dca2b370d33259f4b31
             <div className="mt-[54px]">
               <h2 className="text-[24px] font-Montserrat text-DarkPink font-normal leading-normal">
                 About Company
