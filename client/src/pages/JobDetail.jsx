@@ -136,6 +136,7 @@ function JobDetail() {
               </svg>
               <p className="ml-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
                 Posted 2 Days Ago
+              {/* {jobDetail.created_at} */}
               </p>
             </div>
             <div className="mt-[16px] font-Montserrat flex flex-row justify-center">
