@@ -45,13 +45,11 @@ function LogInInfo() {
   };
 
   return (
-    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div className="email-input">
           <label htmlFor="email">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
-              EMAIL
-            </div>
+            <div className="mb-[4px] font-normal tracking-[1.5px]">EMAIL</div>
             <Controller
               name="email"
               control={control}
@@ -76,7 +74,7 @@ function LogInInfo() {
 
         <div className="password-input">
           <label htmlFor="password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+            <div className="mb-[4px] font-normal tracking-[1.5px]">
               PASSWORD
             </div>
             <Controller
@@ -103,7 +101,7 @@ function LogInInfo() {
 
         <div className="confirmed-password-input">
           <label htmlFor="confirmed-password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+            <div className="mb-[4px] font-normal tracking-[1.5px]">
               PASSWORD CONFIRMATION
             </div>
             <Controller
@@ -129,8 +127,23 @@ function LogInInfo() {
             {errors.confirmedPassword && errors.confirmedPassword.message}
           </span>
         </div>
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button type="submit">NEXT</button>
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+          <button onClick={() => navigate("/user/register2")} className="flex flex-row" type="submit">
+            <div className="ml-[10px]">NEXT</div>
+            <svg
+              className="ml-[8px]"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
+                fill="white"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </form>
@@ -138,5 +151,3 @@ function LogInInfo() {
 }
 
 export default LogInInfo;
-
-

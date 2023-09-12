@@ -40,13 +40,10 @@ function RecruitLogInInfo() {
   };
 
   return (
-    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
         <div className="company-name-input">
-          <label
-            htmlFor="company-name"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
-          >
+          <label htmlFor="company-name" className="mb-[4px] font-normal tracking-[1.5px]">
             COMPANY NAME
             <Controller
               name="companyname"
@@ -69,10 +66,7 @@ function RecruitLogInInfo() {
         </div>
 
         <div className="email-input">
-          <label
-            htmlFor="email"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
-          >
+          <label htmlFor="email" className="mb-[4px] font-normal tracking-[1.5px]">
             EMAIL
             <Controller
               name="companyemail"
@@ -95,10 +89,7 @@ function RecruitLogInInfo() {
         </div>
 
         <div className="password-input">
-          <label
-            htmlFor="password"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
-          >
+          <label htmlFor="password" className="mb-[4px] font-normal tracking-[1.5px]">
             PASSWORD
             <Controller
               name="companypassword"
@@ -151,8 +142,23 @@ function RecruitLogInInfo() {
           </span>
         </div>
 
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button type="submit">NEXT</button>
+        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center tracking-[1.25px]">
+        <button className="flex flex-row" type="submit">
+            <div className="ml-[10px] text-[16px] font-[500px]">NEXT</div>
+            <svg
+              className="ml-[8px]"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
+                fill="white"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </form>
