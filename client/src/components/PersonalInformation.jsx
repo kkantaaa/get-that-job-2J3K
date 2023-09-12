@@ -26,13 +26,8 @@ function PersonalInformation() {
 
   const onSubmit = async (data) => {
     const { name, phone, birthdate, linkedin } = data;
-    setUserData({...userData,
-      name,
-      phone,
-      birthdate,
-      linkedin
-    });
-
+    
+    console.log({ page2: data });
     try {
       await setUserData({
         ...userData,
