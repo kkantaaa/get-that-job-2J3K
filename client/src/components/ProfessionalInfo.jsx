@@ -44,8 +44,11 @@ function ProfessionalInfo() {
       navigate("/user/findthatjob");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     } catch (error) {
 =======
+=======
+>>>>>>> 21060fb (fix: change the navigation)
     } catch (error){
 >>>>>>> a815473 (fix: change the navigation)
 =======
