@@ -40,6 +40,7 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
+              <Route path="/user/apply" element={<ApplicationApplyPage />} />
               <Route path="/recruiter/jobpostings" element={<JobPostings />} />
               <Route path="/user/jobdetail" element={<JobDetail />} />
               <Route path="*" element={<NoMatch />} />
