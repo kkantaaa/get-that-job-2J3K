@@ -5,10 +5,11 @@ import axios from "axios";
 
 function JobDetail() {
   const navigate = useNavigate();
-  const [jobDetail, setJobDetail] = useState({}); // สร้าง state และกำหนดค่าเริ่มต้นเป็น obj ว่างๆ ที่ใช้เก็บข้อมูลขอดีเทลงาน
+  const [jobDetail, setJobDetail] = useState({}); // สร้าง state และกำหนดค่าเริ่มต้นเป็น obj ว่างๆ ที่ใช้เก็บข้อมูลดีเทลงาน
   const {jobId} = useParams(); // ใช้ useParams เพื่อดึงค่า jobId ออกมาจาก URL ซึ่งเป็นส่วนหนึ่งของ path
 
 
+  // declare component getJobDetail ขึ้นมา เพื่อส่ง request ไปหา server ดึงข้อมูลรายการงานมาแสดงที่เว็บไซต์
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getJobDetail = async () => {
     try {
@@ -25,11 +26,13 @@ function JobDetail() {
     getJobDetail();
   },[getJobDetail, jobId]); //  Added jobId โดยระบุ [jobId] เป็น dependency เพื่อให้ getJobDetail re-render เมื่อ jobId เปลี่ยนแปลง
 
+  // declare component getJobDetail ขึ้นมา เพื่อ navigate กลับไปหน้า job listings
   const handleBack = (event) => {
     event.preventDefault();
     navigate("/user/findthatjob");
   }
 
+  // declare component getJobDetail ขึ้นมา เพื่อ navigate กลับไปหน้าสมัครงาน
   const handleJobApplication = (event) =>{
     event.preventDefault();
     navigate("/path หน้า job application")
