@@ -1,5 +1,5 @@
 import ProfessionalSidebar from "@/components/ProfessionalSidebar.jsx";
-import searchline from "@/images/findthatjob-page/search-line.png";
+// import searchline from "@/images/findthatjob-page/search-line.png";
 
 function FindThatJobPage() {
   return (
