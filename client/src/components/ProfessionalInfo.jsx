@@ -37,7 +37,7 @@ function ProfessionalInfo() {
     try {
       await UserRegister(userData, data);
       navigate("/user/findthatjob");
-    } catch (error) {
+    } catch (error){
       console.error("Error during registration", error);
     }
   };
