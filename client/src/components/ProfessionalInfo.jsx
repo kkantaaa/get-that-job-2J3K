@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
-
-
-
+import {supabase } from "../utils/supabaseClientFront";
 function ProfessionalInfo() {
 
   const navigate = useNavigate();
