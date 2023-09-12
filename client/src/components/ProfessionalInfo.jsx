@@ -39,7 +39,11 @@ function ProfessionalInfo() {
     try {
       await UserRegister(userData, data);
       navigate("/user/findthatjob");
+<<<<<<< HEAD
     } catch (error) {
+=======
+    } catch (error){
+>>>>>>> a815473 (fix: change the navigation)
       console.error("Error during registration", error);
     }
   };
