@@ -1,9 +1,11 @@
 import ProfessionalSidebar from "@/components/ProfessionalSidebar.jsx";
 import searchline from "@/images/findthatjob-page/search-line.png";
+import { CategorySelector } from "@/components/CategorySelector";
+import { TypeSelector } from "@/components/TypeSelector";
 
 function FindThatJobPage() {
   return (
-    <div className="w-full flex  flex-row justify-spacearound">
+    <div className="w-full flex flex-row justify-spacearound">
       <ProfessionalSidebar />
       <div className="w-full px-12 py-6 flex flex-col justify-start items-start">
         <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline3 font-light">
@@ -24,48 +26,51 @@ function FindThatJobPage() {
           />
         </div>
         <div className="flex flew-row">
-          <div className="flex flex-col">
+          <div className="py-2 pr-2 flex flex-col">
             <label
               className="w-fit text-[10px] text-LightGray"
               htmlFor="search-box"
             >
               CATEGORY
             </label>
-            <input
-              className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
+            <CategorySelector />
+            {/* <input
+              className="h-[36px] w-[280px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
               type="text"
               id="search-input"
               placeholder="Select a category"
-            />
+            /> */}
           </div>
-          <div className="flex flex-col">
+          <div className="p-2 flex flex-col">
             <label
               className="w-fit text-[10px] text-LightGray"
               htmlFor="search-box"
             >
               TYPE
             </label>
-            <input
+            <TypeSelector />
+            {/* <input
               className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
               type="text"
               id="search-input"
               placeholder="Select a type"
-            />
+            /> */}
           </div>
-          <div className="flex flex-col">
+          <div className="p-2 flex flex-col">
             <label
               className="w-fit text-[10px] text-LightGray"
               htmlFor="search-box"
             >
               SALARY RANGE
             </label>
-            <div>
+            <div className="">
               <input
                 className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
                 type="text"
                 id="search-input"
                 placeholder="min"
               />
+              <span className="p-2 text-LightGray">-</span>
               <input
                 className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
                 type="text"

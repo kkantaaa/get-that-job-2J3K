@@ -3,25 +3,7 @@ import { pool } from "../utils/db_connection.js";
 import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
-jobRouter.use(protect);
-//***not yet get total cadidates and candidates on track -- joint table with job application
-jobRouter.get("/", async (req, res) => {
-  const result = await pool.query("Select * FROM jobs");
-  return res.json({
-    result: result.rows,
-  });
-});
-
-jobRouter.get("/:job_id", async (req, res) => {
-  const job_id = req.params.job_id;
-  const result = await pool.query("Select * FROM jobs WHERE job_id = $1", [
-    job_id,
-  ]);
-  return res.json({
-    result: result.rows,
-  });
-});
-//***
+// jobRouter.use(protect);
 
 jobRouter.get("/", async (req, res) => {
   try {
@@ -164,7 +146,7 @@ jobRouter.put("/:job_id", async (req, res) => {
 
     const categoryQuery = await pool.query(
       "SELECT * FROM job_categories WHERE category_name = $1",
-      [updatedJob.category] 
+      [updatedJob.category]
     );
     console.log("Category Query Result:", categoryQuery.rows);
     if (categoryQuery.rows.length === 0) {
@@ -173,14 +155,13 @@ jobRouter.put("/:job_id", async (req, res) => {
 
     const typeQuery = await pool.query(
       "SELECT * FROM job_types WHERE type_name = $1",
-      [updatedJob.type] 
+      [updatedJob.type]
     );
     console.log("Type Query Result:", typeQuery.rows);
     if (typeQuery.rows.length === 0) {
       return res.status(411).json({ message: "Type not found" });
     }
 
-    
     await pool.query(
       "UPDATE jobs SET job_title = $1, job_category_id = $2, job_type_id = $3, salary_min = $4, salary_max = $5, about_job_position = $6, mandatory_requirement = $7, optional_requirement = $8, updated_at = $9, closed_at = $10 WHERE job_id = $11",
       [
@@ -197,7 +178,6 @@ jobRouter.put("/:job_id", async (req, res) => {
         job_id,
       ]
     );
-    
 
     return res.json({
       message: `Job ${job_id} has been updated.`,
@@ -209,7 +189,5 @@ jobRouter.put("/:job_id", async (req, res) => {
     });
   }
 });
-
-
 
 export default jobRouter;
