@@ -59,7 +59,7 @@ function JobDetail() {
                 />
               </svg>
               <p className="ml-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                Post 2 Days Ago
+                Posted 2 Days Ago
               </p>
             </div>
             <div className="mt-[16px]">Category Type Salary</div>
