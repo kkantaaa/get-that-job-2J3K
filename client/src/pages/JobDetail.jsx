@@ -181,11 +181,12 @@ function JobDetail() {
                 </div>
               </div>
             </div>
+
             <div className="mt-[54px]">
               <h2 className="text-[24px] font-Montserrat text-DarkPink font-normal leading-normal">
                 About Company
               </h2>
-              <p className="w-[760px] h-[192px]">
+              <p className="w-[760px]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Pellentesque porta nunc viverra velit tincidunt, non vehicula
                 augue vehicula. Donec viverra luctus nisl, sed vehicula ligula.
