@@ -1,9 +1,28 @@
 import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function JobDetail() {
   const navigate = useNavigate();
+  const [jobDetail, setJobDetail] = useState({}); // Initialize as an object for jobDetail
+  const {jobId} = useParams();
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getJobDetail = async () => {
+    try {
+      const result = await axios.get(`endpoint/${jobId}`);
+      setJobDetail(result.data);
+      console.log(result.data);
+    } catch (error) {
+      console.error("Error: failed to fetch Job data", error);
+    }
+  };
+
+  useEffect(()=>{
+    getJobDetail();
+  },[getJobDetail, jobId]); //  Added jobId as a dependency
 
   const handleBack = (event) => {
     event.preventDefault();
@@ -43,10 +62,12 @@ function JobDetail() {
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
                     logo
+                    {/* {jobDetail.companylogo} */}
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
                       The Company name SA
+                      {/* {jobDetail.companyname} */}
                     </div>
                     <svg
                       width="138"
@@ -132,7 +153,9 @@ function JobDetail() {
                       fill="#616161"
                     />
                   </svg>
-                  <div>Manufacturing</div>
+                  <div>Manufacturing
+                  {/* {jobDetail.jobcategory} */}
+                  </div>
                 </div>
               </div>
 
@@ -154,7 +177,9 @@ function JobDetail() {
                       fill="#616161"
                     />
                   </svg>
-                <div>Full time</div>
+                <div>Full time
+                {/* {jobDetail.jobtype} */}
+                </div>
                 </div>
               </div>
 
@@ -176,9 +201,13 @@ function JobDetail() {
                       fill="#616161"
                     />
                   </svg>
-                  <p className="minsalary">2000</p>
+                  <p className="minsalary">2000 
+                  {/* {jobDetail.minsalary} */}
+                  </p>
                   <p className="ml-1 mr-1">-</p>
-                  <p className="maxsalary">2500</p>
+                  <p className="maxsalary">2500
+                  {/* {jobDetail.maxsalary} */}
+                  </p>
                 </div>
               </div>
             </div>
@@ -199,6 +228,7 @@ function JobDetail() {
                 aliquet massa id orci volutpat ullamcorper. Nunc at ante sem.
                 Etiam elementum, mi eget aliquam lobortis, elit libero tempus
                 ex, vel pretium nisi risus ac augue.
+                {/* {jobDetail.aboutcompany} */}
               </p>
             </div>
             <div className="mt-[16px]">
@@ -217,6 +247,7 @@ function JobDetail() {
                 aliquet massa id orci volutpat ullamcorper. Nunc at ante sem.
                 Etiam elementum, mi eget aliquam lobortis, elit libero tempus
                 ex, vel pretium nisi risus ac augue.
+                {/* {jobDetail.aboutposition} */}
               </p>
             </div>
             <div className="mt-[16px]">
@@ -230,6 +261,7 @@ function JobDetail() {
                 Vivamus maximus metus a magna fermentum ullamcorper. Phasellus
                 ultrices vestibulum ligula ut pellentesque. Quisque quis congue
                 quam.
+                {/* {jobDetail.mandatoryrequirement} */}
               </p>
             </div>
             <div className="mt-[16px]">
@@ -240,6 +272,7 @@ function JobDetail() {
                 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 <br />- Maecenas vel metus imperdiet, malesuada dolor a,
                 pulvinar tellus.
+                {/* {jobDetail.optionalrequirement} */}
               </p>
             </div>
             <div className="flex flex-row justify-center items-center mt-[16px]">
