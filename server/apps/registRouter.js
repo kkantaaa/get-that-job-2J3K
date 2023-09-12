@@ -47,7 +47,7 @@ registRouter.post("/test/post_tabledata", async (req, res) => {
         user.experience,
       ]
     );
-    
+
     return res.json({
       message: "Get that job account created!",
     });
@@ -85,16 +85,15 @@ registRouter.post("/professional", async (req, res) => {
       birthdate: req.body.birthdate,
       linkedin: req.body.linkedin,
       title: req.body.title,
-      jobexp: req.body.jobexp,
+      jobexp: req.body.jobExp,
       education: req.body.education,
       havefile: req.body.havefile,
-      confirmedpassword: req.body.confirmedpassword,
+      confirmedpassword: req.body.confirmedPassword,
     };
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
-
       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
       [
         user.email,

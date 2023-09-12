@@ -3,9 +3,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import authRouter from "./apps/auth.js";
 import dotenv from "dotenv";
-import registRouter from "./Website_Router/registRouter.js";
-import uploadRouter from "./Website_Router/uploadRouter.js";
-import jobRouter from "./apps/jobs.js"
+import registRouter from "./apps/registRouter.js";
+import uploadRouter from "./apps/uploadRouter.js";
+import jobRouter from "./apps/jobs.js";
 import categoryRouter from "./apps/category.js";
 <<<<<<< HEAD
 import typeRouter from "./apps/type.js";
@@ -30,7 +30,7 @@ async function init() {
   app.use("/regist", registRouter);
   app.use("/auth", authRouter);
   app.use("/upload", uploadRouter);
-  app.use("/jobs", jobRouter)
+  app.use("/jobs", jobRouter);
   app.use("/category", categoryRouter);
 <<<<<<< HEAD
   app.use("/type", typeRouter);
