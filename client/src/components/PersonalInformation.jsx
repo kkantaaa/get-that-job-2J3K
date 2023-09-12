@@ -167,7 +167,23 @@ function PersonalInformation() {
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button className="flex flex-row" type="submit">
             <div onClick={() => navigate("/user/register3")} className="ml-[10px]">NEXT</div>
+<<<<<<< HEAD
             <img src={ArrowRight}/>
+=======
+            <svg
+              className="ml-[8px]"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
+                fill="white"
+              />
+            </svg>
+>>>>>>> eb21c4d (fix: fix buttons and font size)
           </button>
           </div>
         </div>
