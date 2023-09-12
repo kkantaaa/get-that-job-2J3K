@@ -53,7 +53,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
   try {
     const client = await pool.connect();
     const result = await client.query(
-      "SELECT * FROM recruiters WHERE companyemail = $1",
+      "SELECT * FROM recruitertable WHERE companyemail = $1",
       [email]
     );
     const recruiter = result.rows[0];
