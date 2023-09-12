@@ -13,6 +13,7 @@ import JobPostings from "./pages/JobPostingsPage.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 
+
 function App() {
   const NoMatch = () => <h1>Page Not Found.</h1>;
 

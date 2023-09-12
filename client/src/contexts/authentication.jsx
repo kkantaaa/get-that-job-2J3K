@@ -40,8 +40,8 @@ export const AuthProvider = ({ children }) => {
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
-      console.log(`this is token : ${token}`);
-      setUserData({ userDataFromToken });
+      // console.log(`this is token : ${token}`);
+      setUserData({ ...userData, user: userDataFromToken });
       navigate("/recruiter/jobpostings");
     } catch (error) {
       // console.error("Error: unable to login the account", error);
