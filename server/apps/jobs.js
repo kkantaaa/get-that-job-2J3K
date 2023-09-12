@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { pool } from "../utils/db_connection.js";
-import { protect } from "../utils/protect.js";
+import { protect } from "../Middlewares/protect.js";
 
 const jobRouter = Router();
 jobRouter.use(protect);

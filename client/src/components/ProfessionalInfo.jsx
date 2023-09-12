@@ -86,15 +86,15 @@ function ProfessionalInfo() {
           >
             PROFESSIONAL EXPERIENCE
             <Controller
-              name="jobexp"
+              name="jobExp"
               control={control}
               defaultValue=""
               rules={{ required: "Professional experience is required" }}
               render={({ field }) => (
                 <input
                   className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  name="jobexp"
-                  id="jobexp"
+                  name="jobExp"
+                  id="jobExp"
                   type="text"
                   placeholder="Worked 6 years in a bitcoin farm until I decided to change my life..."
                   {...field}
@@ -134,12 +134,12 @@ function ProfessionalInfo() {
         <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
           Between 100 and 2000 characters
         </p>
-      
+
         <div className="file-upload-container">
           <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
             UPLOAD / UPDATE YOUR CV
           </p>
-          
+
           <input
             className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
             name="havefile"
@@ -153,7 +153,6 @@ function ProfessionalInfo() {
             }}
           />
         </div>
-        
 
         <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
           Only PDF. Max size 5MB
@@ -180,9 +179,7 @@ function ProfessionalInfo() {
           </div>
 
           <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
-            <button onClick={handlerSkip}>
-              SKIP THIS!
-            </button>
+            <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
 
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
