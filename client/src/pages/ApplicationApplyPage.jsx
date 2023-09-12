@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+
 import axios from "axios";
 
-export default function ApplicationApplyPage({ companyName }) {
+function ApplicationApplyPage({ companyName }) {
   const { control, handleSubmit } = useForm();
   const [currentCV, setCurrentCV] = useState(null);
   const [showUploadButton, setShowUploadButton] = useState(false);
@@ -76,7 +80,9 @@ export default function ApplicationApplyPage({ companyName }) {
         </div>
         {showUploadButton && (
           <div>
-            <button type="button">Upload New CV</button>
+            <Button variant="outline" type="button">
+              Upload New CV
+            </Button>
             <span>Only PDF. Max size 5 MB</span>
           </div>
         )}
@@ -89,7 +95,7 @@ export default function ApplicationApplyPage({ companyName }) {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input {...field} type="text" id="experience" />
+              <Input {...field} type="text" id="experience" />
             )}
           />
         </div>
@@ -102,7 +108,7 @@ export default function ApplicationApplyPage({ companyName }) {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input {...field} type="text" id="WHY ARE YOU INTERESTED" />
+              <Input {...field} type="text" id="WHY ARE YOU INTERESTED" />
             )}
           />
           <span className="input-description">
@@ -121,7 +127,7 @@ export default function ApplicationApplyPage({ companyName }) {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input {...field} type="text" id="WHY ARE YOU INTERESTED" />
+              <Input {...field} type="text" id="WHY ARE YOU INTERESTED" />
             )}
           />
           <span className="input-description">
@@ -129,10 +135,12 @@ export default function ApplicationApplyPage({ companyName }) {
           </span>
         </div>
         <div>
-          <button type="submit">Send Application</button>
+          <Button type="submit">Send Application</Button>
         </div>
-        ) )
+        
       </form>
     </>
   );
 }
+export default ApplicationApplyPage;
+// /user/application/apply

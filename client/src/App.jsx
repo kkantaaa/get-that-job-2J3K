@@ -11,6 +11,7 @@ import Homepage from "@/pages/HomePage.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
 import JobPostings from "./pages/JobPostingsPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
+import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 
@@ -40,7 +41,7 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-              <Route path="/user/apply" element={<ApplicationApplyPage />} />
+              <Route path="/user/application/apply" element={<ApplicationApplyPage />} />
               <Route path="/recruiter/jobpostings" element={<JobPostings />} />
               <Route path="/user/jobdetail" element={<JobDetail />} />
               <Route path="*" element={<NoMatch />} />
