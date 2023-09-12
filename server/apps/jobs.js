@@ -5,35 +5,30 @@ const jobRouter = Router();
 
 jobRouter.get("/", async (req, res) => {
   try {
-    const keywords = req.query.keywords || null;
+    // const keywords = req.query.keywords || null;
+    const keywords = "%Dev%";
     const category = req.query.category || null;
     const type = req.query.type || null;
-    const maxSalary = req.query.maxSalary || null;
-    const minSalary = req.query.minSalary || null;
+    // const minSalary = req.query.minSalary || null;
+    const minSalary = 2000;
+    // const maxSalary = req.query.maxSalary || null;
+    const maxSalary = 4000;
 
     let query = "";
     let values = [];
 
-    if (keywords && category && type) {
-      query = `SELECT *
-    FROM jobs
-    WHERE (job_title ilike $1 or job_title IS NULL) AND
-          (recruiter_profile.companyname ilike $1 or recruiter_profile.companyname IS NULL) AND
-          (category = $2 OR $2 IS NULL) AND
-          (type = $3 OR $3 IS NULL) AND
-          (salary_max <= $4 AND salary_min >= $5 OR $4 IS NULL OR $5 IS NULL)`;
-      values = [keywords, category, type, maxSalary, minSalary];
-    }
+    //ยัวไม่ได้เพิ่ม SEARCH BY COMPANY NAME -> link recruiter_id : jobs table to recruiter_profile table
+    query = `SELECT *
+    FROM jobs_mock
+    WHERE (job_title ILIKE $1 OR $1 IS NULL)
+    AND (job_category = $2 OR $2 IS NULL)
+    AND (job_type_id = $3 OR $3 IS NULL)
+    AND (salary_min >= $4 OR $4 IS NULL)
+    AND (salary_max <= $5 OR $5 IS NULL)`;
+    values = [keywords, category, type, minSalary, maxSalary];
 
-    // if (keywords) {
-    //   query = `select * from jobs
-    // where title ilike $1
-    // or recruiter.companyname ilike $1`;
-    //   values = [keywords];
-    // }
-    else {
-      query = `select * from jobs`;
-    }
+    // query = `SELECT * FROM jobs_mock WHERE job_title ILIKE $1 AND salary_min >= $2`;
+    // values = [keywords, minSalary];
 
     const results = await pool.query(query, values);
 
@@ -59,7 +54,9 @@ jobRouter.get("/:id", async (req, res) => {
   let result;
 
   try {
-    result = await pool.query("select * from jobs where job_id=$1", [jobId]);
+    result = await pool.query("select * from jobs_mock where job_id=$1", [
+      jobId,
+    ]);
   } catch (error) {
     return res.json({
       message: `${error}`,
