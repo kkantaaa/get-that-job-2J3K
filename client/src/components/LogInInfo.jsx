@@ -35,6 +35,7 @@ function LogInInfo() {
         await setUserData({
           email: control._fields.email._f.value,
           password: control._fields.password._f.value,
+          confirmedPassword: control._fields.confirmedPassword._f.value,
         });
         console.log(data);
         navigate("/user/register2");
