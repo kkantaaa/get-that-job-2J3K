@@ -156,11 +156,26 @@ function PersonalInformation() {
         </div>
 
         <div className="flex flex-row">
-          <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] tracking-[1.25px]">
+          <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] font-[500px] tracking-[1.25px]">
             <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button type="submit">NEXT</button>
+          <button className="flex flex-row" type="submit">
+            <div onClick={() => navigate("/user/register3")} className="ml-[10px]">NEXT</div>
+            <svg
+              className="ml-[8px]"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
+                fill="white"
+              />
+            </svg>
+          </button>
           </div>
         </div>
       </div>
