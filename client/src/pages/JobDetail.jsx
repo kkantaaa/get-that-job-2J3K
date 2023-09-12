@@ -1,5 +1,20 @@
 import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
+import { useNavigate } from "react-router-dom";
+
 function JobDetail() {
+  const navigate = useNavigate();
+
+  const handleBack = (event) => {
+    event.preventDefault();
+    navigate("/user/findthatjob");
+  }
+
+  const handleJobApplication = (event) =>{
+    event.preventDefault();
+    navigate("/path หน้า job application")
+  }
+
+
   return (
     <>
       <div className="bg-Background overflow-x-hidden">
@@ -19,7 +34,8 @@ function JobDetail() {
                   fill="#616161"
                 />
               </svg>
-              <p className="uppercase">Back</p>
+              <p className="uppercase cursor-pointer"
+              onClick={handleBack}>Back</p>
             </div>
             <div className="mt-[16px]">
               <div className="flex flex-row">
@@ -71,7 +87,8 @@ function JobDetail() {
                       fill="white"
                     />
                   </svg>
-                  <div className="ml-[4px]">Apply now</div>
+                  <div className="ml-[4px]"
+                  onClick={handleJobApplication}>Apply now</div>
                 </button>
               </div>
             </div>
@@ -237,7 +254,8 @@ function JobDetail() {
                     fill="white"
                   />
                 </svg>
-                <div className="ml-[4px]">Apply now</div>
+                <div className="ml-[4px]"
+                onClick={handleJobApplication}>Apply now</div>
               </button>
             </div>
           </div>
