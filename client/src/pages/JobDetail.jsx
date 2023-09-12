@@ -5,7 +5,7 @@ function JobDetail() {
       <div className="bg-Background overflow-x-hidden">
         <div className="flex flex-row font-Inter text-[16px]">
           <ProfessionalSidebar />
-          <div className="ml-[120px] mt-[32px]">
+          <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
             <div className="flex flex-row">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
