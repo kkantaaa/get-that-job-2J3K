@@ -4,10 +4,13 @@ import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 =======
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
@@ -45,6 +48,7 @@ function ProfessionalInfo() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     } catch (error) {
 =======
 =======
@@ -54,6 +58,9 @@ function ProfessionalInfo() {
 =======
     } catch (error) {
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+    } catch (error) {
+>>>>>>> fca291e (fix: fix buttons and font size)
       console.error("Error during registration", error);
     }
   };
@@ -187,9 +194,12 @@ function ProfessionalInfo() {
 
         <div className="mt-[16px] flex flex-row">
 <<<<<<< HEAD
+<<<<<<< HEAD
           {/* Previous Button */}
 =======
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
             <button
               onClick={() => navigate("/user/register2")}
@@ -197,8 +207,11 @@ function ProfessionalInfo() {
               type="submit"
             >
 <<<<<<< HEAD
+<<<<<<< HEAD
               <img src={ArrowLeft}/>
 =======
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -211,11 +224,15 @@ function ProfessionalInfo() {
                   fill="white"
                 />
               </svg>
+<<<<<<< HEAD
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
               <div className="ml-[4px]">PREVIOUS</div>
             </button>
           </div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
           {/* Skip Button */}
           <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
@@ -237,6 +254,33 @@ function ProfessionalInfo() {
 =======
           <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
             <button onClick={handlerSkip}>SKIP THIS!</button>
+=======
+          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
+            <button onClick={handlerSkip}>SKIP THIS!</button>
+          </div>
+
+          <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+            <button
+              className="flex flex-row"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              <div className="ml-[10px]">FINISH</div>
+              <svg
+                className="ml-[8px]"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+>>>>>>> fca291e (fix: fix buttons and font size)
           </div>
 
           <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">

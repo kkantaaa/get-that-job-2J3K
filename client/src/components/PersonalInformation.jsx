@@ -194,8 +194,11 @@ function PersonalInformation() {
           <button className="flex flex-row" type="submit">
             <div onClick={() => navigate("/user/register3")} className="ml-[10px]">NEXT</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <img src={ArrowRight}/>
 =======
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
             <svg
               className="ml-[8px]"
               xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +212,10 @@ function PersonalInformation() {
                 fill="white"
               />
             </svg>
+<<<<<<< HEAD
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
           </button>
           </div>
         </div>

@@ -131,12 +131,17 @@ function RecruitCompanyInfo() {
         <div className="about-company-input">
           <label
 <<<<<<< HEAD
+<<<<<<< HEAD
             htmlFor="about_company"
             className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
 =======
             htmlFor="abtcompany"
             className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+            htmlFor="abtcompany"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+>>>>>>> fca291e (fix: fix buttons and font size)
           >
             ABOUT COMPANY
             <Controller
@@ -147,10 +152,14 @@ function RecruitCompanyInfo() {
               render={({ field }) => (
                 <input
 <<<<<<< HEAD
+<<<<<<< HEAD
                   className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 =======
                   className="flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+                  className="flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> fca291e (fix: fix buttons and font size)
                   id="aboutcompany"
                   name="aboutcompany"
                   type="text"
@@ -204,17 +213,24 @@ function RecruitCompanyInfo() {
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <button
 =======
           <button
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+          <button
+>>>>>>> fca291e (fix: fix buttons and font size)
               onClick={() => navigate("/recruiter/register1")}
               className="flex flex-row"
               type="submit"
             >
 <<<<<<< HEAD
+<<<<<<< HEAD
               <img src={ArrowLeft} />
 =======
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -227,7 +243,10 @@ function RecruitCompanyInfo() {
                   fill="white"
                 />
               </svg>
+<<<<<<< HEAD
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
               <div className="ml-[4px]">PREVIOUS</div>
             </button>
           </div>
@@ -238,18 +257,25 @@ function RecruitCompanyInfo() {
 
           <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <button
 =======
           <button
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+          <button
+>>>>>>> fca291e (fix: fix buttons and font size)
               className="flex flex-row"
               type="submit"
               onClick={handleSubmit}
             >
               <div className="ml-[10px]">FINISH</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <img src={ArrowRight}/>
 =======
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
               <svg
                 className="ml-[8px]"
                 xmlns="http://www.w3.org/2000/svg"
@@ -263,7 +289,10 @@ function RecruitCompanyInfo() {
                   fill="white"
                 />
               </svg>
+<<<<<<< HEAD
 >>>>>>> eb21c4d (fix: fix buttons and font size)
+=======
+>>>>>>> fca291e (fix: fix buttons and font size)
             </button>
           </div>
         </div>
