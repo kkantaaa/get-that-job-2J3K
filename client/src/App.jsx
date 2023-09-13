@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider, useAuth } from "./contexts/authentication.jsx"; // Import AuthProvider and useAuth
+import { AuthProvider, useAuth } from "./contexts/authentication.jsx";
 import UserRegisterPage1 from "./pages/UserRegisterPage1.jsx";
 import UserRegisterPage2 from "./pages/UserRegisterPage2.jsx";
 import UserRegisterPage3 from "./pages/UserRegisterPage3.jsx";
@@ -7,17 +7,15 @@ import RecruitRegisterPage1 from "./pages/RecruitRegisterPage1.jsx";
 import RecruitRegisterPage2 from "./pages/RecruitRegisterPage2.jsx";
 import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
-// import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
-// import JobPostings from "./pages/JobPostingsPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
 
 function App() {
-  // const auth = useAuth(); 
+  const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
 
   const NoMatch = () => <h1>Page Not Found.</h1>;
 
@@ -43,14 +41,13 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-<<<<<<< HEAD
               <Route
                 path="/user/application/apply"
                 element={<ApplicationApplyPage />}
               />
-              {/* <Route path="/recruiter/jobpostings" element={<JobPostings />} /> */}
 
-              {/* {auth.isLoggedIn && (
+              {/* เพิ่มเงื่อนไขเพื่อตรวจสอบว่าผู้ใช้ลงชื่อเข้าใช้หรือไม่
+              {auth.isLoggedIn && (
                 <Route
                   path="/recruiter/createjobposting"
                   element={<CreateJobPosting />}
@@ -58,11 +55,6 @@ function App() {
               )} */}
 
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
-
-=======
-              <Route path="/recruiter/jobpostings" element={<JobPostings />} />
-              <Route path="/user/jobs/:job_id" element={<JobDetail />} />
->>>>>>> 87fe57e4a472a21985a1ac756488a8fae1f0d90e
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </ContextProvider>
@@ -73,3 +65,4 @@ function App() {
 }
 
 export default App;
+
