@@ -9,13 +9,13 @@ import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
-import JobDetail from "./pages/JobDetail.1.jsx";
+import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
 
 function App() {
-  const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
+  // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
 
   const NoMatch = () => <h1>Page Not Found.</h1>;
 
