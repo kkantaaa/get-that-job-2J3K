@@ -43,6 +43,7 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
+<<<<<<< HEAD
               <Route
                 path="/user/application/apply"
                 element={<ApplicationApplyPage />}
@@ -58,6 +59,10 @@ function App() {
 
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
 
+=======
+              <Route path="/recruiter/jobpostings" element={<JobPostings />} />
+              <Route path="/user/jobs/:job_id" element={<JobDetail />} />
+>>>>>>> 87fe57e4a472a21985a1ac756488a8fae1f0d90e
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </ContextProvider>
