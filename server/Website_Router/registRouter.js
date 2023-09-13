@@ -13,7 +13,9 @@ registRouter.get("/test/get_tabledata", async (req, res) => {
     return res.json({ message: result.rows });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Error fetching data from the database" });
+    return res
+      .status(500)
+      .json({ message: "Error fetching data from the database" });
   }
 });
 
@@ -29,7 +31,7 @@ registRouter.post("/test/post_tabledata", async (req, res) => {
       title: req.body.title,
       experience: req.body.experience,
     };
-    
+
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
 
@@ -45,7 +47,10 @@ registRouter.post("/test/post_tabledata", async (req, res) => {
         user.experience,
       ]
     );
-    return res.json({ message: "Get that job account created!" });
+
+    return res.json({
+      message: "Get that job account created!",
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Error creating the account" });
@@ -68,12 +73,19 @@ registRouter.post("/professional", async (req, res) => {
       havefile: req.body.havefile,
       confirmedpassword: req.body.confirmedpassword,
     };
-    
+
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
 
     await pool.query(
       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+
+      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+
       [
         user.email,
         user.password,
@@ -109,7 +121,7 @@ registRouter.post("/recruiter", async (req, res) => {
       aboutcompany: req.body.aboutcompany,
       havefile: req.body.havefile,
     };
-    
+
     const salt = await bcrypt.genSalt(14);
     user.companypassword = await bcrypt.hash(user.companypassword, salt);
 
