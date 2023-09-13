@@ -22,7 +22,7 @@ export function TypeSelector() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel className="text-LightGray text-[14px]">
-            <p className="text-LightGray text-[14px]">Select a type</p>
+            <p className="text-LightGray text-[14px]">-- Select a type --</p>
           </SelectLabel>
           <SelectItem className="text-LightGray text-[14px]" value="Full time">
             Full time

@@ -22,7 +22,9 @@ export function CategorySelector() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel className="text-LightGray text-[14px]">
-            <p className="text-LightGray text-[14px]">Select a category</p>
+            <p className="text-LightGray text-[14px]">
+              -- Select a category --
+            </p>
           </SelectLabel>
           <SelectItem
             className="text-LightGray text-[14px]"
