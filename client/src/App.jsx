@@ -14,6 +14,8 @@ import JobPostings from "./pages/JobPostingsPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
+import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
+
 
 function App() {
   const NoMatch = () => <h1>Page Not Found.</h1>;
@@ -40,6 +42,10 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
+              <Route
+                path="/user/application/apply"
+                element={<ApplicationApplyPage/>}
+              />
               <Route path="/recruiter/jobpostings" element={<JobPostings />} />
               <Route path="/user/jobdetail" element={<JobDetail />} />
               <Route
