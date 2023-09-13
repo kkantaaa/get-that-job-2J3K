@@ -12,6 +12,8 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
+    "@hookform/resolvers": "^3.3.1",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^1.2.2",
     "@radix-ui/react-slot": "^1.0.2",
     "axios": "^1.5.0",
@@ -25,7 +27,9 @@
     "react-router-dom": "^6.15.0",
     "shadcn-ui": "^0.3.0",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "yup": "^1.2.0",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/node": "^20.5.9",
