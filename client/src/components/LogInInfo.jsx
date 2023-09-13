@@ -1,4 +1,4 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form"; //1. นำเข้า React Hook Form, Controller = เพื่อเชื่อมต่อ field ใน input เข้ากับ react hook form
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
@@ -7,16 +7,17 @@ function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
   const navigate = useNavigate();
 
+// 2. เราจะใช้ useForm(); เพื่อกำหนดค่าต่างๆ และส่งค่าที่จะใช้ในการจัดการ form
   const {
-    handleSubmit,
-    control,
-    setError,
-    formState: { errors },
+    handleSubmit, // <- ใช้เพื่อ manage เวลาส่งฟอร์ม 
+    control, // <- มาจาก controller .ใช้เพื่อเชื่อมต่อกับ field input ใน form
+    setError, // <- function สำหรับจัดการข้อความ error message ที่อยากให้แสดง
+    formState: { errors }, // <-  เป็นค่าที่ใช้ในเก็บ error message ที่เรา set ขึ้นมา เวลากรอก form ไม่ครบ
   } = useForm();
 
   useEffect(() => {
-    // Log the updated userData after the state has been updated
-    console.log("Updated userData:", userData);
+// ใช้ useEffect เพื่ออัปเดตเวลามีข้อมูลเปลี่ยนแปลง
+        console.log("Updated userData:", userData);
   }, [userData]);
 
   const onSubmit = async (data) => {
