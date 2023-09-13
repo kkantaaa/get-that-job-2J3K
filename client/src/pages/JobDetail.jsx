@@ -1,43 +1,41 @@
-import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ProfessionalSidebar from "@/components/ProfessionalSideBar";
 
 function JobDetail() {
   const navigate = useNavigate();
-  const [jobDetail, setJobDetail] = useState({}); // สร้าง state และกำหนดค่าเริ่มต้นเป็น obj ว่างๆ ที่ใช้เก็บข้อมูลดีเทลงาน
-  const {jobId} = useParams(); // ใช้ useParams เพื่อดึงค่า jobId ออกมาจาก URL ซึ่งเป็นส่วนหนึ่งของ path
+  const [jobDetail, setJobDetail] = useState([]);
+  const { job_id } = useParams();
 
-
-  // declare component getJobDetail ขึ้นมา เพื่อส่ง request ไปหา server ดึงข้อมูลรายการงานมาแสดงที่เว็บไซต์
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getJobDetail = async () => {
     try {
-      const result = await axios.get(`endpoint/${jobId}`);
-      setJobDetail(result.data); // อัพเดต state jobDetail เพื่อเก็บข้อมูลดีเทลงานที่ได้รับจาก API
-      console.log(result.data);
+      const result = await axios.get(`http://localhost:4000/jobs/${job_id}`);
+      console.log(result.data.data);
+      setJobDetail(result.data.data);
     } catch (error) {
-      console.error("Error: failed to fetch Job data", error);
+      console.error(
+        "Error: Failed to fetch job data for job_id:",
+        job_id,
+        error
+      );
     }
   };
 
-  // ใช้ useEffect เพื่อรัน getJobDetail เมื่อ jobId เปลี่ยนแปลง 
-  useEffect(()=>{
+  useEffect(() => {
     getJobDetail();
-  },[getJobDetail, jobId]); //  Added jobId โดยระบุ [jobId] เป็น dependency เพื่อให้ getJobDetail re-render เมื่อ jobId เปลี่ยนแปลง
+  }, [getJobDetail, job_id]);
 
-  // declare component getJobDetail ขึ้นมา เพื่อ navigate กลับไปหน้า job listings
   const handleBack = (event) => {
     event.preventDefault();
     navigate("/user/findthatjob");
-  }
+  };
 
-  // declare component getJobDetail ขึ้นมา เพื่อ navigate กลับไปหน้าสมัครงาน
-  const handleJobApplication = (event) =>{
+  const handleJobApplication = (event) => {
     event.preventDefault();
-    navigate("/path หน้า job application")
-  }
-
+    navigate("/user/application/apply");
+  };
 
   return (
     <>
@@ -58,8 +56,9 @@ function JobDetail() {
                   fill="#616161"
                 />
               </svg>
-              <p className="uppercase cursor-pointer"
-              onClick={handleBack}>Back</p>
+              <p className="uppercase cursor-pointer" onClick={handleBack}>
+                Back
+              </p>
             </div>
             <div className="mt-[16px]">
               <div className="flex flex-row">
@@ -113,13 +112,15 @@ function JobDetail() {
                       fill="white"
                     />
                   </svg>
-                  <div className="ml-[4px]"
-                  onClick={handleJobApplication}>Apply now</div>
+                  <div className="ml-[4px]" onClick={handleJobApplication}>
+                    Apply now
+                  </div>
                 </button>
               </div>
             </div>
             <h1 className="text-[48px] mt-[16px] text-center font-Montserrat font-normal leading-normal">
               The Job Title
+              {jobDetail.job_title}
             </h1>
             <div className="flex flex-row uppercase justify-center">
               <svg
@@ -136,6 +137,7 @@ function JobDetail() {
               </svg>
               <p className="ml-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
                 Posted 2 Days Ago
+                {jobDetail.created_at}
               </p>
             </div>
             <div className="mt-[16px] font-Montserrat flex flex-row justify-center">
@@ -157,8 +159,9 @@ function JobDetail() {
                       fill="#616161"
                     />
                   </svg>
-                  <div>Manufacturing
-                  {/* {jobDetail.jobcategory} */}
+                  <div>
+                    Manufacturing
+                    {jobDetail.job_category}
                   </div>
                 </div>
               </div>
@@ -181,9 +184,10 @@ function JobDetail() {
                       fill="#616161"
                     />
                   </svg>
-                <div>Full time
-                {/* {jobDetail.jobtype} */}
-                </div>
+                  <div>
+                    Full time
+                    {jobDetail.job_type_id}
+                  </div>
                 </div>
               </div>
 
@@ -205,17 +209,18 @@ function JobDetail() {
                       fill="#616161"
                     />
                   </svg>
-                  <p className="minsalary">2000 
-                  {/* {jobDetail.minsalary} */}
+                  <p className="minsalary">
+                    2000
+                    {jobDetail.salary_min}
                   </p>
                   <p className="ml-1 mr-1">-</p>
-                  <p className="maxsalary">2500
-                  {/* {jobDetail.maxsalary} */}
+                  <p className="maxsalary">
+                    2500
+                    {jobDetail.salary_max}
                   </p>
                 </div>
               </div>
             </div>
-
             <div className="mt-[54px]">
               <h2 className="text-[24px] font-Montserrat text-DarkPink font-normal leading-normal">
                 About Company
@@ -232,7 +237,7 @@ function JobDetail() {
                 aliquet massa id orci volutpat ullamcorper. Nunc at ante sem.
                 Etiam elementum, mi eget aliquam lobortis, elit libero tempus
                 ex, vel pretium nisi risus ac augue.
-                {/* {jobDetail.aboutcompany} */}
+                {jobDetail.aboutcompany}
               </p>
             </div>
             <div className="mt-[16px]">
@@ -251,7 +256,7 @@ function JobDetail() {
                 aliquet massa id orci volutpat ullamcorper. Nunc at ante sem.
                 Etiam elementum, mi eget aliquam lobortis, elit libero tempus
                 ex, vel pretium nisi risus ac augue.
-                {/* {jobDetail.aboutposition} */}
+                {jobDetail.about_job_position}
               </p>
             </div>
             <div className="mt-[16px]">
@@ -265,7 +270,7 @@ function JobDetail() {
                 Vivamus maximus metus a magna fermentum ullamcorper. Phasellus
                 ultrices vestibulum ligula ut pellentesque. Quisque quis congue
                 quam.
-                {/* {jobDetail.mandatoryrequirement} */}
+                {jobDetail.mandatory_requirement}
               </p>
             </div>
             <div className="mt-[16px]">
@@ -276,7 +281,7 @@ function JobDetail() {
                 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 <br />- Maecenas vel metus imperdiet, malesuada dolor a,
                 pulvinar tellus.
-                {/* {jobDetail.optionalrequirement} */}
+                {jobDetail.optional_requirement}
               </p>
             </div>
             <div className="flex flex-row justify-center items-center mt-[16px]">
@@ -293,8 +298,9 @@ function JobDetail() {
                     fill="white"
                   />
                 </svg>
-                <div className="ml-[4px]"
-                onClick={handleJobApplication}>Apply now</div>
+                <div className="ml-[4px]" onClick={handleJobApplication}>
+                  Apply now
+                </div>
               </button>
             </div>
           </div>
