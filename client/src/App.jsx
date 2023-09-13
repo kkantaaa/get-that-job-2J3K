@@ -47,11 +47,15 @@ function App() {
                 element={<ApplicationApplyPage/>}
               />
               <Route path="/recruiter/jobpostings" element={<JobPostings />} />
+<<<<<<< HEAD
               <Route path="/user/jobdetail" element={<JobDetail />} />
               <Route
                 path="/recruiter/createjobposting"
                 element={<CreateJobPosting />}
               />
+=======
+              <Route path="/user/jobs/:job_id" element={<JobDetail />} />
+>>>>>>> 87fe57e (fix: getjobdetail callback)
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </ContextProvider>
