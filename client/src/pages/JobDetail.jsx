@@ -34,7 +34,7 @@ function JobDetail() {
 
   const handleJobApplication = (event) => {
     event.preventDefault();
-    navigate("/path-to-job-application"); 
+    navigate("/user/application/apply"); 
   };
 
   return (
