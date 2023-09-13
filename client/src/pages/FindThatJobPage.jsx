@@ -1,5 +1,4 @@
-import ProfessionalSidebar from "@/components/ProfessionalSidebar.jsx";
-// import searchline from "@/images/findthatjob-page/search-line.png";
+import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar.jsx";
 import { CategorySelector } from "@/components/CategorySelector";
 import { TypeSelector } from "@/components/TypeSelector";
 import JobList from "@/components/JobList.jsx";
@@ -7,8 +6,8 @@ import JobList from "@/components/JobList.jsx";
 function FindThatJobPage() {
   return (
     <div className="w-full flex flex-row justify-spacearound">
-      <ProfessionalSidebar />
-      <div className="flex flex-col w-full bg-Background">
+      <FindThatJobSideBar />
+      <div className="flex flex-col w-full ml-[240px] bg-Background mb-12">
         <div className="w-full px-12 pt-8 flex flex-col justify-start items-start">
           <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline3 font-light">
             Find that job
@@ -36,12 +35,6 @@ function FindThatJobPage() {
                 CATEGORY
               </label>
               <CategorySelector />
-              {/* <input
-              className="h-[36px] w-[280px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-              type="text"
-              id="search-input"
-              placeholder="Select a category"
-            /> */}
             </div>
             <div className="p-2 flex flex-col">
               <label
@@ -51,12 +44,6 @@ function FindThatJobPage() {
                 TYPE
               </label>
               <TypeSelector />
-              {/* <input
-              className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-              type="text"
-              id="search-input"
-              placeholder="Select a type"
-            /> */}
             </div>
             <div className="p-2 flex flex-col">
               <label
