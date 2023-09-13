@@ -1,11 +1,30 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "@/contexts/registerContexts";
+import { useEffect } from "react";
 
 function LogInInfo() {
+  const { userData, setUserData } = useGlobalContext();
   const navigate = useNavigate();
-  const { handleSubmit, control, setError, formState: { errors } } = useForm();
+
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    // Log the updated userData after the state has been updated
+    console.log("Updated userData:", userData);
+  }, [userData]);
 
   const onSubmit = async (data) => {
+    console.log({
+      email: control._fields.email._f.value,
+      password: control._fields.password._f.value,
+    });
+
     if (data.confirmedPassword !== data.password) {
       setError("confirmedPassword", {
         type: "manual",
@@ -13,7 +32,11 @@ function LogInInfo() {
       });
     } else {
       try {
-        // await userRegister(data);
+        await setUserData({
+          email: control._fields.email._f.value,
+          password: control._fields.password._f.value,
+        });
+        console.log(data);
         navigate("/user/register2");
       } catch (error) {
         console.error("Error during registration", error);
@@ -26,7 +49,9 @@ function LogInInfo() {
       <div>
         <div className="email-input">
           <label htmlFor="email">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">EMAIL</div>
+            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+              EMAIL
+            </div>
             <Controller
               name="email"
               control={control}
@@ -51,7 +76,9 @@ function LogInInfo() {
 
         <div className="password-input">
           <label htmlFor="password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">PASSWORD</div>
+            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+              PASSWORD
+            </div>
             <Controller
               name="password"
               control={control}
@@ -76,7 +103,9 @@ function LogInInfo() {
 
         <div className="confirmed-password-input">
           <label htmlFor="confirmed-password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">PASSWORD CONFIRMATION</div>
+            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+              PASSWORD CONFIRMATION
+            </div>
             <Controller
               name="confirmedPassword"
               control={control}
@@ -87,7 +116,7 @@ function LogInInfo() {
               render={({ field }) => (
                 <input
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="confirmed-password"
+                  id="confirmedpassword"
                   type="password"
                   placeholder="******"
                   {...field}

@@ -87,6 +87,16 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      /* boxShadow: {
+        nav: " 0px 2px 8px 0px hsla(0, 0%, 0%, 0.2)",
+        much: " 0px 10px 20px 0px hsla(0, 0%, 0%, 0.25)",
+        little: " 0px 5px 10px 0px hsla(0, 0%, 0%, 0.25)",
+      },*/
+      dropShadow: {
+        nav: " 0px 2px 8px  hsla(0, 0%, 0%, 0.2)",
+        much: " 0px 10px 20px  hsla(0, 0%, 0%, 0.25)",
+        little: " 0px 5px 10px  hsla(0, 0%, 0%, 0.25)",
+      },
     },
     fontFamily: {
       Inter: ["Inter", "sans-serif"],

@@ -1,18 +1,22 @@
+import { useAuth } from "@/contexts/authentication";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { UserLogin, errorState } = useAuth();
   const {
     control,
-    handleSubmit: handleSubmit1, // Rename the handleSubmit function to avoid conflicts
+    handleSubmit, // Rename the handleSubmit function to avoid conflicts
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // Handle form submission here, e.g., make an API call
+    console.log("data from login form");
     console.log(data); // Replace with your API call logic
-    navigate("/"); // Redirect after successful login
+    await UserLogin(data);
+    // navigate("/"); // Redirect after successful login
   };
 
   // Remove the duplicate useForm() call
@@ -38,26 +42,23 @@ export default function LoginForm() {
             <label className="w-fit text-[10px]" htmlFor="email">
               EMAIL
             </label>
-            <label>
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required:
-                    "The email address you entered isn't connected to an account.",
-                }}
-                render={({ field }) => (
-                  <input
-                    className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-                    id="email"
-                    type="email"
-                    placeholder="some.user@mail.com"
-                    {...field}
-                  />
-                )}
-              />
-            </label>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Please insert login email.",
+              }}
+              render={({ field }) => (
+                <input
+                  className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
+                  id="email"
+                  type="email"
+                  placeholder="some.user@mail.com"
+                  {...field}
+                />
+              )}
+            />
             <span>{errors.email && errors.email.message}</span>
           </div>
           <div className="flex flex-col">
@@ -69,7 +70,7 @@ export default function LoginForm() {
               control={control}
               defaultValue=""
               rules={{
-                required: "The password that you've entered is incorrect.",
+                required: "Please insert password.",
               }}
               render={({ field }) => (
                 <input
@@ -82,6 +83,9 @@ export default function LoginForm() {
               )}
             />
             <span>{errors.password && errors.password.message}</span>
+            {errorState && (
+              <h1 className="text-red-500">Error: {errorState}</h1>
+            )}
           </div>
           <div className="text-right">
             <button
@@ -96,4 +100,3 @@ export default function LoginForm() {
     </>
   );
 }
-

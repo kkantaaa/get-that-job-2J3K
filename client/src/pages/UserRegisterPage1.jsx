@@ -1,11 +1,20 @@
 import LogInInfo from "../components/LogInInfo.jsx";
 import happyGirl from "../images/landing-page/discussing.png";
+import { useNavigate } from "react-router-dom";
+import NavBar from "@/components/NavBar.jsx";
 
 function UserRegisterPage1() {
+  const navigate = useNavigate();
+
+  const handleRecruiterClick = () =>{
+    navigate("/recruiter/register1")
+  };
+
   return (
     <>
       <div className="bg-Background min-h-screen flex flex-col">
-      <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
+      <NavBar/>
+      <div className="flex flex-col ml-[220px] mt-[32px] mr-[776px]">
         <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
         <p className="font-Montserrat text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
         <div className="flex flex-row">
@@ -14,7 +23,9 @@ function UserRegisterPage1() {
           <div className="w-[115px] h-[2px] bg-Pink mt-[6px]"></div>
           </div>
           <div className="flex flex-col font-Inter text-LightGray">
-          <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]">RECRUITER</h2>
+          <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]"
+          onClick={handleRecruiterClick}
+          style={{cursor: "pointer"}}>RECRUITER</h2>
           <div className="w-[80px] h-[2px] bg-LightGray mt-[6px]"></div>
           </div>
         </div>

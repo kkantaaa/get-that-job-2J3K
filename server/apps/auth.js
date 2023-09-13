@@ -10,13 +10,9 @@ authRouter.post("/user/login", async (req, res) => {
 
   try {
     const client = await pool.connect();
-
     const result = await client.query(
-      "SELECT * FROM [table_name_user] WHERE [column_name_email] = $1",
-      [
-        // รอเปลี่ยนชื่อ column email , user
-        email,
-      ]
+      "SELECT * FROM usertable WHERE email = $1",
+      [email]
     );
     const user = result.rows[0];
 
@@ -24,7 +20,7 @@ authRouter.post("/user/login", async (req, res) => {
       return res.status(404).json({ message: "user not found" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password); //รอเปลี่ยนชื่อ column ของ user
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       return res.status(400).json({ message: "password not valid" });
@@ -32,10 +28,8 @@ authRouter.post("/user/login", async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user._id, //รอเปลี่ยนชื่อ column ของ user
-        email: user.email, //รอเปลี่ยนชื่อ column ของ user
-        firstName: user.firstName, //รอเปลี่ยนชื่อ column ของ user
-        lastName: user.lastName, //รอเปลี่ยนชื่อ column ของ user
+        id: user.user_id,
+        email: user.email,
       },
       process.env.SECRET_KEY,
       {
@@ -58,21 +52,20 @@ authRouter.post("/recruiter/login", async (req, res) => {
 
   try {
     const client = await pool.connect();
-
     const result = await client.query(
-      "SELECT * FROM recruiter WHERE email = $1",
-      [
-        // รอเปลี่ยนชื่อ column email , recruiter
-        email,
-      ]
+      "SELECT * FROM recruitertable WHERE companyemail = $1",
+      [email]
     );
-    const user = result.rows[0];
+    const recruiter = result.rows[0];
 
-    if (!user) {
+    if (!recruiter) {
       return res.status(404).json({ message: "user not found" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, recruiter.password); //รอเปลี่ยนชื่อ column ของ recruiter
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      recruiter.companypassword
+    );
 
     if (!isPasswordValid) {
       return res.status(400).json({ message: "password not valid" });
@@ -80,10 +73,8 @@ authRouter.post("/recruiter/login", async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user._id, //รอเปลี่ยนชื่อ column ของ recruiter
-        email: user.email, //รอเปลี่ยนชื่อ column ของ recruiter
-        firstName: user.firstName, //รอเปลี่ยนชื่อ column ของ recruiter
-        lastName: user.lastName, //รอเปลี่ยนชื่อ column ของ recruiter
+        id: recruiter.recruiter_id,
+        email: recruiter.companyemail,
       },
       process.env.SECRET_KEY,
       {

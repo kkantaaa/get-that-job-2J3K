@@ -1,22 +1,46 @@
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "@/contexts/registerContexts";
+import { useEffect } from "react";
 
 function RecruitLogInInfo() {
   const navigate = useNavigate();
-  const { handleSubmit, control, setError, formState: { errors } } = useForm();
+  const { recruiterData, setRecruiterData } = useGlobalContext();
+  const { handleSubmit, control, setError, clearErrors, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    if (data.confirmedPassword !== data.password) {
-      setError("confirmedPassword", { type: "manual", message: "The confirmed Password is not matched" });
+  useEffect(() => {
+    console.log("Updated recruiterData:", recruiterData);
+  }, [recruiterData]);
+
+  const onSubmit = async (data) => {
+    // Check if passwords match
+    if (data.confirmedPassword !== data.companypassword) {
+      setError("confirmedPassword", {
+        type: "manual",
+        message: "The confirmed Password is not matched",
+      });
     } else {
-      navigate("/recruiter/register2");
+      // Clear the error if passwords match
+      clearErrors("confirmedPassword");
+
+      try {
+        await setRecruiterData({
+          companyname: control._fields.companyname._f.value,
+          companyemail: control._fields.companyemail._f.value,
+          companypassword: control._fields.companypassword._f.value,
+        });
+
+        navigate("/recruiter/register2");
+      } catch (error) {
+        console.error("Error during registration", error);
+      }
     }
   };
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
-      <div className="company-name-input">
+        <div className="company-name-input">
           <label htmlFor="company-name" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
             COMPANY NAME
             <Controller
@@ -26,7 +50,8 @@ function RecruitLogInInfo() {
               rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="companyname"
                   id="companyname"
                   type="text"
                   placeholder="My Company S.A"
@@ -42,14 +67,15 @@ function RecruitLogInInfo() {
           <label htmlFor="email" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
             EMAIL
             <Controller
-              name="email"
+              name="companyemail"
               control={control}
               defaultValue=""
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="email"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="companyemail"
+                  name="companyemail"
                   type="email"
                   placeholder="some.user@mail.com"
                   {...field}
@@ -57,21 +83,22 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.email && errors.email.message}</span>
+          <span>{errors.companyemail && errors.companyemail.message}</span>
         </div>
 
         <div className="password-input">
           <label htmlFor="password" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
             PASSWORD
             <Controller
-              name="password"
+              name="companypassword"
               control={control}
               defaultValue=""
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="password"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="companypassword"
+                  name="companypassword"
                   type="password"
                   placeholder="******"
                   {...field}
@@ -79,7 +106,7 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.password && errors.password.message}</span>
+          <span>{errors.companypassword && errors.companypassword.message}</span>
         </div>
 
         <div className="confirmed-password-input">
@@ -94,7 +121,7 @@ function RecruitLogInInfo() {
               }}
               render={({ field }) => (
                 <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="confirmed-password"
                   type="password"
                   placeholder="******"
