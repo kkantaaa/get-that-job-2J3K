@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./contexts/authentication.jsx";
+import { AuthProvider, useAuth } from "./contexts/authentication.jsx"; // Import AuthProvider and useAuth
 import UserRegisterPage1 from "./pages/UserRegisterPage1.jsx";
 import UserRegisterPage2 from "./pages/UserRegisterPage2.jsx";
 import UserRegisterPage3 from "./pages/UserRegisterPage3.jsx";
@@ -7,17 +7,18 @@ import RecruitRegisterPage1 from "./pages/RecruitRegisterPage1.jsx";
 import RecruitRegisterPage2 from "./pages/RecruitRegisterPage2.jsx";
 import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
-import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
+// import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
-import JobPostings from "./pages/JobPostingsPage.jsx";
+// import JobPostings from "./pages/JobPostingsPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
 
-
 function App() {
+  // const auth = useAuth(); 
+
   const NoMatch = () => <h1>Page Not Found.</h1>;
 
   return (
@@ -44,18 +45,19 @@ function App() {
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
               <Route
                 path="/user/application/apply"
-                element={<ApplicationApplyPage/>}
+                element={<ApplicationApplyPage />}
               />
-              <Route path="/recruiter/jobpostings" element={<JobPostings />} />
-<<<<<<< HEAD
-              <Route path="/user/jobdetail" element={<JobDetail />} />
-              <Route
-                path="/recruiter/createjobposting"
-                element={<CreateJobPosting />}
-              />
-=======
+              {/* <Route path="/recruiter/jobpostings" element={<JobPostings />} /> */}
+
+              {/* {auth.isLoggedIn && (
+                <Route
+                  path="/recruiter/createjobposting"
+                  element={<CreateJobPosting />}
+                />
+              )} */}
+
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
->>>>>>> 87fe57e (fix: getjobdetail callback)
+
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </ContextProvider>
@@ -64,4 +66,5 @@ function App() {
     </>
   );
 }
+
 export default App;
