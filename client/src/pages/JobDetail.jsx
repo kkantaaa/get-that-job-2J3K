@@ -69,7 +69,6 @@ function JobDetail() {
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
-                      The Company name SA
                       {jobDetail.company_name}
                     </div>
                     <svg
@@ -221,8 +220,7 @@ function JobDetail() {
                 About Company
               </h2>
               <p className="w-[760px]">
-                test
-                {jobDetail.aboutcompany}
+                {jobDetail.about_company}
               </p>
             </div>
             <div className="mt-[16px]">
