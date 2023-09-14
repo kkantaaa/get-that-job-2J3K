@@ -193,8 +193,5 @@ function PersonalInformation() {
 }
 
 export default PersonalInformation;
-<<<<<<< HEAD
 
 
-=======
->>>>>>> ba4c718 (fix: fix the missing part of the form)
