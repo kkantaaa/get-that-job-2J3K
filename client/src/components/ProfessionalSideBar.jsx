@@ -1,7 +1,9 @@
 import Logo from "../images/landing-page/navlogo1.png";
 import { useAuth } from "@/contexts/authentication";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfessionalSidebar() {
+  const navigate = useNavigate();
   const { logout } = useAuth();
 
   return (
@@ -10,7 +12,13 @@ export default function ProfessionalSidebar() {
         <img src={Logo} />
       </div>
       <div className="w-full h-fit font-Inter text-DarkGray ">
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background ">
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            navigate("/user/findthatjob");
+          }}
+          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background "
+        >
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
@@ -106,8 +114,11 @@ export default function ProfessionalSidebar() {
           <span className=" h-fit">Profile</span>
         </button>
 
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background"
-          onClick={() => { logout(); }}  
+        <button
+          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background"
+          onClick={() => {
+            logout();
+          }}
         >
           <div className=" h-fit mr-[8px]">
             <svg
