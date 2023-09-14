@@ -10,7 +10,6 @@ import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
 import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
-import JobPostings from "./pages/JobPostingsPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
@@ -40,7 +39,6 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-              <Route path="/recruiter/jobpostings" element={<JobPostings />} />
               <Route path="/user/jobdetail" element={<JobDetail />} />
               <Route
                 path="/recruiter/createjobposting"
