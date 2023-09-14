@@ -25,7 +25,7 @@ function JobDetail() {
 
   useEffect(() => {
     getJobDetail();
-  }, [getJobDetail, job_id]);
+  }, [job_id]);
 
   const handleBack = (event) => {
     event.preventDefault();
