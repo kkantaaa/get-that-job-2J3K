@@ -2,12 +2,14 @@ import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSide
 import { CategorySelector } from "@/components/CategorySelector";
 import { TypeSelector } from "@/components/TypeSelector";
 import JobList from "@/components/JobList.jsx";
+import searchIcon from "@/images/getthatjob-page/searchIcon.png";
+import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.png";
 
 function FindThatJobPage() {
   return (
-    <div className="w-full flex flex-row justify-spacearound">
+    <div className="w-full h-screen flex flex-row justify-spacearound bg-Background">
       <FindThatJobSideBar />
-      <div className="flex flex-col w-full ml-[240px] bg-Background mb-12">
+      <div className="flex flex-col w-full ml-[240px] mb-12">
         <div className="w-full px-12 pt-8 flex flex-col justify-start items-start">
           <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline3 font-light">
             Find that job
@@ -19,12 +21,20 @@ function FindThatJobPage() {
             >
               SEARCH BY JOB TITLE OR COMPANY NAME
             </label>
-            <input
-              className="h-[36px] w-[360px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-              type="text"
-              id="search-input"
-              placeholder="manufacturing, sales, swim"
-            />
+            <div className="relative">
+              <input
+                className="h-[36px] w-[360px] rounded-[8px] text-[14px] pl-[28px] border-solid border-[1px] border-Pink bg-White"
+                type="text"
+                id="search-input"
+                placeholder="manufacturing, sales, swim"
+              />
+              <img
+                className="absolute top-2 left-1.5"
+                src={searchIcon}
+                width={20}
+                height={20}
+              />
+            </div>
           </div>
           <div className="flex flew-row">
             <div className="py-2 pr-2 flex flex-col">
@@ -52,25 +62,42 @@ function FindThatJobPage() {
               >
                 SALARY RANGE
               </label>
-              <div className="">
-                <input
-                  className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-                  type="text"
-                  id="search-input"
-                  placeholder="min"
-                />
+              <div className="flex flex-row">
+                <div className="relative">
+                  <input
+                    className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
+                    type="text"
+                    id="search-input"
+                    placeholder="min"
+                  />
+                  <img
+                    className="absolute top-2 left-1"
+                    src={darkDollarIcon}
+                    width={20}
+                    height={20}
+                  />
+                </div>
+
                 <span className="p-2 text-LightGray">-</span>
-                <input
-                  className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-                  type="text"
-                  id="search-input"
-                  placeholder="max"
-                />
+
+                <div className="relative">
+                  <input
+                    className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
+                    type="text"
+                    id="search-input"
+                    placeholder="max"
+                  />
+                  <img
+                    className="absolute top-2 left-1"
+                    src={darkDollarIcon}
+                    width={20}
+                    height={20}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* Render Jobs List Compentent here*/}
         <div className="mx-12">
           <JobList />
         </div>

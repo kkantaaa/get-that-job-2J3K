@@ -7,19 +7,20 @@ const jobRouter = Router();
 
 jobRouter.get("/", async (req, res) => {
   try {
-    // const keywords = req.query.keywords || null;
-    const keywords = "%Dev%";
+    const keywords = req.query.keywords || null;
+    // const keywords = "%Dev%";
     const category = req.query.category || null;
     const type = req.query.type || null;
-    // const minSalary = req.query.minSalary || null;
-    const minSalary = 2000;
-    // const maxSalary = req.query.maxSalary || null;
-    const maxSalary = 4000;
+    const minSalary = req.query.minSalary || null;
+    // const minSalary = 2000;
+    const maxSalary = req.query.maxSalary || null;
+    // const maxSalary = 4000;
 
     let query = "";
     let values = [];
 
     //ยัวไม่ได้เพิ่ม SEARCH BY COMPANY NAME -> link recruiter_id to company_name : join jobs table to recruiter_profile table
+    //OR (recruiter_informations.company_name ILIKE $1 OR IS NULL)
     //ยังไม่ได้เลือกแสดงผลเฉพาะงานที่ status open
     query = `SELECT *
     FROM jobs_mock
