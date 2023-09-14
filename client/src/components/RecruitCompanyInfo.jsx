@@ -10,6 +10,7 @@ function RecruitCompanyInfo() {
   const { handleSubmit, control, setValue, watch } = useForm();
   const [logoPreview, setLogoPreview] = useState(null);
   const { RecruiterRegister } = useAuth();
+  const { upload } = useAuth();
 
   useEffect(() => {
     console.log("Updated RecruiterData:", recruiterData);
@@ -19,44 +20,56 @@ function RecruitCompanyInfo() {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
-      navigate("/path to job post");
-    } catch (error){
+      // navigate("/path to job post");
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
-
+  console.log(recruiterData);
 
   const onSubmit = async (data) => {
-    const { companywebsite, aboutcompany, havefile} = data;
-    setRecruiterData({
-      ...recruiterData,
-      companywebsite,
-      aboutcompany,
-      havefile,
-    });
+    console.log(data);
 
+    const img = data.file;
+    console.log({ img: img });
+    let company_logo = await upload(img);
+
+
+    if (company_logo === undefined) {
+      company_logo = null;
+    }
+    
     try {
-      await RecruiterRegister(recruiterData, data);
-      navigate("/path to job listing");
-    } catch (error){
+      // const { company_website, about_company } = data;
+
+      setRecruiterData({
+        ...recruiterData,
+        company_website: data.company_website,
+        about_company: data.about_company,
+        company_logo: company_logo,
+      });
+      
+      await RecruiterRegister(recruiterData);
+      // navigate("/path to job listing");
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
 
-  useEffect(() => {
-    const logoFile = watch("file");
-    console.log("Logo File:", logoFile);
-    if (logoFile) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        console.log("Logo Preview Data URL:", e.target.result);
-        setLogoPreview(e.target.result);
-      };
-      reader.readAsDataURL(logoFile);
-    } else {
-      setLogoPreview(null);
-    }
-  }, [watch]);
+  // useEffect(() => {
+  //   const logoFile = watch("file");
+  //   console.log("Logo File:", logoFile);
+  //   if (logoFile) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       console.log("Logo Preview Data URL:", e.target.result);
+  //       setLogoPreview(e.target.result);
+  //     };
+  //     reader.readAsDataURL(logoFile);
+  //   } else {
+  //     setLogoPreview(null);
+  //   }
+  // }, [watch]);
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
@@ -74,15 +87,15 @@ function RecruitCompanyInfo() {
           >
             COMPANY WEBSITE
             <Controller
-              name="companywebsite"
+              name="company_website"
               control={control}
               defaultValue=""
               //   rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="companywebsite"
-                  name="companywebsite"
+                  id="company_website"
+                  name="company_website"
                   type="text"
                   placeholder="http://www.mycompany.sa"
                   {...field}
@@ -94,20 +107,20 @@ function RecruitCompanyInfo() {
 
         <div className="about-company-input">
           <label
-            htmlFor="abtcompany"
+            htmlFor="about_company"
             className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
           >
             ABOUT COMPANY
             <Controller
-              name="aboutcompany"
+              name="about_company"
               control={control}
               defaultValue=""
               //   rules={{ required: "About company experience is required" }}
               render={({ field }) => (
                 <input
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="aboutcompany"
-                  name="aboutcompany"
+                  id="about_company"
+                  name="about_company"
                   type="text"
                   placeholder="My Company SA has the vision to change the way how..."
                   {...field}
@@ -159,9 +172,7 @@ function RecruitCompanyInfo() {
           </div>
 
           <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[12px] tracking-[1.25px]">
-            <button onClick={handlerSkip}>
-              SKIP THIS!
-            </button>
+            <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
 
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">

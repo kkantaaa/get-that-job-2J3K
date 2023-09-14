@@ -110,30 +110,45 @@ registRouter.post("/professional", async (req, res) => {
   }
 });
 
+
 // Insert data to the recruitertable for recruiter users
+//double table => recruiters + recruiter_information
 registRouter.post("/recruiter", async (req, res) => {
+  console.log(req.body);
   try {
     const user = {
-      companyemail: req.body.companyemail,
-      companypassword: req.body.companypassword,
-      companyname: req.body.companyname,
-      companywebsite: req.body.companywebsite,
-      aboutcompany: req.body.aboutcompany,
-      havefile: req.body.havefile,
+      email: req.body.email,
+      password: req.body.password,
+      company_name: req.body.company_name,
+      company_website: req.body.company_website,
+      about_company: req.body.about_company,
+      company_logo: req.body.company_logo,
     };
 
     const salt = await bcrypt.genSalt(14);
-    user.companypassword = await bcrypt.hash(user.companypassword, salt);
-
+    user.password = await bcrypt.hash(user.password, salt);
+    
     await pool.query(
-      "INSERT INTO recruitertable (companyemail, companypassword, companyname, companywebsite, aboutcompany, havefile) VALUES ($1, $2, $3, $4, $5, $6)",
-      [
-        user.companyemail,
-        user.companypassword,
-        user.companyname,
-        user.companywebsite,
-        user.aboutcompany,
-        user.havefile,
+      "INSERT INTO recruiters (email, password ) VALUES ($1, $2)",
+      [user.email, user.password]
+    );
+    
+    const recruiterQuery = await pool.query(
+      "SELECT * FROM recruiters WHERE email = $1",
+      [user.email]
+    );
+    console.log("Recruiter Query Result:", recruiterQuery.rows);
+    if (recruiterQuery.rows.length === 0) {
+      return res.status(410).json({ message: "Recruiter Email not found" });
+    }
+    await pool.query(
+      "INSERT INTO recruitertable (recruiter_id, company_name, company_website, about_company, company_logo) VALUES ($1, $2, $3, $4, $5)",
+      [ 
+        parseInt(recruiterQuery.rows[0].recruiter_id, 10),
+        user.company_name,
+        user.company_website,
+        user.about_company,
+        user.company_logo,
       ]
     );
 
@@ -145,5 +160,41 @@ registRouter.post("/recruiter", async (req, res) => {
     return res.status(500).json({ message: "Error creating the account" });
   }
 });
+
+// single table => recruitertable
+// registRouter.post("/recruiter", async (req, res) => {
+//   try {
+//     const user = {
+//       companyemail: req.body.companyemail,
+//       companypassword: req.body.companypassword,
+//       companyname: req.body.companyname,
+//       companywebsite: req.body.companywebsite,
+//       aboutcompany: req.body.aboutcompany,
+//       havefile: req.body.havefile,
+//     };
+
+//     const salt = await bcrypt.genSalt(14);
+//     user.companypassword = await bcrypt.hash(user.companypassword, salt);
+
+//     await pool.query(
+//       "INSERT INTO recruitertable (companyemail, companypassword, companyname, companywebsite, aboutcompany, havefile) VALUES ($1, $2, $3, $4, $5, $6)",
+//       [
+//         user.companyemail,
+//         user.companypassword,
+//         user.companyname,
+//         user.companywebsite,
+//         user.aboutcompany,
+//         user.havefile,
+//       ]
+//     );
+
+//     return res.json({
+//       message: "Get that job account created! Welcome recruiter user!",
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     return res.status(500).json({ message: "Error creating the account" });
+//   }
+// });
 
 export default registRouter;

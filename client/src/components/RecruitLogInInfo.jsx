@@ -6,13 +6,19 @@ import { useEffect } from "react";
 function RecruitLogInInfo() {
   const navigate = useNavigate();
   const { recruiterData, setRecruiterData } = useGlobalContext();
-  const { handleSubmit, control, setError, clearErrors, formState: { errors } } = useForm();
+  const {
+    handleSubmit,
+    control,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     // Check if passwords match
     if (data.confirmedPassword !== data.companypassword) {
       setError("confirmedPassword", {
@@ -23,17 +29,13 @@ function RecruitLogInInfo() {
       // Clear the error if passwords match
       clearErrors("confirmedPassword");
 
-      try {
-        await setRecruiterData({
-          companyname: control._fields.companyname._f.value,
-          companyemail: control._fields.companyemail._f.value,
-          companypassword: control._fields.companypassword._f.value,
-        });
+      setRecruiterData({
+        company_name: control._fields.companyname._f.value,
+        email: control._fields.companyemail._f.value,
+        password: control._fields.companypassword._f.value,
+      });
 
-        navigate("/recruiter/register2");
-      } catch (error) {
-        console.error("Error during registration", error);
-      }
+      navigate("/recruiter/register2");
     }
   };
 
@@ -41,7 +43,10 @@ function RecruitLogInInfo() {
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
         <div className="company-name-input">
-          <label htmlFor="company-name" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="company-name"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
             COMPANY NAME
             <Controller
               name="companyname"
@@ -64,7 +69,10 @@ function RecruitLogInInfo() {
         </div>
 
         <div className="email-input">
-          <label htmlFor="email" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="email"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
             EMAIL
             <Controller
               name="companyemail"
@@ -87,7 +95,10 @@ function RecruitLogInInfo() {
         </div>
 
         <div className="password-input">
-          <label htmlFor="password" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="password"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
             PASSWORD
             <Controller
               name="companypassword"
@@ -106,11 +117,16 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companypassword && errors.companypassword.message}</span>
+          <span>
+            {errors.companypassword && errors.companypassword.message}
+          </span>
         </div>
 
         <div className="confirmed-password-input">
-          <label htmlFor="confirmed-password" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="confirmed-password"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+          >
             PASSWORD CONFIRMATION
             <Controller
               name="confirmedPassword"
@@ -130,7 +146,9 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
+          <span>
+            {errors.confirmedPassword && errors.confirmedPassword.message}
+          </span>
         </div>
 
         <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
