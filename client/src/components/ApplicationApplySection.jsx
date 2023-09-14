@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 //images
 import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
@@ -25,16 +24,17 @@ function ApplicationApplySection({ companyName }) {
         );
         const data = response.data;
 
-        setCurrentCV(data.user_appli_CV);
+        setCurrentCV(data[0].user_appli_cv);
         setProfessionalExperience(data[0].user_appli_exp);
         console.log(data);
-        console.log("Current CV fetched and set:", data);
-        console.log("professionalExperience:", professionalExperience);
+        console.log("Current CV fetched and set:", data[0].user_appli_cv);
+        console.log("professionalExperience:", data[0].user_appli_exp);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
+    setCurrentCV();
   }, []);
 
   const handleCVChoiceChange = (data) => {
@@ -96,11 +96,17 @@ function ApplicationApplySection({ companyName }) {
                         handleCVChoiceChange("useCurrent");
                         const fetchCurrentCV = async () => {
                           try {
-                            const response = await axios.get("");
-                            setCurrentCV(response.data);
+                            const user_id = "1";
+                            const job_id = "4";
+                            const response = await axios.get(
+                              `http://localhost:4000/testapply/${user_id}/job-list/${job_id}`
+                            );
+                            const data = response.data;
+                            console.log(data[0].user_appli_cv);
+                            setCurrentCV(data[0].user_appli_cv);
                             console.log(
                               "Current CV fetched and set:",
-                              response.data
+                              data[0].user_appli_cv
                             );
                           } catch (error) {
                             console.error("Error fetching current CV:", error);
@@ -148,11 +154,11 @@ function ApplicationApplySection({ companyName }) {
                   id="fileInput"
                   accept=".pdf"
                   style={{ display: "none" }}
-                  onChange={(e) => {
+                  onClick={(e) => {
                     const selectedFile = e.target.files[0];
                     if (selectedFile) {
                       setCurrentCV(selectedFile);
-                      console.log("File uploaded:", currentCV);
+                      console.log("Current CV set:", selectedFile);
                     }
                   }}
                 />
