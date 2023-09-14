@@ -69,8 +69,7 @@ function JobDetail() {
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
-                      The Company name SA
-                      {/* {jobDetail.companyname} */}
+                      {jobDetail.company_name}
                     </div>
                     <svg
                       width="138"
@@ -119,7 +118,6 @@ function JobDetail() {
               </div>
             </div>
             <h1 className="text-[48px] mt-[16px] text-center font-Montserrat font-normal leading-normal">
-              The Job Title
               {jobDetail.job_title}
             </h1>
             <div className="flex flex-row uppercase justify-center">
@@ -160,7 +158,6 @@ function JobDetail() {
                     />
                   </svg>
                   <div>
-                    Manufacturing
                     {jobDetail.job_category}
                   </div>
                 </div>
@@ -185,7 +182,6 @@ function JobDetail() {
                     />
                   </svg>
                   <div>
-                    Full time
                     {jobDetail.job_type_id}
                   </div>
                 </div>
@@ -210,12 +206,10 @@ function JobDetail() {
                     />
                   </svg>
                   <p className="minsalary">
-                    2000
                     {jobDetail.salary_min}
                   </p>
                   <p className="ml-1 mr-1">-</p>
                   <p className="maxsalary">
-                    2500
                     {jobDetail.salary_max}
                   </p>
                 </div>
@@ -226,18 +220,7 @@ function JobDetail() {
                 About Company
               </h2>
               <p className="w-[760px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque porta nunc viverra velit tincidunt, non vehicula
-                augue vehicula. Donec viverra luctus nisl, sed vehicula ligula.
-                Vivamus maximus metus a magna fermentum ullamcorper. Phasellus
-                ultrices vestibulum ligula ut pellentesque. Quisque quis congue
-                quam. Nunc porttitor risus lorem, in blandit augue iaculis
-                vitae. Cras sit amet fringilla neque. Fusce ac elit ut quam
-                ultrices bibendum. Curabitur vitae dignissim quam. Suspendisse
-                aliquet massa id orci volutpat ullamcorper. Nunc at ante sem.
-                Etiam elementum, mi eget aliquam lobortis, elit libero tempus
-                ex, vel pretium nisi risus ac augue.
-                {jobDetail.aboutcompany}
+                {jobDetail.about_company}
               </p>
             </div>
             <div className="mt-[16px]">
@@ -245,17 +228,6 @@ function JobDetail() {
                 About the job position
               </h2>
               <p className="w-[760px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque porta nunc viverra velit tincidunt, non vehicula
-                augue vehicula. Donec viverra luctus nisl, sed vehicula ligula.
-                Vivamus maximus metus a magna fermentum ullamcorper. Phasellus
-                ultrices vestibulum ligula ut pellentesque. Quisque quis congue
-                quam. Nunc porttitor risus lorem, in blandit augue iaculis
-                vitae. Cras sit amet fringilla neque. Fusce ac elit ut quam
-                ultrices bibendum. Curabitur vitae dignissim quam. Suspendisse
-                aliquet massa id orci volutpat ullamcorper. Nunc at ante sem.
-                Etiam elementum, mi eget aliquam lobortis, elit libero tempus
-                ex, vel pretium nisi risus ac augue.
                 {jobDetail.about_job_position}
               </p>
             </div>
@@ -264,12 +236,6 @@ function JobDetail() {
                 Mandatory Requirements
               </h2>
               <p className="w-[760px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque porta nunc viverra velit tincidunt, non vehicula
-                augue vehicula. Donec viverra luctus nisl, sed vehicula ligula.
-                Vivamus maximus metus a magna fermentum ullamcorper. Phasellus
-                ultrices vestibulum ligula ut pellentesque. Quisque quis congue
-                quam.
                 {jobDetail.mandatory_requirement}
               </p>
             </div>
@@ -278,9 +244,6 @@ function JobDetail() {
                 Optional Requirements
               </h2>
               <p className="w-[760px]">
-                - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                <br />- Maecenas vel metus imperdiet, malesuada dolor a,
-                pulvinar tellus.
                 {jobDetail.optional_requirement}
               </p>
             </div>
