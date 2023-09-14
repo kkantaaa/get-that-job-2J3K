@@ -1,7 +1,9 @@
 import Logo from "../images/landing-page/navlogo1.png";
 import { useAuth } from "@/contexts/authentication";
+import { useNavigate } from "react-router-dom";
 
 export default function RecruiterSidebar() {
+  const navigate = useNavigate();
   const { logout } = useAuth();
   return (
     <div className="w-[240px] h-screen bg-BackgroundDark flex flex-col relative">
@@ -10,7 +12,12 @@ export default function RecruiterSidebar() {
       </div>
 
       <div className="w-full h-fit font=Inter text-DarkGray ">
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background ">
+        <button
+          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background "
+          onClick={() => {
+            navigate("/recruiter/jobpostings");
+          }}
+        >
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
@@ -35,7 +42,12 @@ export default function RecruiterSidebar() {
 
           <span className=" h-fit">Job Postings</span>
         </button>
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
+        <button
+          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background"
+          onClick={() => {
+            navigate("/recruiter/createjobposting");
+          }}
+        >
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
@@ -61,7 +73,12 @@ export default function RecruiterSidebar() {
           <span className=" h-fit">Create New Job</span>
         </button>
 
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
+        <button
+          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background"
+          onClick={() => {
+            navigate("/recruiter/recruiterprofile");
+          }}
+        >
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
