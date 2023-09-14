@@ -25,9 +25,9 @@ function RecruitLogInInfo() {
 
       try {
         await setRecruiterData({
-          companyname: control._fields.companyname._f.value,
-          companyemail: control._fields.companyemail._f.value,
-          companypassword: control._fields.companypassword._f.value,
+          company_name: control._fields.companyname._f.value,
+          email: control._fields.companyemail._f.value,
+          password: control._fields.companypassword._f.value,
         });
 
         navigate("/recruiter/register2");

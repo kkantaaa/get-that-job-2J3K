@@ -114,26 +114,38 @@ registRouter.post("/professional", async (req, res) => {
 registRouter.post("/recruiter", async (req, res) => {
   try {
     const user = {
-      companyemail: req.body.companyemail,
-      companypassword: req.body.companypassword,
-      companyname: req.body.companyname,
-      companywebsite: req.body.companywebsite,
-      aboutcompany: req.body.aboutcompany,
-      havefile: req.body.havefile,
+      email: req.body.email,
+      password: req.body.password,
+      company_name: req.body.company_name,
+      company_website: req.body.company_website,
+      about_company: req.body.about_company,
+      company_logo: req.body.company_logo,
     };
 
     const salt = await bcrypt.genSalt(14);
-    user.companypassword = await bcrypt.hash(user.companypassword, salt);
-
+    user.password = await bcrypt.hash(user.password, salt);
+    
     await pool.query(
-      "INSERT INTO recruitertable (companyemail, companypassword, companyname, companywebsite, aboutcompany, havefile) VALUES ($1, $2, $3, $4, $5, $6)",
+      "INSERT INTO recruiters (email, password ) VALUES ($1, $2)",
+      [user.email, user.password]
+    );
+    
+    const recruiterQuery = await pool.query(
+      "SELECT * FROM recruiters WHERE email = $1",
+      [user.email]
+    );
+    console.log("Recruiter Query Result:", recruiterQuery.rows);
+    if (recruiterQuery.rows.length === 0) {
+      return res.status(410).json({ message: "Recruiter Email not found" });
+    }
+    await pool.query(
+      "INSERT INTO recruiter_informations (recruiter_id, company_name, company_website, about_company, company_logo) VALUES ($1, $2, $3, $4, $5)",
       [
-        user.companyemail,
-        user.companypassword,
-        user.companyname,
-        user.companywebsite,
-        user.aboutcompany,
-        user.havefile,
+        parseInt(recruiterQuery.rows[0].recruiter_id, 10),
+        user.company_name,
+        user.company_website,
+        user.about_company,
+        user.company_logo,
       ]
     );
 
@@ -145,5 +157,7 @@ registRouter.post("/recruiter", async (req, res) => {
     return res.status(500).json({ message: "Error creating the account" });
   }
 });
+
+
 
 export default registRouter;

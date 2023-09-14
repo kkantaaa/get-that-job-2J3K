@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
+import { createClient } from "@supabase/supabase-js";
 
 const AuthContext = createContext();
 
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axios.post("http://localhost:4000/regist/recruiter", data);
       console.log("Registration successful");
-      setUserData(data);
+      // setUserData(data);
     } catch (error) {
       console.error("Error: unable to register the account", error);
     }
@@ -76,6 +77,35 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
+  const upload = async (data) => {
+    try {
+      await axios.post("http://localhost:4000/upload", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+        
+      });
+      console.log("upload successful");
+      
+    } catch (error) {
+      console.error("Error: unable to upload", error);
+    }
+
+
+    // try {
+    //   const supabaseUrl = 'https://vzijxarmxcbeahvervum.supabase.co/';
+    //   const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6aWp4YXJteGNiZWFodmVydnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM1NTAzOTIsImV4cCI6MjAwOTEyNjM5Mn0.hLQCgbzqQMLMd9wxmLBeNmSUOfKQt8Ar27OjW5Sb5HM';
+    //   const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    //   const { result, error } = await supabase.storage
+    //       .from("testbucket")
+    //       .upload(`companyLogo/${data.name}`, data, {
+    //         cacheControl: "3600",
+    //         upsert: false,
+    //       });
+    //   return result
+    // } catch (error) {
+     
+    //   console.error("Error: unable to upload", error);
+    // }
+  };
   useEffect(() => {
     console.log("Updated userData:", userData);
   }, [userData]);
@@ -88,6 +118,7 @@ export const AuthProvider = ({ children }) => {
         RecruiterLogin,
         UserRegister,
         logout,
+        upload,
         RecruiterRegister,
         errorState,
       }}

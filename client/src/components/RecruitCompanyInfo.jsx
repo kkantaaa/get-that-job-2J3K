@@ -10,6 +10,7 @@ function RecruitCompanyInfo() {
   const { handleSubmit, control, setValue, watch } = useForm();
   const [logoPreview, setLogoPreview] = useState(null);
   const { RecruiterRegister } = useAuth();
+  const { upload } = useAuth();
 
   useEffect(() => {
     console.log("Updated RecruiterData:", recruiterData);
@@ -19,44 +20,53 @@ function RecruitCompanyInfo() {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
-      navigate("/path to job post");
-    } catch (error){
+      // navigate("/path to job post");
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
-
 
   const onSubmit = async (data) => {
-    const { companywebsite, aboutcompany, havefile} = data;
+    console.log(data);
+    const img = data.file;
+    console.log({ img: img });
+    let company_logo = await upload(img);
+
+    console.log({ havefile: company_logo });
+
+    if (company_logo === undefined) {
+      company_logo = null;
+    }
+    const { companywebsite, aboutcompany } = data;
     setRecruiterData({
       ...recruiterData,
-      companywebsite,
-      aboutcompany,
-      havefile,
+      company_website: companywebsite,
+      about_company: aboutcompany,
+      company_logo: company_logo,
     });
-
+    console.log(recruiterData);
     try {
-      await RecruiterRegister(recruiterData, data);
-      navigate("/path to job listing");
-    } catch (error){
+      // await RecruiterRegister(recruiterData);
+      // navigate("/path to job listing");
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
 
-  useEffect(() => {
-    const logoFile = watch("file");
-    console.log("Logo File:", logoFile);
-    if (logoFile) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        console.log("Logo Preview Data URL:", e.target.result);
-        setLogoPreview(e.target.result);
-      };
-      reader.readAsDataURL(logoFile);
-    } else {
-      setLogoPreview(null);
-    }
-  }, [watch]);
+  // useEffect(() => {
+  //   const logoFile = watch("file");
+  //   console.log("Logo File:", logoFile);
+  //   if (logoFile) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       console.log("Logo Preview Data URL:", e.target.result);
+  //       setLogoPreview(e.target.result);
+  //     };
+  //     reader.readAsDataURL(logoFile);
+  //   } else {
+  //     setLogoPreview(null);
+  //   }
+  // }, [watch]);
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
@@ -159,9 +169,7 @@ function RecruitCompanyInfo() {
           </div>
 
           <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[12px] tracking-[1.25px]">
-            <button onClick={handlerSkip}>
-              SKIP THIS!
-            </button>
+            <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
 
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">

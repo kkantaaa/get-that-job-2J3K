@@ -1,31 +1,36 @@
 import { Router } from "express";
 import { supabase } from "../utils/supabaseClient.js";
 //
-// import multer from "multer";
+import multer from "multer";
 // import { pool } from "../utils/db_connection.js";
 // import bcrypt from "bcrypt";
 //
 
+const upload = multer({ dest: "uploads/" });
 const uploadRouter = Router();
 
 // Set up an endpoint for file uploads
-uploadRouter.post("/upload", async (req, res) => {
+uploadRouter.post("/", upload.single("file"), async (req, res) => {
   try {
     // test req if not have file
-    const file = req.files.file;
+    const file = req.file;
     if (!file) {
       return res.status(400).send("No file uploaded.");
     }
-
+    console.log({ reqbody: file });
     // Upload the file
     const uploadResult = await supabase.storage
       .from("testbucket")
-      .upload(`public/${file.name}`, file.data, {
+      .upload(`companyLogo/${file.originalname}`, file, {
         cacheControl: "3600",
         upsert: false,
+        contentType: "image/webp",
       });
-
-    console.log(uploadResult);
+    const url = supabase.storage
+      .from("testbucket")
+      .getPublicUrl(`${file.originalname}`);
+    console.log(url);
+    console.log({ uploadResult: uploadResult });
 
     res.status(200).send("File uploaded successfully to supabase.");
   } catch (error) {
