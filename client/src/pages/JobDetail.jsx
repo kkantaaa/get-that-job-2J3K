@@ -43,6 +43,7 @@ function JobDetail() {
         <div className="flex flex-row font-Inter text-[16px]">
           <ProfessionalSidebar />
           <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
+            {/* BackButton */}
             <div className="flex flex-row">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,12 +61,14 @@ function JobDetail() {
                 Back
               </p>
             </div>
+
+            {/* Section 1: Company Logo / Info / Apply Button1 */}
             <div className="mt-[16px]">
               <div className="flex flex-row">
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
                     logo
-                    {/* {jobDetail.companylogo} */}
+                    {jobDetail.company_logo}
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
@@ -118,10 +121,13 @@ function JobDetail() {
               </div>
             </div>
 
+          {/*Job Title*/}
             <h1 className="text-[48px] mt-[16px] text-center font-Montserrat font-normal leading-normal">
               {jobDetail.job_title}
             </h1>
 
+
+          {/* created at */}
             <div className="flex flex-row uppercase justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -141,6 +147,7 @@ function JobDetail() {
               </p>
             </div>
 
+          {/* Job Highlight */}
             <div className="mt-[16px] font-Montserrat flex flex-row justify-center">
               <div className="w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
@@ -219,6 +226,7 @@ function JobDetail() {
               </div>
             </div>
             
+          {/* Company Detail */}
             <div className="mt-[54px]">
               <h2 className="text-[24px] font-Montserrat text-DarkPink font-normal leading-normal">
                 About Company
