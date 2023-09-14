@@ -117,9 +117,11 @@ function JobDetail() {
                 </button>
               </div>
             </div>
+
             <h1 className="text-[48px] mt-[16px] text-center font-Montserrat font-normal leading-normal">
               {jobDetail.job_title}
             </h1>
+
             <div className="flex flex-row uppercase justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -138,6 +140,7 @@ function JobDetail() {
                 {jobDetail.created_at}
               </p>
             </div>
+
             <div className="mt-[16px] font-Montserrat flex flex-row justify-center">
               <div className="w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
@@ -215,6 +218,7 @@ function JobDetail() {
                 </div>
               </div>
             </div>
+            
             <div className="mt-[54px]">
               <h2 className="text-[24px] font-Montserrat text-DarkPink font-normal leading-normal">
                 About Company
