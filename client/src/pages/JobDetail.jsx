@@ -143,7 +143,7 @@ function JobDetail() {
                 <div className="font-normal not-italic tracking-[0.15px]">
                   Category
                 </div>
-                <div className="flex flex-row items-center text-[24px] not-italic font-normal leading-normal">
+                <div className="flex flex-row items-center text-scale-[24px] not-italic font-normal leading-normal text-ellipsis">
                   <svg
                     className="mr-[4px]"
                     xmlns="http://www.w3.org/2000/svg"
