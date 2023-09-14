@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+//images
+import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
+import SendApplicationButton from "@/images/ApllicationApplyPage/SendApplicationButton.png";
 
 import axios from "axios";
-import FindThatJobPage from "../pages/FindThatJobPage";
 
 function ApplicationApplySection({ companyName }) {
   const { control, handleSubmit } = useForm();
@@ -14,24 +16,25 @@ function ApplicationApplySection({ companyName }) {
   const [interestedReason, setInterestedReason] = useState("");
 
   useEffect(() => {
-    const fetchCurrentCV = async () => {
-      const response = await axios.get("");
+    const fetchData = async () => {
       try {
-        await setCurrentCV(response.data);
+        const user_id = "1";
+        const job_id = "4";
+        const response = await axios.get(
+          `http://localhost:4000/testapply/${user_id}/job-list/${job_id}`
+        );
+        const data = response.data;
+
+        setCurrentCV(data.user_appli_CV);
+        setProfessionalExperience(data[0].user_appli_exp);
+        console.log(data);
+        console.log("Current CV fetched and set:", data);
+        console.log("professionalExperience:", professionalExperience);
       } catch (error) {
-        console.error("Error fetching current CV:", error);
+        console.error("Error fetching data:", error);
       }
     };
-    const fetchProfessionalExperience = async () => {
-      const response = await axios.get(" ");
-      try {
-        await setProfessionalExperience(response.data);
-      } catch (error) {
-        console.error("Error fetching professional experience:", error);
-      }
-    };
-    fetchCurrentCV();
-    fetchProfessionalExperience();
+    fetchData();
   }, []);
 
   const handleCVChoiceChange = (data) => {
@@ -58,14 +61,27 @@ function ApplicationApplySection({ companyName }) {
   return (
     <>
       <div style={{ marginLeft: "10px", marginTop: "20px" }}>
-        <h1 style={{ fontSize: "32px", color: "pink" }}>
+        <h1
+          className="ml-5 "
+          style={{
+            fontSize: "32px",
+            color: "#BF5F82",
+            fontFamily: "Montserrat, sans-serif",
+          }}
+        >
           Complete your application
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label htmlFor="cvChoice">Send your CV Updated</label>
-            <div>
-              <label>
+            <label
+              htmlFor="cvChoice"
+              style={{ color: "#373737" }}
+              className="text-16 ml-5"
+            >
+              Send your CV Updated
+            </label>
+            <div className="ml-5 mt-4">
+              <label className="mr-10">
                 <Controller
                   name="cvChoice"
                   control={control}
@@ -117,8 +133,8 @@ function ApplicationApplySection({ companyName }) {
             </div>
           </div>
           {showUploadButton && (
-            <div style={{ padding: "10px" }}>
-              <Button
+            <div className="mt-3 ml-3" style={{ padding: "10px" }}>
+              <button
                 htmlFor="fileInput"
                 type="button"
                 onClick={() => {
@@ -126,6 +142,7 @@ function ApplicationApplySection({ companyName }) {
                   fileInput.click();
                 }}
               >
+                <img src={ChooseAFile} alt="Choose a file Button" />
                 <input
                   type="file"
                   id="fileInput"
@@ -135,36 +152,67 @@ function ApplicationApplySection({ companyName }) {
                     const selectedFile = e.target.files[0];
                     if (selectedFile) {
                       setCurrentCV(selectedFile);
-                      const selectedFileNameDiv =
-                        document.getElementById("selectedFileName");
-                      selectedFileNameDiv.innerText = `Selected file: ${selectedFile.name}`;
-                      console.log("Selected file:", selectedFile);
+                      console.log("File uploaded:", currentCV);
                     }
                   }}
                 />
-                &#xf093; Upload New CV
-              </Button>
+              </button>
               <br />
-              <span>Only PDF. Max size 5 MB</span>
-              <h1 id="selectedFileName" style={{ marginTop: "10px" }}></h1>
+              <span style={{ color: "#8E8E8E" }}>Only PDF. Max size 5 MB</span>
+              {currentCV && (
+                <div
+                  id="selectedFileBox"
+                  style={{
+                    marginTop: "10px",
+                    border: "1px solid pink",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    color: "#333",
+                    width: "120px",
+                    backgroundColor: "#FCE4EC",
+                  }}
+                >
+                  <span id="selectedFileName">
+                    Selected file: {currentCV.name}
+                  </span>
+                </div>
+              )}
             </div>
           )}
-
           <div style={{ padding: "20px" }}>
             <label htmlFor="experience">
-              Professional experience(TAKEN FROM YOUR PROFILE)
+              <span
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "17px",
+                  color: "#373737",
+                }}
+              >
+                PROFESSIONAL EXPERIENCE
+              </span>{" "}
+              <span
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "15px",
+                  color: "#373737",
+                }}
+              >
+                (TAKEN FROM YOUR PROFILE)
+              </span>
             </label>
             <Controller
               name="experience"
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <Input
+                <Textarea
                   {...field}
                   style={{
                     width: "900px",
                     height: "300px",
                     fontSize: "16px",
+                    border: "4px solid pink",
+                    borderRadius: "14px",
                   }}
                   type="text"
                   id="experience"
@@ -176,19 +224,29 @@ function ApplicationApplySection({ companyName }) {
           </div>
           <div style={{ padding: "20px" }}>
             <label htmlFor="interestedReason">
-              WHY ARE YOU INTERESTED IN WORKING AT THE {companyName}
+              <span
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "17px",
+                  color: "#373737",
+                }}
+              >
+                WHY ARE YOU INTERESTED IN WORKING AT THE {companyName}
+              </span>
             </label>
             <Controller
               name="interestedReason"
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <Input
+                <Textarea
                   {...field}
                   style={{
                     width: "900px",
                     height: "300px",
                     fontSize: "16px",
+                    border: "4px solid pink",
+                    borderRadius: "14px",
                   }}
                   type="text"
                   id="interestedReason"
@@ -197,15 +255,15 @@ function ApplicationApplySection({ companyName }) {
                 />
               )}
             />
-            <span className="input-description">
+            <span className="input-description" style={{ color: "#8E8E8E" }}>
               Between 50 and 1000 characters.
             </span>
           </div>
 
-          <div>
-            <Button type="submit" id="sendApplicationButton">
-              Send Application
-            </Button>
+          <div className="ml-3">
+            <button type="submit" id="sendApplicationButton">
+              <img src={SendApplicationButton} alt="Send Application Button" />
+            </button>
           </div>
         </form>
       </div>
