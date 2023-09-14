@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ApplicationApplySection from "@/components/ApplicationApplySection";
+//images
+import SendAPPlicationButton from "@/images/ApllicationApplyPage/SendAPPlicationButton.png";
 
 function ApplicationApplyPage() {
   const navigate = useNavigate();
@@ -95,9 +98,9 @@ function ApplicationApplyPage() {
                 </div>
                 <button
                   onClick={handleSendApplication}
-                  className="ml-[500px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase"
+                  className="ml-auto"
                 >
-                  Send Application
+                  <img src={SendAPPlicationButton} alt="Send Application Button" />
                 </button>
               </div>
             </div>
