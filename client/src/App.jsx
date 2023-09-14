@@ -41,6 +41,7 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
+              <Route path="/user/jobdetail" element={<JobDetail />} />
               <Route
                 path="/user/application/apply"
                 element={<ApplicationApplyPage />}
@@ -65,4 +66,3 @@ function App() {
 }
 
 export default App;
-
