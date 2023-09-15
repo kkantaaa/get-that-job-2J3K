@@ -66,13 +66,13 @@ function JobDetail() {
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
                     logo
-                    {jobDetail.company_logo}
+                    <img src={jobDetail.company_logo}/>
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
                       {jobDetail.company_name}
                     </div>
-                    <img src={FollowingStatus} alt="following-button" />
+                    <img className="w-[138px] h-[40px]" src={FollowingStatus} alt="following-button" />
                   </div>
                 </div>
                 <button className="ml-[500px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
@@ -92,8 +92,8 @@ function JobDetail() {
             {/* created at */}
             <div className="flex flex-row uppercase justify-center">
               <img src={TimeIcon} alt="time-icon" />
-              <p className="ml-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                Posted 2 Days Ago
+              <p className="ml-[4px] mr-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
+                Posted at
                 {jobDetail.created_at}
               </p>
             </div>
