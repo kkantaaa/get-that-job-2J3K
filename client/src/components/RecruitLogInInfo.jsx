@@ -19,21 +19,26 @@ function RecruitLogInInfo() {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
+  const displayErrorMessage = (fieldName) =>
+    errors[fieldName] && (
+      <span className="text-red-500">{errors[fieldName].message}</span>
+    );
+
   const onSubmit = (data) => {
     // Check if passwords match
-    if (data.confirmedPassword !== data.companypassword) {
+    if (data.confirmedPassword !== data.companyPassword) {
       setError("confirmedPassword", {
         type: "manual",
-        message: "The confirmed Password is not matched",
+        message: "The confirmed password does not match",
       });
     } else {
       // Clear the error if passwords match
       clearErrors("confirmedPassword");
 
       setRecruiterData({
-        company_name: control._fields.companyname._f.value,
-        email: control._fields.companyemail._f.value,
-        password: control._fields.companypassword._f.value,
+        company_name: data.companyName,
+        email: data.companyEmail,
+        password: data.companyPassword,
       });
 
       navigate("/recruiter/register2");
@@ -41,21 +46,22 @@ function RecruitLogInInfo() {
   };
 
   return (
-    <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter text-sm" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
-        <div className="company-name-input">
-          <label htmlFor="company-name" className="mb-[4px] font-normal tracking-[1.5px]">
+        {/* Company Name */}
+        <div className="input-field">
+          <label htmlFor="companyName" className="label">
             COMPANY NAME
             <Controller
-              name="companyname"
+              name="companyName"
               control={control}
               defaultValue=""
               rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  name="companyname"
-                  id="companyname"
+                  className="input"
+                  name="companyName"
+                  id="companyName"
                   type="text"
                   placeholder="My Company S.A"
                   {...field}
@@ -63,22 +69,23 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companyname && errors.companyname.message}</span>
+          {displayErrorMessage("companyName")}
         </div>
 
-        <div className="email-input">
-          <label htmlFor="email" className="mb-[4px] font-normal tracking-[1.5px]">
+        {/* Email */}
+        <div className="input-field">
+          <label htmlFor="companyEmail" className="label">
             EMAIL
             <Controller
-              name="companyemail"
+              name="companyEmail"
               control={control}
               defaultValue=""
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="companyemail"
-                  name="companyemail"
+                  className="input"
+                  id="companyEmail"
+                  name="companyEmail"
                   type="email"
                   placeholder="some.user@mail.com"
                   {...field}
@@ -86,22 +93,23 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companyemail && errors.companyemail.message}</span>
+          {displayErrorMessage("companyEmail")}
         </div>
 
-        <div className="password-input">
-          <label htmlFor="password" className="mb-[4px] font-normal tracking-[1.5px]">
+        {/* Password */}
+        <div className="input-field">
+          <label htmlFor="companyPassword" className="label">
             PASSWORD
             <Controller
-              name="companypassword"
+              name="companyPassword"
               control={control}
               defaultValue=""
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="companypassword"
-                  name="companypassword"
+                  className="input"
+                  id="companyPassword"
+                  name="companyPassword"
                   type="password"
                   placeholder="******"
                   {...field}
@@ -109,28 +117,22 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>
-            {errors.companypassword && errors.companypassword.message}
-          </span>
+          {displayErrorMessage("companyPassword")}
         </div>
 
-        <div className="confirmed-password-input">
-          <label
-            htmlFor="confirmed-password"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
-          >
+        {/* Confirmed Password */}
+        <div className="input-field">
+          <label htmlFor="confirmedPassword" className="label">
             PASSWORD CONFIRMATION
             <Controller
               name="confirmedPassword"
               control={control}
               defaultValue=""
-              rules={{
-                required: "Password confirmation is required",
-              }}
+              rules={{ required: "Password confirmation is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="confirmed-password"
+                  className="input"
+                  id="confirmedPassword"
                   type="password"
                   placeholder="******"
                   {...field}
@@ -138,34 +140,14 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>
-            {errors.confirmedPassword && errors.confirmedPassword.message}
-          </span>
+          {displayErrorMessage("confirmedPassword")}
         </div>
 
-<<<<<<< HEAD
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center tracking-[1.25px]">
-        <button className="flex flex-row" type="submit">
-            <div className="ml-[10px] text-[16px] font-[500px]">NEXT</div>
-            <img src={ArrowRight}/>
-=======
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center tracking-[1.25px]">
-        <button className="flex flex-row" type="submit">
-            <div className="ml-[10px] text-[16px] font-[500px]">NEXT</div>
-            <svg
-              className="ml-[8px]"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
-                fill="white"
-              />
-            </svg>
->>>>>>> fca291e (fix: fix buttons and font size)
+        {/* Submit Button */}
+        <div className="submit-button">
+          <button className="button" type="submit">
+            <div className="button-text">NEXT</div>
+            <img src={ArrowRight} alt="Next Arrow" />
           </button>
         </div>
       </div>

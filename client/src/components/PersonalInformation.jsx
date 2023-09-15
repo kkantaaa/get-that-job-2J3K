@@ -19,18 +19,8 @@ function PersonalInformation() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-<<<<<<< HEAD
-<<<<<<< HEAD
       navigate("/path to job listing");
     } catch (error){
-=======
-      navigate("/user/findthatjob");
-    } catch (error) {
->>>>>>> 21060fb (fix: change the navigation)
-=======
-      navigate("/path to job listing");
-    } catch (error){
->>>>>>> ba4c718 (fix: fix the missing part of the form)
       console.error("Error during registration", error);
     }
   };
@@ -83,11 +73,7 @@ function PersonalInformation() {
             rules={{ required: "Name is required" }}
             render={({ field }) => (
               <input
-<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-=======
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> ba4c718 (fix: fix the missing part of the form)
                 id="name"
                 name="name"
                 type="text"
@@ -112,11 +98,7 @@ function PersonalInformation() {
             rules={{ required: "Phone number is required" }}
             render={({ field }) => (
               <input
-<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-=======
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> ba4c718 (fix: fix the missing part of the form)
                 id="phone"
                 name="phoneNumber"
                 type="text"
@@ -141,11 +123,7 @@ function PersonalInformation() {
             rules={{ required: "Birthdate is required" }}
             render={({ field }) => (
               <input
-<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-=======
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> ba4c718 (fix: fix the missing part of the form)
                 id="birthdate"
                 name="birthdate"
                 type="date"
@@ -169,11 +147,7 @@ function PersonalInformation() {
             rules={{ required: "LinkedIn URL is required" }}
             render={({ field }) => (
               <input
-<<<<<<< HEAD
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-=======
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
->>>>>>> ba4c718 (fix: fix the missing part of the form)
                 id="linkedin"
                 name="linkedin"
                 type="text"
@@ -193,29 +167,7 @@ function PersonalInformation() {
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button className="flex flex-row" type="submit">
             <div onClick={() => navigate("/user/register3")} className="ml-[10px]">NEXT</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
             <img src={ArrowRight}/>
-=======
-=======
->>>>>>> fca291e (fix: fix buttons and font size)
-            <svg
-              className="ml-[8px]"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
-                fill="white"
-              />
-            </svg>
-<<<<<<< HEAD
->>>>>>> eb21c4d (fix: fix buttons and font size)
-=======
->>>>>>> fca291e (fix: fix buttons and font size)
           </button>
           </div>
         </div>
@@ -227,8 +179,3 @@ function PersonalInformation() {
 export default PersonalInformation;
 
 
-<<<<<<< HEAD
-=======
->>>>>>> ba4c718 (fix: fix the missing part of the form)
-=======
->>>>>>> a1e3b27 (commit changes)

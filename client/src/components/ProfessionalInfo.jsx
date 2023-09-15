@@ -3,20 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
-=======
->>>>>>> eb21c4d (fix: fix buttons and font size)
-=======
->>>>>>> fca291e (fix: fix buttons and font size)
-=======
-import ArrowLeft from "../images/registration-page/arrow-left.svg";
-import ArrowRight from "../images/registration-page/arrow-right.svg";
-
->>>>>>> b44f101 (commit changes)
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
@@ -51,22 +39,7 @@ function ProfessionalInfo() {
     try {
       await UserRegister(userData, data);
       navigate("/user/findthatjob");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    } catch (error) {
-=======
-=======
->>>>>>> 21060fb (fix: change the navigation)
     } catch (error){
->>>>>>> a815473 (fix: change the navigation)
-=======
-    } catch (error) {
->>>>>>> eb21c4d (fix: fix buttons and font size)
-=======
-    } catch (error) {
->>>>>>> fca291e (fix: fix buttons and font size)
       console.error("Error during registration", error);
     }
   };
@@ -199,47 +172,18 @@ function ProfessionalInfo() {
         </div>
 
         <div className="mt-[16px] flex flex-row">
-<<<<<<< HEAD
-<<<<<<< HEAD
           {/* Previous Button */}
-=======
->>>>>>> eb21c4d (fix: fix buttons and font size)
-=======
->>>>>>> fca291e (fix: fix buttons and font size)
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
             <button
               onClick={() => navigate("/user/register2")}
               className="flex flex-row"
               type="submit"
             >
-<<<<<<< HEAD
-<<<<<<< HEAD
               <img src={ArrowLeft}/>
-=======
-=======
->>>>>>> fca291e (fix: fix buttons and font size)
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M10.828 12L15.778 16.95L14.364 18.364L8 12L14.364 5.63599L15.778 7.04999L10.828 12Z"
-                  fill="white"
-                />
-              </svg>
-<<<<<<< HEAD
->>>>>>> eb21c4d (fix: fix buttons and font size)
-=======
->>>>>>> fca291e (fix: fix buttons and font size)
               <div className="ml-[4px]">PREVIOUS</div>
             </button>
           </div>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
           {/* Skip Button */}
           <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
             <button onClick={handlerSkip}>SKIP THIS!</button>
@@ -257,61 +201,6 @@ function ProfessionalInfo() {
             </button>
           </div>
 
-=======
-          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
-            <button onClick={handlerSkip}>SKIP THIS!</button>
-=======
-          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
-            <button onClick={handlerSkip}>SKIP THIS!</button>
-          </div>
-
-          <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button
-              className="flex flex-row"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              <div className="ml-[10px]">FINISH</div>
-              <svg
-                className="ml-[8px]"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
->>>>>>> fca291e (fix: fix buttons and font size)
-          </div>
-
-          <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button
-              className="flex flex-row"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              <div className="ml-[10px]">FINISH</div>
-              <svg
-                className="ml-[8px]"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-          </div>
->>>>>>> eb21c4d (fix: fix buttons and font size)
         </div>
       </div>
     </form>
