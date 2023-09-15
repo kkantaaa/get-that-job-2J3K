@@ -7,19 +7,21 @@ const jobRouter = Router();
 
 jobRouter.get("/", async (req, res) => {
   try {
-    const keywords = req.query.keywords || null;
-    // const keywords = "%Dev%";
+    let keywords = `%${req.query.keywords}%` || null;
+    // const keywords = "%office%";
+    console.log(`keywords from server/apps/jobs : ${keywords}`);
     const category = req.query.category || null;
     const type = req.query.type || null;
-    const minSalary = req.query.minSalary || null;
-    // const minSalary = 2000;
-    const maxSalary = req.query.maxSalary || null;
-    // const maxSalary = 4000;
+    // const minSalary = req.query.minSalary || null;
+    const minSalary = 2000;
+    // const maxSalary = req.query.maxSalary || null;
+    const maxSalary = 4000;
 
     let query = "";
     let values = [];
 
     //ยัวไม่ได้เพิ่ม SEARCH BY COMPANY NAME -> link recruiter_id to company_name : join jobs table to recruiter_profile table
+    //OR (recruiter_informations.company_name ILIKE $1 OR IS NULL)
     //ยังไม่ได้เลือกแสดงผลเฉพาะงานที่ status open
     query = `SELECT *
     FROM jobs_mock
@@ -28,7 +30,7 @@ jobRouter.get("/", async (req, res) => {
     AND (job_type_id = $3 OR $3 IS NULL)
     AND (salary_min >= $4 OR $4 IS NULL)
     AND (salary_max <= $5 OR $5 IS NULL)
-    limit 12`;
+    limit 20`;
     values = [keywords, category, type, minSalary, maxSalary];
 
     // query = `SELECT * FROM jobs_mock WHERE job_title ILIKE $1 AND salary_min >= $2`;
