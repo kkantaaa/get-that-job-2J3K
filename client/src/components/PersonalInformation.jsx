@@ -18,18 +18,8 @@ function PersonalInformation() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-<<<<<<< HEAD
-<<<<<<< HEAD
-      navigate("/path to job listing");
-    } catch (error){
-=======
       navigate("/user/findthatjob");
     } catch (error) {
->>>>>>> 21060fb (fix: change the navigation)
-=======
-      navigate("/path to job listing");
-    } catch (error){
->>>>>>> ba4c718 (fix: fix the missing part of the form)
       console.error("Error during registration", error);
     }
   };
@@ -194,8 +184,5 @@ function PersonalInformation() {
 }
 
 export default PersonalInformation;
-<<<<<<< HEAD
 
 
-=======
->>>>>>> ba4c718 (fix: fix the missing part of the form)
