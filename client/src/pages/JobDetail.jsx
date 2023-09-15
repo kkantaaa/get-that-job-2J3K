@@ -72,7 +72,7 @@ function JobDetail() {
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
                       {jobDetail.company_name}
                     </div>
-                    <img src={FollowingStatus} alt="following-button" />
+                    <img className="w-[138px] h-[40px]" src={FollowingStatus} alt="following-button" />
                   </div>
                 </div>
                 <button className="ml-[500px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
