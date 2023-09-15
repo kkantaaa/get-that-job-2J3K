@@ -5,12 +5,18 @@ import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 =======
 >>>>>>> eb21c4d (fix: fix buttons and font size)
 =======
 >>>>>>> fca291e (fix: fix buttons and font size)
+=======
+import ArrowLeft from "../images/registration-page/arrow-left.svg";
+import ArrowRight from "../images/registration-page/arrow-right.svg";
+
+>>>>>>> b44f101 (commit changes)
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
