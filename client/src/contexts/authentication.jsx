@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
+import { createClient } from "@supabase/supabase-js";
 
 const AuthContext = createContext();
 
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axios.post("http://localhost:4000/regist/recruiter", data);
       console.log("Registration successful");
-      setUserData(data);
+      // setUserData(data);
     } catch (error) {
       console.error("Error: unable to register the account", error);
     }
@@ -75,7 +76,38 @@ export const AuthProvider = ({ children }) => {
     setErrorState(null);
     navigate("/");
   };
+  const upload = async (data) => {
+    // try {
+    //   await axios.post("http://localhost:4000/upload", data, {
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   });
+    //   console.log("upload successful");
+    // } catch (error) {
+    //   console.error("Error: unable to upload", error);
+    // }
 
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const { result, error } = await supabase.storage
+          .from("testbucket")
+          .upload(`companyLogo/${data.name}`, data, {
+            cacheControl: "3600",
+            upsert: false,
+          });
+          const url = supabase.storage
+          .from("testbucket")
+          .getPublicUrl(`${data.name}`);
+        
+        console.log({ uploadResult: url.data.publicUrl });
+      return url.data.publicUrl
+    } catch (error) {
+     
+      console.error("Error: unable to upload", error);
+    }
+  };
+  
   useEffect(() => {
     console.log("Updated userData:", userData);
   }, [userData]);
@@ -88,6 +120,7 @@ export const AuthProvider = ({ children }) => {
         RecruiterLogin,
         UserRegister,
         logout,
+        upload,
         RecruiterRegister,
         errorState,
       }}
