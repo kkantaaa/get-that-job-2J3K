@@ -46,7 +46,7 @@ function RecruitLogInInfo() {
   };
 
   return (
-    <form className="font-Inter text-sm" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
         {/* Company Name */}
         <div className="input-field">
@@ -72,9 +72,8 @@ function RecruitLogInInfo() {
           {displayErrorMessage("companyName")}
         </div>
 
-        {/* Email */}
-        <div className="input-field">
-          <label htmlFor="companyEmail" className="label">
+        <div className="email-input">
+          <label htmlFor="email" className="mb-[4px] font-normal tracking-[1.5px]">
             EMAIL
             <Controller
               name="companyEmail"
@@ -96,9 +95,8 @@ function RecruitLogInInfo() {
           {displayErrorMessage("companyEmail")}
         </div>
 
-        {/* Password */}
-        <div className="input-field">
-          <label htmlFor="companyPassword" className="label">
+        <div className="password-input">
+          <label htmlFor="password" className="mb-[4px] font-normal tracking-[1.5px]">
             PASSWORD
             <Controller
               name="companyPassword"

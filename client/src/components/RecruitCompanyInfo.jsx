@@ -25,13 +25,13 @@ function RecruitCompanyInfo() {
     try {
       await RecruiterRegister(recruiterData);
       navigate("/path to job post");
-    } catch (error) {
+    } catch (error)  {
       console.error("Error during registration", error);
     }
   };
 
   const onSubmit = async (data) => {
-    const { companywebsite, aboutcompany, havefile } = data;
+    const { companywebsite, aboutcompany, havefile  } = data;
     setRecruiterData({
       ...recruiterData,
       companywebsite,
@@ -95,8 +95,8 @@ function RecruitCompanyInfo() {
         </p>
         <div className="company-website-input">
           <label
-            htmlFor="company_website"
-            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+            htmlFor="company-website"
+            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
           >
             COMPANY WEBSITE
             <Controller
@@ -187,6 +187,11 @@ function RecruitCompanyInfo() {
             </div>
           )}
         </div>
+
+
+        <p className="text-[12px] text-LightGray font-normal leading-[16px] tracking-[0.4px] uppercase">
+          Only PDF. Max size 5MB
+        </p>
 
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">

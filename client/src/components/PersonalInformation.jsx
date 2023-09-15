@@ -19,8 +19,8 @@ function PersonalInformation() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-      navigate("/path to job listing");
-    } catch (error){
+      navigate("/user/findthatjob");
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
