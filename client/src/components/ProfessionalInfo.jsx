@@ -5,6 +5,7 @@ import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
+import FileInput from "../images/registration-page/upload-line.svg";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
@@ -133,14 +134,18 @@ function ProfessionalInfo() {
         <p className="mb-[16px] text-[10px] font-normal leading-[16px] tracking-[0.4px]">
           Between 100 and 2000 characters
         </p>
-
+        
+        {/* Upload File */}
         <div className="file-upload-container">
           <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
             UPLOAD / UPDATE YOUR CV
           </p>
-
+          
+          <div className="p-2 active:bg-DarkPink hover:bg-LightPink flex  items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px]">
+          <img src={FileInput}/>
+          <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px]">Choose a file</p>
           <input
-            className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
+            className="hidden mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
             name="havefile"
             type="file"
             id="havefile"
@@ -151,25 +156,12 @@ function ProfessionalInfo() {
               }
             }}
           />
+          </div>
         </div>
 
-        <p className="text-[12px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
-          Only PDF. Max size 5MB
+        <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
+          Only .PDF Max size 5MB
         </p>
-
-        <div className="file-list-preview-container">
-          {watch("file") && (
-            <div className="file-preview-container">
-              <p>{watch("file").name}</p>
-              <button
-                className="file-remove-button"
-                onClick={() => setValue("file", null)}
-              >
-                x
-              </button>
-            </div>
-          )}
-        </div>
 
         <div className="mt-[16px] flex flex-row">
           {/* Previous Button */}
