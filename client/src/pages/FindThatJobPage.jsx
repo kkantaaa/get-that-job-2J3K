@@ -4,10 +4,22 @@ import { TypeSelector } from "@/components/TypeSelector";
 import JobList from "@/components/JobList.jsx";
 import searchIcon from "@/images/getthatjob-page/searchIcon.png";
 import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.png";
+import { useState } from "react";
 
 function FindThatJobPage() {
+  const [text, setText] = useState("");
+
+  const handleInputChange = (event) => {
+    const text = event.target.value;
+    setText(text);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <div className="w-full h-screen flex flex-row justify-spacearound bg-Background">
+    <div className="w-full min-h-screen flex flex-row justify-spacearound bg-Background">
       <FindThatJobSideBar />
       <div className="flex flex-col w-full ml-[240px] mb-12">
         <div className="w-full px-12 pt-8 flex flex-col justify-start items-start">
@@ -21,12 +33,14 @@ function FindThatJobPage() {
             >
               SEARCH BY JOB TITLE OR COMPANY NAME
             </label>
-            <div className="relative">
+            <div className="relative" onSubmit={handleSubmit}>
               <input
                 className="h-[36px] w-[360px] rounded-[8px] text-[14px] pl-[28px] border-solid border-[1px] border-Pink bg-White"
                 type="text"
                 id="search-input"
                 placeholder="manufacturing, sales, swim"
+                value={text}
+                onChange={handleInputChange}
               />
               <img
                 className="absolute top-2 left-1.5"
@@ -99,7 +113,7 @@ function FindThatJobPage() {
           </div>
         </div>
         <div className="mx-12">
-          <JobList />
+          <JobList value={text} />
         </div>
       </div>
     </div>

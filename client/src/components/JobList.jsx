@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import followIcon from "@/images/getthatjob-page/followIcon.png";
@@ -8,22 +7,35 @@ import typeIcon from "@/images/getthatjob-page/typeIcon.png";
 import jobCategoryIcon from "@/images/getthatjob-page/jobCategoryIcon.png";
 import testLogo from "@/images/getthatjob-page/Baby.png";
 
-const JobList = () => {
+const JobList = (props) => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
-  // const { control, handleSubmit, setValue } = useForm(); //ต้องใช้ไหม
+  const keywords = props.value;
 
-  const getJobs = async () => {
-    const jobData = await axios.get("http://localhost:4000/jobs");
-    console.log("Jobs from server");
-    console.log(jobData.data.data);
-    setJobs(jobData.data.data);
+  const getJobs = async (input) => {
+    const keywords = input;
+    try {
+      const params = new URLSearchParams();
+      params.append("keywords", keywords);
+      // console.log(`keywords form getJobs fuction : ${keywords}`);
+      const results = await axios.get("http://localhost:4000/jobs", {
+        params, // Include data in the request body
+      });
+      // const results = await axios.get(
+      //   `http://localhost:4000/jobs?keywords=%dev%`
+      // );
+      // const results = await axios.get("http://localhost:4000/jobs");
+      console.log("Jobs from server");
+      console.log(results.data.data);
+      setJobs(results.data.data);
+    } catch (error) {
+      console.error("Error: Failed to fetch jobs data");
+    }
   };
 
   useEffect(() => {
-    // getJobs(searchText);
-    getJobs();
-  }, []);
+    getJobs(keywords);
+  }, [keywords]);
 
   return (
     <div className="ml-12">
@@ -40,10 +52,10 @@ const JobList = () => {
               <div className="flex flex-col justify-end items-center mt-2 mx-2">
                 <div className="flex flex-row mt-2">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-4">
-                    {/* <img src={testLogo} /> */}
-                    LOGO
+                    <img src={testLogo} />
+                    {/* LOGO
                     <br />
-                    id : {job.job_id}
+                    id : {job.job_id} */}
                   </div>
                   <div className="flex flex-col p-2">
                     <div className="flex flex-row w-fit text-[14px] text-LightGray">
