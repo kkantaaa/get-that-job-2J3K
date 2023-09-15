@@ -2,6 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
+import ArrowRight from "../images/registration-page/arrow-right.svg";
 
 function RecruitLogInInfo() {
   const navigate = useNavigate();
@@ -142,22 +143,10 @@ function RecruitLogInInfo() {
           </span>
         </div>
 
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center tracking-[1.25px]">
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center tracking-[1.25px]">
         <button className="flex flex-row" type="submit">
             <div className="ml-[10px] text-[16px] font-[500px]">NEXT</div>
-            <svg
-              className="ml-[8px]"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
-                fill="white"
-              />
-            </svg>
+            <img src={ArrowRight}/>
           </button>
         </div>
       </div>

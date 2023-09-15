@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useAuth } from "@/contexts/authentication";
+import ArrowLeft from "../images/registration-page/arrow-left.svg";
+import ArrowRight from "../images/registration-page/arrow-right.svg";
 
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
@@ -20,15 +22,31 @@ function RecruitCompanyInfo() {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
+<<<<<<< HEAD
       // navigate("/path to job post");
+=======
+      navigate("/path to job post");
+>>>>>>> d850079 (fix: edit buttons)
     } catch (error) {
       console.error("Error during registration", error);
     }
   };
+<<<<<<< HEAD
   console.log(recruiterData);
 
   const onSubmit = async (data) => {
     console.log(data);
+=======
+
+  const onSubmit = async (data) => {
+    const { companywebsite, aboutcompany, havefile } = data;
+    setRecruiterData({
+      ...recruiterData,
+      companywebsite,
+      aboutcompany,
+      havefile,
+    });
+>>>>>>> d850079 (fix: edit buttons)
 
     const img = data.file;
     console.log({ img: img });
@@ -40,6 +58,7 @@ function RecruitCompanyInfo() {
     }
     
     try {
+<<<<<<< HEAD
       // const { company_website, about_company } = data;
 
       setRecruiterData({
@@ -51,6 +70,10 @@ function RecruitCompanyInfo() {
       
       await RecruiterRegister(recruiterData);
       // navigate("/path to job listing");
+=======
+      await RecruiterRegister(recruiterData, data);
+      navigate("/path to job listing");
+>>>>>>> d850079 (fix: edit buttons)
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -171,23 +194,12 @@ function RecruitCompanyInfo() {
 
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button
+            <button
               onClick={() => navigate("/recruiter/register1")}
               className="flex flex-row"
               type="submit"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M10.828 12L15.778 16.95L14.364 18.364L8 12L14.364 5.63599L15.778 7.04999L10.828 12Z"
-                  fill="white"
-                />
-              </svg>
+              <img src={ArrowLeft} />
               <div className="ml-[4px]">PREVIOUS</div>
             </button>
           </div>
@@ -197,25 +209,13 @@ function RecruitCompanyInfo() {
           </div>
 
           <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button
+            <button
               className="flex flex-row"
               type="submit"
               onClick={handleSubmit}
             >
               <div className="ml-[10px]">FINISH</div>
-              <svg
-                className="ml-[8px]"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M13.1722 12L8.22217 7.04999L9.63617 5.63599L16.0002 12L9.63617 18.364L8.22217 16.95L13.1722 12Z"
-                  fill="white"
-                />
-              </svg>
+              <img src={ArrowRight}/>
             </button>
           </div>
         </div>
