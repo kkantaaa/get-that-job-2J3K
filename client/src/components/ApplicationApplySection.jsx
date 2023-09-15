@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
+import { useNavigate } from "react-router-dom";
 //images
 import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
 import SendApplicationButton from "@/images/ApllicationApplyPage/SendApplicationButton.png";
@@ -13,12 +14,15 @@ function ApplicationApplySection({ companyName }) {
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [professionalExperience, setProfessionalExperience] = useState("");
   const [interestedReason, setInterestedReason] = useState("");
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user_id = "1";
-        const job_id = "4";
+        const user_id = Math.floor(Math.random() * 10) + 1;
+        setUserId(user_id);
+        const job_id = Math.floor(Math.random() * 10) + 1;
         const response = await axios.get(
           `http://localhost:4000/testapply/${user_id}/job-list/${job_id}`
         );
@@ -39,6 +43,9 @@ function ApplicationApplySection({ companyName }) {
 
   const handleCVChoiceChange = (data) => {
     setShowUploadButton(data === "uploadNew");
+    if (data === "useCurrent") {
+      const user_id = userId;
+    }
   };
 
   const onSubmit = async () => {
@@ -53,6 +60,7 @@ function ApplicationApplySection({ companyName }) {
       formData.append("interestedReason", interestedReason);
       await axios.post("", formData);
       console.log("Application sent successfully");
+     navigate("/user/findthatjob");
     } catch (error) {
       console.error("Error sending application:", error);
     }
@@ -96,10 +104,10 @@ function ApplicationApplySection({ companyName }) {
                         handleCVChoiceChange("useCurrent");
                         const fetchCurrentCV = async () => {
                           try {
-                            const user_id = "1";
-                            const job_id = "4";
+                            const user_idx = Math.floor(Math.random() * 10) + 1;
+                            const job_id = Math.floor(Math.random() * 10) + 1;
                             const response = await axios.get(
-                              `http://localhost:4000/testapply/${user_id}/job-list/${job_id}`
+                              `http://localhost:4000/testapply/${user_idx}/job-list/${job_id}`
                             );
                             const data = response.data;
                             console.log(data[0].user_appli_cv);

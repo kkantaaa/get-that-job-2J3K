@@ -1,7 +1,40 @@
 import { Router } from "express";
 import { pool } from "../utils/db_connection.js";
 
-const testapply   = Router();
+const testapply = Router();
+
+testapply.get("/:job_Id", async (req, res) => {
+  try {
+    const tryjoin = req.params.job_Id;
+
+    const jobdata = await pool.query(
+      "SELECT mock_appliacation_company.company_name, job_title, salary_min, salary_max, job_category ,job_type, is_following, date_time,avatar FROM jobs_mock inner join mock_appliacation_company on jobs_mock.company_id = mock_appliacation_company.company_id WHERE jobs_mock.company_id = $1",
+      [tryjoin]
+    );
+
+    res.json(jobdata.rows);
+    console.log(jobdata.rows);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+testapply.get("/logo/:logo_id", async (req, res) => {
+  try {
+    const trylogo = req.params.logo_id;
+
+    const logodata = await pool.query(
+      "SELECT company_logo FROM mock_appliacation_logo WHERE id = $1",
+      [trylogo]
+    );
+    res.json(logodata.rows);
+    console.log(logodata.rows);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 testapply.get("/:user_Id/job-list/:job_Id", async (req, res) => {
   try {
@@ -13,23 +46,12 @@ testapply.get("/:user_Id/job-list/:job_Id", async (req, res) => {
       [user_Id]
     );
 
-     res.json(userdata.rows);
-     console.log(userdata.rows);  
+    res.json(userdata.rows);
+    console.log(userdata.rows);
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-        
-
-
-
-
-
-
-
-
-
 
 export default testapply;
