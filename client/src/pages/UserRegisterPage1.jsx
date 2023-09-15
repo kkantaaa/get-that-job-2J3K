@@ -15,7 +15,7 @@ function UserRegisterPage1() {
 
   return (
     <>
-      <div className="bg-background min-h-screen flex flex-col">
+      <div className="bg-Background min-h-screen flex flex-col">
         <NavBar />
 
         {/* Introduction */}
