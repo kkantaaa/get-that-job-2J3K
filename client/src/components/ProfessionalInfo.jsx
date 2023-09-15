@@ -24,15 +24,12 @@ function ProfessionalInfo() {
       await UserRegister(userData);
       navigate("/path-to-job-listing");
     } catch (error) {
-      navigate("/path to job listing");
-    } catch (error) {
       console.error("Error during registration", error);
     }
   };
 
   const onSubmit = async (data) => {
     const { title, jobexp, education, havefile } = data;
-    const { title, jobExp, education, havefile } = data;
     setUserData({
       ...userData,
       title,

@@ -96,7 +96,7 @@ function RecruitCompanyInfo() {
         <div className="company-website-input">
           <label
             htmlFor="company-website"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             COMPANY WEBSITE
             <Controller
@@ -120,7 +120,7 @@ function RecruitCompanyInfo() {
         <div className="about-company-input">
           <label
             htmlFor="about_company"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             ABOUT COMPANY
             <Controller
@@ -146,7 +146,7 @@ function RecruitCompanyInfo() {
 
         <div
           onClick={handleFileButtonClick}
-          className="p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
+          className="mt-[8px] p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
         >
           <img
             src={FileInputIcon}
@@ -187,11 +187,6 @@ function RecruitCompanyInfo() {
             </div>
           )}
         </div>
-
-
-        <p className="text-[12px] text-LightGray font-normal leading-[16px] tracking-[0.4px] uppercase">
-          Only PDF. Max size 5MB
-        </p>
 
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
