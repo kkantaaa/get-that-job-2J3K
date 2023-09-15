@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +35,11 @@ const postJobSchema = yup.object({
   jobCategory: yup.string().required(),
   jobType: yup.string().required(),
   salaryRangeMin: yup.number().positive().integer().required(),
-  salaryRangeMax: yup.number().positive().integer().required(),
+  salaryRangeMax: yup
+    .number()
+    .positive("JOB TITLE is a required field")
+    .integer()
+    .required(),
   aboutJobPosition: yup.string().required(),
   mandatoryRequirement: yup.string().required(),
   optionalRequirement: yup.string().required(),
@@ -42,10 +47,53 @@ const postJobSchema = yup.object({
 
 function CreateJobPosting() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
+  const navigate = useNavigate();
 
-  const onSubmit = (e) => {
-    console.log(e);
-    //navigate("/recruiter/createjobposting");
+  const [categories, setCategories] = useState([]);
+  const [types, setTypes] = useState([]);
+
+  const getCategories = async () => {
+    try {
+      const results = await axios.get("http://localhost:4000/category");
+      //const categories = results.data.result;
+      setCategories(results.data.result);
+      console.log("Categories get successful");
+    } catch (error) {
+      console.error("Error: unable to load categories", error);
+    }
+  };
+
+  const getTypes = async () => {
+    try {
+      const results = await axios.get("http://localhost:4000/type");
+      //const categories = results.data.result;
+      setTypes(results.data.result);
+      console.log("Types get successful");
+    } catch (error) {
+      console.error("Error: unable to load Types", error);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+    getTypes();
+    console.log("categories are", categories);
+    console.log("Types are", types);
+  }, []);
+
+  const onSubmit = async (data) => {
+    try {
+      try {
+        console.log(data);
+        await axios.post("http://localhost:4000/jobs", data);
+        console.log("Posting successful");
+      } catch (error) {
+        console.error("Error: unable to post", error);
+      }
+      //navigate("/recruiter/jobpostings");
+    } catch (error) {
+      console.error("Error during posting job", error);
+    }
   };
 
   return (
@@ -99,16 +147,17 @@ function CreateJobPosting() {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Categories</SelectLabel>
-                                <SelectItem value="apple">Apple</SelectItem>
-                                <SelectItem value="banana">Banana</SelectItem>
-                                <SelectItem value="blueberry">
-                                  Blueberry
-                                </SelectItem>
-                                <SelectItem value="grapes">Grapes</SelectItem>
-                                <SelectItem value="pineapple">
-                                  Pineapple
-                                </SelectItem>
                               </SelectGroup>
+                              {categories.map((category) => {
+                                return (
+                                  <SelectItem
+                                    value={category.category_name}
+                                    key={category.category_id}
+                                  >
+                                    {category.category_name}
+                                  </SelectItem>
+                                );
+                              })}
                             </SelectContent>
                           </Select>
                           <FormDescription></FormDescription>
@@ -133,15 +182,16 @@ function CreateJobPosting() {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Types</SelectLabel>
-                                <SelectItem value="apple">Apple</SelectItem>
-                                <SelectItem value="banana">Banana</SelectItem>
-                                <SelectItem value="blueberry">
-                                  Blueberry
-                                </SelectItem>
-                                <SelectItem value="grapes">Grapes</SelectItem>
-                                <SelectItem value="pineapple">
-                                  Pineapple
-                                </SelectItem>
+                                {types.map((type) => {
+                                  return (
+                                    <SelectItem
+                                      value={type.type_name}
+                                      key={type.type_id}
+                                    >
+                                      {type.type_name}
+                                    </SelectItem>
+                                  );
+                                })}
                               </SelectGroup>
                             </SelectContent>
                           </Select>
