@@ -142,7 +142,7 @@ registRouter.post("/recruiter", async (req, res) => {
       return res.status(410).json({ message: "Recruiter Email not found" });
     }
     await pool.query(
-      "INSERT INTO recruitertable (recruiter_id, company_name, company_website, about_company, company_logo) VALUES ($1, $2, $3, $4, $5)",
+      "INSERT INTO recruiter_informations (recruiter_id, company_name, company_website, about_company, company_logo) VALUES ($1, $2, $3, $4, $5)",
       [ 
         parseInt(recruiterQuery.rows[0].recruiter_id, 10),
         user.company_name,

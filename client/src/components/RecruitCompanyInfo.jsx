@@ -19,6 +19,7 @@ function RecruitCompanyInfo() {
   useEffect(() => {
     console.log("Updated RecruiterData:", recruiterData);
   }, [recruiterData]);
+  //do not forget to remove after finish rechecked
 
   const handlerSkip = async (event) => {
     event.preventDefault();
@@ -30,40 +31,40 @@ function RecruitCompanyInfo() {
     }
   };
 
+  console.log(recruiterData);
   const onSubmit = async (data) => {
-    const { companywebsite, aboutcompany, havefile  } = data;
-    setRecruiterData({
-      ...recruiterData,
-      companywebsite,
-      aboutcompany,
-      havefile,
-    });
-
-    const img = data.file;
+    console.log(data);
+  
+    const img = {
+      fileType: 'companyLogo',
+      file: data.file
+    };
+    
     console.log({ img: img });
     let company_logo = await upload(img);
-
-
+  
     if (company_logo === undefined) {
       company_logo = null;
     }
-    
+  
     try {
-      // const { company_website, about_company } = data;
-
-      setRecruiterData({
+      
+      const fetchData = {
         ...recruiterData,
         company_website: data.company_website,
         about_company: data.about_company,
         company_logo: company_logo,
-      });
-      
-      await RecruiterRegister(recruiterData);
+      };
+  
+      await RecruiterRegister(fetchData);
       // navigate("/path to job listing");
     } catch (error) {
       console.error("Error during registration", error);
     }
   };
+  
+
+  
 
   // useEffect(() => {
   //   const logoFile = watch("file");

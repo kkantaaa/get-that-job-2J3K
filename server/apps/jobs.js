@@ -75,6 +75,7 @@ jobRouter.get("/:id", async (req, res) => {
 });
 
 jobRouter.post("/", async (req, res) => {
+  console.log(req);
   const hasClosed = req.body.status === "closed";
   console.log(req);
 
@@ -102,6 +103,7 @@ jobRouter.post("/", async (req, res) => {
     );
     console.log("Category Query Result:", categoryQuery.rows);
     if (categoryQuery.rows.length === 0) {
+      
       return res.status(410).json({ message: "Category not found" });
     }
 
@@ -111,6 +113,7 @@ jobRouter.post("/", async (req, res) => {
     );
     console.log("type Query Result:", typeQuery.rows);
     if (typeQuery.rows.length === 0) {
+      
       return res.status(411).json({ message: "type not found" });
     }
 
