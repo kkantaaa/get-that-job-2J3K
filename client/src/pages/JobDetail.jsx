@@ -66,7 +66,7 @@ function JobDetail() {
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
                     logo
-                    {jobDetail.company_logo}
+                    <img src={jobDetail.company_logo}/>
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
