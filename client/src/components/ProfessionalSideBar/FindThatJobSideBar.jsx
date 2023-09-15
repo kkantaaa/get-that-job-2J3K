@@ -1,8 +1,14 @@
 import Logo from "../../images/landing-page/navlogo1.png";
 import { useAuth } from "@/contexts/authentication";
+import { useNavigate } from "react-router-dom";
 
 export default function FindThatJobSideBar() {
   const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleFindthatJobPage = ()=>{
+    navigate("/user/findthatjob");
+  }
 
   return (
     <div className="fixed w-[240px] h-screen bg-BackgroundDark flex flex-col">
@@ -10,7 +16,7 @@ export default function FindThatJobSideBar() {
         <img src={Logo} />
       </div>
       <div className="w-full h-fit font-Inter text-DarkGray ">
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] bg-Background active:bg-Background focus:bg-Background ">
+        <button onClick={handleFindthatJobPage} className="flex h-[48px] w-full py-[12px] px-[16px] bg-Background active:bg-Background focus:bg-Background ">
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
