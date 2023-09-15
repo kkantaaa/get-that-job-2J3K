@@ -184,8 +184,5 @@ function PersonalInformation() {
 }
 
 export default PersonalInformation;
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 667fcc332ccf038911bf8e3136cdb29da5ff0ce8
