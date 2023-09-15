@@ -174,7 +174,7 @@ function RecruitCompanyInfo() {
           </div>
 
           <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button
+          <button
               className="flex flex-row"
               type="submit"
               onClick={handleSubmit}
