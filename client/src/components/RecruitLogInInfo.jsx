@@ -46,22 +46,24 @@ function RecruitLogInInfo() {
   };
 
   return (
-    <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
-        {/* Company Name */}
-        <div className="input-field">
-          <label htmlFor="companyName" className="label">
+        <div className="company-name-input">
+          <label
+            htmlFor="company-name"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             COMPANY NAME
             <Controller
-              name="companyName"
+              name="companyname"
               control={control}
               defaultValue=""
               rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
-                  className="input"
-                  name="companyName"
-                  id="companyName"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  name="companyname"
+                  id="companyname"
                   type="text"
                   placeholder="My Company S.A"
                   {...field}
@@ -69,22 +71,25 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          {displayErrorMessage("companyName")}
+          <span>{errors.companyname && errors.companyname.message}</span>
         </div>
 
         <div className="email-input">
-          <label htmlFor="email" className="mb-[4px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="email"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             EMAIL
             <Controller
-              name="companyEmail"
+              name="companyemail"
               control={control}
               defaultValue=""
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
-                  className="input"
-                  id="companyEmail"
-                  name="companyEmail"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="companyemail"
+                  name="companyemail"
                   type="email"
                   placeholder="some.user@mail.com"
                   {...field}
@@ -92,22 +97,25 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          {displayErrorMessage("companyEmail")}
+          <span>{errors.companyemail && errors.companyemail.message}</span>
         </div>
 
         <div className="password-input">
-          <label htmlFor="password" className="mb-[4px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="password"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             PASSWORD
             <Controller
-              name="companyPassword"
+              name="companypassword"
               control={control}
               defaultValue=""
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
-                  className="input"
-                  id="companyPassword"
-                  name="companyPassword"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="companypassword"
+                  name="companypassword"
                   type="password"
                   placeholder="******"
                   {...field}
@@ -115,22 +123,28 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          {displayErrorMessage("companyPassword")}
+          <span>
+            {errors.companypassword && errors.companypassword.message}
+          </span>
         </div>
 
-        {/* Confirmed Password */}
-        <div className="input-field">
-          <label htmlFor="confirmedPassword" className="label">
+        <div className="confirmed-password-input">
+          <label
+            htmlFor="confirmed-password"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             PASSWORD CONFIRMATION
             <Controller
               name="confirmedPassword"
               control={control}
               defaultValue=""
-              rules={{ required: "Password confirmation is required" }}
+              rules={{
+                required: "Password confirmation is required",
+              }}
               render={({ field }) => (
                 <input
-                  className="input"
-                  id="confirmedPassword"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="confirmed-password"
                   type="password"
                   placeholder="******"
                   {...field}
@@ -138,14 +152,15 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          {displayErrorMessage("confirmedPassword")}
+          <span>
+            {errors.confirmedPassword && errors.confirmedPassword.message}
+          </span>
         </div>
 
-        {/* Submit Button */}
-        <div className="submit-button">
-          <button className="button" type="submit">
-            <div className="button-text">NEXT</div>
-            <img src={ArrowRight} alt="Next Arrow" />
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+          <button onClick={() => navigate("/recruiter/register2")} className="flex flex-row" type="submit">
+            <div className="ml-[10px]">NEXT</div>
+            <img src={ArrowRight}/>
           </button>
         </div>
       </div>
