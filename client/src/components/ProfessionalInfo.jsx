@@ -3,11 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
-<<<<<<< HEAD
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
-=======
->>>>>>> a1e3b27271cfa3230fe2bf6d8eb0ed33520a9ac2
+
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
