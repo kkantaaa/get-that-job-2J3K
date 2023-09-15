@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ProfessionalSidebar from "@/components/ProfessionalSideBar";
+import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar";
 import FollowingStatus from "../images/job-detail-page/FollowButton.svg";
 import NavigateLine from "../images/job-detail-page/navigate-line.svg";
 import CategoryIcon from "../images/job-detail-page/category-icon.svg";
@@ -49,7 +49,7 @@ function JobDetail() {
     <>
       <div className="bg-Background overflow-x-hidden">
         <div className="flex flex-row font-Inter text-[16px]">
-          <ProfessionalSidebar />
+          <FindThatJobSideBar />
 
           <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
             {/* BackButton */}
