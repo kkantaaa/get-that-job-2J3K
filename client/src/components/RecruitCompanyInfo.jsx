@@ -118,7 +118,7 @@ function RecruitCompanyInfo() {
               //   rules={{ required: "About company experience is required" }}
               render={({ field }) => (
                 <input
-                  className="flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="aboutcompany"
                   name="aboutcompany"
                   type="text"
@@ -164,6 +164,11 @@ function RecruitCompanyInfo() {
             </div>
           )}
         </div>
+
+        <p className="text-[12px] text-LightGray font-normal leading-[16px] tracking-[0.4px] uppercase">
+          Only PDF. Max size 5MB
+        </p>
+
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button
