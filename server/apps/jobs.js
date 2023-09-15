@@ -3,7 +3,7 @@ import { pool } from "../utils/db_connection.js";
 import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
-// jobRouter.use(protect);
+jobRouter.use(protect);
 
 jobRouter.get("/", async (req, res) => {
   try {
@@ -76,21 +76,25 @@ jobRouter.get("/:id", async (req, res) => {
 
 jobRouter.post("/", async (req, res) => {
   const hasClosed = req.body.status === "closed";
+  console.log(req);
+
   try {
     const job = {
       recruiter_id: req.user.id,
-      job_title: req.body.job_title,
-      category: req.body.category, //use category replace category_name
-      type: req.body.type, //use type replace type_name
-      salary_min: req.body.salary_min,
-      salary_max: req.body.salary_max,
-      about_job_position: req.body.about_job_position,
-      mandatory_requirement: req.body.mandatory_requirement,
-      optional_requirement: req.body.optional_requirement,
+      job_title: req.body.jobTitle,
+      category: req.body.jobCategory, //use category replace category_name
+      type: req.body.jobType, //use type replace type_name
+      salary_min: req.body.salaryRangeMin,
+      salary_max: req.body.salaryRangeMax,
+      about_job_position: req.body.aboutJobPosition,
+      mandatory_requirement: req.body.mandatoryRequirement,
+      optional_requirement: req.body.optionalRequirement,
       opened_at: new Date(),
       updated_at: new Date(),
       closed_at: hasClosed ? new Date() : null,
     };
+
+    console.log(job);
 
     const categoryQuery = await pool.query(
       "SELECT * FROM job_categories WHERE category_name = $1",

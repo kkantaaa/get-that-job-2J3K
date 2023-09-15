@@ -8,6 +8,9 @@ import RecruitRegisterPage2 from "./pages/RecruitRegisterPage2.jsx";
 import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
+import JobPosting from "@/pages/Recruiter/JobPostingPage.jsx";
+import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
+import RecruiterProfile from "@/pages/Recruiter/RecruiterProfile.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
@@ -41,11 +44,22 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
+              <Route path="/user/jobdetail" element={<JobDetail />} />
               <Route
                 path="/user/application/apply"
                 element={<ApplicationApplyPage />}
               />
+              <Route path="/recruiter/jobpostings" element={<JobPosting />} />
 
+              <Route
+                path="/recruiter/createjobposting"
+                element={<CreateJobPosting />}
+              />
+
+              <Route
+                path="/recruiter/recruiterprofile"
+                element={<RecruiterProfile />}
+              />
               {/* เพิ่มเงื่อนไขเพื่อตรวจสอบว่าผู้ใช้ลงชื่อเข้าใช้หรือไม่
               {auth.isLoggedIn && (
                 <Route
@@ -65,4 +79,3 @@ function App() {
 }
 
 export default App;
-
