@@ -151,7 +151,7 @@ function ProfessionalInfo() {
           />
         </div>
 
-        <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
+        <p className="text-[12px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
           Only PDF. Max size 5MB
         </p>
 
