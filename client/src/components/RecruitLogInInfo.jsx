@@ -2,6 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
+import ArrowRight from "../images/registration-page/arrow-right.svg";
 
 function RecruitLogInInfo() {
   const navigate = useNavigate();
@@ -18,21 +19,26 @@ function RecruitLogInInfo() {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
+  const displayErrorMessage = (fieldName) =>
+    errors[fieldName] && (
+      <span className="text-red-500">{errors[fieldName].message}</span>
+    );
+
   const onSubmit = (data) => {
     // Check if passwords match
-    if (data.confirmedPassword !== data.companypassword) {
+    if (data.confirmedPassword !== data.companyPassword) {
       setError("confirmedPassword", {
         type: "manual",
-        message: "The confirmed Password is not matched",
+        message: "The confirmed password does not match",
       });
     } else {
       // Clear the error if passwords match
       clearErrors("confirmedPassword");
 
       setRecruiterData({
-        company_name: control._fields.companyname._f.value,
-        email: control._fields.companyemail._f.value,
-        password: control._fields.companypassword._f.value,
+        company_name: data.companyName,
+        email: data.companyEmail,
+        password: data.companyPassword,
       });
 
       navigate("/recruiter/register2");
@@ -45,7 +51,7 @@ function RecruitLogInInfo() {
         <div className="company-name-input">
           <label
             htmlFor="company-name"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             COMPANY NAME
             <Controller
@@ -71,7 +77,7 @@ function RecruitLogInInfo() {
         <div className="email-input">
           <label
             htmlFor="email"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             EMAIL
             <Controller
@@ -97,7 +103,7 @@ function RecruitLogInInfo() {
         <div className="password-input">
           <label
             htmlFor="password"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             PASSWORD
             <Controller
@@ -125,7 +131,7 @@ function RecruitLogInInfo() {
         <div className="confirmed-password-input">
           <label
             htmlFor="confirmed-password"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             PASSWORD CONFIRMATION
             <Controller
@@ -151,8 +157,11 @@ function RecruitLogInInfo() {
           </span>
         </div>
 
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button type="submit">NEXT</button>
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+          <button onClick={() => navigate("/recruiter/register2")} className="flex flex-row" type="submit">
+            <div className="ml-[10px]">NEXT</div>
+            <img src={ArrowRight}/>
+          </button>
         </div>
       </div>
     </form>

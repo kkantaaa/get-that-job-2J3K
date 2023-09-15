@@ -1,22 +1,24 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form"; //1. นำเข้า React Hook Form, Controller = เพื่อเชื่อมต่อ field ใน input เข้ากับ react hook form
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
+import ArrowRight from "../images/registration-page/arrow-right.svg";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
   const navigate = useNavigate();
 
+// 2. เราจะใช้ useForm(); เพื่อกำหนดค่าต่างๆ และส่งค่าที่จะใช้ในการจัดการ form
   const {
-    handleSubmit,
-    control,
-    setError,
-    formState: { errors },
+    handleSubmit, // <- ใช้เพื่อ manage เวลาส่งฟอร์ม 
+    control, // <- มาจาก controller .ใช้เพื่อเชื่อมต่อกับ field input ใน form
+    setError, // <- function สำหรับจัดการข้อความ error message ที่อยากให้แสดง
+    formState: { errors }, // <-  เป็นค่าที่ใช้ในเก็บ error message ที่เรา set ขึ้นมา เวลากรอก form ไม่ครบ
   } = useForm();
 
   useEffect(() => {
-    // Log the updated userData after the state has been updated
-    console.log("Updated userData:", userData);
+// ใช้ useEffect เพื่ออัปเดตเวลามีข้อมูลเปลี่ยนแปลง
+        console.log("Updated userData:", userData);
   }, [userData]);
 
   const onSubmit = async (data) => {
@@ -45,13 +47,11 @@ function LogInInfo() {
   };
 
   return (
-    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
+    <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div className="email-input">
           <label htmlFor="email">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
-              EMAIL
-            </div>
+            <div className="mb-[4px] font-normal tracking-[1.5px]">EMAIL</div>
             <Controller
               name="email"
               control={control}
@@ -76,7 +76,7 @@ function LogInInfo() {
 
         <div className="password-input">
           <label htmlFor="password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+            <div className="mb-[4px] font-normal tracking-[1.5px]">
               PASSWORD
             </div>
             <Controller
@@ -103,7 +103,7 @@ function LogInInfo() {
 
         <div className="confirmed-password-input">
           <label htmlFor="confirmed-password">
-            <div className="mb-[4px] text-xs font-normal tracking-[1.5px]">
+            <div className="mb-[4px] font-normal tracking-[1.5px]">
               PASSWORD CONFIRMATION
             </div>
             <Controller
@@ -129,8 +129,11 @@ function LogInInfo() {
             {errors.confirmedPassword && errors.confirmedPassword.message}
           </span>
         </div>
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button type="submit">NEXT</button>
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+          <button onClick={() => navigate("/user/register2")} className="flex flex-row" type="submit">
+            <div className="ml-[10px]">NEXT</div>
+            <img src={ArrowRight}/>
+          </button>
         </div>
       </div>
     </form>
@@ -138,5 +141,3 @@ function LogInInfo() {
 }
 
 export default LogInInfo;
-
-
