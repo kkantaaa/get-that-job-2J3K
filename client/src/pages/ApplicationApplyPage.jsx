@@ -1,60 +1,72 @@
-/* eslint-disable no-unused-vars */
+// component and files
 import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
+import ApplicationApplySection from "@/components/ApplicationApplySection";
+import SendAPPlicationButton from "@/images/ApllicationApplyPage/SendAPPlicationButton.png"; //img
+import FollowButton from "@/images/ApllicationApplyPage/FollowButton.png"; //img
+//functions, method and libaries
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ApplicationApplySection from "@/components/ApplicationApplySection";
-//images
-import SendAPPlicationButton from "@/images/ApllicationApplyPage/SendAPPlicationButton.png";
-import FollowButton from "@/images/ApllicationApplyPage/FollowButton.png";
-//
 import moment from "moment";
+//init
 moment().format();
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function ApplicationApplyPage() {
+  // nav
   const navigate = useNavigate();
+  // state
   const [jobDetail, setJobDetail] = useState({});
-  const { jobId } = useParams();
+  const { userparams, jobparams } = useParams();
+  // useEffect
+  useEffect(
+    () => {
+      console.log("userparams [24]:", userparams);
+      console.log("jobparams [25]:", jobparams);
+      //1
+      const getJobDetail = async () => {
+        try {
+          const job_id = parseInt(jobparams);
+          console.log("job_id:", job_id);
+          const getcompanyinfo = await axios.get(
+            `http://localhost:4000/testapply/${job_id}`
+          );
+          setJobDetail(getcompanyinfo.data[0]);
+          console.log("fetch dai kub [30]:", getcompanyinfo.data[0]);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      //2
+      const fetchLogo = async () => {
+        try {
+          const logo_id = parseInt(jobparams);
+          const getcompanylogo = await axios.get(
+            `http://localhost:4000/testapply/logo/${logo_id}`
+          );
+          setJobDetail(getcompanylogo.data[0]);
+          console.log(getcompanylogo.data[0]);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      //1+2
+      const fetchData = async () => {
+        await fetchLogo();
+        await getJobDetail();
+      };
 
-  useEffect(() => {
-    const getJobDetail = async () => {
-      try {
-        const job_id = Math.floor(Math.random() * 10) + 1;
-        const result = await axios.get(
-          `http://localhost:4000/testapply/${job_id}`
-        );
-        setJobDetail(result.data[0]);
-        console.log(result.data[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const fetchLogo = async () => {
-      try {
-        const logo_id = Math.floor(Math.random() * 10) + 1;
-        const result = await axios.get(
-          `http://localhost:4000/testapply/logo/${logo_id}`
-        );
-        setJobDetail(result.data[0]);
-        console.log(result.data[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const fetchData = async () => {
-      await fetchLogo();
-      await getJobDetail();
-    };
-
-    fetchData();
-  }, []);
-
+      fetchData();
+    },
+    [jobparams],
+    [userparams]
+  );
+  // moment
   const createdAt = moment(`${jobDetail.date_time}`).fromNow();
-
+  //back action and jump to send application button>>>>>>>
   const handleBack = (event) => {
     event.preventDefault();
+    // !!check team nakub!!
     navigate("/user/findthatjob");
   };
 
@@ -62,12 +74,19 @@ function ApplicationApplyPage() {
     const button = document.getElementById("sendApplicationButton");
     button.scrollIntoView({ behavior: "smooth" });
   };
+  //>>>>>>>>>
   return (
     <>
       <div className="bg-Background overflow-x-hidden">
         <div className="flex flex-row font-Inter text-[16px]">
           <ProfessionalSidebar />
+          {
+            // application show job + company section
+          }
           <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
+            {
+              // back button>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            }
             <div className="flex flex-row">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -85,6 +104,13 @@ function ApplicationApplyPage() {
                 Back
               </p>
             </div>
+            {
+              // job + company  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            }
+            {
+              // avatar + company name + follow button
+              // job title + posted at
+            }
             <div className="mt-[16px]">
               <div className="flex flex-row">
                 <div className="flex flex-row">
@@ -155,6 +181,9 @@ function ApplicationApplyPage() {
                 <p> Posted: {createdAt} </p>
               </p>
             </div>
+            {
+              // cataegory + type + salary section
+            }
             <div className="mt-[16px] font-Montserrat flex flex-row justify-center">
               <div className="w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
@@ -226,7 +255,13 @@ function ApplicationApplyPage() {
                 </div>
               </div>
             </div>
-            <ApplicationApplySection />
+            {
+              // user apply section
+            }
+            <ApplicationApplySection
+              userparams={userparams}
+              jobparams={jobparams}
+            />
           </div>
         </div>
       </div>

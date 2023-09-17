@@ -45,8 +45,11 @@ function App() {
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
               <Route path="/user/jobdetail" element={<JobDetail />} />
+              {
+                //kan's Route : tbd put auth
+              }
               <Route
-                path="/user/application/apply"
+                path="/user/jobs/:jobparams/apply"
                 element={<ApplicationApplyPage />}
               />
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
