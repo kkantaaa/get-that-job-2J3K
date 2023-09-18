@@ -19,50 +19,35 @@ function ApplicationApplyPage() {
   const [jobDetail, setJobDetail] = useState({});
   const { userparams, jobparams } = useParams();
   // useEffect
-  useEffect(
-    () => {
-      console.log("userparams [24]:", userparams);
-      console.log("jobparams [25]:", jobparams);
-      //1
-      const getJobDetail = async () => {
-        try {
-          const job_id = parseInt(jobparams);
-          console.log("job_id:", job_id);
-          const getcompanyinfo = await axios.get(
-            `http://localhost:4000/testapply/${job_id}`
-          );
-          setJobDetail(getcompanyinfo.data[0]);
-          console.log("fetch dai kub [30]:", getcompanyinfo.data[0]);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      //2
-      const fetchLogo = async () => {
-        try {
-          const logo_id = parseInt(jobparams);
-          const getcompanylogo = await axios.get(
-            `http://localhost:4000/testapply/logo/${logo_id}`
-          );
-          setJobDetail(getcompanylogo.data[0]);
-          console.log(getcompanylogo.data[0]);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      //1+2
-      const fetchData = async () => {
-        await fetchLogo();
-        await getJobDetail();
-      };
+  useEffect(() => {
+    console.log("userparams [24]:", userparams);
+    console.log("jobparams [25]:", jobparams);
+    //1
+    const getJobDetail = async () => {
+      try {
+        const job_id = parseInt(jobparams);
+        console.log("job_id [29]:", job_id);
+        const getcompanyinfo = await axios.get(
+          `http://localhost:4000/testapply/${job_id}`
+        );
+        setJobDetail(getcompanyinfo.data[0]);
+        console.log("fetch dai kub [30]:", getcompanyinfo.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    //1
+    const fetchData = async () => {
 
-      fetchData();
-    },
-    [jobparams],
-    [userparams]
-  );
+      await getJobDetail();
+    };
+
+    fetchData();
+  }, [ jobparams, userparams]);
   // moment
-  const createdAt = moment(`${jobDetail.date_time}`).fromNow();
+  console.log("jobDetail [65]:", jobDetail);
+  const createdAt = moment(jobDetail.date_time).fromNow();
   //back action and jump to send application button>>>>>>>
   const handleBack = (event) => {
     event.preventDefault();
