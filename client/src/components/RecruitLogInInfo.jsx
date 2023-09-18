@@ -11,7 +11,6 @@ function RecruitLogInInfo() {
     handleSubmit,
     control,
     setError,
-    clearErrors,
     formState: { errors },
   } = useForm();
 
@@ -19,22 +18,19 @@ function RecruitLogInInfo() {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
-  const displayErrorMessage = (fieldName) =>
-    errors[fieldName] && (
-      <span className="text-red-500">{errors[fieldName].message}</span>
-    );
+  // const displayErrorMessage = (fieldName) =>
+  //   errors[fieldName] && (
+  //     <span className="text-red-500">{errors[fieldName].message}</span>
+  //   );
 
   const onSubmit = (data) => {
-    // Check if passwords match
+    // validate if passwords match
     if (data.confirmedPassword !== data.companyPassword) {
       setError("confirmedPassword", {
         type: "manual",
-        message: "The confirmed password does not match",
+        message: "The confirmed password is not matched",
       });
     } else {
-      // Clear the error if passwords match
-      clearErrors("confirmedPassword");
-
       setRecruiterData({
         company_name: data.companyName,
         email: data.companyEmail,
@@ -71,7 +67,9 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companyname && errors.companyname.message}</span>
+          <div className="text-red-500 text-[10px] uppercase">
+            {errors.companyname && errors.companyname.message}
+          </div>
         </div>
 
         <div className="email-input">
@@ -97,7 +95,9 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companyemail && errors.companyemail.message}</span>
+          <div className="text-red-500 text-[10px] uppercase">
+            {errors.companyemail && errors.companyemail.message}
+          </div>
         </div>
 
         <div className="password-input">
@@ -123,9 +123,9 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>
+          <div className="text-red-500 text-[10px] uppercase">
             {errors.companypassword && errors.companypassword.message}
-          </span>
+          </div>
         </div>
 
         <div className="confirmed-password-input">
@@ -152,15 +152,15 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>
+          <div className="text-red-500 text-[10px] uppercase">
             {errors.confirmedPassword && errors.confirmedPassword.message}
-          </span>
+          </div>
         </div>
 
         <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
-          <button onClick={() => navigate("/recruiter/register2")} className="flex flex-row" type="submit">
+          <button className="flex flex-row" type="submit">
             <div className="ml-[10px]">NEXT</div>
-            <img src={ArrowRight}/>
+            <img src={ArrowRight} />
           </button>
         </div>
       </div>

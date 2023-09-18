@@ -23,7 +23,7 @@ function ProfessionalInfo() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-      navigate("/path-to-job-listing");
+      navigate("/user/findthatjob");
     } catch (error) {
       console.error("Error during registration", error);
     }
