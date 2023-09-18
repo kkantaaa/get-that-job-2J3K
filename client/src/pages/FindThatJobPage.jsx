@@ -8,11 +8,18 @@ import { useState } from "react";
 
 function FindThatJobPage() {
   const [text, setText] = useState("");
+  const [minSalary, setMinSalary] = useState("");
+  // const [maxSalary, setMaxSalary] = useState();
   //เพิ่ม variable สำหรับ parameter อื่นๆ
 
   const handleInputChange = (event) => {
-    const text = event.target.value;
-    setText(text);
+    console.log(event.target);
+    // const text = event.target.value;
+    // const min = event.target.min;
+    // const max = event.target.value;
+    // setText(text);
+    // setMinSalary(min);
+    // setMaxSalary(max);
   };
 
   const handleSubmit = (event) => {
@@ -41,7 +48,9 @@ function FindThatJobPage() {
                 id="search-input"
                 placeholder="manufacturing, sales, swim"
                 value={text}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  setText(e.target.value);
+                }}
               />
               <img
                 className="absolute top-2 left-1.5"
@@ -84,6 +93,10 @@ function FindThatJobPage() {
                     type="text"
                     id="search-input"
                     placeholder="min"
+                    value={minSalary}
+                    onChange={(e) => {
+                      setMinSalary(e.target.value);
+                    }}
                   />
                   <img
                     className="absolute top-2 left-1"
@@ -101,6 +114,8 @@ function FindThatJobPage() {
                     type="text"
                     id="search-input"
                     placeholder="max"
+                    // value={maxSalary}
+                    // onChange={handleInputChange}
                   />
                   <img
                     className="absolute top-2 left-1"
@@ -114,7 +129,7 @@ function FindThatJobPage() {
           </div>
         </div>
         <div className="mx-12">
-          <JobList value={text} />
+          <JobList text={text} minSalary={minSalary} />
         </div>
       </div>
     </div>

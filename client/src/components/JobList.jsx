@@ -10,24 +10,19 @@ import testLogo from "@/images/getthatjob-page/Baby.png";
 const JobList = (props) => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
-  const keywords = props.value;
+  const keywords = props.text;
+  const minSalary = props.minSalary;
 
   const getJobs = async (input) => {
-    const keywords = input;
-    // const { status, keywords, page } = input; เพิ่ม parameter อื่นๆ ตามนี้
+    const { keywords, minSalary } = input;
     try {
       const params = new URLSearchParams();
       params.append("keywords", keywords);
-      // params.append("min", min);
-      // params.append("max", max);
-      // console.log(`keywords form getJobs fuction : ${keywords}`);
+      params.append("minSalary", minSalary);
       const results = await axios.get("http://localhost:4000/jobs", {
-        params, // Include data in the request body
+        params,
       });
-      // const results = await axios.get(
-      //   `http://localhost:4000/jobs?keywords=%dev%`
-      // );
-      // const results = await axios.get("http://localhost:4000/jobs");
+
       console.log("Jobs from server");
       console.log(results.data.data);
       setJobs(results.data.data);
@@ -37,8 +32,8 @@ const JobList = (props) => {
   };
 
   useEffect(() => {
-    getJobs(keywords);
-  }, [keywords]);
+    getJobs({ keywords, minSalary });
+  }, [keywords, minSalary]);
 
   return (
     <div className="ml-12">
@@ -56,9 +51,6 @@ const JobList = (props) => {
                 <div className="flex flex-row mt-2">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-4">
                     <img src={testLogo} />
-                    {/* LOGO
-                    <br />
-                    id : {job.job_id} */}
                   </div>
                   <div className="flex flex-col p-2">
                     <div className="flex flex-row w-fit text-[14px] text-LightGray">
@@ -72,7 +64,6 @@ const JobList = (props) => {
                     <div className="flex flex-row">
                       <div className="flex flex-row text-LightGray">
                         <img src={typeIcon} />
-                        {/* {job.job_type_id} */}
                         Full-time
                       </div>
                       <div className="flex flex-row text-LightGray">

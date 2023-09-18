@@ -8,11 +8,11 @@ jobRouter.use(protect);
 jobRouter.get("/", async (req, res) => {
   try {
     const keywords = `%${req.query.keywords}%` || null;
-    // const keywords = "%office%";
+    // const category = req.query.keywords || null;
     console.log(`keywords from server/apps/jobs : ${keywords}`);
     const category = req.query.category || null;
     const type = req.query.type || null;
-    const minSalary = req.query.minSalary || null;
+    const minSalary = `${req.query.minSalary}` || null;
     // const minSalary = 2000;
     const maxSalary = req.query.maxSalary || null;
     // const maxSalary = 4000;
@@ -103,7 +103,6 @@ jobRouter.post("/", async (req, res) => {
     );
     console.log("Category Query Result:", categoryQuery.rows);
     if (categoryQuery.rows.length === 0) {
-      
       return res.status(410).json({ message: "Category not found" });
     }
 
@@ -113,7 +112,6 @@ jobRouter.post("/", async (req, res) => {
     );
     console.log("type Query Result:", typeQuery.rows);
     if (typeQuery.rows.length === 0) {
-      
       return res.status(411).json({ message: "type not found" });
     }
 
