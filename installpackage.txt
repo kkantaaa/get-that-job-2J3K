@@ -6,3 +6,6 @@ npm i -D @types/node
 npx shadcn-ui@latest 
 
 npm install @hookform/resolvers yup
+
+//moment for showing how long application/job has been posted
+npm install moment
