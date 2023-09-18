@@ -54,4 +54,36 @@ testapply.get("/:user_Id/job-list/:job_Id", async (req, res) => {
   }
 });
 
+testapply.post("/:user_Id/job-list/:job_Id", async (req, res) => {
+  try {
+    const job_Id = req.params.job_Id;
+
+    console.log(req.body);
+
+    const { currentCV, interestedReason, professionalExperience } = req.body;
+    console.log("job_Id:", job_Id);
+    console.log("professionalExperience:", professionalExperience);
+    console.log("currentCV:", currentCV);
+    console.log("interestedReason:", interestedReason);
+    const userdata = await pool.query(
+      "INSERT INTO test_send_applicatio (job_id, professional_experience, cv, interested_reason) " +
+        "VALUES ($1, $2, $3, $4) " +
+        "ON CONFLICT (job_id) DO UPDATE SET " +
+        "professional_experience = $2, " +
+        "cv = $3, " +
+        "interested_reason = $4 " +
+        "RETURNING *",
+      [job_Id, professionalExperience, currentCV, interestedReason]
+    );
+
+    console.log("Application submitted successfully");
+    res.json(userdata.rows[0]);
+  } catch (error) {
+    console.error("Error submitting application:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while submitting the application." });
+  }
+});
+
 export default testapply;

@@ -1,28 +1,36 @@
+//function, methods and libraries
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 //images
 import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
 import SendApplicationButton from "@/images/ApllicationApplyPage/SendApplicationButton.png";
 
-import axios from "axios";
-
-function ApplicationApplySection({ companyName }) {
+//
+function ApplicationApplySection(pagedata) {
+  //form
   const { control, handleSubmit } = useForm();
+  //states
   const [currentCV, setCurrentCV] = useState(null);
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [professionalExperience, setProfessionalExperience] = useState("");
   const [interestedReason, setInterestedReason] = useState("");
   const [userId, setUserId] = useState(null);
+  //navigation
   const navigate = useNavigate();
-
+  //data destructuring
+  const { userparams, jobparams, companyname } = pagedata;
+  // useeffect
   useEffect(() => {
+    //1
+    console.log("companyname:", companyname);
     const fetchData = async () => {
       try {
         const user_id = Math.floor(Math.random() * 10) + 1;
         setUserId(user_id);
-        const job_id = Math.floor(Math.random() * 10) + 1;
+        const job_id = jobparams;
         const response = await axios.get(
           `http://localhost:4000/testapply/${user_id}/job-list/${job_id}`
         );
@@ -40,13 +48,11 @@ function ApplicationApplySection({ companyName }) {
     fetchData();
     setCurrentCV();
   }, []);
-
+  // event handler 1
   const handleCVChoiceChange = (data) => {
     setShowUploadButton(data === "uploadNew");
-    if (data === "useCurrent") {
-      const user_id = userId;
-    }
   };
+  // event handler 2
 
   const onSubmit = async () => {
     if (!currentCV) {
@@ -54,18 +60,22 @@ function ApplicationApplySection({ companyName }) {
       return;
     }
     try {
-      const formData = new FormData();
-      formData.append("currentCV", currentCV);
-      formData.append("professionalExperience", professionalExperience);
-      formData.append("interestedReason", interestedReason);
-      await axios.post("", formData);
-      console.log("Application sent successfully");
-     navigate("/user/findthatjob");
+      const user_idt = userparams;
+      const job_idt = jobparams;
+      const formData = { currentCV, interestedReason, professionalExperience };
+      await axios.post(
+        `http://localhost:4000/testapply/${user_idt}/job-list/${job_idt}`,
+        formData
+      );
+      console.log("Application sent successfully :", formData);
+      //
+      navigate("/user/findthatjob");
     } catch (error) {
       console.error("Error sending application:", error);
     }
   };
 
+  // return
   return (
     <>
       <div style={{ marginLeft: "10px", marginTop: "20px" }}>
@@ -79,6 +89,9 @@ function ApplicationApplySection({ companyName }) {
         >
           Complete your application
         </h1>
+        {
+          // CV choice section
+        }
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label
@@ -193,6 +206,9 @@ function ApplicationApplySection({ companyName }) {
               )}
             </div>
           )}
+          {
+            // User Experience section
+          }
           <div style={{ padding: "20px" }}>
             <label htmlFor="experience">
               <span
@@ -236,6 +252,9 @@ function ApplicationApplySection({ companyName }) {
               )}
             />
           </div>
+          {
+            // Why are you interested section
+          }
           <div style={{ padding: "20px" }}>
             <label htmlFor="interestedReason">
               <span
@@ -245,7 +264,8 @@ function ApplicationApplySection({ companyName }) {
                   color: "#373737",
                 }}
               >
-                WHY ARE YOU INTERESTED IN WORKING AT THE {companyName}
+                WHY ARE YOU INTERESTED IN WORKING AT THE
+                <span>{companyname}</span>
               </span>
             </label>
             <Controller
@@ -266,6 +286,8 @@ function ApplicationApplySection({ companyName }) {
                   id="interestedReason"
                   value={interestedReason}
                   onChange={(e) => setInterestedReason(e.target.value)}
+                  minLength={50}
+                  maxLength={1000}
                 />
               )}
             />
@@ -285,4 +307,5 @@ function ApplicationApplySection({ companyName }) {
   );
 }
 export default ApplicationApplySection;
-// /user/application/apply
+
+// /user/jobs/:jobid/apply
