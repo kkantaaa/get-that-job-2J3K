@@ -9,18 +9,18 @@ import { useState } from "react";
 function FindThatJobPage() {
   const [text, setText] = useState("");
   const [minSalary, setMinSalary] = useState("");
-  // const [maxSalary, setMaxSalary] = useState();
+  const [maxSalary, setMaxSalary] = useState("");
   //เพิ่ม variable สำหรับ parameter อื่นๆ
 
-  const handleInputChange = (event) => {
-    console.log(event.target);
-    // const text = event.target.value;
-    // const min = event.target.min;
-    // const max = event.target.value;
-    // setText(text);
-    // setMinSalary(min);
-    // setMaxSalary(max);
-  };
+  // const handleInputChange = (event) => {
+  //   console.log(event.target);
+  //   const text = event.target.value;
+  //   const min = event.target.min;
+  //   const max = event.target.value;
+  //   setText(text);
+  //   setMinSalary(min);
+  //   setMaxSalary(max);
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -114,8 +114,10 @@ function FindThatJobPage() {
                     type="text"
                     id="search-input"
                     placeholder="max"
-                    // value={maxSalary}
-                    // onChange={handleInputChange}
+                    value={maxSalary}
+                    onChange={(e) => {
+                      setMaxSalary(e.target.value);
+                    }}
                   />
                   <img
                     className="absolute top-2 left-1"
@@ -129,7 +131,7 @@ function FindThatJobPage() {
           </div>
         </div>
         <div className="mx-12">
-          <JobList text={text} minSalary={minSalary} />
+          <JobList text={text} minSalary={minSalary} maxSalary={maxSalary} />
         </div>
       </div>
     </div>

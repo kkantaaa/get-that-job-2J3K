@@ -12,13 +12,15 @@ const JobList = (props) => {
   const [jobs, setJobs] = useState([]);
   const keywords = props.text;
   const minSalary = props.minSalary;
+  const maxSalary = props.maxSalary;
 
   const getJobs = async (input) => {
-    const { keywords, minSalary } = input;
+    const { keywords, minSalary, maxSalary } = input;
     try {
       const params = new URLSearchParams();
       params.append("keywords", keywords);
       params.append("minSalary", minSalary);
+      params.append("maxSalary", maxSalary);
       const results = await axios.get("http://localhost:4000/jobs", {
         params,
       });
@@ -32,8 +34,8 @@ const JobList = (props) => {
   };
 
   useEffect(() => {
-    getJobs({ keywords, minSalary });
-  }, [keywords, minSalary]);
+    getJobs({ keywords, minSalary, maxSalary });
+  }, [keywords, minSalary, maxSalary]);
 
   return (
     <div className="ml-12">

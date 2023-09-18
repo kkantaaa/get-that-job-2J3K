@@ -9,13 +9,13 @@ jobRouter.get("/", async (req, res) => {
   try {
     const keywords = `%${req.query.keywords}%` || null;
     // const category = req.query.keywords || null;
-    console.log(`keywords from server/apps/jobs : ${keywords}`);
+    // console.log(`keywords from server/apps/jobs : ${keywords}`);
     const category = req.query.category || null;
     const type = req.query.type || null;
     const minSalary = `${req.query.minSalary}` || null;
-    // const minSalary = 2000;
-    const maxSalary = req.query.maxSalary || null;
-    // const maxSalary = 4000;
+    // const minSalary = req.query.minSalary || null;
+    const maxSalary = `${req.query.maxSalary}` || null;
+    // const maxSalary = req.query.maxSalary || null;
 
     let query = "";
     let values = [];
