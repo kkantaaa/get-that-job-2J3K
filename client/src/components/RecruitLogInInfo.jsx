@@ -25,20 +25,20 @@ function RecruitLogInInfo() {
 
   const onSubmit = (data) => {
     // validate if passwords match
-    if (data.confirmedPassword !== data.companyPassword) {
+    console.log(data);
+    if (data.confirmedPassword !== data.companypassword) {
       setError("confirmedPassword", {
         type: "manual",
         message: "The confirmed password is not matched",
       });
-    } else {
-      setRecruiterData({
-        company_name: data.companyName,
-        email: data.companyEmail,
-        password: data.companyPassword,
-      });
-
-      navigate("/recruiter/register2");
     }
+    setRecruiterData({
+      company_name: data.companyname,
+      email: data.companyemail,
+      password: data.companypassword,
+    });
+
+    navigate("/recruiter/register2");
   };
 
   return (

@@ -53,7 +53,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
   try {
     const client = await pool.connect();
     const result = await client.query(
-      "SELECT * FROM recruitertable WHERE companyemail = $1",
+      "SELECT * FROM recruiters WHERE email = $1",
       [email]
     );
     const recruiter = result.rows[0];
@@ -64,7 +64,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(
       password,
-      recruiter.companypassword
+      recruiter.password
     );
 
     if (!isPasswordValid) {
@@ -74,12 +74,10 @@ authRouter.post("/recruiter/login", async (req, res) => {
     const token = jwt.sign(
       {
         id: recruiter.recruiter_id,
-        email: recruiter.companyemail,
+        email: recruiter.email,
       },
       process.env.SECRET_KEY,
-      {
-        expiresIn: "900000",
-      }
+      
     );
 
     return res.json({
