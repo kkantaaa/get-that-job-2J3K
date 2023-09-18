@@ -19,10 +19,10 @@ function RecruitLogInInfo() {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
-  const displayErrorMessage = (fieldName) =>
-    errors[fieldName] && (
-      <span className="text-red-500">{errors[fieldName].message}</span>
-    );
+  // const displayErrorMessage = (fieldName) =>
+  //   errors[fieldName] && (
+  //     <span className="text-red-500">{errors[fieldName].message}</span>
+  //   );
 
   const onSubmit = (data) => {
     // Check if passwords match
