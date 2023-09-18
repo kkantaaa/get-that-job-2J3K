@@ -7,15 +7,15 @@ jobRouter.use(protect);
 
 jobRouter.get("/", async (req, res) => {
   try {
-    let keywords = `%${req.query.keywords}%` || null;
+    const keywords = `%${req.query.keywords}%` || null;
     // const keywords = "%office%";
     console.log(`keywords from server/apps/jobs : ${keywords}`);
     const category = req.query.category || null;
     const type = req.query.type || null;
-    // const minSalary = req.query.minSalary || null;
-    const minSalary = 2000;
-    // const maxSalary = req.query.maxSalary || null;
-    const maxSalary = 4000;
+    const minSalary = req.query.minSalary || null;
+    // const minSalary = 2000;
+    const maxSalary = req.query.maxSalary || null;
+    // const maxSalary = 4000;
 
     let query = "";
     let values = [];

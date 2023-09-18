@@ -14,9 +14,12 @@ const JobList = (props) => {
 
   const getJobs = async (input) => {
     const keywords = input;
+    // const { status, keywords, page } = input; เพิ่ม parameter อื่นๆ ตามนี้
     try {
       const params = new URLSearchParams();
       params.append("keywords", keywords);
+      // params.append("min", min);
+      // params.append("max", max);
       // console.log(`keywords form getJobs fuction : ${keywords}`);
       const results = await axios.get("http://localhost:4000/jobs", {
         params, // Include data in the request body

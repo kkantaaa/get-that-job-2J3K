@@ -8,6 +8,7 @@ import { useState } from "react";
 
 function FindThatJobPage() {
   const [text, setText] = useState("");
+  //เพิ่ม variable สำหรับ parameter อื่นๆ
 
   const handleInputChange = (event) => {
     const text = event.target.value;
