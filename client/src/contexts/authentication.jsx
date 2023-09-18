@@ -77,28 +77,21 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
   const upload = async (data) => {
-    // try {
-    //   await axios.post("http://localhost:4000/upload", data, {
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   });
-    //   console.log("upload successful");
-    // } catch (error) {
-    //   console.error("Error: unable to upload", error);
-    // }
-
+  
     try {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;;
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      console.log(data);
       const { result, error } = await supabase.storage
           .from("testbucket")
-          .upload(`companyLogo/${data.name}`, data, {
+          .upload(`${data.fileType}/${data.file.name}`, data.file, {
             cacheControl: "3600",
             upsert: false,
           });
           const url = supabase.storage
           .from("testbucket")
-          .getPublicUrl(`${data.name}`);
+          .getPublicUrl(`${data.fileType}/${data.file.name}`);
         
         console.log({ uploadResult: url.data.publicUrl });
       return url.data.publicUrl

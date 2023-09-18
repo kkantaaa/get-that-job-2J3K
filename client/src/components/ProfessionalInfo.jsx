@@ -13,6 +13,7 @@ function ProfessionalInfo() {
   const { UserRegister } = useAuth();
   const { handleSubmit, control, setValue } = useForm();
   const fileInputRef = useRef(null);
+  const { upload } = useAuth();
 
   useEffect(() => {
     console.log("Updated userData:", userData);
@@ -29,17 +30,29 @@ function ProfessionalInfo() {
   };
 
   const onSubmit = async (data) => {
-    const { title, jobexp, education, havefile } = data;
-    setUserData({
-      ...userData,
-      title,
-      jobexp,
-      education,
-      havefile,
-    });
+    const cv = {
+      fileType: "professional_cv",
+      file: data.file,
+    };
+
+    let user_cv = await upload(cv);
+
+    if (user_cv === undefined) {
+      user_cv = null;
+    }
 
     try {
-      await UserRegister(userData, data);
+      const { title, jobexp, education } = data;
+      const fetchData = {
+        ...userData,
+        title,
+        jobexp,
+        education,
+        user_cv: user_cv,
+      };
+
+      // navigate("/path to job listing");
+      await UserRegister(fetchData);
       navigate("/user/findthatjob");
     } catch (error) {
       console.error("Error during registration", error);
@@ -146,13 +159,11 @@ function ProfessionalInfo() {
             UPLOAD / UPDATE YOUR CV
           </p>
 
-          <div 
-          onClick={handleFileButtonClick}
-          className="p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer">
-            <img
-              src={FileInputIcon}
-              alt="File Input"
-            />
+          <div
+            onClick={handleFileButtonClick}
+            className="p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
+          >
+            <img src={FileInputIcon} alt="File Input" />
             <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px] cursor-pointer">
               Choose a file
             </p>
@@ -214,4 +225,3 @@ function ProfessionalInfo() {
 }
 
 export default ProfessionalInfo;
-

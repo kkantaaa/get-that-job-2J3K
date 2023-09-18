@@ -58,57 +58,114 @@ registRouter.post("/test/post_tabledata", async (req, res) => {
 });
 
 // Insert data to the UserTable for professional users
+// Insert data to the UserTable for professional users
 registRouter.post("/professional", async (req, res) => {
+  
   try {
     const user = {
       email: req.body.email,
       password: req.body.password,
-      name: req.body.name,
-      phone: req.body.phone,
-      birthdate: req.body.birthdate,
-      linkedin: req.body.linkedin,
-      title: req.body.title,
-      jobexp: req.body.jobexp,
-      education: req.body.education,
-      havefile: req.body.havefile,
-      confirmedpassword: req.body.confirmedpassword,
+      user_name: req.body.name,
+      user_phone: req.body.phone,
+      user_birthdate: req.body.birthdate,
+      user_linkedin: req.body.linkedin,
+      user_title: req.body.title,
+      user_experience: req.body.jobexp,
+      user_education: req.body.education,
+      user_cv: req.body.user_cv,
     };
-
+    
     const salt = await bcrypt.genSalt(14);
     user.password = await bcrypt.hash(user.password, salt);
-
+    
     await pool.query(
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
-
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-
-      "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-
-      [
-        user.email,
-        user.password,
-        user.name,
-        user.phone,
-        user.birthdate,
-        user.linkedin,
-        user.title,
-        user.jobexp,
-        user.education,
-        user.havefile,
-        user.confirmedpassword,
+      "INSERT INTO users (email, password ) VALUES ($1, $2)",
+      [user.email, user.password]
+    );
+    
+    const userQuery = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [user.email]
+    );
+    console.log("User Query Result:", userQuery.rows);
+    if (userQuery.rows.length === 0) {
+      return res.status(410).json({ message: "user Email not found" });
+    }
+    await pool.query(
+      "INSERT INTO user_profiles (user_id, user_name, user_phone, user_birthdate, user_linkedin, user_title, user_experience, user_education, user_cv) VALUES ($1, $2, $3, $4, $5,$6,$7,$8,$9)",
+      [ 
+        parseInt(userQuery.rows[0].user_id, 10),
+        user.user_name,
+        user.user_phone,
+        user.user_birthdate,
+        user.user_linkedin,
+        user.user_title,
+        user.user_experience,
+        user.user_education,
+        user.user_cv
       ]
     );
 
     return res.json({
-      message: "Get that job account created! Welcome professional user!",
+      message: "Get that job account created! Welcome Professional user!",
     });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Error creating the account" });
   }
 });
+
+// registRouter.post("/professional", async (req, res) => {
+//   try {
+//     const user = {
+//       email: req.body.email,
+//       password: req.body.password,
+//       name: req.body.name,
+//       phone: req.body.phone,
+//       birthdate: req.body.birthdate,
+//       linkedin: req.body.linkedin,
+//       title: req.body.title,
+//       jobexp: req.body.jobexp,
+//       education: req.body.education,
+//       havefile: req.body.havefile,
+//       confirmedpassword: req.body.confirmedpassword,
+//     };
+
+//     const salt = await bcrypt.genSalt(14);
+//     user.password = await bcrypt.hash(user.password, salt);
+
+//     await pool.query(
+//       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+
+//       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobexp,education,havefile) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+
+//       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+
+//       "insert into UserTable (email,password,name,phone,birthdate,linkedin,title,jobExp,education,havefile,confirmedpassword) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+
+//       [
+//         user.email,
+//         user.password,
+//         user.name,
+//         user.phone,
+//         user.birthdate,
+//         user.linkedin,
+//         user.title,
+//         user.jobexp,
+//         user.education,
+//         user.havefile,
+//         user.confirmedpassword,
+//       ]
+//     );
+
+//     return res.json({
+//       message: "Get that job account created! Welcome professional user!",
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     return res.status(500).json({ message: "Error creating the account" });
+//   }
+// });
 
 
 // Insert data to the recruitertable for recruiter users
@@ -142,7 +199,7 @@ registRouter.post("/recruiter", async (req, res) => {
       return res.status(410).json({ message: "Recruiter Email not found" });
     }
     await pool.query(
-      "INSERT INTO recruitertable (recruiter_id, company_name, company_website, about_company, company_logo) VALUES ($1, $2, $3, $4, $5)",
+      "INSERT INTO recruiter_informations (recruiter_id, company_name, company_website, about_company, company_logo) VALUES ($1, $2, $3, $4, $5)",
       [ 
         parseInt(recruiterQuery.rows[0].recruiter_id, 10),
         user.company_name,
