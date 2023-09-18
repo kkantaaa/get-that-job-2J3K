@@ -148,11 +148,11 @@ function CreateJobPosting() {
                               <SelectGroup>
                                 <SelectLabel>Categories</SelectLabel>
                               </SelectGroup>
-                              {categories.map((category) => {
+                              {categories.map((category, key) => {
                                 return (
                                   <SelectItem
                                     value={category.category_name}
-                                    key={category.category_id}
+                                    key={key}
                                   >
                                     {category.category_name}
                                   </SelectItem>
@@ -176,23 +176,23 @@ function CreateJobPosting() {
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a type" />
-                            </SelectTrigger>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a type" />
+                              </SelectTrigger>
+                            </FormControl>
+
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Types</SelectLabel>
-                                {types.map((type) => {
-                                  return (
-                                    <SelectItem
-                                      value={type.type_name}
-                                      key={type.type_id}
-                                    >
-                                      {type.type_name}
-                                    </SelectItem>
-                                  );
-                                })}
                               </SelectGroup>
+                              {types.map((type, key) => {
+                                return (
+                                  <SelectItem value={type.type_name} key={key}>
+                                    {type.type_name}
+                                  </SelectItem>
+                                );
+                              })}
                             </SelectContent>
                           </Select>
                           <FormDescription></FormDescription>
