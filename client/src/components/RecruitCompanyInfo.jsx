@@ -201,11 +201,11 @@ function RecruitCompanyInfo() {
             </button>
           </div>
 
-          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
+          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 active:bg-DarkPink hover:bg-LightPink border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
             <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
 
-          <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+          <div className="w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
             <button
               className="flex flex-row"
               type="submit"

@@ -157,7 +157,7 @@ function RecruitLogInInfo() {
           </div>
         </div>
 
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
           <button className="flex flex-row" type="submit">
             <div className="ml-[10px]">NEXT</div>
             <img src={ArrowRight} />
