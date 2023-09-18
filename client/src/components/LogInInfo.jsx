@@ -32,7 +32,6 @@ function LogInInfo() {
         type: "manual",
         message: "The confirmed Password is not matched",
       });
-      return; // หยุดการส่งฟอร์มหาก pw กับ cf pw ไม่ตรงกัน
     } else {
       try {
         await setUserData({
@@ -70,9 +69,9 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="email-error" className="error-message">
+          <div id="email-error" className="text-red-500 text-[10px] uppercase">
             {errors.email && errors.email.message}
-          </span>
+          </div>
         </div>
 
         <div className="password-input">
@@ -97,9 +96,9 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="password-error" className="error-message">
+          <div id="password-error" className="text-red-500 text-[10px] uppercase">
             {errors.password && errors.password.message}
-          </span>
+          </div>
         </div>
 
         <div className="confirmed-password-input">
@@ -126,14 +125,15 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="confirmed-password-error" className="error-message">
+          <div id="confirmed-password-error" className="text-red-500 text-[10px] uppercase">
             {errors.confirmedPassword && errors.confirmedPassword.message}
-          </span>
+          </div>
         </div>
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
           <button
             className="flex flex-row"
             type="submit"
+            disabled={errors.confirmedPassword ? true : false}
           >
             <div className="ml-[10px]">NEXT</div>
             <img src={ArrowRight} />

@@ -48,7 +48,7 @@ function RecruitRegisterPage1() {
               <img className="w-[32px] h-[32px]" src={StepTwo} alt="Step Two" />
               <div className="flex flex-col ml-[8px] text-LightGray">
                 <p className="text-[10px] font-normal leading-normal tracking-[1.5px]">PENDING</p>
-                <p className="text-[16px] font-normal tracking-[0.5px] leading-[24px]">company</p>
+                <p className="text-[16px] font-normal tracking-[0.5px] leading-[24px]">Company</p>
                 <p className="text-[16px] font-normal tracking-[0.5px] leading-[24px]">information</p>
               </div>
             </div>
