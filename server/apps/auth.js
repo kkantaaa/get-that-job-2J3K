@@ -28,7 +28,7 @@ authRouter.post("/user/login", async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user.user_id,
+        user_id: user.user_id,
         email: user.email,
       },
       process.env.SECRET_KEY,
@@ -73,7 +73,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: recruiter.recruiter_id,
+        recruiter_id: recruiter.recruiter_id,
         email: recruiter.email,
       },
       process.env.SECRET_KEY,
