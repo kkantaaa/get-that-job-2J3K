@@ -42,7 +42,7 @@ function JobDetail() {
 
   const handleJobApplication = (event) => {
     event.preventDefault();
-    navigate("/user/application/apply");
+    navigate("/user/jobs/:jobparams/apply");
   };
 
   return (
