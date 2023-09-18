@@ -261,6 +261,7 @@ function ApplicationApplyPage() {
             <ApplicationApplySection
               userparams={userparams}
               jobparams={jobparams}
+              companyname={jobDetail.company_name}
             />
           </div>
         </div>
