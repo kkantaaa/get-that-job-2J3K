@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
-// import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 
 const AuthContext = createContext();
 
@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   const RecruiterRegister = async (data) => {
     try {
+      console.log(data);
       await axios.post("http://localhost:4000/regist/recruiter", data);
       console.log("Registration successful");
       // setUserData(data);

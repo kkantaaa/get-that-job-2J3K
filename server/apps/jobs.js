@@ -4,10 +4,78 @@ import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
 jobRouter.use(protect);
+//get jobs by recruiter id for recruiter role
+jobRouter.get("/:recruiter_id", async (req, res) => {
+  const recruiter_id = req.params.recruiter_id;
+
+  if (!recruiter_id) {
+    return res.status(401).json({
+      message: "Please specified recruiter id in order to get the job",
+    });
+  }
+  const query = `SELECT
+  company_name,
+  company_logo,
+  job_title,
+  category_name,
+  type_name,
+  salary_min,
+  salary_max,
+  about_job_position,
+  mandatory_requirement,
+  optional_requirement,
+  opened_at,
+  closed_at,
+  COUNT(application.application_id) AS total_candidates,
+  COUNT(
+    CASE
+      WHEN application.application_status = 'inprogress' THEN 1
+      ELSE NULL
+    END
+  ) AS candidates_on_track
+FROM
+  jobs
+INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+INNER JOIN application ON jobs.job_id = application.job_id
+INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+WHERE
+  jobs.recruiter_id = $1
+GROUP BY
+  company_name,
+  company_logo,
+  job_title,
+  category_name,
+  type_name,
+  salary_min,
+  salary_max,
+  about_job_position,
+  mandatory_requirement,
+  optional_requirement,
+  opened_at,
+  closed_at;
+`
+  try {
+    let result = await pool.query(query, [
+      recruiter_id,
+    ]);
+    return res.json({
+      data: result.rows
+    });
+    
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+
+  
+});
 
 jobRouter.get("/", async (req, res) => {
   try {
-    let keywords = `%${req.query.keywords}%` || null;
+    const keywords = req.query.keywords || null;
+
     // const keywords = "%office%";
     console.log(`keywords from server/apps/jobs : ${keywords}`);
     const category = req.query.category || null;
@@ -48,31 +116,31 @@ jobRouter.get("/", async (req, res) => {
   }
 });
 
-jobRouter.get("/:id", async (req, res) => {
-  const jobId = req.params.id;
+// jobRouter.get("/:id", async (req, res) => {
+//   const jobId = req.params.id;
 
-  if (!jobId) {
-    return res.status(401).json({
-      message: "Please specified job id in order to get the job",
-    });
-  }
+//   if (!jobId) {
+//     return res.status(401).json({
+//       message: "Please specified job id in order to get the job",
+//     });
+//   }
 
-  let result;
+//   let result;
 
-  try {
-    result = await pool.query("select * from jobs_mock where job_id=$1", [
-      jobId,
-    ]);
-  } catch (error) {
-    return res.json({
-      message: `${error}`,
-    });
-  }
+//   try {
+//     result = await pool.query("select * from jobs_mock where job_id=$1", [
+//       jobId,
+//     ]);
+//   } catch (error) {
+//     return res.json({
+//       message: `${error}`,
+//     });
+//   }
 
-  return res.json({
-    data: result?.rows?.[0] ?? [],
-  });
-});
+//   return res.json({
+//     data: result?.rows?.[0] ?? [],
+//   });
+// });
 
 jobRouter.post("/", async (req, res) => {
   console.log(req);
@@ -103,7 +171,6 @@ jobRouter.post("/", async (req, res) => {
     );
     console.log("Category Query Result:", categoryQuery.rows);
     if (categoryQuery.rows.length === 0) {
-      
       return res.status(410).json({ message: "Category not found" });
     }
 
@@ -113,7 +180,6 @@ jobRouter.post("/", async (req, res) => {
     );
     console.log("type Query Result:", typeQuery.rows);
     if (typeQuery.rows.length === 0) {
-      
       return res.status(411).json({ message: "type not found" });
     }
 
