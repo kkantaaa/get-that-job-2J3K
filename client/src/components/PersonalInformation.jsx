@@ -166,7 +166,7 @@ function PersonalInformation() {
           {/* Next Button */}
           <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button className="flex flex-row" type="submit">
-            <div onClick={() => navigate("/user/register3")} className="ml-[10px]">NEXT</div>
+            <div className="ml-[10px]">NEXT</div>
             <img src={ArrowRight}/>
           </button>
           </div>
