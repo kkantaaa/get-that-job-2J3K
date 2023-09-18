@@ -132,7 +132,7 @@ function LogInInfo() {
         </div>
         <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
           <button
-            onClick={() => navigate("/user/register2")}
+            // onClick={() => navigate("/user/register2")}
             className="flex flex-row"
             type="submit"
           >
