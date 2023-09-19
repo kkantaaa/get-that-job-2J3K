@@ -111,7 +111,7 @@ jobRouter.get("/", async (req, res) => {
     const keywords = `%${req.query.keywords}%` || null;
     const min = `${req.query.minSalary}` || null;
     const max = `${req.query.maxSalary}` || null;
-    
+
     const category = req.query.category || null;
     const type = req.query.type || null;
     //uncomment 3 อันนี้เพื่อ query ใน postman
@@ -121,7 +121,7 @@ jobRouter.get("/", async (req, res) => {
 
     let query = "";
     let values = [];
-    
+
     //queryเก่า ตาราง jobs_mock
     // query = `SELECT *
     // FROM jobs_mock

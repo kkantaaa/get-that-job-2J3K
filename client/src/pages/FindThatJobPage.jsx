@@ -64,21 +64,23 @@ function FindThatJobPage() {
             <div className="py-2 pr-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
-                htmlFor="search-box"
+                htmlFor="category-box"
               >
                 CATEGORY
               </label>
               <CategorySelector />
             </div>
+
             <div className="p-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
-                htmlFor="search-box"
+                htmlFor="type-box"
               >
                 TYPE
               </label>
               <TypeSelector />
             </div>
+
             <div className="p-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
@@ -95,7 +97,7 @@ function FindThatJobPage() {
                     placeholder="min"
                     value={minSalary}
                     onChange={(e) => {
-                      setMinSalary(e.target.value);
+                      setMinSalary(e.target.value.replace(/[^0-9]/g, ""));
                     }}
                   />
                   <img
@@ -116,7 +118,7 @@ function FindThatJobPage() {
                     placeholder="max"
                     value={maxSalary}
                     onChange={(e) => {
-                      setMaxSalary(e.target.value);
+                      setMaxSalary(e.target.value.replace(/[^0-9]/g, ""));
                     }}
                   />
                   <img

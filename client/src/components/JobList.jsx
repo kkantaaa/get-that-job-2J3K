@@ -25,8 +25,8 @@ const JobList = (props) => {
         params,
       });
 
-      console.log("Jobs from server");
-      console.log(results.data.data);
+      // console.log("Jobs from server");
+      // console.log(results.data.data);
       setJobs(results.data.data);
     } catch (error) {
       console.error("Error: Failed to fetch jobs data");
