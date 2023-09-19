@@ -5,11 +5,11 @@ import { protect } from "../utils/protect.js";
 const jobRouter = Router();
 jobRouter.use(protect);
 // get jobs by recruiter id for recruiter role
-jobRouter.get("/", async (req, res) => {
+jobRouter.get("/recruiter", async (req, res) => {
   const recruiter_id = req.user.recruiter_id;
-  console.log(req);
 
   const query = `SELECT
+  jobs.job_id,
   company_name,
   company_logo,
   job_title,
@@ -35,8 +35,10 @@ INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_
 INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
 INNER JOIN application ON jobs.job_id = application.job_id
 INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
-WHERE  jobs.recruiter_id = $1
+where
+  jobs.recruiter_id = $1
 GROUP BY
+  jobs.job_id,
   company_name,
   company_logo,
   job_title,
@@ -64,49 +66,49 @@ GROUP BY
   
 });
 
-// jobRouter.get("/", async (req, res) => {
-//   try {
-//     const keywords = req.query.keywords || null;
+jobRouter.get("/", async (req, res) => {
+  try {
+    const keywords = req.query.keywords || null;
 
-//     // const keywords = "%office%";
-//     console.log(`keywords from server/apps/jobs : ${keywords}`);
-//     const category = req.query.category || null;
-//     const type = req.query.type || null;
-//     // const minSalary = req.query.minSalary || null;
-//     const minSalary = 2000;
-//     // const maxSalary = req.query.maxSalary || null;
-//     const maxSalary = 4000;
+    // const keywords = "%office%";
+    console.log(`keywords from server/apps/jobs : ${keywords}`);
+    const category = req.query.category || null;
+    const type = req.query.type || null;
+    // const minSalary = req.query.minSalary || null;
+    const minSalary = 2000;
+    // const maxSalary = req.query.maxSalary || null;
+    const maxSalary = 4000;
 
-//     let query = "";
-//     let values = [];
+    let query = "";
+    let values = [];
 
-//     //ยัวไม่ได้เพิ่ม SEARCH BY COMPANY NAME -> link recruiter_id to company_name : join jobs table to recruiter_profile table
-//     //OR (recruiter_informations.company_name ILIKE $1 OR IS NULL)
-//     //ยังไม่ได้เลือกแสดงผลเฉพาะงานที่ status open
-//     query = `SELECT *
-//     FROM jobs_mock
-//     WHERE (job_title ILIKE $1 OR $1 IS NULL)
-//     AND (job_category = $2 OR $2 IS NULL)
-//     AND (job_type_id = $3 OR $3 IS NULL)
-//     AND (salary_min >= $4 OR $4 IS NULL)
-//     AND (salary_max <= $5 OR $5 IS NULL)
-//     limit 20`;
-//     values = [keywords, category, type, minSalary, maxSalary];
+    //ยัวไม่ได้เพิ่ม SEARCH BY COMPANY NAME -> link recruiter_id to company_name : join jobs table to recruiter_profile table
+    //OR (recruiter_informations.company_name ILIKE $1 OR IS NULL)
+    //ยังไม่ได้เลือกแสดงผลเฉพาะงานที่ status open
+    query = `SELECT *
+    FROM jobs_mock
+    WHERE (job_title ILIKE $1 OR $1 IS NULL)
+    AND (job_category = $2 OR $2 IS NULL)
+    AND (job_type_id = $3 OR $3 IS NULL)
+    AND (salary_min >= $4 OR $4 IS NULL)
+    AND (salary_max <= $5 OR $5 IS NULL)
+    limit 20`;
+    values = [keywords, category, type, minSalary, maxSalary];
 
-//     // query = `SELECT * FROM jobs_mock WHERE job_title ILIKE $1 AND salary_min >= $2`;
-//     // values = [keywords, minSalary];
+    // query = `SELECT * FROM jobs_mock WHERE job_title ILIKE $1 AND salary_min >= $2`;
+    // values = [keywords, minSalary];
 
-//     const results = await pool.query(query, values);
+    const results = await pool.query(query, values);
 
-//     return res.json({
-//       data: results.rows,
-//     });
-//   } catch (error) {
-//     return res.json({
-//       message: `${error}`,
-//     });
-//   }
-// });
+    return res.json({
+      data: results.rows,
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
 
 // jobRouter.get("/:id", async (req, res) => {
 //   const jobId = req.params.id;
