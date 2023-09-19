@@ -45,7 +45,7 @@ function JobDetail() {
 
   const handleJobApplication = (event) => {
     event.preventDefault();
-    navigate("/user/jobs/apply/:jobparams");
+    navigate(`/user/jobs/apply/${job_id}`);
   };
 
   // const handlePostDate = () =>{
@@ -126,7 +126,7 @@ function JobDetail() {
             <div className="flex flex-row uppercase justify-center">
               <img src={TimeIcon} alt="time-icon" />
               <p className="ml-[4px] mr-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                Posted  {handlePostDate}
+                Posted {handlePostDate}
               </p>
             </div>
 
