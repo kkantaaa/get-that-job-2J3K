@@ -62,10 +62,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
       return res.status(404).json({ message: "user not found" });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      recruiter.password
-    );
+    const isPasswordValid = await bcrypt.compare(password, recruiter.password);
 
     if (!isPasswordValid) {
       return res.status(400).json({ message: "password not valid" });
@@ -76,8 +73,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
         recruiter_id: recruiter.recruiter_id,
         email: recruiter.email,
       },
-      process.env.SECRET_KEY,
-      
+      process.env.SECRET_KEY
     );
 
     return res.json({

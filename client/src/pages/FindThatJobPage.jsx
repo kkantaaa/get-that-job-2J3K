@@ -5,11 +5,22 @@ import JobList from "@/components/JobList.jsx";
 import searchIcon from "@/images/getthatjob-page/searchIcon.png";
 import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.png";
 import { useState } from "react";
+import * as React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 function FindThatJobPage() {
   const [text, setText] = useState("");
   const [minSalary, setMinSalary] = useState("");
   const [maxSalary, setMaxSalary] = useState("");
+  const [category, setCategory] = useState("");
+  const [type, setType] = useState("");
   //เพิ่ม variable สำหรับ parameter อื่นๆ
 
   // const handleInputChange = (event) => {
@@ -21,6 +32,12 @@ function FindThatJobPage() {
   //   setMinSalary(min);
   //   setMaxSalary(max);
   // };
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+  const handleTypeChange = (e) => {
+    setType(e.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -68,7 +85,81 @@ function FindThatJobPage() {
               >
                 CATEGORY
               </label>
-              <CategorySelector />
+              {/* <Select>
+                <SelectTrigger className="h-[36px] w-[280px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White">
+                  <SelectValue
+                    className="text-LightGray text-[14px]"
+                    placeholder="Select a category"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem
+                    className="text-LightGray text-[14px]"
+                    value=""
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    Select a category
+                  </SelectItem>
+
+                  <SelectItem
+                    className="text-LightGray text-[14px]"
+                    value="Software Developer"
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    Software Developer
+                  </SelectItem>
+                  <SelectItem
+                    className="text-LightGray text-[14px]"
+                    value="Sales"
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    Sales
+                  </SelectItem>
+
+                  <SelectItem
+                    className="text-LightGray text-[14px]"
+                    value="Graphic Designer"
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    Graphic Designer
+                  </SelectItem>
+
+                  <SelectItem
+                    className="text-LightGray text-[14px]"
+                    value="Digital Marketing"
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    Digital Marketing
+                  </SelectItem>
+                </SelectContent>
+              </Select> */}
+              {/* <CategorySelector selectedCategory={setCategory} /> */}
+              <div>
+                <select
+                  className="h-[36px] w-[280px] rounded-[8px] text-LightGray text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
+                  value={category}
+                  onChange={handleCategoryChange}
+                >
+                  <option value="">Select a category</option>
+                  <option value="Software Developer">Software Developer</option>
+                  <option value="Sales">Sales</option>
+                  <option value="Graphic Designer">Graphic Designer</option>
+                  <option value="Digital Marketing">Digital Marketing</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Legal">Legal</option>
+                  <option value="Education">Education</option>
+                </select>
+              </div>
             </div>
 
             <div className="p-2 flex flex-col">
@@ -78,7 +169,18 @@ function FindThatJobPage() {
               >
                 TYPE
               </label>
-              <TypeSelector />
+              {/* <TypeSelector /> */}
+              <div>
+                <select
+                  className="h-[36px] w-[280px] rounded-[8px] text-LightGray text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
+                  value={type}
+                  onChange={handleTypeChange}
+                >
+                  <option value="">Select a type</option>
+                  <option value="Full time">Full time</option>
+                  <option value="Part time">Part time</option>
+                </select>
+              </div>
             </div>
 
             <div className="p-2 flex flex-col">
@@ -133,7 +235,13 @@ function FindThatJobPage() {
           </div>
         </div>
         <div className="mx-12">
-          <JobList text={text} minSalary={minSalary} maxSalary={maxSalary} />
+          <JobList
+            text={text}
+            minSalary={minSalary}
+            maxSalary={maxSalary}
+            category={category}
+            type={type}
+          />
         </div>
       </div>
     </div>
