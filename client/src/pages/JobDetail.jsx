@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ProfessionalSidebar from "@/components/ProfessionalSideBar";
+import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar";
 import FollowingStatus from "../images/job-detail-page/FollowButton.svg";
 import NavigateLine from "../images/job-detail-page/navigate-line.svg";
 import CategoryIcon from "../images/job-detail-page/category-icon.svg";
@@ -9,6 +9,9 @@ import DollarSign from "../images/job-detail-page/dollarsign.svg";
 import CalendarIcon from "../images/job-detail-page/calendar.svg";
 import TimeIcon from "../images/job-detail-page/time.svg";
 import ArrowLeft from "../images/job-detail-page/arrow-left-black.svg";
+import moment from "moment";
+
+moment().format();
 
 function JobDetail() {
   const navigate = useNavigate();
@@ -42,19 +45,46 @@ function JobDetail() {
 
   const handleJobApplication = (event) => {
     event.preventDefault();
-    navigate("/user/application/apply");
+    navigate("/user/jobs/apply/:jobparams");
+  };
+
+  // const handlePostDate = () =>{
+  //   const openedAt = new Date(jobDetail.opened_at)
+  //   const currentDate = new Date();
+
+  //   const timeDifference = currentDate - openedAt;
+
+  //   const daysAgo = Math.floor(timeDifference / (1000*60*60*24));
+
+  //   let timeAgoString;
+
+  //   if (daysAgo === 0) {
+  //     timeAgoString = 'Today';
+  //   } else if (daysAgo === 1) {
+  //     timeAgoString = 'Yesterday';
+  //   } else {
+  //     timeAgoString = `${daysAgo} days ago`;
+  //   }
+  //   console.log("Job is created at", timeAgoString);
+  // };
+
+  const handlePostDate = () => {
+    const createdAt = moment(jobDetail.opened_at);
+    const now = moment();
+    const timeAgoString = createdAt.fromNow();
+    return timeAgoString;
   };
 
   return (
     <>
       <div className="bg-Background overflow-x-hidden">
         <div className="flex flex-row font-Inter text-[16px]">
-          <ProfessionalSidebar />
+          <FindThatJobSideBar />
 
           <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
             {/* BackButton */}
             <div className="flex flex-row">
-              <img src={ArrowLeft} alt="arrow-left-black-icon"/>
+              <img src={ArrowLeft} alt="arrow-left-black-icon" />
               <p className="uppercase cursor-pointer" onClick={handleBack}>
                 Back
               </p>
@@ -65,17 +95,20 @@ function JobDetail() {
               <div className="flex flex-row">
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
-                    logo
-                    <img src={jobDetail.company_logo}/>
+                    <img src={jobDetail.company_logo} />
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
                       {jobDetail.company_name}
                     </div>
-                    <img className="w-[138px] h-[40px]" src={FollowingStatus} alt="following-button" />
+                    <img
+                      className="w-[138px] h-[40px]"
+                      src={FollowingStatus}
+                      alt="following-button"
+                    />
                   </div>
                 </div>
-                <button className="ml-[500px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
+                <button className="ml-[500px] hover:bg-LightPink active:bg-DarkPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
                   <img src={NavigateLine} alt="navigate-line" />
                   <div className="ml-[4px]" onClick={handleJobApplication}>
                     Apply now
@@ -93,8 +126,7 @@ function JobDetail() {
             <div className="flex flex-row uppercase justify-center">
               <img src={TimeIcon} alt="time-icon" />
               <p className="ml-[4px] mr-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                Posted at
-                {jobDetail.created_at}
+                Posted  {handlePostDate}
               </p>
             </div>
 
@@ -112,11 +144,11 @@ function JobDetail() {
                     src={CategoryIcon}
                     alt="category-icon"
                   />
-                  <div>{jobDetail.job_category}</div>
+                  <div>{jobDetail.category_name}</div>
                 </div>
               </div>
 
-            {/* Job Type */}
+              {/* Job Type */}
               <div className="ml-[32px] w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
                   Type
@@ -127,11 +159,11 @@ function JobDetail() {
                     src={CalendarIcon}
                     alt="calendar-icon"
                   />
-                  <div>{jobDetail.job_type_id}</div>
+                  <div>{jobDetail.type_name}</div>
                 </div>
               </div>
 
-            {/* Job Salary */}
+              {/* Job Salary */}
               <div className="ml-[32px] w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
                   Salary
@@ -177,7 +209,7 @@ function JobDetail() {
 
             {/* Apply Button */}
             <div className="flex flex-row justify-center items-center mt-[16px]">
-              <button className="mt-[16px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
+              <button className="mt-[16px] hover:bg-LightPink active:bg-DarkPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
                 <img src={NavigateLine} alt="navigate-line" />
                 <div className="ml-[4px]" onClick={handleJobApplication}>
                   Apply now
