@@ -18,8 +18,9 @@ function ApplicationApplyPage() {
   const navigate = useNavigate();
   // state
   const [jobDetail, setJobDetail] = useState({});
+  const [userDetail, setUserDetail] = useState({});
   const { jobparams } = useParams();
-  const [userid, setuserparams] = useState("");
+  const [user_id, setuserparams] = useState("");
   // useEffect
   useEffect(() => {
     //0
@@ -40,25 +41,41 @@ function ApplicationApplyPage() {
     }
     //
     //1
+    //1.1
     const getJobDetail = async () => {
       try {
         const job_id = parseInt(jobparams);
+        console.log(job_id);
         const getcompanyinfo = await axios.get(
-          `http://localhost:4000/testapply/${job_id}`
+          `http://localhost:4000/apply/${job_id}`
         );
-        setJobDetail(getcompanyinfo.data[0]);
+        setJobDetail(getcompanyinfo.data);
+        console.log(getcompanyinfo.data);
       } catch (error) {
         console.log(error);
       }
     };
-
-    //1
+    //1.2
+    const getUserDetail = async () => {
+      try {
+        console.log(user_id);
+        const getuserinfo = await axios.get(
+          `http://localhost:4000/apply/u/${user_id}`
+        );
+        setUserDetail(getuserinfo.data);
+        console.log(userDetail);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    //2
     const fetchData = async () => {
       await getJobDetail();
+      await getUserDetail();
     };
 
     fetchData();
-  }, [jobparams, userid]);
+  }, [jobparams,  user_id ]);   
   // moment
   const createdAt = moment(jobDetail.date_time).fromNow();
   //back action and jump to send application button>>>>>>>
@@ -113,7 +130,7 @@ function ApplicationApplyPage() {
               <div className="flex flex-row">
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
-                    <img src={jobDetail.avatar} alt="Company Logo" />
+                    <img src={jobDetail.company_logo} alt="Company Logo" />
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
@@ -201,7 +218,9 @@ function ApplicationApplyPage() {
                     />
                   </svg>
                   <div>
-                    <p style={{ fontSize: "16px" }}>{jobDetail.job_category}</p>
+                    <p style={{ fontSize: "16px" }}>
+                      {jobDetail.job_category_id}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -224,7 +243,7 @@ function ApplicationApplyPage() {
                       fill="#616161"
                     />
                   </svg>
-                  <div>{jobDetail.job_type}</div>
+                  <div>{jobDetail.job_type_id}</div>
                 </div>
               </div>
 
@@ -256,7 +275,7 @@ function ApplicationApplyPage() {
               // user apply section
             }
             <ApplicationApplySection
-              userparams={userid}
+              userDetail={userDetail}
               jobparams={jobparams}
               companyname={jobDetail.company_name}
             />

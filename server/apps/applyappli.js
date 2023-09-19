@@ -35,15 +35,30 @@ applyappliRouter.post("/:user_Id/job-list/:job_Id", async (req, res) => {
   }
 });
 
-applyappliRouter.get("/:user_id", async (req, res) => {
+applyappliRouter.get("/:job_id", async (req, res) => {
+  const job_id = req.params.job_id;
   try {
-    const user_Id = req.params.user_id;
-    console.log("user_Id:", user_Id);
     const userdata = await pool.query(
-      "SELECT * FROM user_profiles WHERE user_id = $1",
-      [user_Id]
+      "SELECT * FROM jobs INNER JOIN recruiter_informations on jobs.recruiter_id = recruiter_informations.recruiter_id WHERE job_id = $1",
+      [job_id]
     );
-    console.log("Application submitted successfully");
+    res.json(userdata.rows[0]);
+  } catch (error) {
+    console.error("Error submitting application:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while submitting the application." });
+  }
+});
+
+applyappliRouter.get("/u/:user_id", async (req, res) => {
+  const user_id = req.params.user_id;
+  console.log("user_id:", user_id);
+  try {
+    const userdata = await pool.query("SELECT * FROM kan  WHERE user_id = $1", [
+      user_id,
+    ]);
+    console.log("Application submitted successfully :", userdata.rows[0]);
     res.json(userdata.rows[0]);
   } catch (error) {
     console.error("Error submitting application:", error);
