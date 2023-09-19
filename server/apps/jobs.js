@@ -3,38 +3,45 @@ import { pool } from "../utils/db_connection.js";
 import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
-jobRouter.use(protect);
+// jobRouter.use(protect);
 
 jobRouter.get("/", async (req, res) => {
   try {
     const keywords = `%${req.query.keywords}%` || null;
-    // const category = req.query.keywords || null;
-    // console.log(`keywords from server/apps/jobs : ${keywords}`);
+    const min = `${req.query.minSalary}` || null;
+    const max = `${req.query.maxSalary}` || null;
+
     const category = req.query.category || null;
     const type = req.query.type || null;
-    const minSalary = `${req.query.minSalary}` || null;
-    // const minSalary = req.query.minSalary || null;
-    const maxSalary = `${req.query.maxSalary}` || null;
-    // const maxSalary = req.query.maxSalary || null;
+    // const keywords = req.query.keywords || null;
+    // const min = req.query.minSalary || null;
+    // const max = req.query.maxSalary || null;
 
     let query = "";
     let values = [];
 
-    //ยัวไม่ได้เพิ่ม SEARCH BY COMPANY NAME -> link recruiter_id to company_name : join jobs table to recruiter_profile table
-    //OR (recruiter_informations.company_name ILIKE $1 OR IS NULL)
-    //ยังไม่ได้เลือกแสดงผลเฉพาะงานที่ status open
-    query = `SELECT *
-    FROM jobs_mock
-    WHERE (job_title ILIKE $1 OR $1 IS NULL)
-    AND (job_category = $2 OR $2 IS NULL)
-    AND (job_type_id = $3 OR $3 IS NULL)
-    AND (salary_min >= $4 OR $4 IS NULL)
-    AND (salary_max <= $5 OR $5 IS NULL)
-    limit 20`;
-    values = [keywords, category, type, minSalary, maxSalary];
+    // query = `SELECT *
+    // FROM jobs_mock
+    // WHERE (job_title ILIKE $1 OR $1 IS NULL)
+    // AND (job_category = $2 OR $2 IS NULL)
+    // AND (job_type_id = $3 OR $3 IS NULL)
+    // AND (salary_min >= $4 OR $4 IS NULL)
+    // AND (salary_max <= $5 OR $5 IS NULL)
+    // limit 20`;
 
-    // query = `SELECT * FROM jobs_mock WHERE job_title ILIKE $1 AND salary_min >= $2`;
-    // values = [keywords, minSalary];
+    // console.log(`keywords from server/apps/jobs : ${keywords}`);
+
+    query = `SELECT *
+    FROM jobs
+    INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+    INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+    INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+    WHERE (job_title ILIKE $1 OR company_name ILIKE $1 OR $1 IS NULL)
+      AND (category_name = $2 OR $2 IS NULL)
+      AND (type_name = $3 OR $3 IS NULL)
+      AND (salary_min >= $4 OR $4 IS NULL)
+      AND (salary_max <= $5 OR $5 IS NULL)`;
+    values = [keywords, category, type, min, max];
 
     const results = await pool.query(query, values);
 
@@ -60,9 +67,14 @@ jobRouter.get("/:id", async (req, res) => {
   let result;
 
   try {
-    result = await pool.query("select * from jobs_mock where job_id=$1", [
-      jobId,
-    ]);
+    result = await pool.query(
+      `select * from jobs
+    INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+    INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+    INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+    where job_id=$1`,
+      [jobId]
+    );
   } catch (error) {
     return res.json({
       message: `${error}`,

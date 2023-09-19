@@ -52,21 +52,21 @@ const JobList = (props) => {
               <div className="flex flex-col justify-end items-center mt-2 mx-2">
                 <div className="flex flex-row mt-2">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-4">
-                    <img src={testLogo} />
+                    <img src={job.company_logo} />
                   </div>
                   <div className="flex flex-col p-2">
                     <div className="flex flex-row w-fit text-[14px] text-LightGray">
                       <img src={jobCategoryIcon} />
-                      {job.job_category}
+                      {job.category_name}
                     </div>
                     <div className="">{job.job_title}</div>
                     <div className="text-[15px] text-Gray">
-                      The company name id : {job.company_id}
+                      {job.company_name}
                     </div>
                     <div className="flex flex-row">
                       <div className="flex flex-row text-LightGray">
                         <img src={typeIcon} />
-                        Full-time
+                        {job.type_name}
                       </div>
                       <div className="flex flex-row text-LightGray">
                         <img className="" src={dollarIcon} />
