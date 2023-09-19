@@ -89,7 +89,7 @@ testapply.post("/:user_Id/job-list/:job_Id", async (req, res) => {
 testapply.get("/recruiter/:job_id", async (req, res) => {
   try {
     const job_id = req.params.job_id;
-
+    const status = `${req.query.status}` || null; //status query
     const result = await pool.query(
       `SELECT
       application.job_id,
@@ -109,9 +109,10 @@ testapply.get("/recruiter/:job_id", async (req, res) => {
     INNER JOIN users ON application.user_id = users.user_id
     INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
     WHERE
-      application.job_id = $1;
+      (application.job_id = $1)
+    AND (application_status = $2 OR $2 is NULL)
     `,
-      [job_id]
+      [job_id,status]
     );
 
     return res.json(result.rows);
