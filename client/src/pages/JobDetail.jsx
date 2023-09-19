@@ -45,6 +45,26 @@ function JobDetail() {
     navigate("/user/jobs/:jobparams/apply");
   };
 
+  const handlePostDate = () =>{
+    const openedAt = new Date(jobDetail.opened_at)
+    const currentDate = new Date();
+
+    const timeDifference = currentDate - openedAt;
+
+    const daysAgo = Math.floor(timeDifference / (1000*60*60*24));
+
+    let timeAgoString;
+
+    if (daysAgo === 0) {
+      timeAgoString = 'Today';
+    } else if (daysAgo === 1) {
+      timeAgoString = 'Yesterday';
+    } else {
+      timeAgoString = `${daysAgo} days ago`;
+    }
+    console.log("Job is created at", timeAgoString);
+  };
+
   return (
     <>
       <div className="bg-Background overflow-x-hidden">
@@ -54,7 +74,7 @@ function JobDetail() {
           <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
             {/* BackButton */}
             <div className="flex flex-row">
-              <img src={ArrowLeft} alt="arrow-left-black-icon"/>
+              <img src={ArrowLeft} alt="arrow-left-black-icon" />
               <p className="uppercase cursor-pointer" onClick={handleBack}>
                 Back
               </p>
@@ -66,13 +86,17 @@ function JobDetail() {
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
                     logo
-                    <img src={jobDetail.company_logo}/>
+                    <img src={jobDetail.company_logo} />
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
                       {jobDetail.company_name}
                     </div>
-                    <img className="w-[138px] h-[40px]" src={FollowingStatus} alt="following-button" />
+                    <img
+                      className="w-[138px] h-[40px]"
+                      src={FollowingStatus}
+                      alt="following-button"
+                    />
                   </div>
                 </div>
                 <button className="ml-[500px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
@@ -93,8 +117,7 @@ function JobDetail() {
             <div className="flex flex-row uppercase justify-center">
               <img src={TimeIcon} alt="time-icon" />
               <p className="ml-[4px] mr-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                Posted at
-                {jobDetail.opened_at}
+                Posted  {handlePostDate()}
               </p>
             </div>
 
@@ -112,11 +135,11 @@ function JobDetail() {
                     src={CategoryIcon}
                     alt="category-icon"
                   />
-                  <div>{jobDetail.job_category_id}</div>
+                  <div>{jobDetail.job_category}</div>
                 </div>
               </div>
 
-            {/* Job Type */}
+              {/* Job Type */}
               <div className="ml-[32px] w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
                   Type
@@ -131,7 +154,7 @@ function JobDetail() {
                 </div>
               </div>
 
-            {/* Job Salary */}
+              {/* Job Salary */}
               <div className="ml-[32px] w-[281px] h-[77px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] border-DarkPink border-[1px] bg-white rounded-lg flex flex-col justify-center items-center">
                 <div className="font-normal not-italic tracking-[0.15px]">
                   Salary
