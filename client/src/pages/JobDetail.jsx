@@ -94,7 +94,7 @@ function JobDetail() {
               <img src={TimeIcon} alt="time-icon" />
               <p className="ml-[4px] mr-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
                 Posted at
-                {jobDetail.created_at}
+                {jobDetail.opened_at}
               </p>
             </div>
 
@@ -112,7 +112,7 @@ function JobDetail() {
                     src={CategoryIcon}
                     alt="category-icon"
                   />
-                  <div>{jobDetail.job_category}</div>
+                  <div>{jobDetail.job_category_id}</div>
                 </div>
               </div>
 
