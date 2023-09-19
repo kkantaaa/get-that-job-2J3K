@@ -44,12 +44,11 @@ function App() {
                 element={<RecruitRegisterPage2 />}
               />
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-              <Route path="/user/jobdetail" element={<JobDetail />} />
               {
                 //kan's Route : tbd put auth
               }
               <Route
-                path="/user/jobs/:jobparams"
+                path="/user/jobs/apply/:jobparams"
                 element={<ApplicationApplyPage />}
               />
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />

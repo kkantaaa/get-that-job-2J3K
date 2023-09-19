@@ -9,6 +9,9 @@ import DollarSign from "../images/job-detail-page/dollarsign.svg";
 import CalendarIcon from "../images/job-detail-page/calendar.svg";
 import TimeIcon from "../images/job-detail-page/time.svg";
 import ArrowLeft from "../images/job-detail-page/arrow-left-black.svg";
+import moment from "moment";
+
+moment().format();
 
 function JobDetail() {
   const navigate = useNavigate();
@@ -42,27 +45,34 @@ function JobDetail() {
 
   const handleJobApplication = (event) => {
     event.preventDefault();
-    navigate("/user/jobs/:jobparams/apply");
+    navigate("/user/jobs/apply/:jobparams");
   };
 
-  const handlePostDate = () =>{
-    const openedAt = new Date(jobDetail.opened_at)
-    const currentDate = new Date();
+  // const handlePostDate = () =>{
+  //   const openedAt = new Date(jobDetail.opened_at)
+  //   const currentDate = new Date();
 
-    const timeDifference = currentDate - openedAt;
+  //   const timeDifference = currentDate - openedAt;
 
-    const daysAgo = Math.floor(timeDifference / (1000*60*60*24));
+  //   const daysAgo = Math.floor(timeDifference / (1000*60*60*24));
 
-    let timeAgoString;
+  //   let timeAgoString;
 
-    if (daysAgo === 0) {
-      timeAgoString = 'Today';
-    } else if (daysAgo === 1) {
-      timeAgoString = 'Yesterday';
-    } else {
-      timeAgoString = `${daysAgo} days ago`;
-    }
-    console.log("Job is created at", timeAgoString);
+  //   if (daysAgo === 0) {
+  //     timeAgoString = 'Today';
+  //   } else if (daysAgo === 1) {
+  //     timeAgoString = 'Yesterday';
+  //   } else {
+  //     timeAgoString = `${daysAgo} days ago`;
+  //   }
+  //   console.log("Job is created at", timeAgoString);
+  // };
+
+  const handlePostDate = () => {
+    const createdAt = moment(jobDetail.opened_at);
+    const now = moment();
+    const timeAgoString = createdAt.fromNow();
+    return timeAgoString;
   };
 
   return (
@@ -85,7 +95,6 @@ function JobDetail() {
               <div className="flex flex-row">
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
-                    logo
                     <img src={jobDetail.company_logo} />
                   </div>
                   <div className="ml-[16px] flex flex-col">
@@ -99,7 +108,7 @@ function JobDetail() {
                     />
                   </div>
                 </div>
-                <button className="ml-[500px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
+                <button className="ml-[500px] hover:bg-LightPink active:bg-DarkPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
                   <img src={NavigateLine} alt="navigate-line" />
                   <div className="ml-[4px]" onClick={handleJobApplication}>
                     Apply now
@@ -117,7 +126,7 @@ function JobDetail() {
             <div className="flex flex-row uppercase justify-center">
               <img src={TimeIcon} alt="time-icon" />
               <p className="ml-[4px] mr-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                Posted  {handlePostDate()}
+                Posted  {handlePostDate}
               </p>
             </div>
 
@@ -135,7 +144,7 @@ function JobDetail() {
                     src={CategoryIcon}
                     alt="category-icon"
                   />
-                  <div>{jobDetail.job_category}</div>
+                  <div>{jobDetail.category_name}</div>
                 </div>
               </div>
 
@@ -150,7 +159,7 @@ function JobDetail() {
                     src={CalendarIcon}
                     alt="calendar-icon"
                   />
-                  <div>{jobDetail.job_type_id}</div>
+                  <div>{jobDetail.type_name}</div>
                 </div>
               </div>
 
@@ -200,7 +209,7 @@ function JobDetail() {
 
             {/* Apply Button */}
             <div className="flex flex-row justify-center items-center mt-[16px]">
-              <button className="mt-[16px] hover:bg-LightPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
+              <button className="mt-[16px] hover:bg-LightPink active:bg-DarkPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
                 <img src={NavigateLine} alt="navigate-line" />
                 <div className="ml-[4px]" onClick={handleJobApplication}>
                   Apply now
