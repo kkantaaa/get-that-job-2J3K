@@ -10,21 +10,21 @@ import testLogo from "@/images/getthatjob-page/Baby.png";
 const JobList = (props) => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
-  const keywords = props.value;
+  const keywords = props.text;
+  const minSalary = props.minSalary;
+  const maxSalary = props.maxSalary;
 
   const getJobs = async (input) => {
-    const keywords = input;
+    const { keywords, minSalary, maxSalary } = input;
     try {
       const params = new URLSearchParams();
       params.append("keywords", keywords);
-      // console.log(`keywords form getJobs fuction : ${keywords}`);
+      params.append("minSalary", minSalary);
+      params.append("maxSalary", maxSalary);
       const results = await axios.get("http://localhost:4000/jobs", {
-        params, // Include data in the request body
+        params,
       });
-      // const results = await axios.get(
-      //   `http://localhost:4000/jobs?keywords=%dev%`
-      // );
-      // const results = await axios.get("http://localhost:4000/jobs");
+
       console.log("Jobs from server");
       console.log(results.data.data);
       setJobs(results.data.data);
@@ -34,8 +34,8 @@ const JobList = (props) => {
   };
 
   useEffect(() => {
-    getJobs(keywords);
-  }, [keywords]);
+    getJobs({ keywords, minSalary, maxSalary });
+  }, [keywords, minSalary, maxSalary]);
 
   return (
     <div className="ml-12">
@@ -52,25 +52,21 @@ const JobList = (props) => {
               <div className="flex flex-col justify-end items-center mt-2 mx-2">
                 <div className="flex flex-row mt-2">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-4">
-                    <img src={testLogo} />
-                    {/* LOGO
-                    <br />
-                    id : {job.job_id} */}
+                    <img src={job.company_logo} />
                   </div>
                   <div className="flex flex-col p-2">
                     <div className="flex flex-row w-fit text-[14px] text-LightGray">
                       <img src={jobCategoryIcon} />
-                      {job.job_category}
+                      {job.category_name}
                     </div>
                     <div className="">{job.job_title}</div>
                     <div className="text-[15px] text-Gray">
-                      The company name id : {job.company_id}
+                      {job.company_name}
                     </div>
                     <div className="flex flex-row">
                       <div className="flex flex-row text-LightGray">
                         <img src={typeIcon} />
-                        {/* {job.job_type_id} */}
-                        Full-time
+                        {job.type_name}
                       </div>
                       <div className="flex flex-row text-LightGray">
                         <img className="" src={dollarIcon} />
