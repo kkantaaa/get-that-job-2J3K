@@ -49,7 +49,7 @@ function App() {
                 //kan's Route : tbd put auth
               }
               <Route
-                path="/user/jobs/:jobparams/apply"
+                path="/user/jobs/:jobparams"
                 element={<ApplicationApplyPage />}
               />
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
