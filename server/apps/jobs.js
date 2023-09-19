@@ -3,23 +3,126 @@ import { pool } from "../utils/db_connection.js";
 import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
-// jobRouter.use(protect);
+jobRouter.use(protect);
+
+// get jobs by recruiter id for recruiter role
+jobRouter.get("/recruiter", async (req, res) => {
+  const recruiter_id = req.user.recruiter_id;
+
+  const query = `SELECT
+  jobs.recruiter_id,
+  jobs.job_id,
+  company_name,
+  company_logo,
+  job_title,
+  category_name,
+  type_name,
+  salary_min,
+  salary_max,
+  about_job_position,
+  mandatory_requirement,
+  optional_requirement,
+  opened_at,
+  closed_at,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+  ) AS total_candidates,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+      AND application_status = 'inprogress'
+  ) AS candidates_on_track
+FROM
+  jobs
+INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+WHERE jobs.recruiter_id = $1;
+
+`;
+  try {
+    let result = await pool.query(query, [recruiter_id]);
+    return res.json({
+      data: result.rows,
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
+jobRouter.get("/recruiter/:job_id", async (req, res) => {
+  const recruiter_id = req.user.recruiter_id;
+  const job_id = req.params.job_id;
+
+  const query = `SELECT
+  jobs.recruiter_id,
+  jobs.job_id,
+  company_name,
+  company_logo,
+  job_title,
+  category_name,
+  type_name,
+  salary_min,
+  salary_max,
+  about_job_position,
+  mandatory_requirement,
+  optional_requirement,
+  opened_at,
+  closed_at,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+  ) AS total_candidates,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+      AND application_status = 'inprogress'
+  ) AS candidates_on_track
+FROM
+  jobs
+INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+WHERE jobs.recruiter_id = $1 AND jobs.job_id = $2;
+`;
+  try {
+    const result = await pool.query(query, [recruiter_id, job_id]);
+
+    return res.json({
+      data: result.rows,
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
 
 jobRouter.get("/", async (req, res) => {
   try {
+    //comment 3 อันนี้เพื่อ query ใน postman
     const keywords = `%${req.query.keywords}%` || null;
     const min = `${req.query.minSalary}` || null;
     const max = `${req.query.maxSalary}` || null;
-
+    
     const category = req.query.category || null;
     const type = req.query.type || null;
+    //uncomment 3 อันนี้เพื่อ query ใน postman
     // const keywords = req.query.keywords || null;
     // const min = req.query.minSalary || null;
     // const max = req.query.maxSalary || null;
 
     let query = "";
     let values = [];
-
+    
+    //queryเก่า ตาราง jobs_mock
     // query = `SELECT *
     // FROM jobs_mock
     // WHERE (job_title ILIKE $1 OR $1 IS NULL)

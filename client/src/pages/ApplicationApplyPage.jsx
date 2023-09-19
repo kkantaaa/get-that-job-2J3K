@@ -6,6 +6,7 @@ import FollowButton from "@/images/ApllicationApplyPage/FollowButton.png"; //img
 //functions, method and libaries
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 import moment from "moment";
 //init
@@ -17,52 +18,50 @@ function ApplicationApplyPage() {
   const navigate = useNavigate();
   // state
   const [jobDetail, setJobDetail] = useState({});
-  const { userparams, jobparams } = useParams();
+  const { jobparams } = useParams();
+  const [userid, setuserparams] = useState("");
   // useEffect
-  useEffect(
-    () => {
-      console.log("userparams [24]:", userparams);
-      console.log("jobparams [25]:", jobparams);
-      //1
-      const getJobDetail = async () => {
-        try {
-          const job_id = parseInt(jobparams);
-          console.log("job_id:", job_id);
-          const getcompanyinfo = await axios.get(
-            `http://localhost:4000/testapply/${job_id}`
-          );
-          setJobDetail(getcompanyinfo.data[0]);
-          console.log("fetch dai kub [30]:", getcompanyinfo.data[0]);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      //2
-      const fetchLogo = async () => {
-        try {
-          const logo_id = parseInt(jobparams);
-          const getcompanylogo = await axios.get(
-            `http://localhost:4000/testapply/logo/${logo_id}`
-          );
-          setJobDetail(getcompanylogo.data[0]);
-          console.log(getcompanylogo.data[0]);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      //1+2
-      const fetchData = async () => {
-        await fetchLogo();
-        await getJobDetail();
-      };
+  useEffect(() => {
+    //0
+    const token = localStorage.getItem("token");
+    //
+    if (token) {
+      console.log("Token found in local storage");
+    } else {
+      console.log("Token not found in local storage");
+    }
+    //
+    try {
+      const decoded = jwtDecode(token);
+      const user_id_from_token = parseInt(decoded.id);
+      setuserparams(user_id_from_token);
+      console.log("User ID from token:", user_id_from_token);
+    } catch (error) {
+      console.error("Token verification failed:", error);
+    }
+    //
+    //1
+    const getJobDetail = async () => {
+      try {
+        const job_id = parseInt(jobparams);
+        const getcompanyinfo = await axios.get(
+          `http://localhost:4000/testapply/${job_id}`
+        );
+        setJobDetail(getcompanyinfo.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      fetchData();
-    },
-    [jobparams],
-    [userparams]
-  );
+    //1
+    const fetchData = async () => {
+      await getJobDetail();
+    };
+
+    fetchData();
+  }, [jobparams, userid]);
   // moment
-  const createdAt = moment(`${jobDetail.date_time}`).fromNow();
+  const createdAt = moment(jobDetail.date_time).fromNow();
   //back action and jump to send application button>>>>>>>
   const handleBack = (event) => {
     event.preventDefault();
@@ -177,9 +176,8 @@ function ApplicationApplyPage() {
                   fill="#616161"
                 />
               </svg>
-              <p className="ml-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                <p> Posted: {createdAt} </p>
-              </p>
+              <p className="ml-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal"></p>
+              <p> Posted: {createdAt} </p>
             </div>
             {
               // cataegory + type + salary section
@@ -259,7 +257,7 @@ function ApplicationApplyPage() {
               // user apply section
             }
             <ApplicationApplySection
-              userparams={userparams}
+              userparams={userid}
               jobparams={jobparams}
               companyname={jobDetail.company_name}
             />

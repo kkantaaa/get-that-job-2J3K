@@ -9,7 +9,7 @@ import FileInputIcon from "../images/registration-page/upload-line.svg";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
-  const { userData, setUserData } = useGlobalContext();
+  const { userData } = useGlobalContext();
   const { UserRegister } = useAuth();
   const { handleSubmit, control, setValue } = useForm();
   const fileInputRef = useRef(null);
@@ -23,7 +23,7 @@ function ProfessionalInfo() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-      navigate("/path-to-job-listing");
+      navigate("/user/findthatjob");
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -189,7 +189,7 @@ function ProfessionalInfo() {
 
         <div className="mt-[16px] flex flex-row">
           {/* Previous Button */}
-          <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+          <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
             <button
               onClick={() => navigate("/user/register2")}
               className="flex flex-row"
@@ -201,14 +201,14 @@ function ProfessionalInfo() {
           </div>
 
           {/* Skip Button */}
-          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
+          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
             <button onClick={handlerSkip} type="button">
               SKIP THIS!
             </button>
           </div>
 
           {/* Finish Button */}
-          <div className="w-[120px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+          <div className="w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
             <button
               className="flex flex-row"
               type="submit"

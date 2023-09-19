@@ -8,17 +8,17 @@ function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
   const navigate = useNavigate();
 
-// 2. เราจะใช้ useForm(); เพื่อกำหนดค่าต่างๆ และส่งค่าที่จะใช้ในการจัดการ form
+  // 2. เราจะใช้ useForm(); เพื่อกำหนดค่าต่างๆ และส่งค่าที่จะใช้ในการจัดการ form
   const {
-    handleSubmit, // <- ใช้เพื่อ manage เวลาส่งฟอร์ม 
+    handleSubmit, // <- ใช้เพื่อ manage เวลาส่งฟอร์ม
     control, // <- มาจาก controller .ใช้เพื่อเชื่อมต่อกับ field input ใน form
     setError, // <- function สำหรับจัดการข้อความ error message ที่อยากให้แสดง
     formState: { errors }, // <-  เป็นค่าที่ใช้ในเก็บ error message ที่เรา set ขึ้นมา เวลากรอก form ไม่ครบ
   } = useForm();
 
   useEffect(() => {
-// ใช้ useEffect เพื่ออัปเดตเวลามีข้อมูลเปลี่ยนแปลง
-        console.log("Updated userData:", userData);
+    // ใช้ useEffect เพื่ออัปเดตเวลามีข้อมูลเปลี่ยนแปลง
+    console.log("Updated userData:", userData);
   }, [userData]);
 
   const onSubmit = async (data) => {
@@ -69,9 +69,9 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="email-error" className="error-message">
+          <div id="email-error" className="text-red-500 text-[10px] uppercase">
             {errors.email && errors.email.message}
-          </span>
+          </div>
         </div>
 
         <div className="password-input">
@@ -96,9 +96,9 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="password-error" className="error-message">
+          <div id="password-error" className="text-red-500 text-[10px] uppercase">
             {errors.password && errors.password.message}
-          </span>
+          </div>
         </div>
 
         <div className="confirmed-password-input">
@@ -125,14 +125,18 @@ function LogInInfo() {
               )}
             />
           </label>
-          <span id="confirmed-password-error" className="error-message">
+          <div id="confirmed-password-error" className="text-red-500 text-[10px] uppercase">
             {errors.confirmedPassword && errors.confirmedPassword.message}
-          </span>
+          </div>
         </div>
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
-          <button onClick={() => navigate("/user/register2")} className="flex flex-row" type="submit">
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+          <button
+            className="flex flex-row"
+            type="submit"
+            disabled={errors.confirmedPassword ? true : false}
+          >
             <div className="ml-[10px]">NEXT</div>
-            <img src={ArrowRight}/>
+            <img src={ArrowRight} />
           </button>
         </div>
       </div>

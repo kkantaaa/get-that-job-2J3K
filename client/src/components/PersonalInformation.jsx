@@ -159,14 +159,14 @@ function PersonalInformation() {
         </div>
 
         <div className="flex flex-row">
-          <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center text-[14px] font-[500px] tracking-[1.25px]">
+          <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 active:bg-DarkPink hover:bg-LightPink border-Pink rounded-[16px] text-black text-center text-[14px] font-[500px] tracking-[1.25px]">
             <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
 
           {/* Next Button */}
-          <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+          <div className="w-[106px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
           <button className="flex flex-row" type="submit">
-            <div onClick={() => navigate("/user/register3")} className="ml-[10px]">NEXT</div>
+            <div className="ml-[10px]">NEXT</div>
             <img src={ArrowRight}/>
           </button>
           </div>
