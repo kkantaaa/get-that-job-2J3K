@@ -191,7 +191,9 @@ registRouter.post("/recruiter", async (req, res) => {
     );
     console.log("Recruiter Query Result:", recruiterQuery.rows);
     if (recruiterQuery.rows.length === 0) {
-      return res.status(410).json({ message: "Recruiter Email not found" });
+      return res.status(410).json({ message: "Recruiter email not found" });
+    } else if (recruiterQuery.rows.length > 1) {
+      return res.status(410).json({ message: "Email address is already registered" });
     }
     await pool.query(
       "INSERT INTO recruiter_informations (recruiter_id, company_name, company_website, about_company, company_logo) VALUES ($1, $2, $3, $4, $5)",

@@ -9,6 +9,7 @@ jobRouter.get("/recruiter", async (req, res) => {
   const recruiter_id = req.user.recruiter_id;
 
   const query = `SELECT
+  jobs.recruiter_id,
   jobs.job_id,
   company_name,
   company_logo,
@@ -22,22 +23,43 @@ jobRouter.get("/recruiter", async (req, res) => {
   optional_requirement,
   opened_at,
   closed_at,
-  COUNT(application.application_id) AS total_candidates,
-  COUNT(
-    CASE
-      WHEN application.application_status = 'inprogress' THEN 1
-      ELSE NULL
-    END
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+  ) AS total_candidates,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+      AND application_status = 'inprogress'
   ) AS candidates_on_track
 FROM
   jobs
 INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
 INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
-INNER JOIN application ON jobs.job_id = application.job_id
 INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
-where
-  jobs.recruiter_id = $1
-GROUP BY
+WHERE jobs.recruiter_id = $1;
+
+`;
+  try {
+    let result = await pool.query(query, [recruiter_id]);
+    return res.json({
+      data: result.rows,
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
+jobRouter.get("/recruiter/:job_id", async (req, res) => {
+  const recruiter_id = req.user.recruiter_id;
+  const job_id = req.params.job_id;
+
+  const query = `SELECT
+  jobs.recruiter_id,
   jobs.job_id,
   company_name,
   company_logo,
@@ -50,20 +72,36 @@ GROUP BY
   mandatory_requirement,
   optional_requirement,
   opened_at,
-  closed_at;
-`
+  closed_at,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+  ) AS total_candidates,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+      AND application_status = 'inprogress'
+  ) AS candidates_on_track
+FROM
+  jobs
+INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+WHERE jobs.recruiter_id = $1 AND jobs.job_id = $2;
+`;
   try {
-    let result = await pool.query(query,[recruiter_id]);
+    const result = await pool.query(query, [recruiter_id, job_id]);
+
     return res.json({
-      data: result.rows
+      data: result.rows,
     });
-    
   } catch (error) {
     return res.json({
       message: `${error}`,
     });
   }
-  
 });
 
 jobRouter.get("/", async (req, res) => {
@@ -110,31 +148,31 @@ jobRouter.get("/", async (req, res) => {
   }
 });
 
-// jobRouter.get("/:id", async (req, res) => {
-//   const jobId = req.params.id;
+jobRouter.get("/:id", async (req, res) => {
+  const jobId = req.params.id;
 
-//   if (!jobId) {
-//     return res.status(401).json({
-//       message: "Please specified job id in order to get the job",
-//     });
-//   }
+  if (!jobId) {
+    return res.status(401).json({
+      message: "Please specified job id in order to get the job",
+    });
+  }
 
-//   let result;
+  let result;
 
-//   try {
-//     result = await pool.query("select * from jobs_mock where job_id=$1", [
-//       jobId,
-//     ]);
-//   } catch (error) {
-//     return res.json({
-//       message: `${error}`,
-//     });
-//   }
+  try {
+    result = await pool.query("select * from jobs_mock where job_id=$1", [
+      jobId,
+    ]);
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
 
-//   return res.json({
-//     data: result?.rows?.[0] ?? [],
-//   });
-// });
+  return res.json({
+    data: result?.rows?.[0] ?? [],
+  });
+});
 
 jobRouter.post("/", async (req, res) => {
   console.log(req);
