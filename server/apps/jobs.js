@@ -107,21 +107,25 @@ WHERE jobs.recruiter_id = $1 AND jobs.job_id = $2;
 
 jobRouter.get("/", async (req, res) => {
   try {
-    //comment 3 อันนี้เพื่อ query ใน postman
+    //comment 5 อันนี้เพื่อ query ใน postman
     const keywords = `%${req.query.keywords}%` || null;
+    const category = `${req.query.category}` || null;
+    const type = `${req.query.type}` || null;
     const min = `${req.query.minSalary}` || null;
     const max = `${req.query.maxSalary}` || null;
-    
-    const category = req.query.category || null;
-    const type = req.query.type || null;
-    //uncomment 3 อันนี้เพื่อ query ใน postman
+
+    // console.log(`category from server/apps/jobs : ${category}`);
+
+    // uncomment 5 อันนี้เพื่อ query ใน postman
+    // const type = req.query.type || null;
     // const keywords = req.query.keywords || null;
+    // const category = req.query.category || null;
     // const min = req.query.minSalary || null;
     // const max = req.query.maxSalary || null;
 
     let query = "";
     let values = [];
-    
+
     //queryเก่า ตาราง jobs_mock
     // query = `SELECT *
     // FROM jobs_mock
@@ -131,8 +135,6 @@ jobRouter.get("/", async (req, res) => {
     // AND (salary_min >= $4 OR $4 IS NULL)
     // AND (salary_max <= $5 OR $5 IS NULL)
     // limit 20`;
-
-    // console.log(`keywords from server/apps/jobs : ${keywords}`);
 
     query = `SELECT *
     FROM jobs

@@ -13,20 +13,26 @@ const JobList = (props) => {
   const keywords = props.text;
   const minSalary = props.minSalary;
   const maxSalary = props.maxSalary;
+  const category = props.category;
+  const type = props.type;
+
+  // console.log(`category from joblist : ${category}`);
 
   const getJobs = async (input) => {
-    const { keywords, minSalary, maxSalary } = input;
+    const { keywords, minSalary, maxSalary, category, type } = input;
     try {
       const params = new URLSearchParams();
       params.append("keywords", keywords);
       params.append("minSalary", minSalary);
       params.append("maxSalary", maxSalary);
+      params.append("category", category);
+      params.append("type", type);
       const results = await axios.get("http://localhost:4000/jobs", {
         params,
       });
 
-      console.log("Jobs from server");
-      console.log(results.data.data);
+      // console.log("Jobs from server");
+      // console.log(results.data.data);
       setJobs(results.data.data);
     } catch (error) {
       console.error("Error: Failed to fetch jobs data");
@@ -34,8 +40,8 @@ const JobList = (props) => {
   };
 
   useEffect(() => {
-    getJobs({ keywords, minSalary, maxSalary });
-  }, [keywords, minSalary, maxSalary]);
+    getJobs({ keywords, minSalary, maxSalary, category, type });
+  }, [keywords, minSalary, maxSalary, category, type]);
 
   return (
     <div className="ml-12">
