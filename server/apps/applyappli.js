@@ -68,5 +68,70 @@ applyappliRouter.get("/u/:user_id", async (req, res) => {
   }
 });
 
+//recruiter ใช้
+applyappliRouter.get("/recruiter/:job_id", async (req, res) => {
+  try {
+    const job_id = req.params.job_id;
+    const status = req.query.status || null; // status query
+
+    let query = `
+      SELECT
+        application.job_id,
+        application.application_id,
+        application.user_id,
+        user_name,
+        user_linkedin,
+        email,
+        user_phone,
+        sent_date,
+        application_status,
+        exp_in_application,
+        interested_reason,
+        cv_in_application
+      FROM
+        application
+      INNER JOIN users ON application.user_id = users.user_id
+      INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
+      WHERE
+        application.job_id = $1
+    `;
+
+    const queryParams = [job_id];
+
+    if (status !== null) {
+      query += " AND application_status = $2";
+      queryParams.push(status);
+    }
+
+    const result = await pool.query(query, queryParams);
+
+    return res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+applyappliRouter.put("/recruiter/:application_id", async (req, res) => {
+  try {
+    const application_id = req.params.application_id;
+    const updateApplication = {
+      application_status: req.body.application_status,
+    };
+
+    await pool.query(
+      "UPDATE application SET application_status = $1 WHERE application_id = $2",
+      [updateApplication.application_status, application_id]
+    );
+
+    return res.json({
+      message: `Status of Application ${application_id} has been updated`,
+    });
+  } catch (error) {
+    console.error("Error updating application status:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default applyappliRouter;
 //("/apply/xxxxxxxxx", applyappliRouter);
