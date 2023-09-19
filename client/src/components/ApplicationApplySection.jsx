@@ -17,54 +17,34 @@ function ApplicationApplySection(pagedata) {
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [professionalExperience, setProfessionalExperience] = useState("");
   const [interestedReason, setInterestedReason] = useState("");
-  const [userId, setUserId] = useState(null);
   //navigation
   const navigate = useNavigate();
   //data destructuring
-  const { userparams, jobparams, companyname } = pagedata;
+  const { userDetail, jobparams, companyname } = pagedata;
   // useeffect
   useEffect(() => {
-    //1
-    console.log("companyname:", companyname);
-    const fetchData = async () => {
-      try {
-        const user_id = Math.floor(Math.random() * 10) + 1;
-        setUserId(user_id);
-        const job_id = jobparams;
-        const response = await axios.get(
-          `http://localhost:4000/testapply/${user_id}/job-list/${job_id}`
-        );
-        const data = response.data;
-
-        setCurrentCV(data[0].user_appli_cv);
-        setProfessionalExperience(data[0].user_appli_exp);
-        console.log(data);
-        console.log("Current CV fetched and set:", data[0].user_appli_cv);
-        console.log("professionalExperience:", data[0].user_appli_exp);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-    setCurrentCV();
+    console.log("userDetail", pagedata);
+    console.log("userDetail", pagedata.userDetail.user_experience);
   }, []);
   // event handler 1
   const handleCVChoiceChange = (data) => {
     setShowUploadButton(data === "uploadNew");
   };
   // event handler 2
-
   const onSubmit = async () => {
     if (!currentCV) {
       console.log("Current CV data is not available.");
       return;
     }
     try {
-      const user_idt = userparams;
+      const user_idt = userDetail.user_id;
+      console.log("user_idt", user_idt);
       const job_idt = jobparams;
+      console.log("job_idt", job_idt);
+      console.log("professionalExperience :", professionalExperience);
       const formData = { currentCV, interestedReason, professionalExperience };
       await axios.post(
-        `http://localhost:4000/testapply/${user_idt}/job-list/${job_idt}`,
+        `http://localhost:4000/apply/${user_idt}/job-list/${job_idt}`,
         formData
       );
       console.log("Application sent successfully :", formData);
@@ -117,17 +97,10 @@ function ApplicationApplySection(pagedata) {
                         handleCVChoiceChange("useCurrent");
                         const fetchCurrentCV = async () => {
                           try {
-                            const user_idx = Math.floor(Math.random() * 10) + 1;
-                            const job_id = Math.floor(Math.random() * 10) + 1;
-                            const response = await axios.get(
-                              `http://localhost:4000/testapply/${user_idx}/job-list/${job_id}`
-                            );
-                            const data = response.data;
-                            console.log(data[0].user_appli_cv);
-                            setCurrentCV(data[0].user_appli_cv);
+                            setCurrentCV(pagedata.userDetail.user_cv);
                             console.log(
                               "Current CV fetched and set:",
-                              data[0].user_appli_cv
+                              pagedata.userDetail.user_cv
                             );
                           } catch (error) {
                             console.error("Error fetching current CV:", error);
@@ -246,7 +219,7 @@ function ApplicationApplySection(pagedata) {
                   }}
                   type="text"
                   id="experience"
-                  value={professionalExperience}
+                  value={pagedata.userDetail.user_experience}
                   onChange={(e) => setProfessionalExperience(e.target.value)}
                 />
               )}
