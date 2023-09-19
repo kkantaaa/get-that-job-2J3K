@@ -33,11 +33,10 @@ function ApplicationApplyPage() {
     //
     try {
       const decoded = jwtDecode(token);
-      const user_id_from_token = parseInt(decoded.id);
+      const user_id_from_token = parseInt(decoded.user_id);
       setuserparams(user_id_from_token);
-      console.log("User ID from token:", user_id_from_token);
     } catch (error) {
-      console.error("Token verification failed:", error);
+      console.log("Token verification failed:", error);
     }
     //
     //1
