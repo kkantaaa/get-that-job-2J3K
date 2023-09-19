@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import money_dollar_circle_fill from "@/images/posting-job-page/money_dollar_circle_fill.png";
 
 //const navigate = useNavigate();
 
@@ -101,13 +102,16 @@ function CreateJobPosting() {
       <div className="flex flex-row">
         <RecruiterSidebar />
         <div className="bg-Background w-full flex justify-center">
-          <div className="w-[960px] py-8 ">
+          <div className="w-[960px] py-8 space-y-4">
             <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal">
               Create new job posting
             </div>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <div className="PersonalInfo w-full my-4 p-2">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <div className="PersonalInfo w-full p-2 ">
                   <div className="text-Headline5 text-DarkGray font-Montserrat font-normal">
                     Main information
                   </div>
@@ -201,7 +205,12 @@ function CreateJobPosting() {
                       )}
                     />
 
-                    <label htmlFor="inputLabel">SALARY RANGE</label>
+                    <label
+                      htmlFor="inputLabel"
+                      className="text-DarkGray text-Overline font-Inter font-normal tracking-[1.5px]"
+                    >
+                      SALARY RANGE
+                    </label>
                     <div className=" w-[231px] flex flex-row items-center ">
                       <FormField
                         control={form.control}
@@ -211,7 +220,7 @@ function CreateJobPosting() {
                           <FormItem>
                             <FormLabel></FormLabel>
                             <FormControl>
-                              <Input placeholder="min" {...field} />
+                              <Input placeholder="min" {...field}></Input>
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -240,7 +249,7 @@ function CreateJobPosting() {
                   </div>
                 </div>
 
-                <div className="ProfessionalInfo w-full my-4 p-2">
+                <div className="ProfessionalInfo w-full p-2 ">
                   <div className="text-Headline5 text-DarkGray font-Montserrat font-normal">
                     Additional information
                   </div>

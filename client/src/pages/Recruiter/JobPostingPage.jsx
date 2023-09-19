@@ -43,25 +43,25 @@ const postJobSchema = yup.object({
   optionalRequirement: yup.string().required(),
 });
 
-const [jobs, setJobs] = useState([]);
+function JobPosting() {
+  const [jobs, setJobs] = useState([]);
 
-const getJob = async () => {
-  try {
-    const results = await axios.get("http://localhost:4000/jobs");
-    console.log(results);
-    setJobs(results);
-    console.log("Categories get successful");
-  } catch (error) {
-    console.error("Error: unable to load jobs", error);
-  }
-};
+  const getJob = async () => {
+    try {
+      const results = await axios.get("http://localhost:4000/jobs");
+      console.log(results);
+      setJobs(results);
+      console.log("Categories get successful");
+    } catch (error) {
+      console.error("Error: unable to load jobs", error);
+    }
+  };
 
-useEffect(() => {
-  getJob();
-  console.log("Jobs are", jobs);
-}, []);
+  useEffect(() => {
+    getJob();
+    //console.log("Jobs are", jobs);
+  }, []);
 
-function JobPostingPage() {
   return (
     <>
       <div className="flex flex-row">
@@ -100,4 +100,4 @@ function JobPostingPage() {
     </>
   );
 }
-export default JobPostingPage;
+export default JobPosting;
