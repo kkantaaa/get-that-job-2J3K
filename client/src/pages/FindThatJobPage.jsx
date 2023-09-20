@@ -2,8 +2,8 @@ import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSide
 import { CategorySelector } from "@/components/CategorySelector";
 import { TypeSelector } from "@/components/TypeSelector";
 import JobList from "@/components/JobList.jsx";
-import searchIcon from "@/images/getthatjob-page/searchIcon.png";
-import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.png";
+import searchIcon from "@/images/getthatjob-page/searchIcon.svg";
+import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.svg";
 import { useState } from "react";
 
 function FindThatJobPage() {
@@ -51,12 +51,7 @@ function FindThatJobPage() {
                   setText(e.target.value);
                 }}
               />
-              <img
-                className="absolute top-2 left-1.5"
-                src={searchIcon}
-                width={20}
-                height={20}
-              />
+              <img className="absolute top-2 left-1.5" src={searchIcon} />
             </div>
           </div>
           <div className="flex flew-row">
@@ -99,12 +94,7 @@ function FindThatJobPage() {
                       setMinSalary(e.target.value.replace(/[^0-9]/g, ""));
                     }}
                   />
-                  <img
-                    className="absolute top-2 left-1"
-                    src={darkDollarIcon}
-                    width={20}
-                    height={20}
-                  />
+                  <img className="absolute top-2 left-1" src={darkDollarIcon} />
                 </div>
 
                 <span className="p-2 text-LightGray">-</span>
