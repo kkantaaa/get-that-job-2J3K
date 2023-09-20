@@ -35,33 +35,20 @@ function App() {
               <Route path="/user/register1" element={<UserRegisterPage1 />} />
               <Route path="/user/register2" element={<UserRegisterPage2 />} />
               <Route path="/user/register3" element={<UserRegisterPage3 />} />
-              <Route
-                path="/recruiter/register1"
-                element={<RecruitRegisterPage1 />}
-              />
-              <Route
-                path="/recruiter/register2"
-                element={<RecruitRegisterPage2 />}
-              />
+              <Route path="/recruiter/register1" element={<RecruitRegisterPage1 />}/>
+              <Route path="/recruiter/register2" element={<RecruitRegisterPage2 />}/>
+
+              {/* Kan, Jumb and JJ's Route */}
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-              {
-                //kan's Route : tbd put auth
-              }
-              <Route
-                path="/user/jobs/apply/:jobparams"
-                element={<ApplicationApplyPage />}
-              />
+              <Route path="/user/jobs/apply/:jobparams" element={<ApplicationApplyPage />}/>
+              <Route path="/user/jobs/:job_id" element={<JobDetail />} />
+
+
+              {/* keem and kaka's routes */}
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
+              <Route path="/recruiter/createjobposting" element={<CreateJobPosting />}/>
+              <Route path="/recruiter/recruiterprofile" element={<RecruiterProfile />}/>
 
-              <Route
-                path="/recruiter/createjobposting"
-                element={<CreateJobPosting />}
-              />
-
-              <Route
-                path="/recruiter/recruiterprofile"
-                element={<RecruiterProfile />}
-              />
               {/* เพิ่มเงื่อนไขเพื่อตรวจสอบว่าผู้ใช้ลงชื่อเข้าใช้หรือไม่
               {auth.isLoggedIn && (
                 <Route
@@ -70,7 +57,6 @@ function App() {
                 />
               )} */}
 
-              <Route path="/user/jobs/:job_id" element={<JobDetail />} />
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </ContextProvider>

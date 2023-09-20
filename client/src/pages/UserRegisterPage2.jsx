@@ -21,7 +21,7 @@ function UserRegisterPage2() {
         </div>
         <div className="flex flex-col font-Inter text-LightGray">
         <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]">RECRUITER</h2>
-        <div className="w-[80px] h-[2px] bg-LightGray mt-[6px]"></div>
+        <div className="w-[85px] h-[2px] bg-LightGray mt-[6px]"></div>
         </div>
       </div>
 
