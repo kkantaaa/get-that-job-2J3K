@@ -29,7 +29,7 @@ function FindThatJobPage() {
     <div className="w-full min-h-screen flex flex-row justify-spacearound bg-Background">
       <FindThatJobSideBar />
       <div className="flex flex-col w-full ml-[240px] mb-12">
-        <div className="w-full px-12 pt-8 flex flex-col justify-start items-start">
+        <div className="w-full px-12 pt-8 ml-[48px] flex flex-col justify-start items-start">
           <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline3 font-light">
             Find that job
           </div>

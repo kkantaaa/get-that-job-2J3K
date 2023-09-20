@@ -47,7 +47,7 @@ const JobList = (props) => {
       <div className="m-2 text-[18px]">
         <h2 className="font-Montserrat">{jobs.length} jobs for you</h2>
       </div>
-      <div className="grid grid-cols-3 gap-">
+      <div className="grid lg:grid-cols-2 gap-2 xl:grid-cols-3 2xl:grid-cols-4">
         {jobs.map((job) => {
           return (
             <div
@@ -55,7 +55,7 @@ const JobList = (props) => {
               className="rounded-[8px] border-solid border-[1px] w-[290px] h-[170px] my-1 bg-White drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] justify-center items-center"
             >
               <div className="flex flex-col justify-end items-center mx-1">
-                <div className="flex flex-row mt-2">
+                <div className="flex flex-row mt-3">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-4">
                     <img src={job.company_logo} />
                   </div>
