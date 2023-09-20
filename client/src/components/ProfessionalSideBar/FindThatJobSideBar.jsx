@@ -10,6 +10,18 @@ export default function FindThatJobSideBar() {
     navigate("/user/findthatjob");
   }
 
+  const handleApplicationPage = ()=>{
+    navigate("/user/:user_id/applications");
+  }
+
+  const handleFollowingPage = ()=>{
+    navigate("/user/:user_id/following");
+  }
+
+  const handleProfilePage = ()=>{
+    navigate("/user/:user_id/profile");
+  }
+
   return (
     <div className="fixed w-[240px] h-screen bg-BackgroundDark flex flex-col">
       <div className="w-[168px] h-fit px-[16px] py-[32px]">
@@ -41,7 +53,8 @@ export default function FindThatJobSideBar() {
 
           <span className=" h-fit">Find that job</span>
         </button>
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
+
+        <button onClick={handleApplicationPage} className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
@@ -67,7 +80,7 @@ export default function FindThatJobSideBar() {
           <span className=" h-fit">Your application</span>
         </button>
 
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
+        <button onClick={handleFollowingPage} className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
@@ -86,7 +99,7 @@ export default function FindThatJobSideBar() {
           <span className=" h-fit">Following</span>
         </button>
 
-        <button className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
+        <button onClick={handleProfilePage} className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background">
           <div className=" h-fit mr-[8px]">
             <svg
               width="24"
