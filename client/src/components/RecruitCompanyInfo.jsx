@@ -10,11 +10,11 @@ import FileInputIcon from "../images/registration-page/upload-line.svg";
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
   const { recruiterData } = useGlobalContext();
-  const { handleSubmit, control, setValue } = useForm();
-  const [logoPreview] = useState(null);
+  const { handleSubmit, control } = useForm();
   const { RecruiterRegister } = useAuth();
   const { upload } = useAuth();
   const fileInputRef = useRef(null);
+  const [file, setFile] = useState();
 
   useEffect(() => {
     console.log("Updated RecruiterData:", recruiterData);
@@ -65,6 +65,14 @@ function RecruitCompanyInfo() {
   const handleFileButtonClick = ()=>{
     fileInputRef.current.click();
   }
+
+  const handleFilePreview = (e) =>{
+    if (e.target.files.length > 0) {
+      const fileURL = URL.createObjectURL(e.target.files[0]);
+      setFile(fileURL);
+      console.log(file);
+    }
+  } 
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
@@ -144,31 +152,13 @@ function RecruitCompanyInfo() {
             type="file"
             id="havefile"
             accept=".jpg, .png, .jpeg, .gif"
-            onChange={(e) => {
-              if (e.target.files.length > 0) {
-                setValue("file", e.target.files[0]);
-              }
-            }}
+            onChange={handleFilePreview}
           />
         </div>
 
         <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
           Only .jpg, .png, .jpeg, .gif  Max size 5MB
         </p>
-
-        <div className="logo-list-preview-container">
-          {logoPreview && (
-            <div className="logo-preview-container">
-              <img src={logoPreview} alt="Logo Preview" />
-              <button
-                className="logo-remove-button"
-                onClick={() => setValue("file", null)}
-              >
-                x
-              </button>
-            </div>
-          )}
-        </div>
 
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
