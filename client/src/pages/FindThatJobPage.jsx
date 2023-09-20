@@ -78,7 +78,7 @@ function FindThatJobPage() {
             <div className="p-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
-                htmlFor="search-box"
+                htmlFor="salary-box"
               >
                 SALARY RANGE
               </label>
@@ -87,7 +87,7 @@ function FindThatJobPage() {
                   <input
                     className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
                     type="text"
-                    id="search-input"
+                    id="min-salary-input"
                     placeholder="min"
                     value={minSalary}
                     onChange={(e) => {
@@ -103,7 +103,7 @@ function FindThatJobPage() {
                   <input
                     className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
                     type="text"
-                    id="search-input"
+                    id="max-salary-input"
                     placeholder="max"
                     value={maxSalary}
                     onChange={(e) => {
