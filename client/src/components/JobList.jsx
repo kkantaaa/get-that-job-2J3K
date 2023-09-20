@@ -5,7 +5,6 @@ import followIcon from "@/images/getthatjob-page/followIcon.png";
 import dollarIcon from "@/images/getthatjob-page/dollarIcon.png";
 import typeIcon from "@/images/getthatjob-page/typeIcon.png";
 import jobCategoryIcon from "@/images/getthatjob-page/jobCategoryIcon.png";
-import testLogo from "@/images/getthatjob-page/Baby.png";
 
 const JobList = (props) => {
   const navigate = useNavigate();

@@ -1,40 +1,32 @@
 import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar.jsx";
 import { CategorySelector } from "@/components/CategorySelector";
-import { TypeSelector } from "@/components/TypeSelector";
+// import { TypeSelector } from "@/components/TypeSelector";
 import JobList from "@/components/JobList.jsx";
 import searchIcon from "@/images/getthatjob-page/searchIcon.png";
 import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.png";
 import { useState } from "react";
-import * as React from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { useEffect } from "react";
+import axios from "axios";
 
 function FindThatJobPage() {
+  const [categories, setCategories] = useState([]);
   const [text, setText] = useState("");
   const [minSalary, setMinSalary] = useState("");
   const [maxSalary, setMaxSalary] = useState("");
-  const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [type, setType] = useState("");
-  //เพิ่ม variable สำหรับ parameter อื่นๆ
 
-  // const handleInputChange = (event) => {
-  //   console.log(event.target);
-  //   const text = event.target.value;
-  //   const min = event.target.min;
-  //   const max = event.target.value;
-  //   setText(text);
-  //   setMinSalary(min);
-  //   setMaxSalary(max);
-  // };
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
+  //สำหรับ categorySelector
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    console.log("this is selected category");
+    console.log(selectedCategory);
   };
+
+  // const handleCategoryChange = (e) => {
+  //   setSelectedCategory(e.target.value);
+  // };
+
   const handleTypeChange = (e) => {
     setType(e.target.value);
   };
@@ -42,6 +34,19 @@ function FindThatJobPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
+
+  const getCategories = async () => {
+    try {
+      const results = await axios.get("http://localhost:4000/category");
+      setCategories(results.data.result);
+    } catch (error) {
+      console.error("Error: Failed to fetch categories data");
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return (
     <div className="w-full min-h-screen flex flex-row justify-spacearound bg-Background">
@@ -85,81 +90,26 @@ function FindThatJobPage() {
               >
                 CATEGORY
               </label>
-              {/* <Select>
-                <SelectTrigger className="h-[36px] w-[280px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White">
-                  <SelectValue
-                    className="text-LightGray text-[14px]"
-                    placeholder="Select a category"
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem
-                    className="text-LightGray text-[14px]"
-                    value=""
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                    }}
-                  >
-                    Select a category
-                  </SelectItem>
 
-                  <SelectItem
-                    className="text-LightGray text-[14px]"
-                    value="Software Developer"
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                    }}
-                  >
-                    Software Developer
-                  </SelectItem>
-                  <SelectItem
-                    className="text-LightGray text-[14px]"
-                    value="Sales"
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                    }}
-                  >
-                    Sales
-                  </SelectItem>
+              <CategorySelector onCategoryChange={handleCategoryChange} />
 
-                  <SelectItem
-                    className="text-LightGray text-[14px]"
-                    value="Graphic Designer"
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                    }}
-                  >
-                    Graphic Designer
-                  </SelectItem>
-
-                  <SelectItem
-                    className="text-LightGray text-[14px]"
-                    value="Digital Marketing"
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                    }}
-                  >
-                    Digital Marketing
-                  </SelectItem>
-                </SelectContent>
-              </Select> */}
-              {/* <CategorySelector selectedCategory={setCategory} /> */}
-              <div>
+              {/* Render categorySelector แบบไม่ใช้ shadcn*/}
+              {/* <div>
                 <select
                   className="h-[36px] w-[280px] rounded-[8px] text-LightGray text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-                  value={category}
+                  value={selectedCategory}
                   onChange={handleCategoryChange}
                 >
                   <option value="">Select a category</option>
-                  <option value="Software Developer">Software Developer</option>
-                  <option value="Sales">Sales</option>
-                  <option value="Graphic Designer">Graphic Designer</option>
-                  <option value="Digital Marketing">Digital Marketing</option>
-                  <option value="Manufacturing">Manufacturing</option>
-                  <option value="Legal">Legal</option>
-                  <option value="Education">Education</option>
+                  {categories.map((category, key) => {
+                    return (
+                      <option value={category.category_name}>
+                        {category.category_name}
+                      </option>
+                    );
+                  })}
                 </select>
-              </div>
+              </div> */}
             </div>
 
             <div className="p-2 flex flex-col">
@@ -237,10 +187,10 @@ function FindThatJobPage() {
         <div className="mx-12">
           <JobList
             text={text}
+            category={selectedCategory}
+            type={type}
             minSalary={minSalary}
             maxSalary={maxSalary}
-            category={category}
-            type={type}
           />
         </div>
       </div>
