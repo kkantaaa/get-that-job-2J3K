@@ -10,7 +10,7 @@ function RecruitLogInInfo() {
   const {
     handleSubmit,
     control,
-    setError,
+    setError, // <- เพิ่ม function setError from useForm
     formState: { errors },
   } = useForm();
 
@@ -18,20 +18,16 @@ function RecruitLogInInfo() {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
-  // const displayErrorMessage = (fieldName) =>
-  //   errors[fieldName] && (
-  //     <span className="text-red-500">{errors[fieldName].message}</span>
-  //   );
-
   const onSubmit = (data) => {
-    // validate if passwords match
+    // compare password and confirmed password
     console.log(data);
-    if (data.confirmedPassword !== data.companypassword) {
-      setError("confirmedPassword", {
-        type: "manual",
-        message: "The confirmed password is not matched",
-      });
-    }
+    if (data.companypassword !== data.confirmedPassword) {
+    // set an error if they don't match 
+    setError("confirmedPassword", {
+      type: "manual",
+      message: "The confirmed password does not match"
+    });
+    } else {
     setRecruiterData({
       company_name: data.companyname,
       email: data.companyemail,
@@ -39,7 +35,8 @@ function RecruitLogInInfo() {
     });
 
     navigate("/recruiter/register2");
-  };
+    }
+  }
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
