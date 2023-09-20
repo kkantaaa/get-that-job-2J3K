@@ -60,8 +60,26 @@ function RecruitCompanyInfo() {
       console.error("Error during registration", error);
     }
   };
+  
 
-  const handleFileButtonClick = () => {
+  
+
+  // useEffect(() => {
+  //   const logoFile = watch("file");
+  //   console.log("Logo File:", logoFile);
+  //   if (logoFile) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       console.log("Logo Preview Data URL:", e.target.result);
+  //       setLogoPreview(e.target.result);
+  //     };
+  //     reader.readAsDataURL(logoFile);
+  //   } else {
+  //     setLogoPreview(null);
+  //   }
+  // }, [watch]);
+
+  const handleFileButtonClick = ()=>{
     fileInputRef.current.click();
   };
 
