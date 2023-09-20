@@ -1,36 +1,58 @@
-import * as React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import React from "react";
 
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 
-export function TypeSelector() {
+export function TypeSelector({ onTypeChange }) {
+  const [type, setType] = useState([]);
+
+  const handleTypeChange = (e) => {
+    const selectedType = e;
+    onTypeChange(selectedType);
+  };
+
+  const getType = async () => {
+    try {
+      const results = await axios.get("http://localhost:4000/type");
+      setType(results.data.result);
+    } catch (error) {
+      console.error("Error: Failed to fetch type data");
+    }
+  };
+
+  useEffect(() => {
+    getType();
+  }, []);
+
   return (
-    <Select>
+    <Select onValueChange={handleTypeChange}>
       <SelectTrigger className="h-[36px] w-[280px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White">
         <SelectValue
           className="text-LightGray text-[14px]"
-          placeholder="Select a category"
+          placeholder="Select a type"
         />
       </SelectTrigger>
+
       <SelectContent>
-        <SelectGroup>
-          <SelectLabel className="text-LightGray text-[14px]">
-            <p className="text-LightGray text-[14px]">-- Select a type --</p>
-          </SelectLabel>
-          <SelectItem className="text-LightGray text-[14px]" value="Full time">
-            Full time
+        <SelectItem className="text-LightGray text-[14px]" value="">
+          Select a type
+        </SelectItem>
+        {type.map((type, key) => (
+          <SelectItem
+            className="text-LightGray text-[14px]"
+            value={type.type_name}
+          >
+            {type.type_name}
           </SelectItem>
-          <SelectItem className="text-LightGray text-[14px]" value="Part time">
-            Part time
-          </SelectItem>
-        </SelectGroup>
+        ))}
       </SelectContent>
     </Select>
   );

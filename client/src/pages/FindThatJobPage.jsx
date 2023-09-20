@@ -1,52 +1,69 @@
 import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar.jsx";
 import { CategorySelector } from "@/components/CategorySelector";
-// import { TypeSelector } from "@/components/TypeSelector";
+import { TypeSelector } from "@/components/TypeSelector";
 import JobList from "@/components/JobList.jsx";
 import searchIcon from "@/images/getthatjob-page/searchIcon.png";
 import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.png";
 import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
+// import { useEffect } from "react";
+// import axios from "axios";
 
 function FindThatJobPage() {
-  const [categories, setCategories] = useState([]);
   const [text, setText] = useState("");
   const [minSalary, setMinSalary] = useState("");
   const [maxSalary, setMaxSalary] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [type, setType] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  // const [categories, setCategories] = useState([]);
+  // const [type, setType] = useState("");
 
   //สำหรับ categorySelector
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    console.log("this is selected category");
-    console.log(selectedCategory);
+    // console.log("this is selected category");
+    // console.log(selectedCategory);
   };
 
+  const handleTypeChange = (type) => {
+    setSelectedType(type);
+    // console.log("this is selected type");
+    // console.log(selectedType);
+  };
+
+  //category/type Selector แบบไม่ใช้ shadcn*
   // const handleCategoryChange = (e) => {
   //   setSelectedCategory(e.target.value);
   // };
+  // const handleTypeChange = (e) => {
+  //   setType(e.target.value);
+  // };
 
-  const handleTypeChange = (e) => {
-    setType(e.target.value);
-  };
+  // const getCategories = async () => {
+  //   try {
+  //     const results = await axios.get("http://localhost:4000/category");
+  //     setCategories(results.data.result);
+  //   } catch (error) {
+  //     console.error("Error: Failed to fetch categories data");
+  //   }
+  // };
+
+  // const getType = async () => {
+  //   try {
+  //     const results = await axios.get("http://localhost:4000/type");
+  //     setType(results.data.result);
+  //   } catch (error) {
+  //     console.error("Error: Failed to fetch categories data");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getCategories();
+  //   getType();
+  // }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
   };
-
-  const getCategories = async () => {
-    try {
-      const results = await axios.get("http://localhost:4000/category");
-      setCategories(results.data.result);
-    } catch (error) {
-      console.error("Error: Failed to fetch categories data");
-    }
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   return (
     <div className="w-full min-h-screen flex flex-row justify-spacearound bg-Background">
@@ -119,8 +136,8 @@ function FindThatJobPage() {
               >
                 TYPE
               </label>
-              {/* <TypeSelector /> */}
-              <div>
+              <TypeSelector onTypeChange={handleTypeChange} />
+              {/* <div>
                 <select
                   className="h-[36px] w-[280px] rounded-[8px] text-LightGray text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
                   value={type}
@@ -130,7 +147,7 @@ function FindThatJobPage() {
                   <option value="Full time">Full time</option>
                   <option value="Part time">Part time</option>
                 </select>
-              </div>
+              </div> */}
             </div>
 
             <div className="p-2 flex flex-col">
@@ -188,7 +205,7 @@ function FindThatJobPage() {
           <JobList
             text={text}
             category={selectedCategory}
-            type={type}
+            type={selectedType}
             minSalary={minSalary}
             maxSalary={maxSalary}
           />
