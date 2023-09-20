@@ -9,24 +9,23 @@ import FileInputIcon from "../images/registration-page/upload-line.svg";
 
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
-  const { recruiterData, setRecruiterData } = useGlobalContext();
-  const { handleSubmit, control, setValue, watch } = useForm();
-  const [logoPreview, setLogoPreview] = useState(null);
+  const { recruiterData } = useGlobalContext();
+  const { handleSubmit, control } = useForm();
   const { RecruiterRegister } = useAuth();
   const { upload } = useAuth();
   const fileInputRef = useRef(null);
+  const [file, setFile] = useState();
 
   useEffect(() => {
     console.log("Updated RecruiterData:", recruiterData);
   }, [recruiterData]);
-  //do not forget to remove after finish rechecked
 
   const handlerSkip = async (event) => {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
       navigate("/recruiter/jobpostings");
-    } catch (error)  {
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
@@ -34,28 +33,27 @@ function RecruitCompanyInfo() {
   console.log(recruiterData);
   const onSubmit = async (data) => {
     console.log(data);
-  
+
     const img = {
-      fileType: 'companyLogo',
-      file: data.file
+      fileType: "companyLogo",
+      file: data.file,
     };
-    
+
     console.log({ img: img });
     let company_logo = await upload(img);
-  
+
     if (company_logo === undefined) {
       company_logo = null;
     }
-  
+
     try {
-      
       const fetchData = {
         ...recruiterData,
         company_website: data.company_website,
         about_company: data.about_company,
         company_logo: company_logo,
       };
-  
+
       await RecruiterRegister(fetchData);
       navigate("/recruiter/jobpostings");
     } catch (error) {
@@ -63,27 +61,17 @@ function RecruitCompanyInfo() {
     }
   };
   
-
-  
-
-  // useEffect(() => {
-  //   const logoFile = watch("file");
-  //   console.log("Logo File:", logoFile);
-  //   if (logoFile) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       console.log("Logo Preview Data URL:", e.target.result);
-  //       setLogoPreview(e.target.result);
-  //     };
-  //     reader.readAsDataURL(logoFile);
-  //   } else {
-  //     setLogoPreview(null);
-  //   }
-  // }, [watch]);
-
   const handleFileButtonClick = ()=>{
     fileInputRef.current.click();
-  }
+  };
+
+  const handleFilePreview = (e) => {
+    if (e.target.files.length > 0) {
+      const fileURL = URL.createObjectURL(e.target.files[0]);
+      setFile(fileURL);
+      console.log(file);
+    }
+  };
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
@@ -145,49 +133,40 @@ function RecruitCompanyInfo() {
           Between 100 and 2000 characters
         </p>
 
+        {/* button */}
         <div
           onClick={handleFileButtonClick}
           className="mt-[8px] p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
         >
-          <img
-            src={FileInputIcon}
-            alt="File Input"
-          />
-          <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px] cursor-pointer">
-            Choose a file
-          </p>
-          <input
-            ref={fileInputRef}
-            className="hidden"
-            name="havefile"
-            type="file"
-            id="havefile"
-            accept=".jpg, .png, .jpeg, .gif"
-            onChange={(e) => {
-              if (e.target.files.length > 0) {
-                setValue("file", e.target.files[0]);
-              }
-            }}
-          />
+            <img src={FileInputIcon} alt="File Input" />
+            <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px] cursor-pointer">
+              Choose a file
+            </p>
+            <input
+              ref={fileInputRef}
+              className="hidden"
+              name="havefile"
+              type="file"
+              id="havefile"
+              accept=".jpg, .png, .jpeg, .gif"
+              onChange={handleFilePreview}
+            />
         </div>
+
+        <div className="mt-[4px]">
+            {file && (
+              <img
+                src={file}
+                alt="Preview"
+                className="mb-4"
+                style={{ maxWidth: "200px" }}
+              />
+            )}
+            </div>
 
         <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
-          Only .jpg, .png, .jpeg, .gif  Max size 5MB
+          Only .jpg, .png, .jpeg, .gif Max size 5MB
         </p>
-
-        <div className="logo-list-preview-container">
-          {logoPreview && (
-            <div className="logo-preview-container">
-              <img src={logoPreview} alt="Logo Preview" />
-              <button
-                className="logo-remove-button"
-                onClick={() => setValue("file", null)}
-              >
-                x
-              </button>
-            </div>
-          )}
-        </div>
 
         <div className="mt-[16px] flex flex-row">
           <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
