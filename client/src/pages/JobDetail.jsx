@@ -48,26 +48,6 @@ function JobDetail() {
     navigate(`/user/jobs/apply/${job_id}`);
   };
 
-  // const handlePostDate = () =>{
-  //   const openedAt = new Date(jobDetail.opened_at)
-  //   const currentDate = new Date();
-
-  //   const timeDifference = currentDate - openedAt;
-
-  //   const daysAgo = Math.floor(timeDifference / (1000*60*60*24));
-
-  //   let timeAgoString;
-
-  //   if (daysAgo === 0) {
-  //     timeAgoString = 'Today';
-  //   } else if (daysAgo === 1) {
-  //     timeAgoString = 'Yesterday';
-  //   } else {
-  //     timeAgoString = `${daysAgo} days ago`;
-  //   }
-  //   console.log("Job is created at", timeAgoString);
-  // };
-
   const createdAt = moment(jobDetail.opened_at).fromNow();
 
   return (
