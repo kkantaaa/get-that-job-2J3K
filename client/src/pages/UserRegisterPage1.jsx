@@ -39,7 +39,7 @@ function UserRegisterPage1() {
               >
                 RECRUITER
               </h2>
-              <div className="w-[80px] h-[2px] bg-LightGray mt-[6px]"></div>
+              <div className="w-[85px] h-[2px] bg-LightGray mt-[6px]"></div>
             </div>
           </div>
 
