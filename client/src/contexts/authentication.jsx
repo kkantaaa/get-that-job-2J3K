@@ -1,14 +1,14 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
 import { createClient } from "@supabase/supabase-js";
 
 const AuthContext = createContext();
 
-// eslint-disable-next-line react/prop-types
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [errorState, setErrorState] = useState(null);
@@ -78,11 +78,13 @@ export const AuthProvider = ({ children }) => {
     setErrorState(null);
     navigate("/");
   };
+
+
   const upload = async (data) => {
   
     try {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
       console.log(data);
       const { result, error } = await supabase.storage
@@ -126,6 +128,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 // ปรับปรุง useAuth ให้เป็น arrow function
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
