@@ -9,9 +9,9 @@ import FileInputIcon from "../images/registration-page/upload-line.svg";
 
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
-  const { recruiterData, setRecruiterData } = useGlobalContext();
-  const { handleSubmit, control, setValue, watch } = useForm();
-  const [logoPreview, setLogoPreview] = useState(null);
+  const { recruiterData } = useGlobalContext();
+  const { handleSubmit, control, setValue } = useForm();
+  const [logoPreview] = useState(null);
   const { RecruiterRegister } = useAuth();
   const { upload } = useAuth();
   const fileInputRef = useRef(null);
@@ -19,7 +19,6 @@ function RecruitCompanyInfo() {
   useEffect(() => {
     console.log("Updated RecruiterData:", recruiterData);
   }, [recruiterData]);
-  //do not forget to remove after finish rechecked
 
   const handlerSkip = async (event) => {
     event.preventDefault();
@@ -62,24 +61,6 @@ function RecruitCompanyInfo() {
       console.error("Error during registration", error);
     }
   };
-  
-
-  
-
-  // useEffect(() => {
-  //   const logoFile = watch("file");
-  //   console.log("Logo File:", logoFile);
-  //   if (logoFile) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       console.log("Logo Preview Data URL:", e.target.result);
-  //       setLogoPreview(e.target.result);
-  //     };
-  //     reader.readAsDataURL(logoFile);
-  //   } else {
-  //     setLogoPreview(null);
-  //   }
-  // }, [watch]);
 
   const handleFileButtonClick = ()=>{
     fileInputRef.current.click();
