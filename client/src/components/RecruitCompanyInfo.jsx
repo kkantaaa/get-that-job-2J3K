@@ -25,7 +25,7 @@ function RecruitCompanyInfo() {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
-      navigate("/path to job post");
+      navigate("/recruiter/jobpostings");
     } catch (error)  {
       console.error("Error during registration", error);
     }
@@ -57,7 +57,7 @@ function RecruitCompanyInfo() {
       };
   
       await RecruiterRegister(fetchData);
-      // navigate("/path to job listing");
+      navigate("/recruiter/jobpostings");
     } catch (error) {
       console.error("Error during registration", error);
     }
