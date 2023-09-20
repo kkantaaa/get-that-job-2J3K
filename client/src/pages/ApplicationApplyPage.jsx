@@ -26,9 +26,7 @@ function ApplicationApplyPage() {
     //0
     const token = localStorage.getItem("token");
     //
-    if (token) {
-      console.log("Token found in local storage");
-    } else {
+    if (!token) {
       console.log("Token not found in local storage");
     }
     //
@@ -45,26 +43,22 @@ function ApplicationApplyPage() {
     const getJobDetail = async () => {
       try {
         const job_id = parseInt(jobparams);
-        console.log(job_id);
-        const getcompanyinfo = await axios.get(
+         const getcompanyinfo = await axios.get(
           `http://localhost:4000/apply/${job_id}`
         );
         setJobDetail(getcompanyinfo.data);
-        console.log(getcompanyinfo.data);
-      } catch (error) {
+       } catch (error) {
         console.log(error);
       }
     };
     //1.2
     const getUserDetail = async () => {
       try {
-        console.log(user_id);
-        const getuserinfo = await axios.get(
+         const getuserinfo = await axios.get(
           `http://localhost:4000/apply/u/${user_id}`
         );
         setUserDetail(getuserinfo.data);
-        console.log(userDetail);
-      } catch (error) {
+       } catch (error) {
         console.log(error);
       }
     };
@@ -75,9 +69,9 @@ function ApplicationApplyPage() {
     };
 
     fetchData();
-  }, [jobparams,  user_id ]);   
+  }, [jobparams, user_id]);
   // moment
-  const createdAt = moment(jobDetail.date_time).fromNow();
+  const createdAt = moment(jobDetail.opened_at).fromNow();
   //back action and jump to send application button>>>>>>>
   const handleBack = (event) => {
     event.preventDefault();
