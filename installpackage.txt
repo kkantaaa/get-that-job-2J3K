@@ -3,4 +3,11 @@ npm install
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm i -D @types/node
-npx shadcn-ui@latest init
+npx shadcn-ui@latest 
+
+npm install @hookform/resolvers yup
+
+//moment for showing how long application/job has been posted
+npm i moment
+//toast - kan
+npm i react-toastify

@@ -2,13 +2,18 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import ArrowLeft from "../images/registration-page/arrow-left.svg";
+import ArrowRight from "../images/registration-page/arrow-right.svg";
+import FileInputIcon from "../images/registration-page/upload-line.svg";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
-  const { userData, setUserData } = useGlobalContext();
-  const {UserRegister} = useAuth();
-  const { handleSubmit, control, setValue, watch } = useForm();
+  const { userData } = useGlobalContext();
+  const { UserRegister } = useAuth();
+  const { handleSubmit, control, setValue } = useForm();
+  const fileInputRef = useRef(null);
+  const { upload } = useAuth();
 
   useEffect(() => {
     console.log("Updated userData:", userData);
@@ -18,28 +23,44 @@ function ProfessionalInfo() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-      navigate("/path to job listing");
-    } catch (error){
+      navigate("/user/findthatjob");
+    } catch (error) {
       console.error("Error during registration", error);
     }
   };
 
   const onSubmit = async (data) => {
-    const { title, jobExp, education, havefile} = data;
-    setUserData({
-      ...userData,
-      title,
-      jobExp,
-      education,
-      havefile,
-    });
+    const cv = {
+      fileType: "professional_cv",
+      file: data.file,
+    };
+
+    let user_cv = await upload(cv);
+
+    if (user_cv === undefined) {
+      user_cv = null;
+    }
 
     try {
-      await UserRegister(userData, data);
-      navigate("/path to job listing");
-    } catch (error){
+      const { title, jobexp, education } = data;
+      const fetchData = {
+        ...userData,
+        title,
+        jobexp,
+        education,
+        user_cv: user_cv,
+      };
+
+      // navigate("/path to job listing");
+      await UserRegister(fetchData);
+      navigate("/user/findthatjob");
+    } catch (error) {
       console.error("Error during registration", error);
     }
+  };
+
+  const handleFileButtonClick = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -49,12 +70,12 @@ function ProfessionalInfo() {
           You can complete this information later
         </p>
         <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">
-          but we reccomend you to do it now
+          but we recommend you to do it now
         </p>
         <div className="title-input">
           <label
             htmlFor="title"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             TITLE
             <Controller
@@ -65,7 +86,7 @@ function ProfessionalInfo() {
               render={({ field }) => (
                 <input
                   name="title"
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   id="title"
                   type="text"
                   placeholder="Example: Mechanical administrator"
@@ -78,8 +99,8 @@ function ProfessionalInfo() {
 
         <div className="job-exp-input">
           <label
-            htmlFor="jobExp"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            htmlFor="jobexp"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             PROFESSIONAL EXPERIENCE
             <Controller
@@ -89,7 +110,7 @@ function ProfessionalInfo() {
               rules={{ required: "Professional experience is required" }}
               render={({ field }) => (
                 <input
-                  className="flex w-[600px] h-[112px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-[600px] h-[112px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   name="jobexp"
                   id="jobexp"
                   type="text"
@@ -100,14 +121,14 @@ function ProfessionalInfo() {
             />
           </label>
         </div>
-        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+        <p className="mb-[16px] text-[10px] font-normal leading-[16px] tracking-[0.4px]">
           Between 300 and 2000 characters
         </p>
 
         <div className="education-input">
           <label
             htmlFor="education"
-            className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
           >
             EDUCATION
             <Controller
@@ -117,7 +138,7 @@ function ProfessionalInfo() {
               rules={{ required: "Education is required" }}
               render={({ field }) => (
                 <input
-                  className="flex w-[600px] h-[76px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-[600px] h-[76px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   name="education"
                   id="education"
                   type="text"
@@ -128,61 +149,74 @@ function ProfessionalInfo() {
             />
           </label>
         </div>
-        <p className="mb-[16px] text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+        <p className="mb-[16px] text-[10px] font-normal leading-[16px] tracking-[0.4px]">
           Between 100 and 2000 characters
         </p>
 
+        {/* Upload File */}
         <div className="file-upload-container">
           <p className="text-[10px] font-normal leading-normal tracking-[1.5px] uppercase">
             UPLOAD / UPDATE YOUR CV
           </p>
-          
-          <input
-            className="mt-[4px] text-[14px] font-normal leading-[20px] tracking-[0.25px]"
-            name="havefile"
-            type="file"
-            id="havefile"
-            accept=".pdf"
-            onChange={(e) => {
-              if (e.target.files.length > 0) {
-                setValue("file", e.target.files[0]);
-              }
-            }}
-          />
+
+          <div
+            onClick={handleFileButtonClick}
+            className="p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
+          >
+            <img src={FileInputIcon} alt="File Input" />
+            <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px] cursor-pointer">
+              Choose a file
+            </p>
+            <input
+              ref={fileInputRef}
+              className="hidden"
+              name="havefile"
+              type="file"
+              id="havefile"
+              accept=".pdf"
+              onChange={(e) => {
+                if (e.target.files.length > 0) {
+                  setValue("file", e.target.files[0]);
+                }
+              }}
+            />
+          </div>
         </div>
 
-        <p className="text-[12px] font-normal leading-[16px] tracking-[0.4px] uppercase">
-          Only PDF. Max size 5MB
+        <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
+          Only .PDF Max size 5MB
         </p>
 
-        <div className="file-list-preview-container">
-          {watch("file") && (
-            <div className="file-preview-container">
-              <p>{watch("file").name}</p>
-              <button
-                className="file-remove-button"
-                onClick={() => setValue("file", null)}
-              >
-                x
-              </button>
-            </div>
-          )}
-        </div>
         <div className="mt-[16px] flex flex-row">
-          <div className="mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button onClick={() => navigate("/user/register2")}>
-              PREVIOUS
+          {/* Previous Button */}
+          <div className="mr-[16px] w-[140px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+            <button
+              onClick={() => navigate("/user/register2")}
+              className="flex flex-row"
+              type="button"
+            >
+              <img src={ArrowLeft} alt="Previous" />
+              <div className="ml-[4px]">PREVIOUS</div>
             </button>
           </div>
 
-          <div className="text-[13px] mr-[16px] w-[106px] h-[40px] px-[16px] py-[8px] border-2 border-Pink rounded-[16px] text-black text-center tracking-[1.25px]">
-            <button onClick={handlerSkip}>
+          {/* Skip Button */}
+          <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink border-2 border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
+            <button onClick={handlerSkip} type="button">
               SKIP THIS!
             </button>
           </div>
 
-          <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button type="submit">NEXT</button>
+          {/* Finish Button */}
+          <div className="w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+            <button
+              className="flex flex-row"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              <div className="ml-[10px]">FINISH</div>
+              <img src={ArrowRight} alt="Finish" />
+            </button>
           </div>
         </div>
       </div>

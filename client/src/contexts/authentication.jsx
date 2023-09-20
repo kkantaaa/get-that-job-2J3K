@@ -1,13 +1,14 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode"; // นำเข้า jwtDecode ที่ใช้ในการถอดรหัส token
+import { createClient } from "@supabase/supabase-js";
 
 const AuthContext = createContext();
 
-// eslint-disable-next-line react/prop-types
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [errorState, setErrorState] = useState(null);
@@ -40,8 +41,8 @@ export const AuthProvider = ({ children }) => {
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
-      console.log(`this is token : ${token}`);
-      setUserData({ userDataFromToken });
+      // console.log(`this is token : ${token}`);
+      setUserData({ ...userData, user: userDataFromToken });
       navigate("/recruiter/jobpostings");
     } catch (error) {
       // console.error("Error: unable to login the account", error);
@@ -55,17 +56,19 @@ export const AuthProvider = ({ children }) => {
       console.log("Registration successful");
       setUserData(data);
     } catch (error) {
-      console.error("Error: unable to register the account 9", error);
+      console.error("Error: unable to register the account", error);
     }
   };
 
   const RecruiterRegister = async (data) => {
     try {
+      console.log(data);
       await axios.post("http://localhost:4000/regist/recruiter", data);
       console.log("Registration successful");
-      setUserData(data);
+      // setUserData(data);
     } catch (error) {
       console.error("Error: unable to register the account", error);
+      // setErrorState(error.response.data.message);
     }
   };
 
@@ -76,6 +79,32 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
+
+  const upload = async (data) => {
+  
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      console.log(data);
+      const { result, error } = await supabase.storage
+          .from("testbucket")
+          .upload(`${data.fileType}/${data.file.name}`, data.file, {
+            cacheControl: "3600",
+            upsert: false,
+          });
+          const url = supabase.storage
+          .from("testbucket")
+          .getPublicUrl(`${data.fileType}/${data.file.name}`);
+        
+        console.log({ uploadResult: url.data.publicUrl });
+      return url.data.publicUrl
+    } catch (error) {
+     
+      console.error("Error: unable to upload", error);
+    }
+  };
+  
   useEffect(() => {
     console.log("Updated userData:", userData);
   }, [userData]);
@@ -88,6 +117,7 @@ export const AuthProvider = ({ children }) => {
         RecruiterLogin,
         UserRegister,
         logout,
+        upload,
         RecruiterRegister,
         errorState,
       }}
@@ -98,6 +128,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 // ปรับปรุง useAuth ให้เป็น arrow function
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

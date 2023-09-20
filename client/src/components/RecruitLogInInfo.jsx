@@ -2,46 +2,50 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
+import ArrowRight from "../images/registration-page/arrow-right.svg";
 
 function RecruitLogInInfo() {
   const navigate = useNavigate();
   const { recruiterData, setRecruiterData } = useGlobalContext();
-  const { handleSubmit, control, setError, clearErrors, formState: { errors } } = useForm();
+  const {
+    handleSubmit,
+    control,
+    setError, // <- เพิ่ม function setError from useForm
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
-  const onSubmit = async (data) => {
-    // Check if passwords match
-    if (data.confirmedPassword !== data.companypassword) {
-      setError("confirmedPassword", {
-        type: "manual",
-        message: "The confirmed Password is not matched",
-      });
+  const onSubmit = (data) => {
+    // compare password and confirmed password
+    console.log(data);
+    if (data.companypassword !== data.confirmedPassword) {
+    // set an error if they don't match 
+    setError("confirmedPassword", {
+      type: "manual",
+      message: "The confirmed password does not match"
+    });
     } else {
-      // Clear the error if passwords match
-      clearErrors("confirmedPassword");
+    setRecruiterData({
+      company_name: data.companyname,
+      email: data.companyemail,
+      password: data.companypassword,
+    });
 
-      try {
-        await setRecruiterData({
-          companyname: control._fields.companyname._f.value,
-          companyemail: control._fields.companyemail._f.value,
-          companypassword: control._fields.companypassword._f.value,
-        });
-
-        navigate("/recruiter/register2");
-      } catch (error) {
-        console.error("Error during registration", error);
-      }
+    navigate("/recruiter/register2");
     }
-  };
+  }
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
         <div className="company-name-input">
-          <label htmlFor="company-name" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="company-name"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             COMPANY NAME
             <Controller
               name="companyname"
@@ -60,11 +64,16 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companyname && errors.companyname.message}</span>
+          <div className="text-red-500 text-[10px] uppercase">
+            {errors.companyname && errors.companyname.message}
+          </div>
         </div>
 
         <div className="email-input">
-          <label htmlFor="email" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="email"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             EMAIL
             <Controller
               name="companyemail"
@@ -83,11 +92,16 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companyemail && errors.companyemail.message}</span>
+          <div className="text-red-500 text-[10px] uppercase">
+            {errors.companyemail && errors.companyemail.message}
+          </div>
         </div>
 
         <div className="password-input">
-          <label htmlFor="password" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="password"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             PASSWORD
             <Controller
               name="companypassword"
@@ -106,11 +120,16 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.companypassword && errors.companypassword.message}</span>
+          <div className="text-red-500 text-[10px] uppercase">
+            {errors.companypassword && errors.companypassword.message}
+          </div>
         </div>
 
         <div className="confirmed-password-input">
-          <label htmlFor="confirmed-password" className="mb-[4px] text-xs[10px] font-normal tracking-[1.5px]">
+          <label
+            htmlFor="confirmed-password"
+            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+          >
             PASSWORD CONFIRMATION
             <Controller
               name="confirmedPassword"
@@ -130,11 +149,16 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <span>{errors.confirmedPassword && errors.confirmedPassword.message}</span>
+          <div className="text-red-500 text-[10px] uppercase">
+            {errors.confirmedPassword && errors.confirmedPassword.message}
+          </div>
         </div>
 
-        <div className="w-[106px] h-[40px] px-[16px] py-[8px] bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-          <button type="submit">NEXT</button>
+        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+          <button className="flex flex-row" type="submit">
+            <div className="ml-[10px]">NEXT</div>
+            <img src={ArrowRight} />
+          </button>
         </div>
       </div>
     </form>
