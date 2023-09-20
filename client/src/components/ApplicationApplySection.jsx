@@ -4,6 +4,8 @@ import { useForm, Controller } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //images
 import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
 import SendApplicationButton from "@/images/ApllicationApplyPage/SendApplicationButton.png";
@@ -17,6 +19,7 @@ function ApplicationApplySection(pagedata) {
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [professionalExperience, setProfessionalExperience] = useState("");
   const [interestedReason, setInterestedReason] = useState("");
+  const [radioTicked, setRadioTicked] = useState(false);
   //navigation
   const navigate = useNavigate();
   //data destructuring
@@ -29,11 +32,20 @@ function ApplicationApplySection(pagedata) {
   // event handler 1
   const handleCVChoiceChange = (data) => {
     setShowUploadButton(data === "uploadNew");
+    setRadioTicked(true);
   };
   // event handler 2
   const onSubmit = async () => {
+    if (!radioTicked) {
+      toast.warning("โปรดเลือก CV ด้วยค่ะ");
+      return;
+    }
     if (!currentCV) {
-      console.log("Current CV data is not available.");
+      toast.error("โปรดตรวสอบ CV ด้วยค่ะ");
+      return;
+    }
+    if (!interestedReason) {
+      toast.error("โปรดกรอก interestedReason ด้วยค่ะ");
       return;
     }
     try {
@@ -48,8 +60,10 @@ function ApplicationApplySection(pagedata) {
         formData
       );
       console.log("Application sent successfully :", formData);
-      //
-      navigate("/user/findthatjob");
+      setTimeout(() => {
+        toast.success("ส่งใบสมัครเรียบร้อยแล้วค่ะ");
+        navigate("/user/findthatjob");
+      }, 3000);
     } catch (error) {
       console.error("Error sending application:", error);
     }
@@ -58,6 +72,7 @@ function ApplicationApplySection(pagedata) {
   // return
   return (
     <>
+      <ToastContainer theme="dark" autoClose={3000} limit={3} />
       <div style={{ marginLeft: "10px", marginTop: "20px" }}>
         <h1
           className="ml-5 "

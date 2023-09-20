@@ -68,12 +68,7 @@ function JobDetail() {
   //   console.log("Job is created at", timeAgoString);
   // };
 
-  const handlePostDate = () => {
-    const createdAt = moment(jobDetail.opened_at);
-    const now = moment();
-    const timeAgoString = createdAt.fromNow();
-    return timeAgoString;
-  };
+  const createdAt = moment(jobDetail.opened_at).fromNow();
 
   return (
     <>
@@ -126,7 +121,7 @@ function JobDetail() {
             <div className="flex flex-row uppercase justify-center">
               <img src={TimeIcon} alt="time-icon" />
               <p className="ml-[4px] mr-[4px] text-[10px] text-Gray font-normal tracking-[1.5px] leading-normal">
-                Posted {handlePostDate}
+                Posted {createdAt}
               </p>
             </div>
 
