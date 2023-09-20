@@ -2,7 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/authentication";
 import { useGlobalContext } from "@/contexts/registerContexts";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 import FileInputIcon from "../images/registration-page/upload-line.svg";
@@ -11,9 +11,10 @@ function ProfessionalInfo() {
   const navigate = useNavigate();
   const { userData } = useGlobalContext();
   const { UserRegister } = useAuth();
-  const { handleSubmit, control, setValue } = useForm();
+  const { handleSubmit, control } = useForm();
   const fileInputRef = useRef(null);
   const { upload } = useAuth();
+  const [fileName, setFileName] = useState(null);
 
   useEffect(() => {
     console.log("Updated userData:", userData);
@@ -51,7 +52,6 @@ function ProfessionalInfo() {
         user_cv: user_cv,
       };
 
-      // navigate("/path to job listing");
       await UserRegister(fetchData);
       navigate("/user/findthatjob");
     } catch (error) {
@@ -62,6 +62,13 @@ function ProfessionalInfo() {
   const handleFileButtonClick = () => {
     fileInputRef.current.click();
   };
+
+  const handleFilePreview = (e) =>{
+    if (e.target.files.length > 0){
+      const fileUrl = e.target.files[0].name;
+      setFileName(fileUrl);
+    }
+  }
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
@@ -174,14 +181,12 @@ function ProfessionalInfo() {
               type="file"
               id="havefile"
               accept=".pdf"
-              onChange={(e) => {
-                if (e.target.files.length > 0) {
-                  setValue("file", e.target.files[0]);
-                }
-              }}
+              onChange={handleFilePreview}
             />
           </div>
         </div>
+        
+        <div className="mr-[4px] text-[14px] font-bold text-Gray tracking-[0.25px]"> {fileName} </div>
 
         <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
           Only .PDF Max size 5MB
