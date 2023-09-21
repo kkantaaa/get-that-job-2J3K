@@ -37,7 +37,7 @@ function LogInInfo() {
       console.log(result);
 =======
       const response = await fetch(
-        `http://localhost:4000/jobs?email=${data.email}`
+        `http://localhost:4000/professional?email=${data.email}`
       );
       const result = await response.json();
 >>>>>>> 0770d0a (add: email validation for professional part)
@@ -51,10 +51,14 @@ function LogInInfo() {
         setError("confirmedPassword", {
           type: "manual",
 <<<<<<< HEAD
+<<<<<<< HEAD
           message: "The confirmed password does not match",
 =======
           message: "The confirmed Password is not matched",
 >>>>>>> 0770d0a (add: email validation for professional part)
+=======
+          message: "The confirmed password does not match",
+>>>>>>> 7ed0c9f (fix: api endpoints)
         });
       } else {
         await setUserData({
