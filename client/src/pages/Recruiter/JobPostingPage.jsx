@@ -47,9 +47,9 @@ function JobPosting() {
     return formatted;
   };
 
-  const getJob = async () => {
+  const getJob = async (data) => {
     try {
-      const results = await axios.get("http://localhost:4000/jobs/recruiter");
+      const results = await axios.get(`http://localhost:4000/jobs/recruiter?filter=${data}`);
       setJobs(results.data.data);
       console.log(results.data.data);
       console.log("Categories get successful");
@@ -58,8 +58,9 @@ function JobPosting() {
     }
   };
 
-  const onFilterChange = (data) => {
+  const onFilterChange = async(data) => {
     console.log(data);
+    
   };
 
   useEffect(() => {
@@ -89,7 +90,7 @@ function JobPosting() {
                 <RadioGroup
                   defaultValue="all"
                   className="flex flex-row space-x-1  font-Inter text-Body2 "
-                  onValueChange={onFilterChange}
+                  onValueChange={getJob}
                 >
                   <div className="flex items-center space-x-1">
                     <RadioGroupItem value="all" id="r1" />
