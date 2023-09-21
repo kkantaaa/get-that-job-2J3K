@@ -27,22 +27,33 @@ function LogInInfo() {
       password: control._fields.password._f.value,
     });
 
-    if (data.confirmedPassword !== data.password) {
-      setError("confirmedPassword", {
-        type: "manual",
-        message: "The confirmed Password is not matched",
-      });
-    } else {
-      try {
+    try {
+      // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
+      const response = await fetch(
+        `http://localhost:4000/jobs?email=${data.email}`
+      );
+      const result = await response.json();
+
+      if (result.exists) {
+        setError("email", {
+          type: "manual",
+          message: "The email is already taken",
+        });
+      } else if (data.confirmedPassword !== data.password) {
+        setError("confirmedPassword", {
+          type: "manual",
+          message: "The confirmed Password is not matched",
+        });
+      } else {
         await setUserData({
           email: control._fields.email._f.value,
           password: control._fields.password._f.value,
         });
         console.log(data);
         navigate("/user/register2");
-      } catch (error) {
-        console.error("Error during registration", error);
       }
+    } catch (error) {
+      console.error("Error during registration", error);
     }
   };
 
@@ -96,7 +107,10 @@ function LogInInfo() {
               )}
             />
           </label>
-          <div id="password-error" className="text-red-500 text-[10px] uppercase">
+          <div
+            id="password-error"
+            className="text-red-500 text-[10px] uppercase"
+          >
             {errors.password && errors.password.message}
           </div>
         </div>
@@ -125,7 +139,10 @@ function LogInInfo() {
               )}
             />
           </label>
-          <div id="confirmed-password-error" className="text-red-500 text-[10px] uppercase">
+          <div
+            id="confirmed-password-error"
+            className="text-red-500 text-[10px] uppercase"
+          >
             {errors.confirmedPassword && errors.confirmedPassword.message}
           </div>
         </div>
