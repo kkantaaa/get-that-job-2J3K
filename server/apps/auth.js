@@ -10,9 +10,10 @@ authRouter.post("/user/login", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const result = await client.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
+    const result = await client.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
     const user = result.rows[0];
 
     if (!user) {

@@ -109,9 +109,12 @@ export const AuthProvider = ({ children }) => {
       const url = supabase.storage
         .from("testbucket")
         .getPublicUrl(`${data.fileType}/${data.file.name}`);
-
       console.log({ uploadResult: url.data.publicUrl });
-      return url.data.publicUrl;
+      if (data.fileType === "companyLogo") { 
+      return url.data.publicUrl
+      } else {
+        return (`${data.fileType}/${data.file.name}`)
+    }
     } catch (error) {
       console.error("Error: unable to upload", error);
     }
