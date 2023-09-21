@@ -9,6 +9,8 @@ import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
 import JobPosting from "@/pages/Recruiter/JobPostingPage.jsx";
+import EditJobPostingPage from "@/pages/Recruiter/EditJobPostingPage.jsx";
+import ShowJobPosingPage from "@/pages/Recruiter/ShowJobPosingPage.jsx";
 import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
 import RecruiterProfile from "@/pages/Recruiter/RecruiterProfile.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
@@ -35,19 +37,41 @@ function App() {
               <Route path="/user/register1" element={<UserRegisterPage1 />} />
               <Route path="/user/register2" element={<UserRegisterPage2 />} />
               <Route path="/user/register3" element={<UserRegisterPage3 />} />
-              <Route path="/recruiter/register1" element={<RecruitRegisterPage1 />}/>
-              <Route path="/recruiter/register2" element={<RecruitRegisterPage2 />}/>
+              <Route
+                path="/recruiter/register1"
+                element={<RecruitRegisterPage1 />}
+              />
+              <Route
+                path="/recruiter/register2"
+                element={<RecruitRegisterPage2 />}
+              />
 
               {/* Kan, Jumb and JJ's Route */}
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-              <Route path="/user/jobs/apply/:jobparams" element={<ApplicationApplyPage />}/>
+              <Route
+                path="/user/jobs/apply/:jobparams"
+                element={<ApplicationApplyPage />}
+              />
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
-
 
               {/* keem and kaka's routes */}
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
-              <Route path="/recruiter/createjobposting" element={<CreateJobPosting />}/>
-              <Route path="/recruiter/recruiterprofile" element={<RecruiterProfile />}/>
+              <Route
+                path="/recruiter/createjobposting"
+                element={<CreateJobPosting />}
+              />
+              <Route
+                path="/recruiter/recruiterprofile"
+                element={<RecruiterProfile />}
+              />
+              <Route
+                path="/recruiter/jobpostings/edit"
+                element={<EditJobPostingPage />}
+              />
+              <Route
+                path="/recruiter/jobpostings/show"
+                element={<ShowJobPosingPage />}
+              />
 
               {/* เพิ่มเงื่อนไขเพื่อตรวจสอบว่าผู้ใช้ลงชื่อเข้าใช้หรือไม่
               {auth.isLoggedIn && (

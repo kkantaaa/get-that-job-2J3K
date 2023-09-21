@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { ChevronLeft } from "lucide-react";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -44,27 +45,33 @@ const handleChange = (data) => {
   console.log(data);
 };
 
-function RecruiterProfile() {
+function ShowJobPosingPage() {
   console.log(SelectValue);
 
   return (
     <>
-      <Select onValueChange={handleChange}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select a fruit" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="banana">Banana</SelectItem>
-            <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes">Grapes</SelectItem>
-            <SelectItem value="pineapple">Pineapple</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div className="flex flex-row">
+        <RecruiterSidebar />
+        <div className="bg-Background w-full flex justify-center">
+          <div className="w-[960px] py-8 space-y-4">
+            <Button variant="ghost" size="primary">
+              <Link
+                to="/recruiter/jobpostings"
+                className="font-Inter text-Button text-Gray font-medium tracking-[1.25px] space-x-2"
+              >
+                <div className="space-x-1 flex flex-row">
+                  <ChevronLeft className="h-6 w-6 " />
+                  <div>BACK</div>
+                </div>
+              </Link>
+            </Button>
+            <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal">
+              Show Job Posting
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
-export default RecruiterProfile;
+export default ShowJobPosingPage;
