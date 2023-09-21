@@ -24,8 +24,13 @@ function RecruitLogInInfo() {
 
     // Check if the email already exists
     try {
+<<<<<<< HEAD
       const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
       const result = response.data;
+=======
+      const response = await fetch(`http://localhost:4000/recruiter?email=${data.email}`);
+      const result = await response.json();
+>>>>>>> 065952c (fix: api endpoints)
   
       if (result.exists) {
         setError("email", {
