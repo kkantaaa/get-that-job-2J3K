@@ -30,7 +30,7 @@ function LogInInfo() {
     try {
       // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
       const response = await fetch(
-        `http://localhost:4000/jobs?email=${data.email}`
+        `http://localhost:4000/professional?email=${data.email}`
       );
       const result = await response.json();
 
@@ -42,7 +42,7 @@ function LogInInfo() {
       } else if (data.confirmedPassword !== data.password) {
         setError("confirmedPassword", {
           type: "manual",
-          message: "The confirmed Password is not matched",
+          message: "The confirmed password does not match",
         });
       } else {
         await setUserData({
