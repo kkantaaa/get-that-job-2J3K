@@ -31,6 +31,7 @@ function LogInInfo() {
     try {
       // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
 <<<<<<< HEAD
+<<<<<<< HEAD
       const response = await axios.post(
         `http://localhost:4000/professional?email=${data.email}`);
       const result = response.data.data;
@@ -41,6 +42,12 @@ function LogInInfo() {
       );
       const result = await response.json();
 >>>>>>> 0770d0a (add: email validation for professional part)
+=======
+      const response = await axios.get(
+        `http://localhost:4000/professional?email=${data.email}`);
+      const result = response.data.data;
+      console.log(result);
+>>>>>>> a157a79 (add: edit email validation)
 
       if (result.exists) {
         setError("email", {
