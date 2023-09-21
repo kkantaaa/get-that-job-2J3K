@@ -49,6 +49,7 @@ export function TypeSelector({ onTypeChange }) {
           <SelectItem
             className="text-LightGray text-[14px]"
             value={type.type_name}
+            key={key}
           >
             {type.type_name}
           </SelectItem>

@@ -2,8 +2,8 @@ import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSide
 import { CategorySelector } from "@/components/CategorySelector";
 import { TypeSelector } from "@/components/TypeSelector";
 import JobList from "@/components/JobList.jsx";
-import searchIcon from "@/images/getthatjob-page/searchIcon.png";
-import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.png";
+import searchIcon from "@/images/getthatjob-page/searchIcon.svg";
+import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.svg";
 import { useState } from "react";
 
 function FindThatJobPage() {
@@ -29,7 +29,7 @@ function FindThatJobPage() {
     <div className="w-full min-h-screen flex flex-row justify-spacearound bg-Background">
       <FindThatJobSideBar />
       <div className="flex flex-col w-full ml-[240px] mb-12">
-        <div className="w-full px-12 pt-8 flex flex-col justify-start items-start">
+        <div className="w-full px-12 pt-8 ml-[48px] flex flex-col justify-start items-start">
           <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline3 font-light">
             Find that job
           </div>
@@ -51,12 +51,7 @@ function FindThatJobPage() {
                   setText(e.target.value);
                 }}
               />
-              <img
-                className="absolute top-2 left-1.5"
-                src={searchIcon}
-                width={20}
-                height={20}
-              />
+              <img className="absolute top-2 left-1.5" src={searchIcon} />
             </div>
           </div>
           <div className="flex flew-row">
@@ -83,7 +78,7 @@ function FindThatJobPage() {
             <div className="p-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
-                htmlFor="search-box"
+                htmlFor="salary-box"
               >
                 SALARY RANGE
               </label>
@@ -92,19 +87,14 @@ function FindThatJobPage() {
                   <input
                     className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
                     type="text"
-                    id="search-input"
+                    id="min-salary-input"
                     placeholder="min"
                     value={minSalary}
                     onChange={(e) => {
                       setMinSalary(e.target.value.replace(/[^0-9]/g, ""));
                     }}
                   />
-                  <img
-                    className="absolute top-2 left-1"
-                    src={darkDollarIcon}
-                    width={20}
-                    height={20}
-                  />
+                  <img className="absolute top-2 left-1" src={darkDollarIcon} />
                 </div>
 
                 <span className="p-2 text-LightGray">-</span>
@@ -113,7 +103,7 @@ function FindThatJobPage() {
                   <input
                     className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
                     type="text"
-                    id="search-input"
+                    id="max-salary-input"
                     placeholder="max"
                     value={maxSalary}
                     onChange={(e) => {

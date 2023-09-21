@@ -48,6 +48,7 @@ export function CategorySelector({ onCategoryChange }) {
           <SelectItem
             className="text-LightGray text-[14px]"
             value={category.category_name}
+            key={key}
           >
             {category.category_name}
           </SelectItem>
