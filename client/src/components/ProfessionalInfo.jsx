@@ -11,7 +11,7 @@ function ProfessionalInfo() {
   const navigate = useNavigate();
   const { userData } = useGlobalContext();
   const { UserRegister } = useAuth();
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, setValue } = useForm();
   const fileInputRef = useRef(null);
   const { upload } = useAuth();
   const [fileName, setFileName] = useState(null);
@@ -65,8 +65,8 @@ function ProfessionalInfo() {
 
   const handleFilePreview = (e) =>{
     if (e.target.files.length > 0){
-      const fileUrl = e.target.files[0].name;
-      setFileName(fileUrl);
+      setValue("file", e.target.files[0]);
+      setFileName(e.target.files[0].name);
     }
   }
 

@@ -10,7 +10,7 @@ import FileInputIcon from "../images/registration-page/upload-line.svg";
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
   const { recruiterData } = useGlobalContext();
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, setValue } = useForm();
   const { RecruiterRegister } = useAuth();
   const { upload } = useAuth();
   const fileInputRef = useRef(null);
@@ -67,6 +67,7 @@ function RecruitCompanyInfo() {
 
   const handleFilePreview = (e) => {
     if (e.target.files.length > 0) {
+      setValue("file", e.target.files[0]);
       const fileURL = URL.createObjectURL(e.target.files[0]);
       setFile(fileURL);
       console.log(file);
