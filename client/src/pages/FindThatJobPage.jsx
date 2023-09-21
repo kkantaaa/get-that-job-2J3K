@@ -26,14 +26,14 @@ function FindThatJobPage() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-row justify-spacearound bg-Background">
+    <div className="min-w-screen min-h-screen flex flex-row bg-Background">
       <FindThatJobSideBar />
-      <div className="flex flex-col w-full ml-[240px] mb-12">
-        <div className="w-full px-12 pt-8 ml-[48px] flex flex-col justify-start items-start">
-          <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline3 font-light">
+      <div className="flex flex-col w-full ml-[240px] mb-12 bg-Background">
+        <div className="w-full pt-8 flex flex-col justify-start items-start">
+          <div className="mb-[16px] ml-[96px] text-DarkGray font-Montserrat text-Headline3 font-light">
             Find that job
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col ml-[96px]">
             <label
               className="w-fit text-[10px] text-LightGray"
               htmlFor="search-box"
@@ -54,7 +54,7 @@ function FindThatJobPage() {
               <img className="absolute top-2 left-1.5" src={searchIcon} />
             </div>
           </div>
-          <div className="flex flew-row">
+          <div className="flex flew-row ml-[96px]">
             <div className="py-2 pr-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"

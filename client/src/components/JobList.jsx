@@ -82,7 +82,7 @@ const JobList = (props) => {
                   </div>
                 </div>
                 <div className="flex flex-row">
-                  <div className="pr-2 py-2">
+                  <div className="pr-6 py-2">
                     <button className="flex flex-row font-Inter">
                       {/* <img className="" src={followIcon} /> */}
                       <div className="mx-2">
@@ -109,7 +109,7 @@ const JobList = (props) => {
                       FOLLOW
                     </button>
                   </div>
-                  <div className="px-2">
+                  <div className="pl-6">
                     <button
                       className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-Pink rounded-[16px] text-Gray text-center text-[14px] tracking-[1.25px] font-Inter"
                       onClick={() => navigate(`/user/jobs/${job.job_id}`)}
