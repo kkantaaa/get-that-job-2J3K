@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Download } from "lucide-react";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,6 +27,7 @@ import jobCategoryIcon from "@/images/posting-job-page/building-3-line.png";
 import typeIcon from "@/images/posting-job-page/calendar-2-line.png";
 import dollarIcon from "@/images/posting-job-page/money-dollar-circle-line.png";
 import linkedin from "@/images/posting-job-page/show-job/linkedin-box-line.png";
+import { createClient } from "@supabase/supabase-js";
 
 const handleChange = (data) => {
   console.log(data);
@@ -73,6 +74,46 @@ function ShowJobPosingPage() {
   const onFilterChange = (data) => {
     console.log(data);
   };
+
+  const download = async (data) => {
+    try {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+        const { data: file, error } = await supabase.storage
+            .from('testbucket')
+            .download(`${data.cv}`);
+
+        if (error) {
+            console.error("Error downloading file:", error.message);
+            return;
+        }
+
+        if (!file) {
+            console.error("File not found.");
+            return;
+        }
+
+        const blob = new Blob([file], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${data.cv}`;
+        a.style.display = 'none';
+
+        document.body.appendChild(a);
+        a.click();
+
+        
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    } catch (error) {
+        console.error("Error: unable to download", error);
+    }
+};
+
 
   useEffect(() => {
     getJob();
@@ -431,6 +472,12 @@ function ShowJobPosingPage() {
                             variant="secondary"
                             size="secondary"
                             className="font-Inter text-Button  font-medium tracking-[1px]"
+                            onClick={() => {
+                              download({
+                                cv: candidate.cv
+                                
+                              });
+                            }}
                           >
                             DOWNLOAD CV
                           </Button>
