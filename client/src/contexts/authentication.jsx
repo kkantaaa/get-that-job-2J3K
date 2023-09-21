@@ -88,17 +88,21 @@ export const AuthProvider = ({ children }) => {
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
       console.log(data);
       const { result, error } = await supabase.storage
-          .from("testbucket")
-          .upload(`${data.fileType}/${data.file.name}`, data.file, {
-            cacheControl: "3600",
-            upsert: false,
-          });
-          const url = supabase.storage
-          .from("testbucket")
-          .getPublicUrl(`${data.fileType}/${data.file.name}`);
+        .from("testbucket")
+        .upload(`${data.fileType}/${data.file.name}`, data.file, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+      const url = supabase.storage
+        .from("testbucket")
+        .getPublicUrl(`${data.fileType}/${data.file.name}`);
         
-        console.log({ uploadResult: url.data.publicUrl });
+      console.log({ uploadResult: url.data.publicUrl });
+      if (data.fileType === "companyLogo") { 
       return url.data.publicUrl
+      } else {
+        return (`${data.fileType}/${data.file.name}`)
+    }
     } catch (error) {
      
       console.error("Error: unable to upload", error);
