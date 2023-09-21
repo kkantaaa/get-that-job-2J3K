@@ -7,7 +7,6 @@ import { createClient } from "@supabase/supabase-js";
 
 const AuthContext = createContext();
 
-
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -16,28 +15,43 @@ export const AuthProvider = ({ children }) => {
 
   const UserLogin = async (data) => {
     try {
+      setErrorState(null);
       const result = await axios.post(
         "http://localhost:4000/auth/user/login",
         data
       );
+      //ไม่พบ user แต่ไม่ return error กลับไป catch
+
+      //validation login (temporary)
+      if (!result) {
+        throw new Error("User is not found or password is invalid");
+      }
+
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
       console.log(`this is token : ${token}`);
-      setUserData({ userDataFromToken });
+      setUserData({ ...userData, user: userDataFromToken });
       navigate("/user/findthatjob");
     } catch (error) {
-      // console.error("Error: unable to login the account", error);
-      setErrorState(error.response.data.message);
+      setErrorState(error.message);
+      // setErrorState(error.response.data.message);
     }
   };
 
   const RecruiterLogin = async (data) => {
     try {
+      setErrorState(null);
       const result = await axios.post(
         "http://localhost:4000/auth/recruiter/login",
         data
       );
+
+      //validation login (temporary)
+      if (!result) {
+        throw new Error("User is not found or password is invalid");
+      }
+
       const token = result.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
@@ -46,7 +60,8 @@ export const AuthProvider = ({ children }) => {
       navigate("/recruiter/jobpostings");
     } catch (error) {
       // console.error("Error: unable to login the account", error);
-      setErrorState(error.response.data.message);
+      // setErrorState(error.response.data.message);
+      setErrorState(error.message);
     }
   };
 
@@ -79,32 +94,29 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
-
   const upload = async (data) => {
-  
     try {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
       console.log(data);
       const { result, error } = await supabase.storage
-          .from("testbucket")
-          .upload(`${data.fileType}/${data.file.name}`, data.file, {
-            cacheControl: "3600",
-            upsert: false,
-          });
-          const url = supabase.storage
-          .from("testbucket")
-          .getPublicUrl(`${data.fileType}/${data.file.name}`);
-        
-        console.log({ uploadResult: url.data.publicUrl });
-      return url.data.publicUrl
+        .from("testbucket")
+        .upload(`${data.fileType}/${data.file.name}`, data.file, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+      const url = supabase.storage
+        .from("testbucket")
+        .getPublicUrl(`${data.fileType}/${data.file.name}`);
+
+      console.log({ uploadResult: url.data.publicUrl });
+      return url.data.publicUrl;
     } catch (error) {
-     
       console.error("Error: unable to upload", error);
     }
   };
-  
+
   useEffect(() => {
     console.log("Updated userData:", userData);
   }, [userData]);
