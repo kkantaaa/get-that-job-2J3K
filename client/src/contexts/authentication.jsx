@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
       //validation login (temporary)
       if (!result) {
-        throw new Error("User is not found or password is invalid");
+        throw new Error("Email is not found or password is invalid");
       }
 
       const token = result.data.token;
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
 
       //validation login (temporary)
       if (!result) {
-        throw new Error("User is not found or password is invalid");
+        throw new Error("Email is not found or password is invalid");
       }
 
       const token = result.data.token;
@@ -110,11 +110,11 @@ export const AuthProvider = ({ children }) => {
         .from("testbucket")
         .getPublicUrl(`${data.fileType}/${data.file.name}`);
       console.log({ uploadResult: url.data.publicUrl });
-      if (data.fileType === "companyLogo") { 
-      return url.data.publicUrl
+      if (data.fileType === "companyLogo") {
+        return url.data.publicUrl;
       } else {
-        return (`${data.fileType}/${data.file.name}`)
-    }
+        return `${data.fileType}/${data.file.name}`;
+      }
     } catch (error) {
       console.error("Error: unable to upload", error);
     }
