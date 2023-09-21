@@ -70,25 +70,25 @@ applyappliRouter.get("/recruiter/:job_id", async (req, res) => {
     const status = req.query.status || null; // status query
 
     let query = `
-      SELECT
-        application.job_id,
-        application.application_id,
-        application.user_id,
-        user_name,
-        user_linkedin,
-        email,
-        user_phone,
-        sent_date,
-        application_status,
-        exp_in_application,
-        interested_reason,
-        cv_in_application
-      FROM
-        application
-      INNER JOIN users ON application.user_id = users.user_id
-      INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
-      WHERE
-        application.job_id = $1
+    SELECT
+    application.job_id,
+    application.application_id,
+    application.user_id,
+    user_name,
+    user_linkedin,
+    email,
+    user_phone,
+    sent_date,
+    application_status,
+    professional_experience,
+    interested_reason,
+    cv
+  FROM
+    application
+  INNER JOIN users ON application.user_id = users.user_id
+  INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
+  WHERE
+    application.job_id = $1
     `;
 
     const queryParams = [job_id];
