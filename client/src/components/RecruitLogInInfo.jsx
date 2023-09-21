@@ -23,7 +23,7 @@ function RecruitLogInInfo() {
 
     // Check if the email already exists
     try {
-      const response = await fetch(`http://localhost:4000/recruiters?email=${data.email}`);
+      const response = await fetch(`http://localhost:4000/recruiter?email=${data.email}`);
       const result = await response.json();
   
       if (result.exists) {
