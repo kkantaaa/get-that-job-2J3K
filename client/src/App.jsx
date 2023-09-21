@@ -65,11 +65,11 @@ function App() {
                 element={<RecruiterProfile />}
               />
               <Route
-                path="/recruiter/jobpostings/edit"
+                path="/recruiter/jobpostings/edit/:jobId"
                 element={<EditJobPostingPage />}
               />
               <Route
-                path="/recruiter/jobpostings/show"
+                path="/recruiter/jobpostings/show/:jobId"
                 element={<ShowJobPosingPage />}
               />
 

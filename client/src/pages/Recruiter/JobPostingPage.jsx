@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
@@ -16,14 +16,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ChevronDown } from "lucide-react";
-import typeIcon from "@/images/getthatjob-page/typeIcon.png";
-import jobCategoryIcon from "@/images/getthatjob-page/jobCategoryIcon.png";
-import dollarIcon from "@/images/getthatjob-page/dollarIcon.png";
+
 import mail_open_line from "@/images/posting-job-page/mail-open-line.png";
 import account_circle_line_grey from "@/images/posting-job-page/account-circle-line-grey.png";
 import account_circle_line_pink from "@/images/posting-job-page/account-circle-line.png";
 import search_line from "@/images/posting-job-page/search-line.png";
 import close_circle_line from "@/images/posting-job-page/close-circle-line.png";
+import jobCategoryIcon from "@/images/posting-job-page/building-3-line.png";
+import typeIcon from "@/images/posting-job-page/calendar-2-line.png";
+import dollarIcon from "@/images/posting-job-page/money-dollar-circle-line.png";
 
 //const navigate = useNavigate();
 
@@ -47,14 +48,14 @@ function JobPosting() {
     return formatted;
   };
 
-  const getJob = async (data) => {
+  const getJobs = async (filter) => {
     try {
       const results = await axios.get(
-        `http://localhost:4000/jobs/recruiter?filter=${data}`
+        `http://localhost:4000/jobs/recruiter?filter=${filter}`
       );
       setJobs(results.data.data);
       console.log(results.data.data);
-      console.log("Categories get successful");
+      console.log("Jobs get successful");
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
@@ -72,7 +73,7 @@ function JobPosting() {
   };
 
   useEffect(() => {
-    getJob();
+    getJobs();
     console.log("Jobs are", jobs);
   }, []);
 
@@ -130,7 +131,7 @@ function JobPosting() {
                     {jobs.map((job, key) => {
                       return (
                         <AccordionItem
-                          value={job.job_title}
+                          value={job.job_id}
                           key={key}
                           className="space-y-[10px]"
                         >
@@ -203,7 +204,7 @@ function JobPosting() {
                               <div className="flex flex-row w-[250px] justify-between ">
                                 <Button variant="ghost" size="primary">
                                   <Link
-                                    to="/recruiter/jobpostings/show"
+                                    to={`/recruiter/jobpostings/show/${job.job_id}`}
                                     className="font-Inter text-Button text-Gray font-medium tracking-[1.25px] space-x-2"
                                   >
                                     <div className="space-x-1 flex flex-row">
@@ -214,9 +215,8 @@ function JobPosting() {
                                       <div>SHOW</div>
                                     </div>
                                   </Link>
-
                                 </Button>
-                                
+
                                 {/* ทำให้คลิกแล้วปุ่มเปลี่ยนสีไม่เป็นคับ */}
                                 {job.closed_at !== "close" ? (
                                   <Button
@@ -264,6 +264,14 @@ function JobPosting() {
                                   </Button>
                                 )}
                               </div>
+                              <Button variant="primary" size="primary">
+                                <Link
+                                  to={`/recruiter/jobpostings/edit/${job.job_id}`}
+                                  className="font-Inter text-Button  font-medium tracking-[1px]"
+                                >
+                                  EDIT
+                                </Link>
+                              </Button>
                               {/* <Button>
                                   <Link
                                     to="/recruiter/jobpostings/edit"
