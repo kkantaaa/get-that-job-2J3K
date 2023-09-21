@@ -3,7 +3,7 @@ import axios from "axios";
 import { ChevronLeft } from "lucide-react";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
@@ -33,26 +33,40 @@ import money_dollar_circle_fill from "@/images/posting-job-page/money_dollar_cir
 //const navigate = useNavigate();
 
 const postJobSchema = yup.object({
-  jobTitle: yup.string().required("JOB TITLE is a required field"),
-  jobCategory: yup.string().required(),
-  jobType: yup.string().required(),
-  salaryRangeMin: yup.number().positive().integer().required(),
-  salaryRangeMax: yup
+  job_title: yup.string().required("JOB TITLE is a required field"),
+  job_category_id: yup.string().required(),
+  job_type_id: yup.string().required(),
+  salary_min: yup.number().positive().integer().required(),
+  salary_max: yup
     .number()
     .positive("JOB TITLE is a required field")
     .integer()
     .required(),
-  aboutJobPosition: yup.string().required(),
-  mandatoryRequirement: yup.string().required(),
-  optionalRequirement: yup.string().required(),
+  about_job_position: yup.string().required(),
+  mandatory_requirement: yup.string().required(),
+  optional_requirement: yup.string().required(),
 });
 
 function CreateJobPosting() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
   const navigate = useNavigate();
-
+  const param = useParams();
+  const [jobs, setJobs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [types, setTypes] = useState([]);
+
+  const getJobs = async (param) => {
+    try {
+      const results = await axios.get(
+        `http://localhost:4000/jobs/recruiter/${param.jobId}`
+      );
+      setJobs(results.data.data);
+      console.log(results.data.data);
+      console.log("Jobs get successful");
+    } catch (error) {
+      console.error("Error: unable to load jobs", error);
+    }
+  };
 
   const getCategories = async () => {
     try {
@@ -79,15 +93,22 @@ function CreateJobPosting() {
   useEffect(() => {
     getCategories();
     getTypes();
+    getJobs(param);
+    console.log("jobs", jobs);
     console.log("categories are", categories);
     console.log("Types are", types);
   }, []);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async(data) => {
+    const updateData = {
+      ...data,
+      job_id:param.jobId,
+    };
+    console.log(updateData);
     try {
       try {
         console.log(data);
-        await axios.post("http://localhost:4000/jobs", data);
+        await axios.put(`http://localhost:4000/jobs/${param.jobId}`, updateData);
         console.log("Posting successful");
       } catch (error) {
         console.error("Error: unable to post", error);
@@ -130,7 +151,7 @@ function CreateJobPosting() {
                   <div className="w-[300px] ">
                     <FormField
                       control={form.control}
-                      name="jobTitle"
+                      name="job_title"
                       defaultValue=""
                       render={({ field }) => (
                         <FormItem>
@@ -146,7 +167,7 @@ function CreateJobPosting() {
 
                     <FormField
                       control={form.control}
-                      name="jobCategory"
+                      name="job_category_id"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>JOB CATEGORY</FormLabel>
@@ -167,7 +188,7 @@ function CreateJobPosting() {
                               {categories.map((category, key) => {
                                 return (
                                   <SelectItem
-                                    value={category.category_name}
+                                    value={category.job_category_id}
                                     key={key}
                                   >
                                     {category.category_name}
@@ -184,7 +205,7 @@ function CreateJobPosting() {
 
                     <FormField
                       control={form.control}
-                      name="jobType"
+                      name="job_type_id"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>TYPE</FormLabel>
@@ -204,7 +225,7 @@ function CreateJobPosting() {
                               </SelectGroup>
                               {types.map((type, key) => {
                                 return (
-                                  <SelectItem value={type.type_name} key={key}>
+                                  <SelectItem value={type.job_type_id} key={key}>
                                     {type.type_name}
                                   </SelectItem>
                                 );
@@ -226,7 +247,7 @@ function CreateJobPosting() {
                     <div className=" w-[231px] flex flex-row items-center ">
                       <FormField
                         control={form.control}
-                        name="salaryRangeMin"
+                        name="salary_min"
                         defaultValue=""
                         render={({ field }) => (
                           <FormItem>
@@ -244,7 +265,7 @@ function CreateJobPosting() {
 
                       <FormField
                         control={form.control}
-                        name="salaryRangeMax"
+                        name="salary_max"
                         defaultValue=""
                         render={({ field }) => (
                           <FormItem>
@@ -268,7 +289,7 @@ function CreateJobPosting() {
                   <div className="w-full ">
                     <FormField
                       control={form.control}
-                      name="aboutJobPosition"
+                      name="about_job_position"
                       defaultValue=""
                       render={({ field }) => (
                         <FormItem>
@@ -287,7 +308,7 @@ function CreateJobPosting() {
 
                     <FormField
                       control={form.control}
-                      name="mandatoryRequirement"
+                      name="mandatory_requirement"
                       defaultValue=""
                       render={({ field }) => (
                         <FormItem>
@@ -306,7 +327,7 @@ function CreateJobPosting() {
 
                     <FormField
                       control={form.control}
-                      name="optionalRequirement"
+                      name="optional_requirement"
                       defaultValue=""
                       render={({ field }) => (
                         <FormItem>
