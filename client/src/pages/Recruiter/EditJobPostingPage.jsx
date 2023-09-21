@@ -44,27 +44,22 @@ const handleChange = (data) => {
   console.log(data);
 };
 
-function RecruiterProfile() {
+function EditJobPostingPage() {
   console.log(SelectValue);
 
   return (
     <>
-      <Select onValueChange={handleChange}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select a fruit" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="banana">Banana</SelectItem>
-            <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes">Grapes</SelectItem>
-            <SelectItem value="pineapple">Pineapple</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div className="flex flex-row">
+        <RecruiterSidebar />
+        <div className="bg-Background w-full flex justify-center">
+          <div className="w-[960px] py-8 space-y-4">
+            <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal">
+              Edit Job Posting
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
-export default RecruiterProfile;
+export default EditJobPostingPage;
