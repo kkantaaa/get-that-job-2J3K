@@ -28,7 +28,9 @@ function ApplicationApplySection(pagedata) {
   useEffect(() => {
     console.log("userDetail", pagedata);
     console.log("userDetail", pagedata.userDetail.user_experience);
-  }, []);
+    setProfessionalExperience(pagedata.userDetail.user_experience);
+  }, [pagedata]);
+
   // event handler 1
   const handleCVChoiceChange = (data) => {
     setShowUploadButton(data === "uploadNew");
@@ -234,7 +236,7 @@ function ApplicationApplySection(pagedata) {
                   }}
                   type="text"
                   id="experience"
-                  value={pagedata.userDetail.user_experience}
+                  value={professionalExperience}
                   onChange={(e) => setProfessionalExperience(e.target.value)}
                 />
               )}
