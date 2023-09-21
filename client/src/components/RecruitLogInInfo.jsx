@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
+import axios from "axios";
 
 function RecruitLogInInfo() {
   const navigate = useNavigate();
@@ -23,8 +24,8 @@ function RecruitLogInInfo() {
 
     // Check if the email already exists
     try {
-      const response = await fetch(`http://localhost:4000/recruiter?email=${data.email}`);
-      const result = await response.json();
+      const response = await axios.get(`http://localhost:4000/recruiter?email=${data.email}`);
+      const result = response.data;
   
       if (result.exists) {
         setError("email", {

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
+import axios from "axios";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
@@ -29,10 +30,10 @@ function LogInInfo() {
 
     try {
       // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
-      const response = await fetch(
-        `http://localhost:4000/professional?email=${data.email}`
-      );
-      const result = await response.json();
+      const response = await axios.get(
+        `http://localhost:4000/professional?email=${data.email}`);
+      const result = response.data.data;
+      console.log(result);
 
       if (result.exists) {
         setError("email", {
