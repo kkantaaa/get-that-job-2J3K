@@ -15,7 +15,7 @@ applyappliRouter.post("/:user_Id/job-list/:job_Id", async (req, res) => {
     console.log("currentCV:", currentCV);
     console.log("interestedReason:", interestedReason);
     const userdata = await pool.query(
-      "INSERT INTO test_send_applicatio (job_id, professional_experience, cv, interested_reason) " +
+      "INSERT INTO application (job_id, professional_experience, cv, interested_reason) " +
         "VALUES ($1, $2, $3, $4) " +
         "ON CONFLICT (job_id) DO UPDATE SET " +
         "professional_experience = $2, " +
@@ -55,9 +55,10 @@ applyappliRouter.get("/u/:user_id", async (req, res) => {
   const user_id = req.params.user_id;
   console.log("user_id:", user_id);
   try {
-    const userdata = await pool.query("SELECT * FROM kan  WHERE user_id = $1", [
-      user_id,
-    ]);
+    const userdata = await pool.query(
+      "SELECT * FROM user_profiles  WHERE user_id = $1",
+      [user_id]
+    );
     console.log("Application submitted successfully :", userdata.rows[0]);
     res.json(userdata.rows[0]);
   } catch (error) {
