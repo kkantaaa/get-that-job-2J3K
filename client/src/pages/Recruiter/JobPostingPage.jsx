@@ -99,7 +99,7 @@ function JobPosting() {
                 <RadioGroup
                   defaultValue="all"
                   className="flex flex-row space-x-1  font-Inter text-Body2 "
-                  onValueChange={getJob}
+                  onValueChange={getJobs}
                 >
                   <div className="flex items-center space-x-1">
                     <RadioGroupItem value="all" id="r1" />
