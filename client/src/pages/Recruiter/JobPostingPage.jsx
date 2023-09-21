@@ -49,7 +49,9 @@ function JobPosting() {
 
   const getJob = async (data) => {
     try {
-      const results = await axios.get(`http://localhost:4000/jobs/recruiter?filter=${data}`);
+      const results = await axios.get(
+        `http://localhost:4000/jobs/recruiter?filter=${data}`
+      );
       setJobs(results.data.data);
       console.log(results.data.data);
       console.log("Categories get successful");
@@ -58,9 +60,15 @@ function JobPosting() {
     }
   };
 
-  const onFilterChange = async(data) => {
+  const closedJob = async (data) => {
     console.log(data);
-    
+    try {
+      await axios.put(`http://localhost:4000/jobs/${data.job_id}`, data);
+
+      console.log(`Job_id ${data.job_id} have closed`);
+    } catch (error) {
+      console.error("Error: unable to load jobs", error);
+    }
   };
 
   useEffect(() => {
@@ -206,18 +214,55 @@ function JobPosting() {
                                       <div>SHOW</div>
                                     </div>
                                   </Link>
+
                                 </Button>
-                                <Button variant="primary" size="primary">
-                                  <div className="font-Inter text-Button text-White font-medium tracking-[1.25px] space-x-2">
-                                    <div className="space-x-1 flex flex-row">
-                                      <img
-                                        src={close_circle_line}
-                                        className="w-[24px] h-[24px] "
-                                      />
-                                      <div>CLOSE</div>
+                                
+                                {/* ทำให้คลิกแล้วปุ่มเปลี่ยนสีไม่เป็นคับ */}
+                                {job.closed_at !== "close" ? (
+                                  <Button
+                                    variant="primary"
+                                    size="primary"
+                                    onClick={() => {
+                                      closedJob({
+                                        job_id: job.job_id,
+                                        closed_at: "closed",
+                                      });
+                                    }}
+                                  >
+                                    <div className="font-Inter text-Button text-White font-medium tracking-[1.25px] space-x-2">
+                                      <div className="space-x-1 flex flex-row">
+                                        <img
+                                          src={close_circle_line}
+                                          className="w-[24px] h-[24px]"
+                                          alt="Close Icon"
+                                        />
+                                        <div>CLOSE</div>
+                                      </div>
                                     </div>
-                                  </div>
-                                </Button>
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    variant="primary"
+                                    size="primary"
+                                    onClick={() => {
+                                      closedJob({
+                                        job_id: job.job_id,
+                                        closed_at: null,
+                                      });
+                                    }}
+                                  >
+                                    <div className="font-Inter text-Button text-White font-medium tracking-[1.25px] space-x-2">
+                                      <div className="space-x-1 flex flex-row">
+                                        <img
+                                          src={close_circle_line}
+                                          className="w-[24px] h-[24px]"
+                                          alt="Close Icon"
+                                        />
+                                        <div>CLOSE</div>
+                                      </div>
+                                    </div>
+                                  </Button>
+                                )}
                               </div>
                               {/* <Button>
                                   <Link
