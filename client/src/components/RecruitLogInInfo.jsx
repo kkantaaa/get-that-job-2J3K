@@ -18,26 +18,41 @@ function RecruitLogInInfo() {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
-  const onSubmit = (data) => {
-    // compare password and confirmed password
+  const onSubmit = async (data) => {
     console.log(data);
-    if (data.companypassword !== data.confirmedPassword) {
-    // set an error if they don't match 
-    setError("confirmedPassword", {
-      type: "manual",
-      message: "The confirmed password does not match"
-    });
-    } else {
-    setRecruiterData({
-      company_name: data.companyname,
-      email: data.companyemail,
-      password: data.companypassword,
-    });
 
-    navigate("/recruiter/register2");
+    // Check if the email already exists
+    try {
+      const response = await fetch(`http://localhost:4000/recruiters?email=${data.email}`);
+      const result = await response.json();
+  
+      if (result.exists) {
+        setError("email", {
+          type: "manual",
+          message: "The email is already taken"
+        });
+      }
+  
+      // Check if passwords match
+      else if (data.companypassword !== data.confirmedPassword) {
+        setError("confirmedPassword", {
+          type: "manual",
+          message: "The confirmed password does not match"
+        });
+      } else {
+        setRecruiterData({
+          company_name: data.companyname,
+          email: data.companyemail,
+          password: data.companypassword,
+        });
+  
+        navigate("/recruiter/register2");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  }
-
+  };
+  
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
