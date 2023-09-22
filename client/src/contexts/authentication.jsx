@@ -20,22 +20,25 @@ export const AuthProvider = ({ children }) => {
         "http://localhost:4000/auth/user/login",
         data
       );
-      //ไม่พบ user แต่ไม่ return error กลับไป catch
 
       //validation login (temporary)
-      if (!result) {
-        throw new Error("Email is not found or password is invalid");
+      // if (!result) {
+      //   throw new Error("Email is not found or password is invalid");
+      // }
+      if (result.data.token) {
+        const token = result.data.token;
+        localStorage.setItem("token", token);
+        const userDataFromToken = jwtDecode(token);
+        console.log(`this is token : ${token}`);
+        setUserData({ ...userData, user: userDataFromToken });
+        navigate("/user/findthatjob");
       }
-
-      const token = result.data.token;
-      localStorage.setItem("token", token);
-      const userDataFromToken = jwtDecode(token);
-      console.log(`this is token : ${token}`);
-      setUserData({ ...userData, user: userDataFromToken });
-      navigate("/user/findthatjob");
+      if (result.data.message) {
+        setErrorState(result.data.message);
+      }
     } catch (error) {
-      setErrorState(error.message);
-      // setErrorState(error.response.data.message);
+      // setErrorState(error.message);
+      console.error("Error: unable to login the account", error);
     }
   };
 

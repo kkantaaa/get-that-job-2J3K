@@ -16,13 +16,19 @@ authRouter.post("/user/login", async (req, res) => {
   const user = result.rows[0];
 
   if (!user) {
+    return res.json({
+      message: "User is not found",
+    });
     return res.status(404).json({ message: "User is not found" });
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    return res.status(400).json({ message: "Password isvalid" });
+    return res.json({
+      message: "Password is invalid",
+    });
+    return res.status(400).json({ message: "Password is invalid" });
   }
 
   const token = jwt.sign(
