@@ -83,8 +83,9 @@ const JobList = (props) => {
                 </div>
                 <div className="flex flex-row">
                   <div className="pr-6 py-2">
-                    <button className="flex flex-row font-Inter">
+                    <button className="flex flex-row font-Inter hover:text-Pink">
                       {/* <img className="" src={followIcon} /> */}
+                      {/* ทำเงื่อนไขว่าถ้ามี user_id คู่กับ job_id ในตาราง application ให้ render ปุ่มสีชมพู */}
                       <div className="mx-2">
                         <svg
                           width="24"
@@ -111,7 +112,7 @@ const JobList = (props) => {
                   </div>
                   <div className="pl-6">
                     <button
-                      className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-Pink rounded-[16px] text-Gray text-center text-[14px] tracking-[1.25px] font-Inter"
+                      className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-Pink rounded-[16px] text-Gray text-center text-[14px] tracking-[1.25px] font-Inter hover:bg-Pink hover:text-White"
                       onClick={() => navigate(`/user/jobs/${job.job_id}`)}
                     >
                       SEE MORE

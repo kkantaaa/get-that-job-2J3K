@@ -59,7 +59,9 @@ export default function LoginForm() {
                 />
               )}
             />
-            <span>{errors.email && errors.email.message}</span>
+            <span className="text-red-500">
+              {errors.email && errors.email.message}
+            </span>
           </div>
           <div className="flex flex-col">
             <label className="w-fit text-[10px]" htmlFor="password">
@@ -82,7 +84,9 @@ export default function LoginForm() {
                 />
               )}
             />
-            <span>{errors.password && errors.password.message}</span>
+            <span className="text-red-500">
+              {errors.password && errors.password.message}
+            </span>
             {errorState && (
               <h1 className="text-red-500">Error: {errorState}</h1>
             )}
