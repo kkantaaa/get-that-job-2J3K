@@ -221,7 +221,7 @@ jobRouter.post("/", async (req, res) => {
 
   try {
     const job = {
-      recruiter_id: req.user.id,
+      recruiter_id: req.user.recruiter_id,
       job_title: req.body.jobTitle,
       category: req.body.jobCategory, //use category replace category_name
       type: req.body.jobType, //use type replace type_name
