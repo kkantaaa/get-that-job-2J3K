@@ -56,6 +56,7 @@ function App() {
 
               {/* keem and kaka's routes */}
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
+
               <Route
                 path="/recruiter/createjobposting"
                 element={<CreateJobPosting />}

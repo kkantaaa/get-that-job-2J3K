@@ -22,6 +22,7 @@ import account_circle_line_grey from "@/images/posting-job-page/account-circle-l
 import account_circle_line_pink from "@/images/posting-job-page/account-circle-line.png";
 import search_line from "@/images/posting-job-page/search-line.png";
 import close_circle_line from "@/images/posting-job-page/close-circle-line.png";
+import close_circle_line_gray from "@/images/posting-job-page/close-circle-line-gray.png";
 import jobCategoryIcon from "@/images/posting-job-page/building-3-line.png";
 import typeIcon from "@/images/posting-job-page/calendar-2-line.png";
 import dollarIcon from "@/images/posting-job-page/money-dollar-circle-line.png";
@@ -218,7 +219,7 @@ function JobPosting() {
                                 </Button>
 
                                 {/* ทำให้คลิกแล้วปุ่มเปลี่ยนสีไม่เป็นคับ */}
-                                {job.closed_at !== "close" ? (
+                                {!job.closed_at ? (
                                   <Button
                                     variant="primary"
                                     size="primary"
@@ -242,7 +243,8 @@ function JobPosting() {
                                   </Button>
                                 ) : (
                                   <Button
-                                    variant="primary"
+                                    disabled
+                                    variant="disabled"
                                     size="primary"
                                     onClick={() => {
                                       closedJob({
@@ -251,14 +253,14 @@ function JobPosting() {
                                       });
                                     }}
                                   >
-                                    <div className="font-Inter text-Button text-White font-medium tracking-[1.25px] space-x-2">
+                                    <div className="font-Inter text-Button text-LightGray font-medium tracking-[1.25px] space-x-2">
                                       <div className="space-x-1 flex flex-row">
                                         <img
-                                          src={close_circle_line}
+                                          src={close_circle_line_gray}
                                           className="w-[24px] h-[24px]"
                                           alt="Close Icon"
                                         />
-                                        <div>CLOSE</div>
+                                        <div>CLOSED</div>
                                       </div>
                                     </div>
                                   </Button>

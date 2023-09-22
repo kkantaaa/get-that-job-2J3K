@@ -125,7 +125,7 @@ function CreateJobPosting() {
         <RecruiterSidebar />
         <div className="bg-Background w-full flex justify-center">
           <div className="w-[960px] py-8 space-y-4">
-            <Button variant="ghost" size="primary">
+            <Button variant="bare" size="bare">
               <Link
                 to="/recruiter/jobpostings"
                 className="font-Inter text-Button text-Gray font-medium tracking-[1.25px] space-x-2"
