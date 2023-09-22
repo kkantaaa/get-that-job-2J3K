@@ -26,6 +26,7 @@ function RecruitLogInInfo() {
     try {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
       const result = response.data;
 =======
@@ -34,6 +35,9 @@ function RecruitLogInInfo() {
 >>>>>>> 065952c (fix: api endpoints)
 =======
       const response = await axios.get(`http://localhost:4000/recruiter?email=${data.email}`);
+=======
+      const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
+>>>>>>> fc75c96 (fix: change methods)
       const result = response.data;
 >>>>>>> 2093af7 (add: edit email validation)
   

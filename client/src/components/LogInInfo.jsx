@@ -32,6 +32,7 @@ function LogInInfo() {
       // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       const response = await axios.post(
         `http://localhost:4000/professional?email=${data.email}`);
       const result = response.data.data;
@@ -44,6 +45,9 @@ function LogInInfo() {
 >>>>>>> 065952c (fix: api endpoints)
 =======
       const response = await axios.get(
+=======
+      const response = await axios.post(
+>>>>>>> fc75c96 (fix: change methods)
         `http://localhost:4000/professional?email=${data.email}`);
       const result = response.data.data;
       console.log(result);
