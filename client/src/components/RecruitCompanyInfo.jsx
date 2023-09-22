@@ -55,7 +55,7 @@ function RecruitCompanyInfo() {
       };
 
       await RecruiterRegister(fetchData);
-      navigate("/recruiter/jobpostings");
+      navigate("/recruiter/login");
     } catch (error) {
       console.error("Error during registration", error);
     }
