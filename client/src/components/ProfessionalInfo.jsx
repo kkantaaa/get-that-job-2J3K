@@ -53,7 +53,7 @@ function ProfessionalInfo() {
       };
 
       await UserRegister(fetchData);
-      navigate("/user/findthatjob");
+      navigate("/user/login");
     } catch (error) {
       console.error("Error during registration", error);
     }
