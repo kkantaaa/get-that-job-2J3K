@@ -30,7 +30,11 @@ function LogInInfo() {
 
     try {
       // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
+<<<<<<< HEAD
       const response = await axios.post(
+=======
+      const response = await axios.get(
+>>>>>>> a157a79fca9cb32facb745da5a636f332a30bc53
         `http://localhost:4000/professional?email=${data.email}`);
       const result = response.data.data;
       console.log(result);
