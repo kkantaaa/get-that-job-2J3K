@@ -21,10 +21,10 @@ export const AuthProvider = ({ children }) => {
         data
       );
 
-      //validation login (temporary)
-      // if (!result) {
-      //   throw new Error("Email is not found or password is invalid");
-      // }
+      // validation login (temporary)
+      if (!result.data.token) {
+        throw new Error("Email is not found or password is invalid");
+      }
       if (result.data.token) {
         const token = result.data.token;
         localStorage.setItem("token", token);
@@ -33,12 +33,12 @@ export const AuthProvider = ({ children }) => {
         setUserData({ ...userData, user: userDataFromToken });
         navigate("/user/findthatjob");
       }
-      if (result.data.message) {
-        setErrorState(result.data.message);
-      }
+      // if (result.data.message) {
+      //   setErrorState(result.data.message);
+      // }
     } catch (error) {
-      // setErrorState(error.message);
-      console.error("Error: unable to login the account", error);
+      setErrorState(error.message);
+      // console.error("Error: unable to login the account", error);
     }
   };
 
