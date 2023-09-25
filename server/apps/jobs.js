@@ -47,7 +47,7 @@ jobRouter.get("/recruiter", async (req, res) => {
   INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
   WHERE jobs.recruiter_id = $1
     `;
-    const queryOrder = `ORDER BY closed_at DESC`
+    const queryOrder = `ORDER BY closed_at DESC`;
 
     const values = [recruiter_id];
 
@@ -61,10 +61,9 @@ jobRouter.get("/recruiter", async (req, res) => {
           AND application_status = 'inprogress'
       )`;
     }
-    
 
     query += queryOrder;
-    
+
     const result = await pool.query(query, values);
 
     return res.json({
@@ -149,16 +148,6 @@ jobRouter.get("/", async (req, res) => {
     let query = "";
     let values = [];
 
-    //queryเก่า ตาราง jobs_mock
-    // query = `SELECT *
-    // FROM jobs_mock
-    // WHERE (job_title ILIKE $1 OR $1 IS NULL)
-    // AND (job_category = $2 OR $2 IS NULL)
-    // AND (job_type_id = $3 OR $3 IS NULL)
-    // AND (salary_min >= $4 OR $4 IS NULL)
-    // AND (salary_max <= $5 OR $5 IS NULL)
-    // limit 20`;
-
     query = `SELECT *
     FROM jobs
     INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
@@ -169,6 +158,7 @@ jobRouter.get("/", async (req, res) => {
       AND (type_name = $3 OR $3 IS NULL)
       AND (salary_min >= $4 OR $4 IS NULL)
       AND (salary_max <= $5 OR $5 IS NULL)`;
+    // AND (closed_at IS NULL)`; //แสดงเฉาพะงานที่ยังไม่ close
     values = [keywords, category, type, min, max];
 
     const results = await pool.query(query, values);
@@ -350,26 +340,33 @@ jobRouter.put("/:job_id", async (req, res) => {
     };
     const job_id = req.params.job_id;
     console.log({ updatedJob: updatedJob });
-    const excludedKeys = ["job_id", "company_name","company_logo","category_name","type_name","total_candidates","candidates_on_track"];
+    const excludedKeys = [
+      "job_id",
+      "company_name",
+      "company_logo",
+      "category_name",
+      "type_name",
+      "total_candidates",
+      "candidates_on_track",
+    ];
 
     // Generate the SQL query dynamically
     const query = Object.keys(updatedJob)
       .filter((key) => !excludedKeys.includes(key)) // Exclude keys in excludedKeys array
       .map((key, index) => `${key} = $${index + 1}`)
       .join(", ");
-    console.log({query:query});
+    console.log({ query: query });
     const queryParams = Object.keys(updatedJob)
-    .filter((key) => !excludedKeys.includes(key))
-    .map((key) => updatedJob[key]);
-
+      .filter((key) => !excludedKeys.includes(key))
+      .map((key) => updatedJob[key]);
 
     console.log(queryParams);
     await pool.query(
-      `UPDATE jobs SET ${query} WHERE job_id = $${queryParams.length + 1}::integer`,
+      `UPDATE jobs SET ${query} WHERE job_id = $${
+        queryParams.length + 1
+      }::integer`,
       [...queryParams, job_id]
     );
-    
-    
 
     return res.json({
       message: `Job ${job_id} has been updated.`,
