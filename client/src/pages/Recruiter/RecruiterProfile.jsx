@@ -118,13 +118,31 @@ function CreateJobPosting() {
                   <div className="w-[300px] ">
                     <FormField
                       control={form.control}
-                      name="jobTitle"
+                      name="companyEmail"
                       defaultValue=""
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>JOB TITLE</FormLabel>
+                          <FormLabel>COMPANY EMAIL</FormLabel>
                           <FormControl>
-                            <Input placeholder="Software engineer" {...field} />
+                            <Input
+                              placeholder="GET_THAT_JOB@mail.com"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription></FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="companyName"
+                      defaultValue=""
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>COMPANY NAME</FormLabel>
+                          <FormControl>
+                            <Input placeholder="GET THAT JOB" {...field} />
                           </FormControl>
                           <FormDescription></FormDescription>
                           <FormMessage />
@@ -134,136 +152,14 @@ function CreateJobPosting() {
 
                     <FormField
                       control={form.control}
-                      name="jobCategory"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>JOB CATEGORY</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select or create a category" />
-                              </SelectTrigger>
-                            </FormControl>
-
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Categories</SelectLabel>
-                              </SelectGroup>
-                              {categories.map((category, key) => {
-                                return (
-                                  <SelectItem
-                                    value={category.category_name}
-                                    key={key}
-                                  >
-                                    {category.category_name}
-                                  </SelectItem>
-                                );
-                              })}
-                            </SelectContent>
-                          </Select>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="jobType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>TYPE</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a type" />
-                              </SelectTrigger>
-                            </FormControl>
-
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Types</SelectLabel>
-                              </SelectGroup>
-                              {types.map((type, key) => {
-                                return (
-                                  <SelectItem value={type.type_name} key={key}>
-                                    {type.type_name}
-                                  </SelectItem>
-                                );
-                              })}
-                            </SelectContent>
-                          </Select>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <label
-                      htmlFor="inputLabel"
-                      className="text-DarkGray text-Overline font-Inter font-normal tracking-[1.5px]"
-                    >
-                      SALARY RANGE
-                    </label>
-                    <div className=" w-[231px] flex flex-row items-center ">
-                      <FormField
-                        control={form.control}
-                        name="salaryRangeMin"
-                        defaultValue=""
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel></FormLabel>
-                            <FormControl>
-                              <Input placeholder="min" {...field}></Input>
-                            </FormControl>
-                            <FormDescription></FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <hr className="w-[11px] h-[2px] mx-2 rounded-[2px] bg-LightGray" />
-
-                      <FormField
-                        control={form.control}
-                        name="salaryRangeMax"
-                        defaultValue=""
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel></FormLabel>
-                            <FormControl>
-                              <Input placeholder="max" {...field} />
-                            </FormControl>
-                            <FormDescription></FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="ProfessionalInfo w-full p-2 ">
-                  <div className="text-Headline5 text-DarkGray font-Montserrat font-normal">
-                    Additional information
-                  </div>
-                  <div className="w-full ">
-                    <FormField
-                      control={form.control}
-                      name="aboutJobPosition"
+                      name="companyWebsite"
                       defaultValue=""
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>ABOUT THE JOB POSITION</FormLabel>
+                          <FormLabel>COMPANY WEBSITE</FormLabel>
                           <FormControl>
-                            <Textarea
-                              placeholder="Describe the main functions and characteristics of your job position"
+                            <Input
+                              placeholder="www.getthatjob.com"
                               {...field}
                             />
                           </FormControl>
@@ -275,33 +171,14 @@ function CreateJobPosting() {
 
                     <FormField
                       control={form.control}
-                      name="mandatoryRequirement"
+                      name="aboutCompany"
                       defaultValue=""
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>MANDATORY REQUIREMENTS</FormLabel>
+                          <FormLabel>ABOUT THE COMPANY</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="List each mandatory requirement in a new line"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="optionalRequirement"
-                      defaultValue=""
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>OPTIONAL REQUIREMENTS</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="List each optional requirement in a new line"
+                              placeholder="Describe the company"
                               {...field}
                             />
                           </FormControl>
@@ -315,11 +192,13 @@ function CreateJobPosting() {
 
                 <Button
                   type="submit"
-                  className="h-10 w-[153px]"
+                  className="h-10 w-fit"
                   variant="default"
                   size="secondary"
                 >
-                  POST THIS JOB
+                  <div className="font-Inter font-medium text-Button text-White tracking-[1.25px]">
+                    UPDATE PROFILE
+                  </div>
                 </Button>
               </form>
             </Form>
