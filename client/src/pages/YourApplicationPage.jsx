@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import YourApplicationSideBar from "@/components/ProfessionalSideBar/YourApplicationSideBar";
 import { useForm, Controller } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
@@ -41,7 +41,8 @@ const postJobSchema = yup.object({
 });
 
 function YourApplication() {
-  const [jobs, setJobs] = useState([]);
+  const [applications, setApplications] = useState([]);
+  const {user_id} = useParams();
 
   const formattedDate = (date) => {
     const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
@@ -49,12 +50,12 @@ function YourApplication() {
     return formatted;
   };
 
-  const getApplication = async (filter) => {
+  const getApplication = async () => {
     try {
       const results = await axios.get(
-        `http://localhost:4000/jobs/recruiter?filter=${filter}`
+        `http://localhost:4000/apply/user/${user_id}`
       );
-      setJobs(results.data.data);
+      setApplications(results.data.data);
       console.log(results.data.data);
       console.log("Loaded the applications successfully");
     } catch (error) {
@@ -62,20 +63,9 @@ function YourApplication() {
     }
   };
 
-  const closedJob = async (data) => {
-    console.log(data);
-    try {
-      await axios.put(`http://localhost:4000/jobs/${data.job_id}`, data);
-
-      console.log(`Job_id ${data.job_id} have closed`);
-    } catch (error) {
-      console.error("Error: unable to load jobs", error);
-    }
-  };
-
   useEffect(() => {
     getApplication();
-    console.log("My Application are", jobs);
+    console.log("My Application are", applications);
   }, []);
 
   return (
@@ -286,14 +276,6 @@ function YourApplication() {
                                   EDIT
                                 </Link>
                               </Button>
-                              {/* <Button>
-                                  <Link
-                                    to="/recruiter/jobpostings/edit"
-                                    className="font-Inter text-Button  font-medium tracking-[1px]"
-                                  >
-                                    Edit
-                                  </Link>
-                                </Button>*/}
                             </AccordionTrigger>
                           </div>
 
@@ -301,7 +283,7 @@ function YourApplication() {
                             <div className="space-y-4">
                               <div className="space-y-2">
                                 <label className="text-Subtitle1 text-DarkPink font-Montserrat font-normal">
-                                  About the job position
+                                  Professional Experience
                                 </label>
                                 <div className="text-DarkGray text-Body2 font-Inter font-normal">
                                   {job.about_job_position}
@@ -310,19 +292,10 @@ function YourApplication() {
 
                               <div className="space-y-2">
                                 <label className="text-Subtitle1 text-DarkPink font-Montserrat font-normal">
-                                  Mandatory Requirements
+                                Why are you interested in working at {job.company_name}
                                 </label>
                                 <div className="text-DarkGray text-Body2 font-Inter font-normal">
                                   {job.mandatory_requirement}
-                                </div>
-                              </div>
-
-                              <div className="space-y-2">
-                                <label className="text-Subtitle1 text-DarkPink font-Montserrat font-normal">
-                                  Optional Requirements
-                                </label>
-                                <div className="text-DarkGray text-Body2 font-Inter font-normal">
-                                  {job.optional_requirement}
                                 </div>
                               </div>
                             </div>

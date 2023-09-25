@@ -128,5 +128,46 @@ applyappliRouter.put("/recruiter/:application_id", async (req, res) => {
   }
 });
 
+// สำหรับ professional ใช้ เพื่อดู application ตัวเอง
+// เดี๋ยวถามพี่กัน 
+applyappliRouter.get("/user/:user_id", async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const status = req.query.status || null; // status query
+
+    let query = `
+    SELECT
+    application.job_id,
+    application.application_id,
+    application.user_id,
+    sent_date,
+    application_status,
+    professional_experience,
+    interested_reason,
+  FROM
+    application
+  INNER JOIN users ON application.user_id = users.user_id
+  WHERE
+    application.job_id = $1
+    `;
+
+    const queryParams = [user_id];
+
+    if (status !== null) {
+      query += " AND application_status = $2";
+      queryParams.push(status);
+    }
+
+    const result = await pool.query(query, queryParams);
+
+    return res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+  
+
 export default applyappliRouter;
 //("/apply/xxxxxxxxx", applyappliRouter);
