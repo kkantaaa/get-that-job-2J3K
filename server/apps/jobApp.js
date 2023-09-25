@@ -7,14 +7,13 @@ const jobAppRouter = Router();
 
 jobAppRouter.get("/", async (req, res) => {
   try {
-    const userid = `${req.query.userId}`; //ยังไม่สามารถ set ค่าให้ userid ผ่าน param ได้
-    // const userid = 26;
+    const userid = `${req.query.userId}`;
     if (!userid) {
       return res.status(401).json({
         message: "no userId please login",
       });
     }
-    console.log(`user id is ${userid}`); //ยังไม่สามารถส่งค่า userid ไป query ได้
+    // console.log(`user id is ${userid}`);
 
     let query = "";
     let values = [];

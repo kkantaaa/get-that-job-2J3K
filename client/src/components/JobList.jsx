@@ -22,9 +22,20 @@ const JobList = (props) => {
     const isApplied = appIds.includes(jobId); //set job_id
     if (isApplied) {
       return (
-        <button className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-BackgroundDark rounded-[16px] bg-BackgroundDark text-Gray text-center text-[14px] tracking-[1.25px] font-Inter">
-          APPLIED
-        </button>
+        <>
+          {/* Temporary */}
+          <p
+            className="hover:text-Pink"
+            onClick={() => navigate(`/user/jobs/${jobId}`)}
+          >
+            Link to detail
+          </p>
+          {/* Temporary */}
+
+          <button className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-BackgroundDark rounded-[16px] bg-BackgroundDark text-Gray text-center text-[14px] tracking-[1.25px] font-Inter">
+            APPLIED
+          </button>
+        </>
       );
     } else {
       return (
@@ -60,9 +71,8 @@ const JobList = (props) => {
   };
 
   const getJobApp = async (input) => {
-    // const userId = 26;
     const userId = input;
-    console.log(`user id is ${userId}`);
+    // console.log(`user id is ${userId}`);
     try {
       const params = new URLSearchParams();
       params.append("userId", userId);

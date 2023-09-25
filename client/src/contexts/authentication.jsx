@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
         data
       );
 
-      // validation login (temporary)
+      // validation login (Email & password)
       if (!result.data.token) {
         throw new Error("Email is not found or password is invalid");
       }
@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
         setUserData({ ...userData, user: userDataFromToken });
         navigate("/user/findthatjob");
       }
+      // validation login (Email || password)
       // if (result.data.message) {
       //   setErrorState(result.data.message);
       // }
