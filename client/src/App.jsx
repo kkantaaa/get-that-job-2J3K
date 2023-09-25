@@ -18,7 +18,11 @@ import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
+<<<<<<< HEAD
 import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
+=======
+import YourApplication from "./pages/YourApplicationPage.jsx";
+>>>>>>> fb72f32 (feat: style  basic UI)
 
 function App() {
   // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
@@ -54,6 +58,7 @@ function App() {
                 element={<ApplicationApplyPage />}
               />
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
+              <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
 
               <Route path="/user/profile" element={<ProfessionalProfile />} />
               {/* keem and kaka's routes */}
