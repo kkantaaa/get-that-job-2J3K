@@ -18,6 +18,7 @@ import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
+import YourApplication from "./pages/YourApplicationPage.jsx";
 
 function App() {
   // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
@@ -53,6 +54,7 @@ function App() {
                 element={<ApplicationApplyPage />}
               />
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
+              <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
 
               {/* keem and kaka's routes */}
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
