@@ -22,7 +22,11 @@ import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
 import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
 =======
 import YourApplication from "./pages/YourApplicationPage.jsx";
+<<<<<<< HEAD
 >>>>>>> fb72f32 (feat: style  basic UI)
+=======
+import TestYourApp from "./pages/TestYourApp.jsx";
+>>>>>>> 328b5d6 (feat: style the UI display on testing page)
 
 function App() {
   // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
@@ -59,6 +63,8 @@ function App() {
               />
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
               <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
+              {/* route for testing */}
+              <Route path="/user/test/myapp" element={<TestYourApp />} />
 
               <Route path="/user/profile" element={<ProfessionalProfile />} />
               {/* keem and kaka's routes */}
