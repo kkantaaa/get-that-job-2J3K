@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import YourApplicationSideBar from "@/components/ProfessionalSideBar/YourApplicationSideBar";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
@@ -27,10 +26,32 @@ import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 
 function TestYourApp() {
   const [isOpen, setIsOpen] = useState(false);
+  const [applications, setApplications] = useState([]);
+  const {user_id} = useParams();
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
   };
+
+  const getApplication = async () => {
+    try {
+      const results = await axios.get(
+        `http://localhost:4000/apply/user/${user_id}`
+      );
+      setApplications(results.data.data);
+      console.log(results.data.data);
+      console.log("Loaded the applications successfully");
+    } catch (error) {
+      console.error("Error: unable to load applications", error);
+    }
+  };
+
+  useEffect(() => {
+    getApplication();
+    console.log("My Application are", applications);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   return (
     <>
