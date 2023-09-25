@@ -36,10 +36,10 @@ authRouter.post("/user/login", async (req, res) => {
       user_id: user.user_id,
       email: user.email,
     },
-    process.env.SECRET_KEY,
-    {
-      expiresIn: "900000",
-    }
+    process.env.SECRET_KEY
+    // {
+    //   expiresIn: "900000",
+    // }
   );
 
   return res.json({
@@ -90,7 +90,5 @@ authRouter.post("/recruiter/login", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
 
 export default authRouter;

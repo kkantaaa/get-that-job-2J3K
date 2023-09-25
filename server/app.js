@@ -11,6 +11,7 @@ import typeRouter from "./apps/type.js";
 import applyappliRouter from "./apps/applyappli.js";
 import jobAppRouter from "./apps/jobApp.js";
 import profileRouter from "./apps/profile.js";
+import followingRouter from "./apps/following.js";
 
 async function init() {
   dotenv.config();
@@ -32,6 +33,7 @@ async function init() {
   app.use("/upload", uploadRouter);
   app.use("/jobs", jobRouter);
   app.use("/jobapp", jobAppRouter);
+  app.use("/following", followingRouter);
   app.use("/category", categoryRouter);
   app.use("/type", typeRouter);
   app.use("/apply", applyappliRouter);
