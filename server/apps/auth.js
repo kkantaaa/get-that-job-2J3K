@@ -86,4 +86,6 @@ authRouter.post("/recruiter/login", async (req, res) => {
   }
 });
 
+
+
 export default authRouter;
