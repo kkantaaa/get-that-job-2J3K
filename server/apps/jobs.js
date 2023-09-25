@@ -130,20 +130,20 @@ WHERE jobs.recruiter_id = $1 AND jobs.job_id = $2;
 jobRouter.get("/", async (req, res) => {
   try {
     //comment 5 อันนี้เพื่อ query ใน postman
-    // const keywords = `%${req.query.keywords}%` || null;
-    // const category = `${req.query.category}` || null;
-    // const type = `${req.query.type}` || null;
-    // const min = `${req.query.minSalary}` || null;
-    // const max = `${req.query.maxSalary}` || null;
+    const keywords = `%${req.query.keywords}%` || null;
+    const category = `${req.query.category}` || null;
+    const type = `${req.query.type}` || null;
+    const min = `${req.query.minSalary}` || null;
+    const max = `${req.query.maxSalary}` || null;
 
     // console.log(`category from server/apps/jobs : ${category}`);
 
     // uncomment 5 อันนี้เพื่อ query ใน postman
-    const type = req.query.type || null;
-    const keywords = req.query.keywords || null;
-    const category = req.query.category || null;
-    const min = req.query.minSalary || null;
-    const max = req.query.maxSalary || null;
+    // const type = req.query.type || null;
+    // const keywords = req.query.keywords || null;
+    // const category = req.query.category || null;
+    // const min = req.query.minSalary || null;
+    // const max = req.query.maxSalary || null;
 
     let query = "";
     let values = [];

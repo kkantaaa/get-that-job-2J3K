@@ -35,6 +35,6 @@ followingRouter.get("/job", async (req, res) => {
   }
 });
 
-followingRouter.get("/company", async (req, res) => {});
+// followingRouter.get("/company", async (req, res) => {});
 
 export default followingRouter;
