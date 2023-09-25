@@ -34,7 +34,7 @@ export default function YourApplicationSideBar() {
       <div className="w-full h-fit font-Inter text-DarkGray ">
         <button
           onClick={handleFindthatJobPage}
-          className="flex h-[48px] w-full py-[12px] px-[16px] bg-Background active:bg-Background focus:bg-Background "
+          className="flex h-[48px] w-full py-[12px] px-[16px]"
         >
           <div className=" h-fit mr-[8px]">
             <svg
@@ -63,7 +63,7 @@ export default function YourApplicationSideBar() {
 
         <button
           onClick={handleApplicationPage}
-          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background"
+          className="flex h-[48px] w-full py-[12px] px-[16px] bg-Background"
         >
           <div className=" h-fit mr-[8px]">
             <svg

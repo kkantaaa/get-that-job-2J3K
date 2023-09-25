@@ -63,7 +63,7 @@ export default function FindThatJobSideBar() {
 
         <button
           onClick={handleApplicationPage}
-          className="flex h-[48px] w-full py-[12px] px-[16px] active:bg-Background focus:bg-Background"
+          className="flex h-[48px] w-full py-[12px] px-[16px] bg-Backround active:bg-Background focus:bg-Background"
         >
           <div className=" h-fit mr-[8px]">
             <svg
