@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import YourApplicationSideBar from "@/components/ProfessionalSideBar/YourApplicationSideBar";
-import { useForm, Controller } from "react-hook-form";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -27,25 +24,19 @@ import category from "../images/ApllicationApplyPage/category.svg";
 import dollarIcon from "../images/ApllicationApplyPage/dollar.svg";
 import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 
-//const navigate = useNavigate();
-
-const postJobSchema = yup.object({
-  jobTitle: yup.string().required("JOB TITLE is a required field"),
-  jobCategory: yup.string().required(),
-  jobType: yup.string().required(),
-  salaryRangeMin: yup.number().positive().integer().required(),
-  salaryRangeMax: yup.number().positive().integer().required(),
-  aboutJobPosition: yup.string().required(),
-  mandatoryRequirement: yup.string().required(),
-  optionalRequirement: yup.string().required(),
-});
 
 function TestYourApp() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
-      <div className="flex flex-row bg-Background overflow-x-hidden">
+      <div className="flex flex-row bg-Background">
         <YourApplicationSideBar />
-        <div className="bg-Background w-full flex justify-center overflow-x-hidden">
+        <div className="w-full flex justify-center overflow-x-hidden">
           <div className="w-[960px] py-8 space-y-4">
             <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal">
               Your applications
@@ -100,29 +91,26 @@ function TestYourApp() {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  0 applications found
+                  0 Applications found
                 </div>
 
                 {/* ส่วน Accordian */}
-                <Accordion>
+                <Accordion type="single" collapsible>
                   <AccordionItem>
-                    <AccordionTrigger>
+                    <AccordionTrigger onClick={toggleAccordion}>
                       {/* Big container */}
                       <div className="flex flex-row py-[16px]">
                         {/* section 1*/}
                         <div className="font-Montserrat flex flex-row">
                           <div className="w-[59px] h-[59px] bg-Pink rounded-sm">
-                            {" "}
                             logo
                           </div>
                           <div className="flex flex-col ml-[16px] justify-center">
                             <p className="text-DarkGray text-[20px] text-normal leading-[28px] tracking-[0.15px]">
-                              {" "}
                               The Job Title
                             </p>
                             <p className="text-Gray text-[14px] font-normal leading-[18px] tracking-[0.1px]">
-                              {" "}
-                              Company Name{" "}
+                              Company Name
                             </p>
                           </div>
                         </div>
@@ -131,19 +119,18 @@ function TestYourApp() {
                       {/* Section 2 */}
                       <div className="flex flex-col font-Inter text-LightGray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
                         <div className="flex flex-row">
-                            <img src={category} />
-                            <p>Manufacturing</p>
-                            <img src={calendar} />
-                            <p>Full time</p>
+                          <img src={category} />
+                          <p className="ml-[4px]">Manufacturing</p>
+                          <img src={calendar} className="ml-[4px]" />
+                          <p className="ml-[4px]">Full time</p>
                         </div>
                         <div className="mt-[8px] flex flex-row">
-                            <img src={dollarIcon} />
-                            <p>2.0 k</p> -<p>2.5 k</p>
-                            <img src={timeIcon} />
-                            <p>Posted 2 days ago</p>
-                          </div>
+                          <img src={dollarIcon} />
+                          <p className="ml-[4px]">2.0 k</p> - <p>2.5 k</p>
+                          <img className="ml-[4px]" src={timeIcon} />
+                          <p className="ml-[4px]">Posted 2 days ago</p>
                         </div>
-
+                      </div>
 
                       {/* Section 3 */}
                       <div className="m-[4px] flex flex-row font-Inter text-Gray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
@@ -160,7 +147,19 @@ function TestYourApp() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent></AccordionContent>
+
+                    <AccordionContent className={isOpen ? "block" : "hidden"}>
+                    <div className="flex flex-col font-Inter text-[14px] font-normal leading-[20px] tracking-[0.25px]">
+                      <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
+                        Professional Experience
+                      </h1>
+                      <p className="w-[760px]">test</p>
+                      <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
+                        Why are you interested in working at The company name SA
+                      </h1>
+                      <p className="w-[760px]">test</p>
+                    </div>
+                    </AccordionContent>
                   </AccordionItem>
                 </Accordion>
               </div>
