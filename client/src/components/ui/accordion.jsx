@@ -16,6 +16,7 @@ const AccordionItem = React.forwardRef(({ className, ...props }, ref) => (
 AccordionItem.displayName = "AccordionItem";
 
 const AccordionTrigger = React.forwardRef(
+  // eslint-disable-next-line react/prop-types
   ({ className, children, ...props }, ref) => (
     <AccordionPrimitive.Header className="flex w-full">
       <AccordionPrimitive.Trigger
@@ -35,6 +36,7 @@ const AccordionTrigger = React.forwardRef(
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
 const AccordionContent = React.forwardRef(
+  // eslint-disable-next-line react/prop-types
   ({ className, children, ...props }, ref) => (
     <AccordionPrimitive.Content
       ref={ref}
