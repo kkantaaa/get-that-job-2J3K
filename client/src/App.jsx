@@ -18,6 +18,7 @@ import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
+import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
 
 function App() {
   // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
@@ -54,6 +55,7 @@ function App() {
               />
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
 
+              <Route path="/user/profile" element={<ProfessionalProfile />} />
               {/* keem and kaka's routes */}
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
 
