@@ -142,14 +142,10 @@ applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
     let query = `
     SELECT *
     FROM application
-<<<<<<< HEAD
     INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
     INNER JOIN jobs ON application.job_id = jobs.job_id
     WHERE application.user_id = $1
 
-=======
-    WHERE user_id = $1
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
   `;
   
     const queryParams = [user_id];
