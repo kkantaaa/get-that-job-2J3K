@@ -48,14 +48,12 @@ function ProfessionalProfile() {
   const getdatafromdatabase = async () => {
     const response = await axios.get(`http://localhost:4000/profile/propro`);
     const fetcheddata = response.data;
-    console.log(fetcheddata);
+    // console.log(fetcheddata); เหลืออันนี้ไว้ check
     setFormData({ ...initialFormData, ...fetcheddata });
-    console.log(formData);
   };
   //useEffect - don't add anthing in that [] na ka
   useEffect(() => {
     getdatafromdatabase();
-    console.log(formData);
   }, []);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>handlers
   //1. handleFileInputChange
