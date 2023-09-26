@@ -97,7 +97,6 @@ profileRouter.put("/propro", async (req, res) => {
       user_phone,
       user_title,
     } = req.body;
-console.log(req.body) 
     await pool.query(
       `
       UPDATE user_profiles
@@ -109,9 +108,9 @@ console.log(req.body)
         user_linkedin = $5,
         user_name = $6,
         user_phone = $7,
-        user_title = $8
-      WHERE user_id = $9
-      `,
+        user_title = $8,
+        edited_at = now()   
+      WHERE user_id = $9       `,
       [
         user_birthdate,
         user_cv,
