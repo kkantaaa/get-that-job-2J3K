@@ -23,21 +23,20 @@ import category from "../images/ApllicationApplyPage/category.svg";
 import dollarIcon from "../images/ApllicationApplyPage/dollar.svg";
 import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 
-
 function TestYourApp() {
-  const [isOpen, setIsOpen] = useState(false);
   const [applications, setApplications] = useState([]);
-  const {user_id} = useParams();
+  const [isOpenItem, setIsOpenItem] = useState(false);
 
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
+  const toggleAccordionItem = () => {
+    setIsOpenItem(!isOpenItem);
   };
 
   const getApplication = async () => {
     try {
       const results = await axios.get(
-        `http://localhost:4000/apply/user/${user_id}`
+        "http://localhost:4000/apply/myapplication"
       );
+      console.log("API Response:", results);
       setApplications(results.data.data);
       console.log(results.data.data);
       console.log("Loaded the applications successfully");
@@ -49,9 +48,8 @@ function TestYourApp() {
   useEffect(() => {
     getApplication();
     console.log("My Application are", applications);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <>
@@ -75,7 +73,7 @@ function TestYourApp() {
                 <RadioGroup
                   defaultValue="all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
-                  onValueChange="n/a"
+                  onValueChange={getApplication}
                 >
                   <div className="flex items-center space-x-1">
                     <RadioGroupItem value="all" id="r1" />
@@ -112,76 +110,97 @@ function TestYourApp() {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  0 Applications found
+                  {applications.length} Applications found
                 </div>
 
                 {/* ส่วน Accordian */}
                 <Accordion type="single" collapsible>
-                  <AccordionItem>
-                    <AccordionTrigger onClick={toggleAccordion}>
-                      {/* Big container */}
-                      <div className="flex flex-row py-[16px]">
-                        {/* section 1*/}
-                        <div className="font-Montserrat flex flex-row">
-                          <div className="w-[59px] h-[59px] bg-Pink rounded-sm">
-                            logo
+                  {applications.map((app, key) => {
+                    return (
+                      <AccordionItem value={app.application_id} key={key}>
+                        <AccordionTrigger onClick={toggleAccordionItem}>
+                          {/* Big container */}
+                          <div className="flex flex-row py-[16px]">
+                            {/* section 1*/}
+                            <div className="font-Montserrat flex flex-row">
+                              <div className="w-[59px] h-[59px] bg-Pink rounded-sm">
+                                logo {app.company_logo}
+                              </div>
+                              <div className="flex flex-col ml-[16px] justify-center">
+                                <p className="text-DarkGray text-[20px] text-normal leading-[28px] tracking-[0.15px]">
+                                  The Job Title {app.job_title}
+                                </p>
+                                <p className="text-Gray text-[14px] font-normal leading-[18px] tracking-[0.1px]">
+                                  Company Name {app.company_name}
+                                </p>
+                              </div>
+                            </div>
                           </div>
-                          <div className="flex flex-col ml-[16px] justify-center">
-                            <p className="text-DarkGray text-[20px] text-normal leading-[28px] tracking-[0.15px]">
-                              The Job Title
+
+                          {/* Section 2 */}
+                          <div className="flex flex-col font-Inter text-LightGray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+                            <div className="flex flex-row">
+                              <img src={category} />
+                              <p className="ml-[4px]">
+                                Manufacturing {app.category_name}
+                              </p>
+                              <img src={calendar} className="ml-[4px]" />
+                              <p className="ml-[4px]">
+                                Full time {app.type_name}
+                              </p>
+                            </div>
+                            <div className="mt-[8px] flex flex-row">
+                              <img src={dollarIcon} />
+                              <p className="ml-[4px]">
+                                2.0 k {app.salary_min}{" "}
+                              </p>{" "}
+                              - <p>2.5 {app.salary_max} k</p>
+                              <img className="ml-[4px]" src={timeIcon} />
+                              <p className="ml-[4px]">Posted 2 days ago</p>
+                            </div>
+                          </div>
+
+                          {/* Section 3 */}
+                          <div className="m-[4px] flex flex-row font-Inter text-Gray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+                            <div className="flex flex-col w-[80px] h-[47px] items-center">
+                              <img
+                                className="w-[15px] h-[15px]"
+                                src={letterIcon}
+                              />
+                              <p>sent 1 minute ago {app.sent_date}</p>
+                            </div>
+                            <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
+                              <img
+                                className="w-[15px] h-[15px]"
+                                src={pendingIcon}
+                              />
+                              <p>Waiting for review</p>
+                            </div>
+                          </div>
+                        </AccordionTrigger>
+
+                        <AccordionContent
+                          className={isOpen ? "block" : "hidden"}
+                        >
+                          <div className="flex flex-col font-Inter text-[14px] font-normal leading-[20px] tracking-[0.25px]">
+                            <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
+                              Professional Experience
+                            </h1>
+                            <p className="w-[760px]">
+                              test {app.professional_experience}{" "}
                             </p>
-                            <p className="text-Gray text-[14px] font-normal leading-[18px] tracking-[0.1px]">
-                              Company Name
+                            <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
+                              Why are you interested in working at The company
+                              name SA
+                            </h1>
+                            <p className="w-[760px]">
+                              test {app.interested_reason}
                             </p>
                           </div>
-                        </div>
-                      </div>
-
-                      {/* Section 2 */}
-                      <div className="flex flex-col font-Inter text-LightGray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
-                        <div className="flex flex-row">
-                          <img src={category} />
-                          <p className="ml-[4px]">Manufacturing</p>
-                          <img src={calendar} className="ml-[4px]" />
-                          <p className="ml-[4px]">Full time</p>
-                        </div>
-                        <div className="mt-[8px] flex flex-row">
-                          <img src={dollarIcon} />
-                          <p className="ml-[4px]">2.0 k</p> - <p>2.5 k</p>
-                          <img className="ml-[4px]" src={timeIcon} />
-                          <p className="ml-[4px]">Posted 2 days ago</p>
-                        </div>
-                      </div>
-
-                      {/* Section 3 */}
-                      <div className="m-[4px] flex flex-row font-Inter text-Gray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
-                        <div className="flex flex-col w-[80px] h-[47px] items-center">
-                          <img className="w-[15px] h-[15px]" src={letterIcon} />
-                          <p>sent 1 minute ago</p>
-                        </div>
-                        <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
-                          <img
-                            className="w-[15px] h-[15px]"
-                            src={pendingIcon}
-                          />
-                          <p>Waiting for review</p>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-
-                    <AccordionContent className={isOpen ? "block" : "hidden"}>
-                    <div className="flex flex-col font-Inter text-[14px] font-normal leading-[20px] tracking-[0.25px]">
-                      <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
-                        Professional Experience
-                      </h1>
-                      <p className="w-[760px]">test</p>
-                      <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
-                        Why are you interested in working at The company name SA
-                      </h1>
-                      <p className="w-[760px]">test</p>
-                    </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                        </AccordionContent>
+                      </AccordionItem>
+                    );
+                  })}
                 </Accordion>
               </div>
             </div>

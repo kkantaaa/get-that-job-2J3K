@@ -129,45 +129,40 @@ applyappliRouter.put("/recruiter/:application_id", async (req, res) => {
 });
 
 // สำหรับ professional ใช้ เพื่อดู application ตัวเอง
-// เดี๋ยวถามพี่กัน 
-applyappliRouter.get("/user/:user_id", async (req, res) => {
+// เดี๋ยวถามพี่กัน or กาก้า
+applyappliRouter.get("/myapplication", async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    const status = req.query.status || null; // status query
+    // const filter = req.query.filter || null; // status query
+
+    if (!user_id) {
+      return res.status(404).json({error: "Invalid user_id"});
+    }
 
     let query = `
-    SELECT
-    application.job_id,
-    application.application_id,
-    application.user_id,
-    sent_date,
-    application_status,
-    professional_experience,
-    interested_reason,
-  FROM
-    application
-  INNER JOIN users ON application.user_id = users.user_id
-  WHERE
-    application.job_id = $1
-    `;
-
+    SELECT *
+    FROM application
+    INNER JOIN user_id ON application.user_id = user_id.user_id
+    INNER JOIN job_id ON  application.job_id = job_id.job_id
+    WHERE application_id = $1
+  `;
+  
     const queryParams = [user_id];
-
-    if (status !== null) {
-      query += " AND application_status = $2";
-      queryParams.push(status);
-    }
 
     const result = await pool.query(query, queryParams);
 
     return res.json(result.rows);
+
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-  
+// // professional wants to decline the application
+// applyappliRouter.put("/:user_id", async (res, req)=>{
+
+// })  
 
 export default applyappliRouter;
 //("/apply/xxxxxxxxx", applyappliRouter);
