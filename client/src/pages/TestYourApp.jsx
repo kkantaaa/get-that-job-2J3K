@@ -176,7 +176,7 @@ function TestYourApp() {
                                 className="w-[15px] h-[15px]"
                                 src={pendingIcon}
                               />
-                              <p>Waiting for review</p>
+                              <p>{app.application_status}</p>
                             </div>
                           </div>
                         </AccordionTrigger>
