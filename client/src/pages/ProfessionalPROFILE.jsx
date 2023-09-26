@@ -50,7 +50,7 @@ function ProfessionalProfile() {
     setFormData({ ...initialFormData, ...fetcheddata });
     console.log(formData);
   };
-  //useEffect - don't add anthing in that []
+  //useEffect - don't add anthing in that [] na ka
   useEffect(() => {
     getdatafromdatabase();
     console.log(formData);
@@ -141,7 +141,12 @@ function ProfessionalProfile() {
     setFormData({ ...formData, user_name: e.target.value });
   }; // name
   const handlePhoneChange = (e) => {
-    setFormData({ ...formData, user_phone: e.target.value });
+    let inputValue = e.target.value;
+    const filteredlewkubPhoneNumber = inputValue.replace(/\D/g, "");
+    if (filteredlewkubPhoneNumber.length > 0) {
+      inputValue = `+${filteredlewkubPhoneNumber.slice(0, 11)}`;
+    }
+    setFormData({ ...formData, user_phone: inputValue });
   }; // phone
   const handleBirthdateChange = (e) => {
     setFormData({ ...formData, user_birthdate: e.target.value });
@@ -251,14 +256,12 @@ function ProfessionalProfile() {
                 <Controller
                   name="phone"
                   control={control}
-                  defaultValue="+66"
+                  defaultValue=""
                   render={({ field }) => (
                     <Textarea
                       {...field}
                       className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="tel"
-                      pattern="\+66\d{0,10}"
-                      maxLength="12"
                       value={formData.user_phone}
                       onChange={handlePhoneChange}
                       required
