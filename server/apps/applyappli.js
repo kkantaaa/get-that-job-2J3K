@@ -130,7 +130,7 @@ applyappliRouter.put("/recruiter/:application_id", async (req, res) => {
 
 // สำหรับ professional ใช้ เพื่อดู application ตัวเอง
 // เดี๋ยวถามพี่กัน or กาก้า
-applyappliRouter.get("/myapplication", async (req, res) => {
+applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
   try {
     const user_id = req.params.user_id;
     // const filter = req.query.filter || null; // status query
@@ -142,9 +142,7 @@ applyappliRouter.get("/myapplication", async (req, res) => {
     let query = `
     SELECT *
     FROM application
-    INNER JOIN user_id ON application.user_id = user_id.user_id
-    INNER JOIN job_id ON  application.job_id = job_id.job_id
-    WHERE application_id = $1
+    WHERE user_id = $1
   `;
   
     const queryParams = [user_id];

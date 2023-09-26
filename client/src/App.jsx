@@ -64,7 +64,7 @@ function App() {
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
               <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
               {/* route for testing */}
-              <Route path="/user/myapplication" element={<TestYourApp />} />
+              <Route path="/user/myapplication/:user_id" element={<TestYourApp />} />
 
               <Route path="/user/profile" element={<ProfessionalProfile />} />
               {/* keem and kaka's routes */}
