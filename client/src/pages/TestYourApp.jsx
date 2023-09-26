@@ -128,7 +128,7 @@ function TestYourApp() {
                               <div className="w-[59px] h-[59px] bg-Pink rounded-sm">
                                 logo {app.company_logo}
                               </div>
-                              <div className="flex flex-col ml-[16px] items-start">
+                              <div className="flex flex-col ml-[16px] items-start w-[180px] h-[64px]">
                                 <p className="text-DarkGray text-scale-[20px] text-normal leading-[28px] tracking-[0.15px]">
                                   {app.job_title}
                                 </p>
@@ -140,15 +140,15 @@ function TestYourApp() {
                           </div>
 
                           {/* Section 2 */}
-                          <div className="flex flex-col font-Inter text-LightGray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+                          <div className="w-[350px] h-[40px] flex flex-col font-Inter text-LightGray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
                             <div className="flex flex-row">
                               <img src={category} />
                               <p className="ml-[4px]">
-                                {app.category_name}
+                                {app.job_category_id}
                               </p>
                               <img src={calendar} className="ml-[4px]" />
                               <p className="ml-[4px]">
-                                {app.type_name}
+                                {app.job_type_id}
                               </p>
                             </div>
                             <div className="mt-[8px] flex flex-row">
@@ -163,7 +163,7 @@ function TestYourApp() {
                           </div>
 
                           {/* Section 3 */}
-                          <div className="m-[4px] flex flex-row font-Inter text-Gray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+                          <div className="w-[164px] h-[47px] m-[4px] flex flex-row font-Inter text-Gray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
                             <div className="flex flex-col w-[80px] h-[47px] items-center">
                               <img
                                 className="w-[15px] h-[15px]"
