@@ -13,28 +13,54 @@ const CompanyFollowingList = (props) => {
   const navigate = useNavigate();
   const { userData } = useAuth();
   const [companyJobs, setCompanyJobs] = useState([]);
+  const [companyJobsCount, setCompanyJobsCount] = useState([]);
   const companyFollow = props.data;
 
-  const getCompanyJobs = async (input) => {
-    const recruiterId = input;
+  //   const getCompanyJobs = async (input) => {
+  //     const recruiterId = input;
+  //     const userId = userData.user.user_id;
+  //     try {
+  //       const params = new URLSearchParams();
+  //       params.append("userId", userId);
+  //       params.append("recruiterId", recruiterId); //แบ่ง render ตาม recruiter_id
+  //       const results = await axios.get(
+  //         `http://localhost:4000/following/company`,
+  //         {
+  //           params,
+  //         }
+  //       );
+  //       setCompanyJobs(results.data.data);
+  //     } catch (error) {
+  //       console.error("Error: Failed to fetch company following", error);
+  //     }
+  //   };
+
+  const getCompanyJobsCount = async () => {
     const userId = userData.user.user_id;
     try {
       const params = new URLSearchParams();
       params.append("userId", userId);
-      params.append("recruiterId", recruiterId); //แบ่ง render ตาม recruiter_id
+      //   params.append("recruiterId", recruiterId); //แบ่ง render ตาม recruiter_id
       const results = await axios.get(
-        `http://localhost:4000/following/company`,
+        `http://localhost:4000/following/companycount`,
         {
           params,
         }
       );
-      setCompanyJobs(results.data.data);
+      //   console.log(results.data.data);
+      setCompanyJobsCount(results.data.data);
+
+      //   const count = companyJobsCount.filter((job) => job.recruiter_id == 83)[0]
+      //     .job_count;
+      //   console.log(count);
     } catch (error) {
       console.error("Error: Failed to fetch company following", error);
     }
   };
 
-  console.log(companyJobs);
+  useEffect(() => {
+    getCompanyJobsCount();
+  }, []);
 
   return (
     <div className="ml-[120px]">
@@ -45,11 +71,6 @@ const CompanyFollowingList = (props) => {
       </div>
       <div className="grid lg:grid-cols-2 gap-2 xl:grid-cols-3 2xl:grid-cols-4">
         {companyFollow.map((follow) => {
-          //   ลองใช้ function filter ดู //.filter((job) => (job.recruiter_id = 83))
-          getCompanyJobs(follow.recruiter_id); //ให้ render companyjobs ทุก company_follow แล้วติด loop
-          //   useEffect(() => {
-          //     getCompanyJobs(follow.recruiter_id);
-          //   }, [follow]);
           return (
             <div
               key={follow.recruiter_id}
@@ -68,8 +89,14 @@ const CompanyFollowingList = (props) => {
                         src={jobOpeningIcon}
                         alt="Job Opening Icon"
                       />
-
-                      <div>{companyJobs.length} jobs openings</div>
+                      <div>
+                        {
+                          companyJobsCount.filter(
+                            (job) => job.recruiter_id == follow.recruiter_id
+                          )[0].job_count
+                        }{" "}
+                        jobs openings
+                      </div>
                     </div>
                   </div>
                 </div>
