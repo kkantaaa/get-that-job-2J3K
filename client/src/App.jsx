@@ -18,15 +18,9 @@ import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
-<<<<<<< HEAD
 import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
-=======
 import YourApplication from "./pages/YourApplicationPage.jsx";
-<<<<<<< HEAD
->>>>>>> fb72f32 (feat: style  basic UI)
-=======
 import TestYourApp from "./pages/TestYourApp.jsx";
->>>>>>> 328b5d6 (feat: style the UI display on testing page)
 
 function App() {
   // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
