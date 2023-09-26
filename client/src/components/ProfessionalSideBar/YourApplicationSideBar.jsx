@@ -15,7 +15,7 @@ export default function YourApplicationSideBar() {
   };
 
   const handleApplicationPage = () => {
-    navigate("/user/:user_id/myapplication");
+    navigate("/user/myapplication");
   };
 
   const handleFollowingPage = () => {
