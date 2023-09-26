@@ -32,68 +32,55 @@ import money_dollar_circle_fill from "@/images/posting-job-page/money_dollar_cir
 //const navigate = useNavigate();
 
 const postJobSchema = yup.object({
-  jobTitle: yup.string().required("JOB TITLE is a required field"),
-  jobCategory: yup.string().required(),
-  jobType: yup.string().required(),
-  salaryRangeMin: yup.number().positive().integer().required(),
-  salaryRangeMax: yup
-    .number()
-    .positive("JOB TITLE is a required field")
-    .integer()
-    .required(),
-  aboutJobPosition: yup.string().required(),
-  mandatoryRequirement: yup.string().required(),
-  optionalRequirement: yup.string().required(),
+  companyEmail: yup.string().required("Company Email is a required field"),
+  companyName: yup.string().required("Company Name is a required field"),
+  companyWebsite: yup.string().required("Company Website is a required field"),
+  aboutCompany: yup
+    .string()
+    .required("Company Description is a required field"),
 });
 
-function CreateJobPosting() {
+function RecruiterProfile() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
   const navigate = useNavigate();
 
-  const [categories, setCategories] = useState([]);
-  const [types, setTypes] = useState([]);
+  const [profile, setProfile] = useState(null);
 
-  const getCategories = async () => {
+  const getProfile = async () => {
     try {
-      const results = await axios.get("http://localhost:4000/category");
-      //const categories = results.data.result;
-      setCategories(results.data.result);
-      console.log("Categories get successful");
+      const results = await axios.get(
+        "http://localhost:4000/profile/recruiter"
+      );
+      setProfile(results.data.data[0]);
+      console.log(results.data.data[0]);
+      console.log("Profile get successful");
     } catch (error) {
-      console.error("Error: unable to load categories", error);
-    }
-  };
-
-  const getTypes = async () => {
-    try {
-      const results = await axios.get("http://localhost:4000/type");
-      //const categories = results.data.result;
-      setTypes(results.data.result);
-      console.log("Types get successful");
-    } catch (error) {
-      console.error("Error: unable to load Types", error);
+      console.error("Error: unable to load Profile", error);
     }
   };
 
   useEffect(() => {
-    getCategories();
-    getTypes();
-    console.log("categories are", categories);
-    console.log("Types are", types);
+    getProfile();
+    console.log("profile is", profile);
   }, []);
+
+  if (profile === null) {
+    // Render a loading state or a spinner while profile is being fetched
+    return <p>Loading profile...</p>;
+  }
 
   const onSubmit = async (data) => {
     try {
       try {
         console.log(data);
-        await axios.post("http://localhost:4000/jobs", data);
-        console.log("Posting successful");
+        // await axios.put("http://localhost:4000/jobs", data);
+        console.log("Edit profile successful");
       } catch (error) {
-        console.error("Error: unable to post", error);
+        console.error("Error: unable to edit", error);
       }
       //navigate("/recruiter/jobpostings");
     } catch (error) {
-      console.error("Error during posting job", error);
+      console.error("Error during edit profile", error);
     }
   };
 
@@ -103,23 +90,20 @@ function CreateJobPosting() {
         <RecruiterSidebar />
         <div className="bg-Background w-full flex justify-center">
           <div className="w-[960px] py-8 space-y-4">
-            <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal">
+            <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal tracking-[0.25px]">
               Profile
             </div>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
+                className="space-y-2"
               >
                 <div className="PersonalInfo w-full p-2 ">
-                  <div className="text-Headline5 text-DarkGray font-Montserrat font-normal">
-                    Main information
-                  </div>
-                  <div className="w-[300px] ">
+                  <div className="w-[300px] space-y-2">
                     <FormField
                       control={form.control}
                       name="companyEmail"
-                      defaultValue=""
+                      defaultValue={profile.email}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>COMPANY EMAIL</FormLabel>
@@ -137,7 +121,7 @@ function CreateJobPosting() {
                     <FormField
                       control={form.control}
                       name="companyName"
-                      defaultValue=""
+                      defaultValue={profile.company_name}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>COMPANY NAME</FormLabel>
@@ -153,7 +137,7 @@ function CreateJobPosting() {
                     <FormField
                       control={form.control}
                       name="companyWebsite"
-                      defaultValue=""
+                      defaultValue={profile.company_website}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>COMPANY WEBSITE</FormLabel>
@@ -172,13 +156,13 @@ function CreateJobPosting() {
                     <FormField
                       control={form.control}
                       name="aboutCompany"
-                      defaultValue=""
+                      defaultValue={profile.about_company}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>ABOUT THE COMPANY</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="Describe the company"
+                              placeholder="Descrip the company"
                               {...field}
                             />
                           </FormControl>
@@ -208,4 +192,4 @@ function CreateJobPosting() {
     </>
   );
 }
-export default CreateJobPosting;
+export default RecruiterProfile;
