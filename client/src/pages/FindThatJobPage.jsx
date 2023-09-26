@@ -30,10 +30,10 @@ function FindThatJobPage() {
       <FindThatJobSideBar />
       <div className="flex flex-col w-full ml-[240px] mb-12 bg-Background">
         <div className="w-full pt-8 flex flex-col justify-start items-start">
-          <div className="mb-[16px] ml-[96px] text-DarkGray font-Montserrat text-Headline3 font-light">
+          <div className="mb-[16px] ml-[120px] text-DarkGray font-Montserrat text-Headline3 font-light">
             Find that job
           </div>
-          <div className="flex flex-col ml-[96px]">
+          <div className="flex flex-col ml-[120px]">
             <label
               className="w-fit text-[10px] text-LightGray"
               htmlFor="search-box"
@@ -54,7 +54,7 @@ function FindThatJobPage() {
               <img className="absolute top-2 left-1.5" src={searchIcon} />
             </div>
           </div>
-          <div className="flex flew-row ml-[96px]">
+          <div className="flex flew-row ml-[120px]">
             <div className="py-2 pr-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
@@ -121,7 +121,7 @@ function FindThatJobPage() {
             </div>
           </div>
         </div>
-        <div className="mx-12">
+        <div className="mx-[72px]">
           <JobList
             text={text}
             category={selectedCategory}

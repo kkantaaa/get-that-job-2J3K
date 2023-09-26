@@ -83,7 +83,7 @@ const JobList = (props) => {
     } else {
       return (
         <button
-          className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-Pink rounded-[16px] bg-White text-Gray text-center text-[14px] tracking-[1.25px] font-Inter hover:bg-Pink hover:text-White"
+          className="mr-2 h-[40px] px-[8px] py-[8px] border-2 border-Pink rounded-[16px] bg-White text-Gray text-center text-[14px] tracking-[1.25px] font-Inter hover:bg-Pink hover:text-White"
           onClick={() => navigate(`/user/jobs/${jobId}`)}
         >
           SEE MORE
@@ -116,20 +116,20 @@ const JobList = (props) => {
     const isFollowing = jobFollowingIds.includes(jobId);
     if (isFollowing) {
       return (
-        <button className="flex flex-row font-Inter">
+        <button className="flex flex-row">
           <div className="mx-1">
             <img src={pinkFollowIcon} />
           </div>
-          <div className="pt-2">FOLLOWING</div>
+          <div className="pt-2 font-Inter">FOLLOWING</div>
         </button>
       );
     } else {
       return (
-        <button className="flex flex-row font-Inter pr-4">
+        <button className="flex flex-row pr-4">
           <div className="mx-0">
             <img src={followIcon} />
           </div>
-          <div className="pt-2">FOLLOW</div>
+          <div className="pt-2 font-Inter">FOLLOW</div>
         </button>
       );
     }
@@ -187,10 +187,12 @@ const JobList = (props) => {
                   </div>
                 </div>
                 <div className="flex flex-row">
-                  <div className="hover:text-Pink">
+                  <div className="text-Gray text-[14px] hover:text-Pink">
                     {followButton(job.job_id)}
                   </div>
-                  <div className="pl-4">{seemoreButton(job.job_id)}</div>
+                  <div className="pl-4 text-[14px]">
+                    {seemoreButton(job.job_id)}
+                  </div>
                 </div>
               </div>
             </div>
