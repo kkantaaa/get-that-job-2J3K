@@ -63,10 +63,12 @@ function ShowJobPosingPage() {
     }
   };
 
-  const getCandidates = async () => {
+  const getCandidates = async (status) => {
+    
     try {
+      console.log(status);
       const candidatesResults = await axios.get(
-        `http://localhost:4000/apply/recruiter/${param.jobId}`
+        `http://localhost:4000/apply/recruiter/${param.jobId}?status=${status}`
       );
       setCandidates(candidatesResults.data);
       console.log("Candidates get successful");
@@ -124,6 +126,17 @@ function ShowJobPosingPage() {
       await axios.put(`http://localhost:4000/jobs/${data.job_id}`, data);
 
       console.log(`Job_id ${data.job_id} have closed`);
+    } catch (error) {
+      console.error("Error: unable to load jobs", error);
+    }
+  };
+
+  const changeStatus = async (data) => {
+    console.log(data);
+    try {
+      await axios.put(`http://localhost:4000/apply/recruiter/${data.application_id}`, data);
+
+      console.log(`Application_id ${data.application_id} have been updated`);
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
@@ -361,7 +374,7 @@ function ShowJobPosingPage() {
                 <RadioGroup
                   defaultValue="all"
                   className="flex flex-row space-x-1  font-Inter text-Body2 "
-                  onValueChange={onFilterChange}
+                  onValueChange={(value) => getCandidates(value)}
                 >
                   <div className="flex items-center space-x-1">
                     <RadioGroupItem value="all" id="r1" />
@@ -376,7 +389,7 @@ function ShowJobPosingPage() {
                     </Label>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <RadioGroupItem value="inProgress" id="r3" />
+                    <RadioGroupItem value="inprogress" id="r3" />
                     <Label htmlFor="r3" className="text-Gray font-normal">
                       In progress
                     </Label>
@@ -458,14 +471,46 @@ function ShowJobPosingPage() {
                                   Waiting for review
                                 </div>
                               </div>
+                              {candidate.application_status === "waiting" ? (
+                                <Button
+                                  variant="secondary"
+                                  size="secondary"
+                                  className="font-Inter text-Button font-medium tracking-[1px]"
+                                  onClick={() => {
+                                    changeStatus({
+                                      application_id: candidate.application_id,
+                                      application_status: "inprogress",
+                                    });
+                                  }}
+                                >
+                                  MARK AS STARTED
+                                </Button>
+                              ) : candidate.application_status ===
+                                "inprogress" ? (
+                                <Button
+                                  variant="secondary"
+                                  size="secondary"
+                                  className="font-Inter text-Button font-medium tracking-[1px]"
+                                  onClick={() => {
+                                    changeStatus({
+                                      application_id: candidate.application_id,
+                                      application_status: "finished",
+                                    });
+                                  }}
+                                >
+                                  MARK AS FINISHED
+                                </Button>
+                              ) : (
+                                <Button
+                                  disabled
+                                  variant="disabled"
+                                  size="secondary"
+                                  className="font-Inter text-Button font-medium tracking-[1px]"
+                                >
+                                  FINISHED
+                                </Button>
+                              )}
 
-                              <Button
-                                variant="secondary"
-                                size="secondary"
-                                className="font-Inter text-Button  font-medium tracking-[1px]"
-                              >
-                                MARK AS STARTED
-                              </Button>
                               {/* <Button>
                                   <Link
                                     to="/recruiter/jobpostings/edit"
