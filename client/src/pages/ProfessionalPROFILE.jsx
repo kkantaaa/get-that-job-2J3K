@@ -40,6 +40,8 @@ function ProfessionalProfile() {
   };
   const user_birthdate = formData.user_birthdate;
   const formattedBirthdate = formatDate(user_birthdate);
+  //
+  const today = new Date().toISOString().split("T")[0];
   //init
   const { control } = useForm();
   //fetch data from database ka
@@ -294,6 +296,8 @@ function ProfessionalProfile() {
                       onChange={handleBirthdateChange}
                       value={formattedBirthdate}
                       placeholder="YYYY-MM-DD"
+                      min="1923-01-01"
+                      max={today}
                     />
                   )}
                 />
