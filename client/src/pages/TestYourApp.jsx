@@ -24,7 +24,6 @@ import { useParams } from "react-router-dom";
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-  // const [isOpenItem, setIsOpenItem] = useState(false);
   const {user_id} = useParams();
 
   const toggleAccordionItem = (app) => {
@@ -33,31 +32,22 @@ function TestYourApp() {
   };
 
   const getApplication = async () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     try {
       const results = await axios.get(
         `http://localhost:4000/apply/myapplication/${user_id}`
       ); 
-      console.log("API Response:", results);
-
-      const applicationsWithOpen = results.data.data.map(app => ({ ...app, isOpen: false }));
-      setApplications(applicationsWithOpen);
-      console.log(applicationsWithOpen);
-
-      console.log("Loaded the applications successfully");
+      setApplications(results.data);
     } catch (error) {
       console.error("Error: unable to load applications", error);
     }
   };
 
   useEffect(() => {
-    async function fetchData() {
-      await getApplication();
-      console.log("My Applications are", applications);
-    }
-  
-    fetchData();
-  }, []);
-  
+    getApplication();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [applications]);
+
   return (
     <>
       <div className="flex flex-row bg-Background">
@@ -117,12 +107,12 @@ function TestYourApp() {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  0 Applications found
+                  {applications.length} Applications found
                 </div>
 
                 {/* ส่วน Accordian */}
                 <Accordion type="single" collapsible>
-                  {applications.map((app, key) => {
+                  {applications?.map((app, key) => {
                     return (
                       <AccordionItem value={app.application_id} key={key}>
                         <AccordionTrigger onClick={() => toggleAccordionItem(app)}>
@@ -135,7 +125,7 @@ function TestYourApp() {
                               </div>
                               <div className="flex flex-col ml-[16px] justify-center">
                                 <p className="text-DarkGray text-[20px] text-normal leading-[28px] tracking-[0.15px]">
-                                  The Job Title {app.job_title}
+                                  {app.job_title}
                                 </p>
                                 <p className="text-Gray text-[14px] font-normal leading-[18px] tracking-[0.1px]">
                                   Company Name {app.company_name}
@@ -149,19 +139,19 @@ function TestYourApp() {
                             <div className="flex flex-row">
                               <img src={category} />
                               <p className="ml-[4px]">
-                                Manufacturing {app.category_name}
+                                {app.category_name}
                               </p>
                               <img src={calendar} className="ml-[4px]" />
                               <p className="ml-[4px]">
-                                Full time {app.type_name}
+                                {app.type_name}
                               </p>
                             </div>
                             <div className="mt-[8px] flex flex-row">
                               <img src={dollarIcon} />
                               <p className="ml-[4px]">
-                                2.0 k {app.salary_min}{" "}
-                              </p>{" "}
-                              - <p>2.5 {app.salary_max} k</p>
+                                {app.salary_min} k
+                              </p>
+                              - <p>{app.salary_max} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">Posted 2 days ago</p>
                             </div>
