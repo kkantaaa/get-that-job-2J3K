@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import YourApplicationSideBar from "@/components/ProfessionalSideBar/YourApplicationSideBar";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -22,23 +20,29 @@ import calendar from "../images/ApllicationApplyPage/calendar-lightgray.svg";
 import category from "../images/ApllicationApplyPage/category.svg";
 import dollarIcon from "../images/ApllicationApplyPage/dollar.svg";
 import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
+import { useParams } from "react-router-dom";
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-  const [isOpenItem, setIsOpenItem] = useState(false);
+  // const [isOpenItem, setIsOpenItem] = useState(false);
+  const {user_id} = useParams();
 
-  const toggleAccordionItem = () => {
-    setIsOpenItem(!isOpenItem);
+  const toggleAccordionItem = (app) => {
+    app.isOpen = !app.isOpen;
+    setApplications([...applications])
   };
 
   const getApplication = async () => {
     try {
       const results = await axios.get(
-        "http://localhost:4000/apply/myapplication"
-      );
+        `http://localhost:4000/apply/myapplication/${user_id}`
+      ); 
       console.log("API Response:", results);
-      setApplications(results.data.data);
-      console.log(results.data.data);
+
+      const applicationsWithOpen = results.data.data.map(app => ({ ...app, isOpen: false }));
+      setApplications(applicationsWithOpen);
+      console.log(applicationsWithOpen);
+
       console.log("Loaded the applications successfully");
     } catch (error) {
       console.error("Error: unable to load applications", error);
@@ -46,11 +50,14 @@ function TestYourApp() {
   };
 
   useEffect(() => {
-    getApplication();
-    console.log("My Application are", applications);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    async function fetchData() {
+      await getApplication();
+      console.log("My Applications are", applications);
+    }
+  
+    fetchData();
   }, []);
-
+  
   return (
     <>
       <div className="flex flex-row bg-Background">
@@ -110,7 +117,7 @@ function TestYourApp() {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  {applications.length} Applications found
+                  0 Applications found
                 </div>
 
                 {/* ส่วน Accordian */}
@@ -118,7 +125,7 @@ function TestYourApp() {
                   {applications.map((app, key) => {
                     return (
                       <AccordionItem value={app.application_id} key={key}>
-                        <AccordionTrigger onClick={toggleAccordionItem}>
+                        <AccordionTrigger onClick={() => toggleAccordionItem(app)}>
                           {/* Big container */}
                           <div className="flex flex-row py-[16px]">
                             {/* section 1*/}
@@ -180,7 +187,7 @@ function TestYourApp() {
                         </AccordionTrigger>
 
                         <AccordionContent
-                          className={isOpen ? "block" : "hidden"}
+                          className={app.isOpen ? "block" : "hidden"}
                         >
                           <div className="flex flex-col font-Inter text-[14px] font-normal leading-[20px] tracking-[0.25px]">
                             <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
