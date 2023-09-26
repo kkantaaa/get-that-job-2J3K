@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
-// import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,24 +29,14 @@ function ProfessionalProfile() {
   // states
   const [formData, setFormData] = useState(initialFormData);
   const [fileSelected, setFileSelected] = useState(false);
-  //Schema
-  // const profileSchema = z.object({
-  //   email: z.string().email(),
-  //   user_name: z.string(),
-  //   user_phone: z.string().regex(/^\+66\d{0,}$/),
-  //   user_birthdate: z.date().or(z.string()),
-  //   user_linkedin: z.string().url(),
-  //   user_title: z.string(),
-  //   user_experience: z.string(),
-  //   user_education: z.string(),
-  // });
-  // // Function to format the date as MM/DD/YYYY
+  //
+  // Function to format the date as year-month-day or else it won't work kub
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
+    return `${year}-${month}-${day}`;
   };
   const user_birthdate = formData.user_birthdate;
   const formattedBirthdate = formatDate(user_birthdate);
@@ -293,14 +282,15 @@ function ProfessionalProfile() {
                 <Controller
                   name="birthdate"
                   control={control}
-                  defaultValue={formattedBirthdate}
+                  defaultValue={""}
                   render={({ field }) => (
                     <input
                       {...field}
                       className="px-2 w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="date"
                       onChange={handleBirthdateChange}
-                      placeholder="MM/DD/YYYY"
+                      value={formattedBirthdate}
+                      placeholder="YYYY-MM-DD"
                     />
                   )}
                 />
