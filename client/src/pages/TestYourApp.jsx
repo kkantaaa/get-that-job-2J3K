@@ -24,10 +24,6 @@ import { useParams } from "react-router-dom";
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-<<<<<<< HEAD
-=======
-  // const [isOpenItem, setIsOpenItem] = useState(false);
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
   const {user_id} = useParams();
 
   const toggleAccordionItem = (app) => {
@@ -36,46 +32,21 @@ function TestYourApp() {
   };
 
   const getApplication = async () => {
-<<<<<<< HEAD
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-=======
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
     try {
       const results = await axios.get(
         `http://localhost:4000/apply/myapplication/${user_id}`
       ); 
-<<<<<<< HEAD
       setApplications(results.data);
-=======
-      console.log("API Response:", results);
-
-      const applicationsWithOpen = results.data.data.map(app => ({ ...app, isOpen: false }));
-      setApplications(applicationsWithOpen);
-      console.log(applicationsWithOpen);
-
-      console.log("Loaded the applications successfully");
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
     } catch (error) {
       console.error("Error: unable to load applications", error);
     }
   };
 
   useEffect(() => {
-<<<<<<< HEAD
     getApplication();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applications]);
 
-=======
-    async function fetchData() {
-      await getApplication();
-      console.log("My Applications are", applications);
-    }
-  
-    fetchData();
-  }, []);
-  
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
   return (
     <>
       <div className="flex flex-row bg-Background">
@@ -135,20 +106,12 @@ function TestYourApp() {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-<<<<<<< HEAD
                   {applications.length} Applications found
-=======
-                  0 Applications found
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
                 </div>
 
                 {/* ส่วน Accordian */}
                 <Accordion type="single" collapsible>
-<<<<<<< HEAD
                   {applications?.map((app, key) => {
-=======
-                  {applications.map((app, key) => {
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
                     return (
                       <AccordionItem value={app.application_id} key={key}>
                         <AccordionTrigger onClick={() => toggleAccordionItem(app)}>
@@ -161,11 +124,7 @@ function TestYourApp() {
                               </div>
                               <div className="flex flex-col ml-[16px] justify-center">
                                 <p className="text-DarkGray text-[20px] text-normal leading-[28px] tracking-[0.15px]">
-<<<<<<< HEAD
                                   {app.job_title}
-=======
-                                  The Job Title {app.job_title}
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
                                 </p>
                                 <p className="text-Gray text-[14px] font-normal leading-[18px] tracking-[0.1px]">
                                   Company Name {app.company_name}
@@ -179,33 +138,19 @@ function TestYourApp() {
                             <div className="flex flex-row">
                               <img src={category} />
                               <p className="ml-[4px]">
-<<<<<<< HEAD
                                 {app.category_name}
                               </p>
                               <img src={calendar} className="ml-[4px]" />
                               <p className="ml-[4px]">
                                 {app.type_name}
-=======
-                                Manufacturing {app.category_name}
-                              </p>
-                              <img src={calendar} className="ml-[4px]" />
-                              <p className="ml-[4px]">
-                                Full time {app.type_name}
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
                               </p>
                             </div>
                             <div className="mt-[8px] flex flex-row">
                               <img src={dollarIcon} />
                               <p className="ml-[4px]">
-<<<<<<< HEAD
                                 {app.salary_min} k
                               </p>
                               - <p>{app.salary_max} k</p>
-=======
-                                2.0 k {app.salary_min}{" "}
-                              </p>{" "}
-                              - <p>2.5 {app.salary_max} k</p>
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">Posted 2 days ago</p>
                             </div>
