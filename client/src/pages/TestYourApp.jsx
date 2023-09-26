@@ -21,6 +21,9 @@ import category from "../images/ApllicationApplyPage/category.svg";
 import dollarIcon from "../images/ApllicationApplyPage/dollar.svg";
 import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 import { useParams } from "react-router-dom";
+import moment from "moment";
+
+moment().format(); 
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
@@ -46,6 +49,9 @@ function TestYourApp() {
     getApplication();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applications]);
+
+  const jobCreatedDate = moment(applications.opened_at).fromNow();
+  const ApplicationSentDate = moment(applications.sent_date).fromNow();
 
   return (
     <>
@@ -123,7 +129,7 @@ function TestYourApp() {
                                 logo {app.company_logo}
                               </div>
                               <div className="flex flex-col ml-[16px] justify-center">
-                                <p className="text-DarkGray text-[20px] text-normal leading-[28px] tracking-[0.15px]">
+                                <p className="text-DarkGray text-scale-[20px] text-normal leading-[28px] tracking-[0.15px]">
                                   {app.job_title}
                                 </p>
                                 <p className="text-Gray text-[14px] font-normal leading-[18px] tracking-[0.1px]">
@@ -152,7 +158,7 @@ function TestYourApp() {
                               </p>
                               - <p>{app.salary_max} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
-                              <p className="ml-[4px]">Posted 2 days ago</p>
+                              <p className="ml-[4px]">Posted {jobCreatedDate}</p>
                             </div>
                           </div>
 
@@ -163,7 +169,7 @@ function TestYourApp() {
                                 className="w-[15px] h-[15px]"
                                 src={letterIcon}
                               />
-                              <p>sent 1 minute ago {app.sent_date}</p>
+                              <p>sent {ApplicationSentDate}</p>
                             </div>
                             <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
                               <img

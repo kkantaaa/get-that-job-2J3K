@@ -18,10 +18,7 @@ import JobDetail from "./pages/JobDetail.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
-<<<<<<< HEAD
 import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
-=======
->>>>>>> 12b10248e356b0ab6012636e5ce7bc9550c1f77c
 import YourApplication from "./pages/YourApplicationPage.jsx";
 import TestYourApp from "./pages/TestYourApp.jsx";
 
