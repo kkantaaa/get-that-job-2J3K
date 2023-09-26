@@ -128,5 +128,41 @@ applyappliRouter.put("/recruiter/:application_id", async (req, res) => {
   }
 });
 
+// สำหรับ professional ใช้ เพื่อดู application ตัวเอง
+// เดี๋ยวถามพี่กัน or กาก้า
+applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    // const filter = req.query.filter || null; // status query
+
+    if (!user_id) {
+      return res.status(404).json({error: "Invalid user_id"});
+    }
+
+    let query = `
+    SELECT *
+    FROM application
+    INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
+    INNER JOIN jobs ON application.job_id = jobs.job_id
+    WHERE application.user_id = $1
+  `;
+  
+    const queryParams = [user_id];
+
+    const result = await pool.query(query, queryParams);
+
+    return res.json(result.rows);
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// // professional wants to decline the application
+// applyappliRouter.put("/:user_id", async (res, req)=>{
+
+// })  
+
 export default applyappliRouter;
 //("/apply/xxxxxxxxx", applyappliRouter);

@@ -6,16 +6,18 @@ import { cn } from "@/lib/utils";
 
 const Accordion = AccordionPrimitive.Root;
 
+// eslint-disable-next-line react/prop-types
 const AccordionItem = React.forwardRef(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("rounded-lg bg-White p-4", className)}
+    className={cn("rounded-lg bg-White p-4 mt-[16px] drop-shadow-[0_2px_5px_rgba(0,0,0,0.20)] ", className)}
     {...props}
   />
 ));
 AccordionItem.displayName = "AccordionItem";
 
 const AccordionTrigger = React.forwardRef(
+  // eslint-disable-next-line react/prop-types
   ({ className, children, ...props }, ref) => (
     <AccordionPrimitive.Header className="flex w-full">
       <AccordionPrimitive.Trigger
@@ -35,6 +37,7 @@ const AccordionTrigger = React.forwardRef(
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
 const AccordionContent = React.forwardRef(
+  // eslint-disable-next-line react/prop-types
   ({ className, children, ...props }, ref) => (
     <AccordionPrimitive.Content
       ref={ref}

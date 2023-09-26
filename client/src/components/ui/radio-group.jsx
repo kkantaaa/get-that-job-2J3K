@@ -4,6 +4,7 @@ import { Circle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+// eslint-disable-next-line react/prop-types
 const RadioGroup = React.forwardRef(({ className, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Root
@@ -16,6 +17,7 @@ const RadioGroup = React.forwardRef(({ className, ...props }, ref) => {
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 
 const RadioGroupItem = React.forwardRef(
+  // eslint-disable-next-line react/prop-types, no-unused-vars
   ({ className, children, ...props }, ref) => {
     return (
       <RadioGroupPrimitive.Item
