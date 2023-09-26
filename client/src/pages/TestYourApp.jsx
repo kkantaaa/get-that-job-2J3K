@@ -128,7 +128,7 @@ function TestYourApp() {
                               <div className="w-[59px] h-[59px] bg-Pink rounded-sm">
                                 logo {app.company_logo}
                               </div>
-                              <div className="flex flex-col ml-[16px] justify-center">
+                              <div className="flex flex-col ml-[16px] items-start">
                                 <p className="text-DarkGray text-scale-[20px] text-normal leading-[28px] tracking-[0.15px]">
                                   {app.job_title}
                                 </p>
