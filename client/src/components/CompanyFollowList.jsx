@@ -32,6 +32,29 @@ const CompanyFollowingList = (props) => {
     getCompanyJobsCount();
   }, []);
 
+  // console.log("companyJobsCount : ");
+  // console.log(companyJobsCount.filter((job) => job.recruiter_id == 83)[0]); TESTT
+
+  // const counts = companyJobsCount.map((obj) => {
+  //   return obj.job_count;
+  // });
+  // console.log("counts : ");
+  // console.log(counts);
+
+  // {
+  //   companyJobs && companyJobs.length > 0 ? (
+  //     <div className="flex flex-row">
+  //       {
+  //         companyJobsCount.filter(
+  //           (job) => job.recruiter_id == follow.recruiter_id
+  //         )[0].job_count
+  //       }
+  //     </div>
+  //   ) : (
+  //     <div>Loading...</div>
+  //   );
+  // }
+
   return (
     <div className="ml-[120px]">
       <div className="m-2 text-[18px]">
@@ -41,6 +64,9 @@ const CompanyFollowingList = (props) => {
       </div>
       <div className="grid lg:grid-cols-2 gap-2 xl:grid-cols-3 2xl:grid-cols-4">
         {companyFollow.map((follow) => {
+          // const count = companyJobsCount.filter(
+          //   (job) => job.recruiter_id == follow.recruiter_id
+          // )[0].job_count;
           return (
             <div
               key={follow.recruiter_id}
@@ -60,12 +86,18 @@ const CompanyFollowingList = (props) => {
                         alt="Job Opening Icon"
                       />
                       <div>
-                        {
-                          companyJobsCount.filter(
-                            (job) => job.recruiter_id == follow.recruiter_id
-                          )[0].job_count
-                        }{" "}
-                        jobs openings
+                        {companyJobsCount && companyJobsCount.length > 0 ? (
+                          <div className="flex flex-row">
+                            {
+                              companyJobsCount.filter(
+                                (job) => job.recruiter_id == follow.recruiter_id
+                              )[0].job_count
+                            }{" "}
+                            jobs openings
+                          </div>
+                        ) : (
+                          <div>Loading...</div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -82,7 +114,9 @@ const CompanyFollowingList = (props) => {
                   <div className="pl-4">
                     <button
                       className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-Pink rounded-[16px] bg-White text-Gray text-center text-[14px] tracking-[1.25px] font-Inter hover:bg-Pink hover:text-White"
-                      //   onClick={() => navigate(`/user/jobs/`)} เปลี่ยน naviagte ไปหน้าแสดง jobs ของ company
+                      onClick={() =>
+                        navigate(`/user/companyjob/${follow.recruiter_id}`)
+                      }
                     >
                       SEE MORE
                     </button>
