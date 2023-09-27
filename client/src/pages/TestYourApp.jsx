@@ -30,6 +30,7 @@ function TestYourApp() {
   const [filterStatus, setFilterStatus] = useState("all");
   const { user_id } = useParams();
   const [isDeclined, setIsDeclined] = useState(false);
+  const [filteredApplications, setFilteredApplications] = useState(applications);
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -63,12 +64,13 @@ function TestYourApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
 
-  const handleFilteredApplication = applications.filter((app) => {
-    if (filterStatus === "all") {
-      return true;
+  const handleFilteredApplication = (status) =>{
+    if (status === "all") {
+      return applications;
+    } else {
+      return applications.filter((app)=> app.application_status === status);
     }
-    return app.application_status === filterStatus;
-  });
+  }
 
   const statusChange = () => {
     if (applications.application_status === "pending") {
@@ -109,7 +111,9 @@ function TestYourApp() {
     }
   };
   
+  // eslint-disable-next-line no-undef
   const jobCreatedDate = moment(applications.opened_at).fromNow();
+  // eslint-disable-next-line no-undef
   const ApplicationSentDate = moment(applications.sent_date).fromNow();
 
   return (
@@ -134,7 +138,12 @@ function TestYourApp() {
                 <RadioGroup
                   value={filterStatus}
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
-                  onValueChange={(value) => setFilterStatus(value)}
+                  onValueChange={(value) => {
+                    setFilterStatus(value);
+                    const filteredApplications = handleFilteredApplication(value);
+                    setFilteredApplications(filteredApplications);
+                  }
+                  }
                 >
                   <div className="flex items-center space-x-1">
                     <RadioGroupItem value="all" id="r1" />
@@ -176,7 +185,7 @@ function TestYourApp() {
 
                 {/* ส่วน Accordian */}
                 <Accordion type="single" collapsible className="space-y-4">
-                  {applications.map((app, key) => {
+                  {filteredApplications.map((app, key) => {
                     return (
                       <AccordionItem value={app.application_id} key={key} application={app}>
                         <AccordionTrigger
