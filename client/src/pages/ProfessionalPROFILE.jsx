@@ -32,7 +32,8 @@ function ProfessionalProfile() {
   // states
   const [formData, setFormData] = useState(initialFormData);
   const [fileSelected, setFileSelected] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(phonedatajson[0]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [flag, setflag] = useState("");
   // Function to format the date as year-month-day or else it won't work kub
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
@@ -164,12 +165,46 @@ function ProfessionalProfile() {
   };
   // name
   const handlePhoneChange = (e) => {
+    // Validation
     let inputValue = e.target.value;
     const filteredlewkubPhoneNumber = inputValue.replace(/\D/g, "");
     if (filteredlewkubPhoneNumber.length > 0) {
-      inputValue = `+${filteredlewkubPhoneNumber.slice(0, 11)}`;
+      inputValue = `+${filteredlewkubPhoneNumber.slice(0, 13)}`;
+    } else {
+      inputValue = "";
     }
     setFormData({ ...formData, user_phone: inputValue });
+    //เซ็ตค่า SelectedCountry
+    const digitslength = inputValue.length;
+    if (
+      (selectedCountry && digitslength <= 10) ||
+      (selectedCountry.length === 2 && digitslength !== 11) ||
+      (selectedCountry.length === 3 && digitslength !== 12) ||
+      (selectedCountry.length === 4 && digitslength !== 13)
+    ) {
+      setSelectedCountry("");
+    } else {
+      const findMatchDialUpCountryCode = inputValue.match(/\+(\d{1,3})/);
+      if (findMatchDialUpCountryCode) {
+        const countryCode = findMatchDialUpCountryCode[1];
+        console.log("countryCode:", findMatchDialUpCountryCode);
+        if (digitslength === 10) {
+          setSelectedCountry("+" + countryCode.slice(0, 1));
+        } else if (digitslength === 11) {
+          setSelectedCountry("+" + countryCode.slice(0, 2));
+        } else if (digitslength === 12) {
+          setSelectedCountry("+" + countryCode.slice(0, 3));
+        }
+        console.log("SelectedCountry", selectedCountry);
+      } else {
+        setSelectedCountry("");
+      }
+    }
+    const matchedCountry = phonedatajson.find(
+      (country) => country.dial_code === selectedCountry
+    );
+    setflag(matchedCountry);
+    console.log(flag);
   }; // phone
   const handleBirthdateChange = (e) => {
     setFormData({ ...formData, user_birthdate: e.target.value });
@@ -271,14 +306,22 @@ function ProfessionalProfile() {
                   control={control}
                   defaultValue=""
                   render={({ field }) => (
-                    <Textarea
-                      {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
-                      type="tel"
-                      value={formData.user_phone}
-                      onChange={handlePhoneChange}
-                      required
-                    />
+                    <div className="flex items-center">
+                      <Textarea
+                        {...field}
+                        className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                        type="tel"
+                        value={formData.user_phone}
+                        onChange={handlePhoneChange}
+                        maxLength={13}
+                        required
+                      />
+                      {flag ? (
+                        <div className="ml-2 text-neutral-400 text-xs font-normal font-['Inter'] leading-none tracking-wide">
+                          {flag.flag}
+                        </div>
+                      ) : null}
+                    </div>
                   )}
                 />
               </div>
