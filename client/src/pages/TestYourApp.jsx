@@ -9,7 +9,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ChevronDown } from "lucide-react";
 
 import cancelIcon from "../images/ApllicationApplyPage/cancel.svg";
 import closedIcon from "../images/ApllicationApplyPage/closed.svg";
@@ -30,6 +29,7 @@ function TestYourApp() {
   const [applications, setApplications] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
   const { user_id } = useParams();
+  const [isDeclined, setIsDeclined] = useState(false);
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -47,6 +47,17 @@ function TestYourApp() {
     }
   };
 
+  const handleDeclinedApplication = async (application_id) => {
+    try {
+      await axios.put(`http://localhost:4000/apply/${application_id}`, {
+        status: "declined",
+      });
+      setIsDeclined(true);
+    } catch (error) {
+      console.error("Error: unable to decline applications", error);
+    }
+  };
+
   useEffect(() => {
     getApplication();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,7 +67,7 @@ function TestYourApp() {
     if (filterStatus === "all") {
       return true;
     }
-    return app.status === filterStatus;
+    return app.application_status === filterStatus;
   });
 
   const statusChange = () => {
@@ -70,7 +81,7 @@ function TestYourApp() {
     } else if (applications.application_status === "inprogress") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
-          <img className="w-[15px] h-[15px]" src={letterSentIcon} />
+          <img className="w-[15px] h-[15px]" src={letterIcon} />
           <p>Review in progress</p>
         </div>
       );
@@ -84,35 +95,19 @@ function TestYourApp() {
     } else if (applications.application_status === "declined") {
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
-          <img className="w-[15px] h-[15px]" src={closedIcon} />
+          <img className="w-[15px] h-[15px]" src={cancelIcon} />
           <p>Declined on 07/11/20</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex flex-col text-Grey w-[80px] h-[47px] items-center">
+          <img className="w-[15px] h-[15px]" src={closedIcon} />
+          <p>Unknown status</p>
         </div>
       );
     }
   };
-
-  const handleDeclinedApplication = async (application_id)=>{
-    try {
-      const response = await axios.put(`http://localhost:4000/apply/${application_id}`, {
-        status: "declined"
-      })
-    if (response.status === 200){
-      return (
-        <button
-        className="flex flex-row justify-center items-center ml-[300px] 
-       w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none" disabled
-      >
-        <img src={declineIcon} />
-        <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
-          declined
-        </p>
-      </button>
-      )
-    }
-    }  catch (error) {
-      console.error("Error: unable to decline applications", error);
-    }
-  }
   
   const jobCreatedDate = moment(applications.opened_at).fromNow();
   const ApplicationSentDate = moment(applications.sent_date).fromNow();
@@ -137,7 +132,7 @@ function TestYourApp() {
                 </label>
 
                 <RadioGroup
-                  defaultValue="all"
+                  value={filterStatus}
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => setFilterStatus(value)}
                 >
@@ -173,17 +168,17 @@ function TestYourApp() {
                   </div>
                 </RadioGroup>
               </div>
+
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
                   {applications.length} Applications found
                 </div>
 
                 {/* ส่วน Accordian */}
-
                 <Accordion type="single" collapsible className="space-y-4">
                   {applications.map((app, key) => {
                     return (
-                      <AccordionItem value={app.application_id} key={key}>
+                      <AccordionItem value={app.application_id} key={key} application={app}>
                         <AccordionTrigger
                           onClick={() => toggleAccordionItem(app)}
                         >
@@ -226,8 +221,10 @@ function TestYourApp() {
                           </div>
 
                           {/* Section 3 */}
-                          <div className="w-[164px] h-[47px] m-[4px] flex flex-row font-Inter text-Gray 
-                          text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+                          <div
+                            className="w-[164px] h-[47px] m-[4px] flex flex-row font-Inter text-Gray 
+                          text-[12px] font-normal leading-[16px] tracking-[0.4px]"
+                          >
                             <div className="flex flex-col w-[80px] h-[47px] items-center">
                               <img
                                 className="w-[15px] h-[15px]"
@@ -254,22 +251,40 @@ function TestYourApp() {
                               <b>{app.company_name}</b>
                             </h1>
                             <p className="w-[760px]">{app.interested_reason}</p>
-                            <button
-                              className="flex flex-row justify-center items-center ml-[300px] 
+
+                            {/* decline button */}
+                            {isDeclined ? (
+                              <button
+                                className="flex flex-row justify-center items-center ml-[300px] 
+                              w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none"
+                                disabled
+                              >
+                                <img src={declineIcon} />
+                                <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
+                                  declined
+                                </p>
+                              </button>
+                            ) : (
+                              <button
+                                className="flex flex-row justify-center items-center ml-[300px] 
                             hover:bg-LightPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
-                            onClick={()=> handleDeclinedApplication(applications.application_id)}
-                            >
-                              <img src={declineIcon} />
-                              <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
-                                decline application
-                              </p>
-                            </button>
+                                onClick={() =>
+                                  handleDeclinedApplication(
+                                    app.application_id
+                                  )
+                                }
+                              >
+                                <img src={declineIcon} />
+                                <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
+                                  decline application
+                                </p>
+                              </button>
+                            )}
                           </div>
                         </AccordionContent>
                       </AccordionItem>
                     );
                   })}
-                  ;
                 </Accordion>
               </div>
             </div>

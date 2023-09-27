@@ -168,7 +168,7 @@ applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
 // professional wants to decline the application
 applyappliRouter.put("/:application_id", async (req, res) => {
   try {
-    const application_id = req.params.application_id;
+    const { application_id } = req.params;
     if (!application_id) {
       return res.status(404).json({ error: "Invalid application_id" });
     }
