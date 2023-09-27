@@ -15,6 +15,7 @@ import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
 import RecruiterProfile from "@/pages/Recruiter/RecruiterProfile.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
+import FollowingPage from "./pages/FollowingPage.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
@@ -56,6 +57,9 @@ function App() {
                 element={<ApplicationApplyPage />}
               />
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
+
+              <Route path="/user/following" element={<FollowingPage />} />
+
               <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
               {/* route for testing */}
               <Route path="/user/myapplication/:user_id" element={<TestYourApp />} />
