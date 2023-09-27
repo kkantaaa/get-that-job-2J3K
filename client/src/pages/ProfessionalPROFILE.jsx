@@ -407,6 +407,7 @@ function ProfessionalProfile() {
                       type="text"
                       value={formData.user_experience}
                       onChange={handleExperienceChange}
+                      maxLength={750}
                     />
                   )}
                 />
@@ -438,6 +439,7 @@ function ProfessionalProfile() {
                       type="text"
                       value={formData.user_education}
                       onChange={handleEducationChange}
+                      maxLength={450}
                     />
                   )}
                 />
