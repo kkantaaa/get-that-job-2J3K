@@ -143,8 +143,18 @@ function ProfessionalProfile() {
     setFormData({ ...formData, email: e.target.value });
   }; // email
   const handleNameChange = (e) => {
-    setFormData({ ...formData, user_name: e.target.value });
-  }; // name
+    const inputValue = e.target.value;
+    const alphabetRegex = /^[A-Za-zก-๏\s]+$/;
+    if (inputValue.match(alphabetRegex) || inputValue === "") {
+      const nameParts = inputValue
+        .split(/\s+/)
+        .filter((part) => /^[A-Za-zก-๏]+$/.test(part));
+      if (nameParts.length <= 2) {
+        setFormData({ ...formData, user_name: inputValue });
+      }
+    }
+  };
+  // name
   const handlePhoneChange = (e) => {
     let inputValue = e.target.value;
     const filteredlewkubPhoneNumber = inputValue.replace(/\D/g, "");
