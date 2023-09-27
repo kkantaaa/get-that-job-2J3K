@@ -65,11 +65,6 @@ function App() {
                 element={<CompanyJobPage />}
               />
 
-              <Route
-                path="/user/:user_id/myapplication"
-                element={<YourApplication />}
-              />
-
               {/* route for testing */}
               <Route
                 path="/user/myapplication/:user_id"
