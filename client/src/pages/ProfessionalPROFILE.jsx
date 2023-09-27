@@ -1,14 +1,16 @@
-//import tools, packages, and functions
+//import tools, packages, css, and functions
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProfessionalSidebar from "@/components/ProfessionalSideBar";
 import { Textarea } from "@/components/ui/textarea";
+//components
+import ProfessionalSidebar from "@/components/ProfessionalSideBar";
 //import images
 import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
+import SaveChanges from "@/images/ProfesionalProfile/Save Changes.png";
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>compo declaration<<<<<<<<<<<<<<<<<<<<<<
 function ProfessionalProfile() {
@@ -40,9 +42,9 @@ function ProfessionalProfile() {
   };
   const user_birthdate = formData.user_birthdate;
   const formattedBirthdate = formatDate(user_birthdate);
-  //
+  // var today for limiting the date
   const today = new Date().toISOString().split("T")[0];
-  //init
+  //init useForm
   const { control } = useForm();
   //fetch data from database ka
   const getdatafromdatabase = async () => {
@@ -187,33 +189,23 @@ function ProfessionalProfile() {
       <div style={{ marginLeft: "250px" }}>
         {/* Header -- Profile*/}
         {/* Header -- Profile*/}
-        <h1
-          className="ml-2 "
-          style={{
-            fontSize: "32px",
-            color: "#BF5F82",
-            fontFamily: "Montserrat, sans-serif",
-          }}
-        >
+        <h1 className="ml-2 py-3 text-neutral-700 text-[34px] font-normal font-['Montserrat'] tracking-tight">
           Profile
         </h1>
         <div>
           {/* SubHeader -- Personal information*/}
           {/* SubHeader -- Personal information*/}
-          <h1
-            className="ml-3 mb-1 "
-            style={{ fontSize: "16px", fontWeight: "bolder" }}
-          >
+          <h1 className=" ml-3 w-[944px] text-neutral-900 text-[30px] font-normal font-['Montserrat']">
             Personal information{" "}
           </h1>
-          <div className="mt-8" style={{ marginLeft: "10px" }}>
+          <div className="ml-4">
             <form>
               {/* 1 of 5/Part 1 / Email*/}
               {/* 1 of 5/Part 1 / Email*/}
               <div>
                 <label
                   htmlFor="email"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Email
                 </label>
@@ -238,7 +230,7 @@ function ProfessionalProfile() {
               <div>
                 <label
                   htmlFor="name"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Name
                 </label>
@@ -263,7 +255,7 @@ function ProfessionalProfile() {
               <div>
                 <label
                   htmlFor="phone"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Phone
                 </label>
@@ -292,7 +284,7 @@ function ProfessionalProfile() {
               <div className="mt-3">
                 <label
                   htmlFor="birthdate"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Birthdate (MM/DD/YYYY)
                 </label>
@@ -320,7 +312,7 @@ function ProfessionalProfile() {
               <div className="mt-3 ">
                 <label
                   htmlFor="linkedinUrl"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Linkin URL{" "}
                 </label>
@@ -345,19 +337,13 @@ function ProfessionalProfile() {
               {/* 2nd section : Professional Profile */}
               {/* Professional Profile Header */}
               {/* Professional Profile Header */}
-              <div className="mt-7">
-                <h1
-                  style={{
-                    fontSize: "32px",
-                    color: "#BF5F82",
-                    fontFamily: "Montserrat, sans-serif",
-                  }}
-                >
-                  Professional Profile{" "}
+              <div className="mt-4">
+                <h1 className="w-[944px] text-neutral-900 text-[30px] font-normal font-['Montserrat']">
+                  Professional information{" "}
                 </h1>
                 {/* Sub Professional Profile Header - Disclaimer */}
                 {/* Sub Professional Profile Header - Disclaimer */}
-                <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+                <span className="text-zinc-700 text-[14px] font-normal font-['Inter'] leading-none tracking-wide">
                   changes made here will be reflected on your future
                   applications
                 </span>
@@ -367,7 +353,7 @@ function ProfessionalProfile() {
               <div className="mt-3">
                 <label
                   htmlFor="title"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Title{" "}
                 </label>
@@ -392,7 +378,7 @@ function ProfessionalProfile() {
               <div>
                 <label
                   htmlFor="Professional experience"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Professional experience{" "}
                 </label>
@@ -420,10 +406,10 @@ function ProfessionalProfile() {
               </div>
               {/*3 of 3/Part 2 /Professional Education*/}
               {/*3 of 3/Part 2 /Professional Education*/}
-              <div>
+              <div className="mt-1">
                 <label
                   htmlFor="Education"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
+                  className="text-neutral-1000 text-[12px] font-normal font-['Inter'] uppercase tracking-wider"
                 >
                   Education{" "}
                 </label>
@@ -454,7 +440,7 @@ function ProfessionalProfile() {
               {/* UPLOAD / UPDATE YOUR CV */}
               {/* UPLOAD / UPDATE YOUR CV */}
               <div className="mt-2 mr-2">
-                <h1 style={{ fontSize: "16px", fontWeight: "bold" }}>
+                <h1 className="text-neutral-900 text-[12px] font-normal font-['Inter'] uppercase tracking-wider">
                   UPLOAD / UPDATE YOUR CV
                 </h1>
                 <label htmlFor="fileInput" className="cursor-pointer">
@@ -467,22 +453,13 @@ function ProfessionalProfile() {
                   />
                   <img src={ChooseAFile} alt="Choose a file Button" />
                 </label>
-                <br />
                 <span style={{ color: "#8E8E8E" }}>
                   Only PDF. Max size 5 MB
                 </span>
                 {fileSelected && (
                   <div
                     id="selectedFileBox"
-                    style={{
-                      marginTop: "10px",
-                      border: "1px solid pink",
-                      padding: "10px",
-                      borderRadius: "4px",
-                      color: "#333",
-                      width: "120px",
-                      backgroundColor: "#FCE4EC",
-                    }}
+                    className="mt-3 border border-pink-700 p-2 px-1 rounded-3xl text-gray-900 w-[118px] bg-pink-100"
                   >
                     <span id="selectedFileName">
                       Selected file: {formData.selectedNewFileName}
@@ -494,9 +471,9 @@ function ProfessionalProfile() {
                 <button
                   type="button"
                   onClick={handleSaveChanges}
-                  className="mt-5 bg-pink-300 text-white px-4 py-2 rounded cursor-pointer"
+                  className="mt-6 "
                 >
-                  SAVE CHANGES
+                  <img src={SaveChanges} alt="SaveChanges button" />
                 </button>
               </div>
             </form>
