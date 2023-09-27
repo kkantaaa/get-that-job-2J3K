@@ -2,7 +2,7 @@ import Logo from "../../images/landing-page/navlogo1.png";
 import { useAuth } from "@/contexts/authentication";
 import { useNavigate } from "react-router-dom";
 
-export default function FindThatJobSideBar() {
+export default function YourApplicationSideBar() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -19,26 +19,22 @@ export default function FindThatJobSideBar() {
   };
 
   const handleFollowingPage = () => {
-    // navigate("/user/:user_id/following");
-    navigate("/user/following");
+    navigate("/user/:user_id/following");
   };
 
   const handleProfilePage = () => {
-    navigate("/user/profile");
+    navigate("/user/:user_id/profile");
   };
 
   return (
     <div className="fixed w-[240px] h-screen bg-BackgroundDark flex flex-col">
-      <div
-        onClick={handleHomePage}
-        className="w-[168px] h-fit px-[16px] py-[32px] cursor-pointer"
-      >
+      <div onClick={handleHomePage} className="w-[168px] h-fit px-[16px] py-[32px] cursor-pointer">
         <img src={Logo} />
       </div>
       <div className="w-full h-fit font-Inter text-DarkGray ">
         <button
           onClick={handleFindthatJobPage}
-          className="flex h-[48px] w-full py-[12px] px-[16px] bg-Background active:bg-Background focus:bg-Background "
+          className="flex h-[48px] w-full py-[12px] px-[16px]"
         >
           <div className=" h-fit mr-[8px]">
             <svg
@@ -67,7 +63,7 @@ export default function FindThatJobSideBar() {
 
         <button
           onClick={handleApplicationPage}
-          className="flex h-[48px] w-full py-[12px] px-[16px] bg-Backround active:bg-Background focus:bg-Background"
+          className="flex h-[48px] w-full py-[12px] px-[16px] bg-Background"
         >
           <div className=" h-fit mr-[8px]">
             <svg

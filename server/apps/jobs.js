@@ -7,6 +7,7 @@ const jobRouter = Router();
 
 // get jobs by recruiter id for recruiter role
 jobRouter.get("/recruiter", async (req, res) => {
+ 
   try {
     const recruiter_id = req.user.recruiter_id;
     const filter = req.query.filter || null;
@@ -61,7 +62,7 @@ jobRouter.get("/recruiter", async (req, res) => {
           AND application_status = 'inprogress'
       )`;
     }
-
+    console.log(query);
     query += queryOrder;
 
     const result = await pool.query(query, values);

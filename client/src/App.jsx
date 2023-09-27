@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider, useAuth } from "./contexts/authentication.jsx";
+import { AuthProvider } from "./contexts/authentication.jsx";
 import UserRegisterPage1 from "./pages/UserRegisterPage1.jsx";
 import UserRegisterPage2 from "./pages/UserRegisterPage2.jsx";
 import UserRegisterPage3 from "./pages/UserRegisterPage3.jsx";
@@ -19,6 +19,9 @@ import FollowingPage from "./pages/FollowingPage.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
+import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
+import YourApplication from "./pages/YourApplicationPage.jsx";
+import TestYourApp from "./pages/TestYourApp.jsx";
 
 function App() {
   // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
@@ -54,11 +57,14 @@ function App() {
                 element={<ApplicationApplyPage />}
               />
               <Route path="/user/jobs/:job_id" element={<JobDetail />} />
-              {/* <Route
-                path="/user/:user_id/following"
-                element={<FollowingPage />} */}
+
               <Route path="/user/following" element={<FollowingPage />} />
 
+              <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
+              {/* route for testing */}
+              <Route path="/user/myapplication/:user_id" element={<TestYourApp />} />
+
+              <Route path="/user/profile" element={<ProfessionalProfile />} />
               {/* keem and kaka's routes */}
               <Route path="/recruiter/jobpostings" element={<JobPosting />} />
 
