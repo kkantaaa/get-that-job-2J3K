@@ -142,7 +142,11 @@ function ProfessionalProfile() {
   };
   //3.handle inputs change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const handleEmailChange = (e) => {
-    setFormData({ ...formData, email: e.target.value });
+    const inputValue = e.target.value;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (emailRegex.test(inputValue)) {
+      setFormData({ ...formData, email: inputValue });
+    }
   }; // email
   const handleNameChange = (e) => {
     const inputValue = e.target.value;
