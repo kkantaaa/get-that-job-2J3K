@@ -98,7 +98,7 @@ function TestYourApp() {
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={cancelIcon} />
-          <p>Declined on 07/11/20</p>
+          <p>Declined on {DeclinedDate}</p>
         </div>
       );
     } else {
@@ -111,10 +111,9 @@ function TestYourApp() {
     }
   };
   
-  // eslint-disable-next-line no-undef
   const jobCreatedDate = moment(applications.opened_at).fromNow();
-  // eslint-disable-next-line no-undef
   const ApplicationSentDate = moment(applications.sent_date).fromNow();
+  const DeclinedDate = moment(applications.sent_date, 'DD-MM-YY');
 
   return (
     <>
