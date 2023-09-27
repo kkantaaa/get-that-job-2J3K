@@ -195,8 +195,8 @@ function TestYourApp() {
                           <div className="flex flex-row py-[16px]">
                             {/* section 1*/}
                             <div className="font-Montserrat flex flex-row">
-                              <div className="w-[59px] h-[59px] rounded-sm">
-                                <img src={app.company_logo} />
+                              <div className="w-[59px] h-[59px]">
+                                <img className="rounded-sm" src={app.company_logo} />
                               </div>
                               <div className="flex flex-col ml-[16px] items-start w-[180px] h-[64px]">
                                 <p className="text-DarkGray text-scale-[20px] text-normal leading-[28px] tracking-[0.15px]">
