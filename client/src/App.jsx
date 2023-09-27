@@ -20,7 +20,6 @@ import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
 import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
-import YourApplication from "./pages/YourApplicationPage.jsx";
 import TestYourApp from "./pages/TestYourApp.jsx";
 
 function App() {
@@ -60,7 +59,6 @@ function App() {
 
               <Route path="/user/following" element={<FollowingPage />} />
 
-              <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
               {/* route for testing */}
               <Route path="/user/myapplication/:user_id" element={<TestYourApp />} />
 

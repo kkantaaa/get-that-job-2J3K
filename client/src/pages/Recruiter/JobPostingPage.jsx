@@ -127,6 +127,7 @@ function JobPosting() {
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
                   {jobs.length} jobs posting found
                 </div>
+                
                 <div className=" w-full h-full ">
                   <Accordion type="single" collapsible className="space-y-4">
                     {jobs.map((job, key) => {
