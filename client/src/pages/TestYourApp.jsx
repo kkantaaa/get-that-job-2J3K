@@ -136,15 +136,15 @@ function TestYourApp() {
                           <div className="flex flex-row py-[16px]">
                             {/* section 1*/}
                             <div className="font-Montserrat flex flex-row">
-                              <div className="w-[59px] h-[59px] bg-Pink rounded-sm">
-                                logo {app.company_logo}
+                              <div className="w-[59px] h-[59px] rounded-sm">
+                              <img src={app.company_logo}/>
                               </div>
                               <div className="flex flex-col ml-[16px] items-start w-[180px] h-[64px]">
                                 <p className="text-DarkGray text-scale-[20px] text-normal leading-[28px] tracking-[0.15px]">
                                   {app.job_title}
                                 </p>
                                 <p className="text-Gray text-[14px] font-normal leading-[18px] tracking-[0.1px]">
-                                  Company Name {app.company_name}
+                                  {app.company_name}
                                 </p>
                               </div>
                             </div>
@@ -154,9 +154,9 @@ function TestYourApp() {
                           <div className="w-[350px] h-[40px] flex flex-col font-Inter text-LightGray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
                             <div className="flex flex-row">
                               <img src={category} />
-                              <p className="ml-[4px]">{app.job_category_id}</p>
+                              <p className="ml-[4px]">{app.category_name}</p>
                               <img src={calendar} className="ml-[4px]" />
-                              <p className="ml-[4px]">{app.job_type_id}</p>
+                              <p className="ml-[4px]">{app.type_name}</p>
                             </div>
                             <div className="mt-[8px] flex flex-row">
                               <img src={dollarIcon} />
@@ -196,14 +196,13 @@ function TestYourApp() {
                               Professional Experience
                             </h1>
                             <p className="w-[760px]">
-                              test {app.professional_experience}
+                              {app.professional_experience}
                             </p>
                             <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
-                              Why are you interested in working at The company
-                              name SA
+                              Why are you interested in working at <b>{app.company_name}</b>
                             </h1>
                             <p className="w-[760px]">
-                              test {app.interested_reason}
+                              {app.interested_reason}
                             </p>
                             <button className="flex flex-row justify-center items-center ml-[300px] 
                             hover:bg-LightPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]">
