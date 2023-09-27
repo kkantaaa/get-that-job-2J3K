@@ -375,6 +375,7 @@ function ProfessionalProfile() {
                       type="text"
                       value={formData.user_title}
                       onChangeCapture={handleTitleChange}
+                      maxLength={45}
                     />
                   )}
                 />
