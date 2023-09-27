@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Textarea } from "@/components/ui/textarea";
 //components
@@ -136,8 +136,9 @@ function ProfessionalProfile() {
         `http://localhost:4000/profile/propro`,
         updatedProfileData
       );
+      toast.success("Profile updated successfully");
     } catch (error) {
-      console.error("Error updating profile:", error);
+      toast.error("Error updating profile");
     }
   };
   //3.handle inputs change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
