@@ -19,7 +19,7 @@ export default function YourApplicationSideBar() {
   };
 
   const handleFollowingPage = () => {
-    navigate("/user/:user_id/following");
+    navigate("/user/following");
   };
 
   const handleProfilePage = () => {
