@@ -3,7 +3,7 @@ import { pool } from "../utils/db_connection.js";
 import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
-// jobRouter.use(protect);
+jobRouter.use(protect);
 
 // get jobs by recruiter id for recruiter role
 jobRouter.get("/recruiter", async (req, res) => {

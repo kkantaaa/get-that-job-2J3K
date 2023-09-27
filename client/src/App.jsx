@@ -21,7 +21,6 @@ import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
 import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
-import YourApplication from "./pages/YourApplicationPage.jsx";
 import TestYourApp from "./pages/TestYourApp.jsx";
 
 function App() {
@@ -61,7 +60,6 @@ function App() {
 
               <Route path="/user/following" element={<FollowingPage />} />
 
-              {/* <Route path="user/companyjob" element={<CompanyJobPage />} /> */}
               <Route
                 path="user/companyjob/:recruiter_id"
                 element={<CompanyJobPage />}
@@ -71,6 +69,7 @@ function App() {
                 path="/user/:user_id/myapplication"
                 element={<YourApplication />}
               />
+
               {/* route for testing */}
               <Route
                 path="/user/myapplication/:user_id"

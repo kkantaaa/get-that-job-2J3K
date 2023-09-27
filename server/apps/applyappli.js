@@ -90,15 +90,16 @@ applyappliRouter.get("/recruiter/:job_id", async (req, res) => {
   INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
   WHERE
     application.job_id = $1
+    AND application.application_status != 'declined'
     `;
-    // const queryOrder = `ORDER BY application_status DESC`;
+    const queryOrder = ` ORDER BY application_status DESC`;
     const queryParams = [job_id];
 
     if (status !== "all") {
       query += " AND application_status = $2";
       queryParams.push(status);
     }
-    // query += queryOrder;
+    query += queryOrder;
     
     const result = await pool.query(query, queryParams);
 
@@ -143,11 +144,15 @@ applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
     }
 
     let query = `
-    SELECT *
-    FROM application
-    INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
-    INNER JOIN jobs ON application.job_id = jobs.job_id
-    WHERE application.user_id = $1
+    SELECT 
+      *
+       FROM application
+       INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
+       INNER JOIN jobs ON application.job_id = jobs.job_id
+       INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+       inner join job_categories on jobs.job_category_id=job_categories.job_category_id
+       inner join job_types on jobs.job_type_id=job_types.job_type_id
+       WHERE application.user_id = $1
   `;
 
     const queryParams = [user_id];
@@ -161,10 +166,39 @@ applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
   }
 });
 
-// // professional wants to decline the application
-// applyappliRouter.put("/:user_id", async (res, req)=>{
+// professional wants to decline the application
+applyappliRouter.put("/:application_id", async (req, res) => {
+  try {
+    const { application_id } = req.params;
+    if (!application_id) {
+      return res.status(404).json({ error: "Invalid application_id" });
+    }
 
-// })
+    // Check if the request body contains the status "declined"
+    if (req.body.status === "declined") {
+      await pool.query(
+        // Update the application status to "declined" and set sent_date to current date
+        `
+        UPDATE application
+        SET application_status = $1, sent_date = $2
+        WHERE application_id = $3
+        `,
+        ["declined", new Date(), application_id]
+      );
+      return res.status(200).json({
+        message: "The application has been successfully declined"
+      });
+    } else {
+      return res.status(400).json({
+        error: "Failed to decline the application"
+      });
+    }
+
+  } catch (error) {
+    res.status(500).json({error: "Internal Server Error"});
+  }
+});
 
 export default applyappliRouter;
+
 //("/apply/xxxxxxxxx", applyappliRouter);

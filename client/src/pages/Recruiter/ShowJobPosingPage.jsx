@@ -34,15 +34,14 @@ import phone_line from "@/images/posting-job-page/show-job/phone-line.png";
 import pause_circle_line from "@/images/posting-job-page/show-job/pause-circle-line.png";
 import download_line from "@/images/posting-job-page/show-job/download-line.png";
 
-const handleChange = (data) => {
-  console.log(data);
-};
+
 
 function ShowJobPosingPage() {
   //const navigate = useNavigate();
   const param = useParams();
   const [job, setJob] = useState([]);
   const [candidates, setCandidates] = useState([]);
+  const [status, setStatus] = useState("all");
 
   const formattedDate = (date) => {
     const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
@@ -56,8 +55,6 @@ function ShowJobPosingPage() {
         `http://localhost:4000/jobs/recruiter/${param.jobId}`
       );
       setJob(jobsResults.data.data);
-      console.log("Jobs get successful");
-      console.log("Jobs are", job);
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
@@ -66,20 +63,13 @@ function ShowJobPosingPage() {
   const getCandidates = async (status) => {
     
     try {
-      console.log(status);
       const candidatesResults = await axios.get(
         `http://localhost:4000/apply/recruiter/${param.jobId}?status=${status}`
       );
       setCandidates(candidatesResults.data);
-      console.log("Candidates get successful");
-      console.log("Candidates are", candidates);
     } catch (error) {
       console.error("Error: unable to load candidates", error);
     }
-  };
-
-  const onFilterChange = (data) => {
-    console.log(data);
   };
 
   const download = async (data) => {
@@ -124,19 +114,14 @@ function ShowJobPosingPage() {
     console.log(data);
     try {
       await axios.put(`http://localhost:4000/jobs/${data.job_id}`, data);
-
-      console.log(`Job_id ${data.job_id} have closed`);
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
   };
 
   const changeStatus = async (data) => {
-    console.log(data);
     try {
       await axios.put(`http://localhost:4000/apply/recruiter/${data.application_id}`, data);
-
-      console.log(`Application_id ${data.application_id} have been updated`);
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
@@ -144,8 +129,8 @@ function ShowJobPosingPage() {
 
   useEffect(() => {
     getJob();
-    getCandidates();
-  }, []);
+    getCandidates(status);
+  }, [candidates]);
 
   return (
     <>
@@ -372,9 +357,11 @@ function ShowJobPosingPage() {
                 </label>
 
                 <RadioGroup
-                  defaultValue="all"
+                  defaultValue=""
                   className="flex flex-row space-x-1  font-Inter text-Body2 "
-                  onValueChange={(value) => getCandidates(value)}
+                  onValueChange={(value) => {
+                    setStatus(value)
+                  }}
                 >
                   <div className="flex items-center space-x-1">
                     <RadioGroupItem value="all" id="r1" />
