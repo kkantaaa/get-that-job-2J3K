@@ -59,6 +59,38 @@ function TestYourApp() {
     return app.status === filterStatus;
   });
 
+  const statusChange = () => {
+    if (applications.application_status === "pending") {
+      return (
+        <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
+          <img className="w-[15px] h-[15px]" src={pendingIcon} />
+          <p>Waiting for review</p>
+        </div>
+      );
+    } else if (applications.application_status === "inprogress") {
+      return (
+        <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
+          <img className="w-[15px] h-[15px]" src={letterSentIcon} />
+          <p>Review in progress</p>
+        </div>
+      );
+    } else if (applications.application_status === "finished") {
+      return (
+        <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
+          <img className="w-[15px] h-[15px]" src={letterSentIcon} />
+          <p>Review finished</p>
+        </div>
+      );
+    } else if (applications.application_status === "declined") {
+      return (
+        <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
+          <img className="w-[15px] h-[15px]" src={closedIcon} />
+          <p>Declined on 07/11/20</p>
+        </div>
+      );
+    }
+  };
+  
   const jobCreatedDate = moment(applications.opened_at).fromNow();
   const ApplicationSentDate = moment(applications.sent_date).fromNow();
 
@@ -137,7 +169,7 @@ function TestYourApp() {
                             {/* section 1*/}
                             <div className="font-Montserrat flex flex-row">
                               <div className="w-[59px] h-[59px] rounded-sm">
-                              <img src={app.company_logo}/>
+                                <img src={app.company_logo} />
                               </div>
                               <div className="flex flex-col ml-[16px] items-start w-[180px] h-[64px]">
                                 <p className="text-DarkGray text-scale-[20px] text-normal leading-[28px] tracking-[0.15px]">
@@ -160,8 +192,9 @@ function TestYourApp() {
                             </div>
                             <div className="mt-[8px] flex flex-row">
                               <img src={dollarIcon} />
-                              <p className="ml-[4px]">{app.salary_min} k</p>-{" "}
-                              <p>{app.salary_max} k</p>
+                              <p className="ml-[4px]">
+                                {app.salary_min} k
+                              </p>- <p>{app.salary_max} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">
                                 Posted {jobCreatedDate}
@@ -170,7 +203,8 @@ function TestYourApp() {
                           </div>
 
                           {/* Section 3 */}
-                          <div className="w-[164px] h-[47px] m-[4px] flex flex-row font-Inter text-Gray text-[12px] font-normal leading-[16px] tracking-[0.4px]">
+                          <div className="w-[164px] h-[47px] m-[4px] flex flex-row font-Inter text-Gray 
+                          text-[12px] font-normal leading-[16px] tracking-[0.4px]">
                             <div className="flex flex-col w-[80px] h-[47px] items-center">
                               <img
                                 className="w-[15px] h-[15px]"
@@ -178,13 +212,7 @@ function TestYourApp() {
                               />
                               <p>sent {ApplicationSentDate}</p>
                             </div>
-                            <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
-                              <img
-                                className="w-[15px] h-[15px]"
-                                src={pendingIcon}
-                              />
-                              <p>{app.application_status}</p>
-                            </div>
+                            <div>{statusChange()}</div>
                           </div>
                         </AccordionTrigger>
 
@@ -199,13 +227,14 @@ function TestYourApp() {
                               {app.professional_experience}
                             </p>
                             <h1 className="mt-[16px] font-Montserrat text-Pink text-[16px] font-normal">
-                              Why are you interested in working at <b>{app.company_name}</b>
+                              Why are you interested in working at{" "}
+                              <b>{app.company_name}</b>
                             </h1>
-                            <p className="w-[760px]">
-                              {app.interested_reason}
-                            </p>
-                            <button className="flex flex-row justify-center items-center ml-[300px] 
-                            hover:bg-LightPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]">
+                            <p className="w-[760px]">{app.interested_reason}</p>
+                            <button
+                              className="flex flex-row justify-center items-center ml-[300px] 
+                            hover:bg-LightPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
+                            >
                               <img src={declineIcon} />
                               <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
                                 decline application
