@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
-// import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,41 +29,31 @@ function ProfessionalProfile() {
   // states
   const [formData, setFormData] = useState(initialFormData);
   const [fileSelected, setFileSelected] = useState(false);
-  //Schema
-  // const profileSchema = z.object({
-  //   email: z.string().email(),
-  //   user_name: z.string(),
-  //   user_phone: z.string().regex(/^\+66\d{0,}$/),
-  //   user_birthdate: z.date().or(z.string()),
-  //   user_linkedin: z.string().url(),
-  //   user_title: z.string(),
-  //   user_experience: z.string(),
-  //   user_education: z.string(),
-  // });
-  // // Function to format the date as MM/DD/YYYY
+  //
+  // Function to format the date as year-month-day or else it won't work kub
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
+    return `${year}-${month}-${day}`;
   };
   const user_birthdate = formData.user_birthdate;
   const formattedBirthdate = formatDate(user_birthdate);
+  //
+  const today = new Date().toISOString().split("T")[0];
   //init
   const { control } = useForm();
   //fetch data from database ka
   const getdatafromdatabase = async () => {
     const response = await axios.get(`http://localhost:4000/profile/propro`);
     const fetcheddata = response.data;
-    console.log(fetcheddata);
+    // console.log(fetcheddata); เหลืออันนี้ไว้ check
     setFormData({ ...initialFormData, ...fetcheddata });
-    console.log(formData);
   };
-  //useEffect - don't add anthing in that []
+  //useEffect - don't add anthing in that [] na ka
   useEffect(() => {
     getdatafromdatabase();
-    console.log(formData);
   }, []);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>handlers
   //1. handleFileInputChange
@@ -104,7 +93,7 @@ function ProfessionalProfile() {
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
         const { data, error: professionalError } = await supabase.storage
-          .from("files")
+          .from("professionalprofile")
           .upload(
             `professionalcv/${Date.now()}${formData.newCv.name}`,
             formData.newCv,
@@ -121,6 +110,11 @@ function ProfessionalProfile() {
         setFormData((prevState) => ({
           ...prevState,
           user_cv: data.path,
+        }));
+      } else {
+        setFormData((prevState) => ({
+          ...prevState,
+          user_cv: null,
         }));
       }
 
@@ -152,7 +146,12 @@ function ProfessionalProfile() {
     setFormData({ ...formData, user_name: e.target.value });
   }; // name
   const handlePhoneChange = (e) => {
-    setFormData({ ...formData, user_phone: e.target.value });
+    let inputValue = e.target.value;
+    const filteredlewkubPhoneNumber = inputValue.replace(/\D/g, "");
+    if (filteredlewkubPhoneNumber.length > 0) {
+      inputValue = `+${filteredlewkubPhoneNumber.slice(0, 11)}`;
+    }
+    setFormData({ ...formData, user_phone: inputValue });
   }; // phone
   const handleBirthdateChange = (e) => {
     setFormData({ ...formData, user_birthdate: e.target.value });
@@ -262,14 +261,12 @@ function ProfessionalProfile() {
                 <Controller
                   name="phone"
                   control={control}
-                  defaultValue="+66"
+                  defaultValue=""
                   render={({ field }) => (
                     <Textarea
                       {...field}
                       className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="tel"
-                      pattern="\+66\d{0,10}"
-                      maxLength="12"
                       value={formData.user_phone}
                       onChange={handlePhoneChange}
                       required
@@ -293,14 +290,17 @@ function ProfessionalProfile() {
                 <Controller
                   name="birthdate"
                   control={control}
-                  defaultValue={formattedBirthdate}
+                  defaultValue={""}
                   render={({ field }) => (
                     <input
                       {...field}
                       className="px-2 w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="date"
                       onChange={handleBirthdateChange}
-                      placeholder="MM/DD/YYYY"
+                      value={formattedBirthdate}
+                      placeholder="YYYY-MM-DD"
+                      min="1923-01-01"
+                      max={today}
                     />
                   )}
                 />
@@ -442,37 +442,21 @@ function ProfessionalProfile() {
               {/*UPLOAD / UPDATE YOUR CV */}
               {/*UPLOAD / UPDATE YOUR CV */}
               {/* UPLOAD / UPDATE YOUR CV */}
+              {/* UPLOAD / UPDATE YOUR CV */}
               <div className="mt-2 mr-2">
                 <h1 style={{ fontSize: "16px", fontWeight: "bold" }}>
                   UPLOAD / UPDATE YOUR CV
                 </h1>
-                <button
-                  htmlFor="fileInput"
-                  type="button"
-                  onClick={() => {
-                    const fileInput = document.getElementById("fileInput");
-                    fileInput.click();
-                  }}
-                >
-                  <img src={ChooseAFile} alt="Choose a file Button" />
+                <label htmlFor="fileInput" className="cursor-pointer">
                   <input
                     type="file"
                     id="fileInput"
                     accept=".pdf"
-                    style={{ display: "none" }}
-                    onClick={(e) => {
-                      const selectedFile = e.target.files[0];
-                      if (selectedFile) {
-                        console.log("Current CV set:", selectedFile);
-                        // Display the selected file name
-                        document.getElementById(
-                          "selectedFileName"
-                        ).textContent = `Selected file: ${selectedFile.name}`;
-                      }
-                    }}
                     onChange={handleFileInputChange}
+                    style={{ display: "none" }}
                   />
-                </button>
+                  <img src={ChooseAFile} alt="Choose a file Button" />
+                </label>
                 <br />
                 <span style={{ color: "#8E8E8E" }}>
                   Only PDF. Max size 5 MB
@@ -490,21 +474,20 @@ function ProfessionalProfile() {
                       backgroundColor: "#FCE4EC",
                     }}
                   >
-                    <span id="selectedFileName">Selected file:</span>
+                    <span id="selectedFileName">
+                      Selected file: {formData.selectedNewFileName}
+                    </span>
                   </div>
                 )}
                 {/* SAVE CHANGES button */}
-                {/* SAVE CHANGES button */}
-                {/*  SAVE CHANGES button */}
                 <br />
                 <button
-                  type="submit"
+                  type="button"
                   onClick={handleSaveChanges}
                   className="mt-5 bg-pink-300 text-white px-4 py-2 rounded cursor-pointer"
                 >
                   SAVE CHANGES
                 </button>
-                {/*   */}
               </div>
             </form>
           </div>
