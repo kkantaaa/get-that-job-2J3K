@@ -16,6 +16,7 @@ import RecruiterProfile from "@/pages/Recruiter/RecruiterProfile.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
 import FollowingPage from "./pages/FollowingPage.jsx";
+import CompanyJobPage from "./pages/companyJobPage.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
 import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
@@ -60,9 +61,21 @@ function App() {
 
               <Route path="/user/following" element={<FollowingPage />} />
 
-              <Route path="/user/:user_id/myapplication" element={<YourApplication />} />
+              {/* <Route path="user/companyjob" element={<CompanyJobPage />} /> */}
+              <Route
+                path="user/companyjob/:recruiter_id"
+                element={<CompanyJobPage />}
+              />
+
+              <Route
+                path="/user/:user_id/myapplication"
+                element={<YourApplication />}
+              />
               {/* route for testing */}
-              <Route path="/user/myapplication/:user_id" element={<TestYourApp />} />
+              <Route
+                path="/user/myapplication/:user_id"
+                element={<TestYourApp />}
+              />
 
               <Route path="/user/profile" element={<ProfessionalProfile />} />
               {/* keem and kaka's routes */}

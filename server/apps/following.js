@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { pool } from "../utils/db_connection.js";
+import { protect } from "../utils/protect.js";
 
 const followingRouter = Router();
+// jobRouter.use(protect);
 
 followingRouter.get("/job", async (req, res) => {
   try {
@@ -40,8 +42,8 @@ followingRouter.get("/job", async (req, res) => {
 
 followingRouter.get("/companyinfo", async (req, res) => {
   try {
-    const userid = `${req.query.userId}` || null;
-    // const userid = 26;
+    // const userid = `${req.query.userId}` || null;
+    const userid = 26;
     if (!userid) {
       return res.status(401).json({
         message: "no userId please login",
@@ -111,6 +113,63 @@ followingRouter.get("/companycount", async (req, res) => {
       message: `${error}`,
     });
   }
+});
+
+followingRouter.get("/companyjob/:id", async (req, res) => {
+  const recruiterId = req.params.id;
+  // const recruiterId = 83;
+  // console.log(`recruiter id : ${recruiterId}`);
+
+  if (!recruiterId) {
+    return res.status(401).json({
+      message: "Please specified recruiterId in order to get the companyjob",
+    });
+  }
+
+  let results;
+
+  try {
+    results = await pool.query(
+      `SELECT *
+      FROM jobs
+      INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+      INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+      INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+      WHERE jobs.recruiter_id = $1`,
+      [recruiterId]
+    );
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+
+  return res.json({
+    data: results.rows,
+  });
+
+  // try {
+  //   // console.log(`user id is ${userid}`);
+
+  //   let query = "";
+  //   let values = [];
+
+  //   query = `SELECT *
+  //           FROM jobs
+  //           INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+  //           WHERE jobs.recruiter_id = $1`;
+  //   values = [recruiterId];
+
+  //   const results = await pool.query(query, values);
+
+  //   return res.json({
+  //     data: results.rows,
+  //   });
+  // } catch (error) {
+  //   return res.json({
+  //     message: `${error}`,
+  //   });
+  // }
 });
 
 export default followingRouter;
