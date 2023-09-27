@@ -93,7 +93,7 @@ function ProfessionalProfile() {
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
         const { data, error: professionalError } = await supabase.storage
-          .from("files")
+          .from("professionalprofile")
           .upload(
             `professionalcv/${Date.now()}${formData.newCv.name}`,
             formData.newCv,
@@ -110,6 +110,11 @@ function ProfessionalProfile() {
         setFormData((prevState) => ({
           ...prevState,
           user_cv: data.path,
+        }));
+      } else {
+        setFormData((prevState) => ({
+          ...prevState,
+          user_cv: null,
         }));
       }
 
@@ -437,37 +442,21 @@ function ProfessionalProfile() {
               {/*UPLOAD / UPDATE YOUR CV */}
               {/*UPLOAD / UPDATE YOUR CV */}
               {/* UPLOAD / UPDATE YOUR CV */}
+              {/* UPLOAD / UPDATE YOUR CV */}
               <div className="mt-2 mr-2">
                 <h1 style={{ fontSize: "16px", fontWeight: "bold" }}>
                   UPLOAD / UPDATE YOUR CV
                 </h1>
-                <button
-                  htmlFor="fileInput"
-                  type="button"
-                  onClick={() => {
-                    const fileInput = document.getElementById("fileInput");
-                    fileInput.click();
-                  }}
-                >
-                  <img src={ChooseAFile} alt="Choose a file Button" />
+                <label htmlFor="fileInput" className="cursor-pointer">
                   <input
                     type="file"
                     id="fileInput"
                     accept=".pdf"
-                    style={{ display: "none" }}
-                    onClick={(e) => {
-                      const selectedFile = e.target.files[0];
-                      if (selectedFile) {
-                        console.log("Current CV set:", selectedFile);
-                        // Display the selected file name
-                        document.getElementById(
-                          "selectedFileName"
-                        ).textContent = `Selected file: ${selectedFile.name}`;
-                      }
-                    }}
                     onChange={handleFileInputChange}
+                    style={{ display: "none" }}
                   />
-                </button>
+                  <img src={ChooseAFile} alt="Choose a file Button" />
+                </label>
                 <br />
                 <span style={{ color: "#8E8E8E" }}>
                   Only PDF. Max size 5 MB
@@ -485,21 +474,20 @@ function ProfessionalProfile() {
                       backgroundColor: "#FCE4EC",
                     }}
                   >
-                    <span id="selectedFileName">Selected file:</span>
+                    <span id="selectedFileName">
+                      Selected file: {formData.selectedNewFileName}
+                    </span>
                   </div>
                 )}
                 {/* SAVE CHANGES button */}
-                {/* SAVE CHANGES button */}
-                {/*  SAVE CHANGES button */}
                 <br />
                 <button
-                  type="submit"
+                  type="button"
                   onClick={handleSaveChanges}
                   className="mt-5 bg-pink-300 text-white px-4 py-2 rounded cursor-pointer"
                 >
                   SAVE CHANGES
                 </button>
-                {/*   */}
               </div>
             </form>
           </div>
