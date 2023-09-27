@@ -41,6 +41,20 @@ const CompanyFollowingList = (props) => {
   // console.log("counts : ");
   // console.log(counts);
 
+  // {
+  //   companyJobs && companyJobs.length > 0 ? (
+  //     <div className="flex flex-row">
+  //       {
+  //         companyJobsCount.filter(
+  //           (job) => job.recruiter_id == follow.recruiter_id
+  //         )[0].job_count
+  //       }
+  //     </div>
+  //   ) : (
+  //     <div>Loading...</div>
+  //   );
+  // }
+
   return (
     <div className="ml-[120px]">
       <div className="m-2 text-[18px]">
@@ -50,9 +64,9 @@ const CompanyFollowingList = (props) => {
       </div>
       <div className="grid lg:grid-cols-2 gap-2 xl:grid-cols-3 2xl:grid-cols-4">
         {companyFollow.map((follow) => {
-          const count = companyJobsCount.filter(
-            (job) => job.recruiter_id == follow.recruiter_id
-          )[0].job_count;
+          // const count = companyJobsCount.filter(
+          //   (job) => job.recruiter_id == follow.recruiter_id
+          // )[0].job_count;
           return (
             <div
               key={follow.recruiter_id}
@@ -72,13 +86,18 @@ const CompanyFollowingList = (props) => {
                         alt="Job Opening Icon"
                       />
                       <div>
-                        {/* {
-                          counts.filter(
-                            (job) => job.recruiter_id == follow.recruiter_id
-                          )[0].job_count
-                        }{" "} */}
-                        {count} jobs openings
-                        {/* โหลดไม่ทันแล้วจะ error ลองใส่ await*/}
+                        {companyJobsCount && companyJobsCount.length > 0 ? (
+                          <div className="flex flex-row">
+                            {
+                              companyJobsCount.filter(
+                                (job) => job.recruiter_id == follow.recruiter_id
+                              )[0].job_count
+                            }{" "}
+                            jobs openings
+                          </div>
+                        ) : (
+                          <div>Loading...</div>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -14,15 +14,15 @@ import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 function CompanyJobPage() {
   const navigate = useNavigate();
   const { userData } = useAuth();
-  // const [jobDetail, setJobDetail] = useState([]);
+  const { recruiter_id } = useParams();
   const [companyJobs, setCompanyJobs] = useState([]);
   const [appIds, setAppIds] = useState([]);
   const [jobFollowingIds, setJobFollowingIds] = useState([]);
-  const { recruiter_id } = useParams();
 
   const getCompanyJobs = async () => {
+    //
     try {
-      // console.log(recruiter_id); = 83 OK
+      // console.log(recruiter_id); = 83 รับ recruiter_id มาจากหน้าก่อนหน้า ได้
       const results = await axios.get(
         `http://localhost:4000/following/companyjob/${recruiter_id}`
       );
@@ -32,36 +32,6 @@ function CompanyJobPage() {
       console.error("Error: Failed to fetch jobs data");
     }
   };
-
-  useEffect(() => {
-    getCompanyJobs();
-  }, []);
-
-  // const getJobDetail = async () => {
-  //   try {
-  //     const result = await axios.get(`http://localhost:4000/jobs/${job_id}`);
-  //     console.log(result.data.data);
-  //     setJobDetail(result.data.data);
-  //   } catch (error) {
-  //     console.error(
-  //       "Error: Failed to fetch job data for job_id:",
-  //       job_id,
-  //       error
-  //     );
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getJobDetail();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [job_id]);
-
-  // const handleJobApplication = (event) => {
-  //   event.preventDefault();
-  //   navigate(`/user/jobs/apply/${job_id}`);
-  // };
-
-  // const createdAt = moment(jobDetail.opened_at).fromNow();
 
   const getJobApp = async (input) => {
     const userId = input;
@@ -146,15 +116,26 @@ function CompanyJobPage() {
     }
   };
 
+  // useEffect(() => {
+  //   getCompanyJobs();
+  // }, []);
+
   useEffect(() => {
+    getCompanyJobs();
     getJobApp(userData.user.user_id);
     getJobFollowing(userData.user.user_id);
   }, []);
-  console.log(`companyjob[0]`);
-  // console.log(companyJobs[0].company_name);
-  console.log(companyJobs[0]);
+
   // const companyLogo = companyJobs[0].company_logo;
   // const companyName = companyJobs[0].company_name;
+
+  // {
+  //   companyJobs && companyJobs.length > 0 ? (
+  //     <div className="flex flex-row">{companyJobs[0].company_name}</div>
+  //   ) : (
+  //     <div>Loading...</div>
+  //   );
+  // }
 
   return (
     <>
@@ -179,11 +160,24 @@ function CompanyJobPage() {
               <div className="flex flex-row">
                 <div className="flex flex-row">
                   <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
-                    <img src={companyJobs[0].company_logo} />
+                    {companyJobs && companyJobs.length > 0 ? (
+                      <div className="flex flex-row">
+                        <img src={companyJobs[0].company_logo} />
+                      </div>
+                    ) : (
+                      <div>Loading...</div>
+                    )}
                   </div>
                   <div className="ml-[16px] flex flex-col">
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
-                      {companyJobs[0].company_name}
+                      {/* {companyJobs[0].company_name} */}
+                      {companyJobs && companyJobs.length > 0 ? (
+                        <div className="flex flex-row">
+                          {companyJobs[0].company_name}
+                        </div>
+                      ) : (
+                        <div>Loading...</div>
+                      )}
                     </div>
                     <img
                       className="w-[138px] h-[40px]"
