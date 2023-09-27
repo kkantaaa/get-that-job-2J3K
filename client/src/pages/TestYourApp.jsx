@@ -27,7 +27,7 @@ moment().format();
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-  const [filterStatus, setFilterStatus] = useState("all");
+  // const [filterStatus, setFilterStatus] = useState("all");
   const { user_id } = useParams();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] = useState(applications);
@@ -135,10 +135,11 @@ function TestYourApp() {
                 </label>
 
                 <RadioGroup
-                  value={filterStatus}
+                  // value={filterStatus}
+                  defaultValue="all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
-                    setFilterStatus(value);
+                    // setFilterStatus(value);
                     const filteredApplications = handleFilteredApplication(value);
                     setFilteredApplications(filteredApplications);
                   }
