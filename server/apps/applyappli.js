@@ -165,10 +165,39 @@ applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
   }
 });
 
-// // professional wants to decline the application
-// applyappliRouter.put("/:user_id", async (res, req)=>{
+// professional wants to decline the application
+applyappliRouter.put("/:application_id", async (req, res) => {
+  try {
+    const application_id = req.params.application_id;
+    if (!application_id) {
+      return res.status(404).json({ error: "Invalid application_id" });
+    }
 
-// })
+    // Check if the request body contains the status "declined"
+    if (req.body.status === "declined") {
+      await pool.query(
+        // Update the application status to "declined" and set sent_date to current date
+        `
+        UPDATE application
+        SET application_status = $1, sent_date = $2
+        WHERE application_id = $3
+        `,
+        ["declined", new Date(), application_id]
+      );
+      return res.status(200).json({
+        message: "The application has been successfully declined"
+      });
+    } else {
+      return res.status(400).json({
+        error: "Failed to decline the application"
+      });
+    }
+
+  } catch (error) {
+    res.status(500).json({error: "Internal Server Error"});
+  }
+});
 
 export default applyappliRouter;
+
 //("/apply/xxxxxxxxx", applyappliRouter);

@@ -90,6 +90,29 @@ function TestYourApp() {
       );
     }
   };
+
+  const handleDeclinedApplication = async (application_id)=>{
+    try {
+      const response = await axios.put(`http://localhost:4000/apply/${application_id}`, {
+        status: "declined"
+      })
+    if (response.status === 200){
+      return (
+        <button
+        className="flex flex-row justify-center items-center ml-[300px] 
+       w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none" disabled
+      >
+        <img src={declineIcon} />
+        <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
+          declined
+        </p>
+      </button>
+      )
+    }
+    }  catch (error) {
+      console.error("Error: unable to decline applications", error);
+    }
+  }
   
   const jobCreatedDate = moment(applications.opened_at).fromNow();
   const ApplicationSentDate = moment(applications.sent_date).fromNow();
@@ -234,6 +257,7 @@ function TestYourApp() {
                             <button
                               className="flex flex-row justify-center items-center ml-[300px] 
                             hover:bg-LightPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
+                            onClick={()=> handleDeclinedApplication(applications.application_id)}
                             >
                               <img src={declineIcon} />
                               <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
