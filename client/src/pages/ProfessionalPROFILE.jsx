@@ -11,7 +11,8 @@ import ProfessionalSidebar from "@/components/ProfessionalSideBar";
 //import images
 import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
 import SaveChanges from "@/images/ProfesionalProfile/Save Changes.png";
-
+//phonejson
+import phonedatajson from "@/assets/country_dial_info.json";
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>compo declaration<<<<<<<<<<<<<<<<<<<<<<
 function ProfessionalProfile() {
   // initial form
@@ -31,7 +32,7 @@ function ProfessionalProfile() {
   // states
   const [formData, setFormData] = useState(initialFormData);
   const [fileSelected, setFileSelected] = useState(false);
-  //
+  const [selectedCountry, setSelectedCountry] = useState(phonedatajson[0]);
   // Function to format the date as year-month-day or else it won't work kub
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
