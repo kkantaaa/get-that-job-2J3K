@@ -90,15 +90,16 @@ applyappliRouter.get("/recruiter/:job_id", async (req, res) => {
   INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
   WHERE
     application.job_id = $1
+    AND application.application_status != 'declined'
     `;
-    // const queryOrder = `ORDER BY application_status DESC`;
+    const queryOrder = ` ORDER BY application_status DESC`;
     const queryParams = [job_id];
 
     if (status !== "all") {
       query += " AND application_status = $2";
       queryParams.push(status);
     }
-    // query += queryOrder;
+    query += queryOrder;
     
     const result = await pool.query(query, queryParams);
 
