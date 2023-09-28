@@ -67,7 +67,7 @@ function App() {
 
               {/* route for testing */}
               <Route
-                path="/user/myapplication/:user_id"
+                path="/user/myapplication"
                 element={<TestYourApp />}
               />
 

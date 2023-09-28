@@ -134,15 +134,16 @@ applyappliRouter.put("/recruiter/:application_id", async (req, res) => {
 
 // สำหรับ professional ใช้ เพื่อดู application ตัวเอง
 // เดี๋ยวถามพี่กัน or กาก้า
-applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
+applyappliRouter.get("/myapplication", async (req, res) => {
   try {
-    const user_id = req.params.user_id;
+    const user_id = `${req.query.userId}`;
     // const filter = req.query.filter || null; // status query
-
+    console.log(user_id)
     if (!user_id) {
       return res.status(404).json({ error: "Invalid user_id" });
     }
 
+    let values = []
     let query = `
     SELECT 
       *
@@ -155,11 +156,10 @@ applyappliRouter.get("/myapplication/:user_id", async (req, res) => {
        WHERE application.user_id = $1
   `;
 
-    const queryParams = [user_id];
+    values = [user_id]
+    const result = await pool.query(query, values);
 
-    const result = await pool.query(query, queryParams);
-
-    return res.json(result.rows);
+    return res.json({data: result.rows,});
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });

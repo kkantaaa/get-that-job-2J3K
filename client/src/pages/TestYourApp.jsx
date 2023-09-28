@@ -22,13 +22,15 @@ import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 import declineIcon from "../images/ApllicationApplyPage/white-decline.svg";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import { useAuth } from "@/contexts/authentication";
 
 moment().format();
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
   // const [filterStatus, setFilterStatus] = useState("all");
-  const { user_id } = useParams();
+  // const { user_id } = useParams();
+  const {userData} = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] = useState(applications);
 
@@ -37,12 +39,16 @@ function TestYourApp() {
     setApplications([...applications]);
   };
 
-  const getApplication = async () => {
+  const getApplication = async (input) => {
+    const userId = input;
     try {
+      const params = new URLSearchParams();
+      params.append("userId", userId)
       const results = await axios.get(
-        `http://localhost:4000/apply/myapplication/${user_id}`
+        "http://localhost:4000/apply/myapplication", {params,}
       );
       setApplications(results.data);
+      console.log("results are", results)
     } catch (error) {
       console.error("Error: unable to load applications", error);
     }
@@ -62,7 +68,7 @@ function TestYourApp() {
   useEffect(() => {
     getApplication();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user_id]);
+  }, []);
 
   const handleFilteredApplication = (status) =>{
     if (status === "all") {

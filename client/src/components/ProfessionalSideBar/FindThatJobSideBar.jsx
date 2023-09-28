@@ -15,7 +15,7 @@ export default function FindThatJobSideBar() {
   };
 
   const handleApplicationPage = () => {
-    navigate("/user/myapplication/:user_id");
+    navigate("/user/myapplication");
   };
 
   const handleFollowingPage = () => {
