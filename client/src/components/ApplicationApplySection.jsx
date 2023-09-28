@@ -173,19 +173,11 @@ function ApplicationApplySection(pagedata) {
                 />
               </button>
               <br />
-              <span style={{ color: "#8E8E8E" }}>Only PDF. Max size 5 MB</span>
+              <span className="text-gray-400">Only PDF. Max size 5 MB</span>
               {currentCV && (
                 <div
                   id="selectedFileBox"
-                  style={{
-                    marginTop: "10px",
-                    border: "1px solid pink",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    color: "#333",
-                    width: "120px",
-                    backgroundColor: "#FCE4EC",
-                  }}
+                  className="mt-7 px-5 border border-pink-300 p-2 rounded-3xl text-gray-600 w-[150px] bg-pink-100"
                 >
                   <span id="selectedFileName">
                     Selected file: {currentCV.name}
