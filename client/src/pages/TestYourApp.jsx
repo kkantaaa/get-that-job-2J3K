@@ -23,7 +23,6 @@ import reviewIcon from "../images/ApllicationApplyPage/reviewed.svg";
 import moment from "moment";
 import { useAuth } from "@/contexts/authentication";
 
-moment().format();
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
@@ -102,6 +101,7 @@ function TestYourApp() {
         </div>
       );
     } else if (app.application_status === "declined") {
+      const declinedDate = moment(app.sent_date).format('DD-MM-YY');
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={closedIcon} />
@@ -118,11 +118,6 @@ function TestYourApp() {
     }
   };
   
-  // convert date & time
-  const jobCreatedDate = moment(applications.opened_at).fromNow();
-  const applicationSentDate = moment(applications.sent_date).fromNow();
-  const declinedDate = moment(applications.sent_date).format('DD-MM-YY');
-
 
   return (
     <>
@@ -233,7 +228,7 @@ function TestYourApp() {
                               <p>{app.salary_max /1000} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">
-                                Posted {jobCreatedDate}
+                                Posted {moment(app.opened_at).fromNow()}
                               </p>
                             </div>
                           </div>
@@ -248,7 +243,7 @@ function TestYourApp() {
                                 className="w-[15px] h-[15px]"
                                 src={letterIcon}
                               />
-                              <p>sent {applicationSentDate}</p>
+                              <p>sent {moment(app.sent_date).fromNow()}</p>
                             </div>
                             <div>{statusChange(app)}</div>
                           </div>
