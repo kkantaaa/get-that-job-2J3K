@@ -1,21 +1,26 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/authentication";
 import axios from "axios";
 import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar";
-import FollowingStatus from "../images/job-detail-page/FollowButton.svg";
+// import FollowingStatus from "../images/job-detail-page/FollowButton.svg";
 import NavigateLine from "../images/job-detail-page/navigate-line.svg";
 import CategoryIcon from "../images/job-detail-page/category-icon.svg";
 import DollarSign from "../images/job-detail-page/dollarsign.svg";
 import CalendarIcon from "../images/job-detail-page/calendar.svg";
 import TimeIcon from "../images/job-detail-page/time.svg";
 import ArrowLeft from "../images/job-detail-page/arrow-left-black.svg";
+import followIcon from "@/images/getthatjob-page/followIcon.svg";
+import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 import moment from "moment";
 
 moment().format();
 
 function JobDetail() {
   const navigate = useNavigate();
+  const { userData } = useAuth();
   const [jobDetail, setJobDetail] = useState([]);
+  const [companyFollowIds, setCompanyFollowIds] = useState([]);
   const { job_id } = useParams();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,6 +55,105 @@ function JobDetail() {
 
   const createdAt = moment(jobDetail.opened_at).fromNow();
 
+  const getCompanyFollow = async (input) => {
+    const userId = input;
+    try {
+      const params = new URLSearchParams();
+      params.append("userId", userId);
+      const results = await axios.get(
+        `http://localhost:4000/following/companyinfo`,
+        {
+          params,
+        }
+      );
+      const companyFollowIds = results.data.data.map((obj) => {
+        return obj.recruiter_id;
+      });
+      setCompanyFollowIds(companyFollowIds);
+    } catch (error) {
+      console.error("Error: Failed to fetch company following", userId, error);
+    }
+  };
+
+  const followButton = (recruiterId) => {
+    const isFollowing = companyFollowIds.includes(recruiterId);
+    if (isFollowing) {
+      return (
+        <button className="flex flex-row">
+          <div className="mx-1">
+            <img src={pinkFollowIcon} />
+          </div>
+          <div className="pt-2 font-Inter">
+            <button
+              value={recruiterId}
+              onClick={(event) => {
+                handleUnfollow(event.target.value);
+              }}
+            >
+              FOLLOWING
+            </button>
+          </div>
+        </button>
+      );
+    } else {
+      return (
+        <button className="flex flex-row pr-4">
+          <div className="mx-0">
+            <img src={followIcon} />
+          </div>
+          <div className="pt-2 font-Inter">
+            <button
+              value={recruiterId}
+              onClick={(event) => {
+                handleFollow(event.target.value);
+              }}
+            >
+              FOLLOW
+            </button>
+          </div>
+        </button>
+      );
+    }
+  };
+
+  // FOLLOW LOGIC
+  const handleFollow = async (event) => {
+    const userId = userData.user.user_id;
+    const recruiterId = event;
+    console.log(`user id : ${userId}`);
+    console.log(`job id : ${recruiterId}`);
+    try {
+      const data = {
+        userId: userId,
+        recruiterId: recruiterId,
+      };
+      await axios.post("http://localhost:4000/following/followcompany", data);
+    } catch (error) {
+      console.error("Error: unable to follow the company", error);
+    }
+    getCompanyFollow(userData.user.user_id);
+  };
+
+  // UNFOLLOW LOGIC
+  const handleUnfollow = async (event) => {
+    const userId = userData.user.user_id;
+    const jobId = event;
+    try {
+      const data = {
+        userId: userId,
+        jobId: jobId,
+      };
+      await axios.post("http://localhost:4000/following/unfollowjob", data);
+    } catch (error) {
+      console.error("Error: unable to unfollow the job", error);
+    }
+    getCompanyFollow(userData.user.user_id);
+  };
+
+  useEffect(() => {
+    getCompanyFollow();
+  }, [companyFollowIds]);
+
   return (
     <>
       <div className="bg-Background overflow-x-hidden">
@@ -73,14 +177,12 @@ function JobDetail() {
                     <img src={jobDetail.company_logo} />
                   </div>
                   <div className="ml-[16px] flex flex-col">
-                    <div className="font-Montserrat text-[24px] font-normal leading-normal">
+                    <div className="font-Montserrat text-[24px] text-DarkGray font-normal leading-normal">
                       {jobDetail.company_name}
                     </div>
-                    <img
-                      className="w-[138px] h-[40px]"
-                      src={FollowingStatus}
-                      alt="following-button"
-                    />
+                    <div className="text-Gray hover:text-Pink">
+                      {followButton(jobDetail.recruiter_id)}
+                    </div>
                   </div>
                 </div>
                 <button className="ml-[500px] hover:bg-LightPink active:bg-DarkPink pt-4 justify-center flex flex-row text-white font-[500px] tracking-[1.25px] leading-[24px] rounded-2xl w-[173px] h-[56px] bg-Pink uppercase">
