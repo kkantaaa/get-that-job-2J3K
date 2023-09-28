@@ -62,7 +62,7 @@ const CompanyFollowingList = (props) => {
           You are following {companyFollow.length} companies
         </h2>
       </div>
-      <div className="grid lg:grid-cols-2 gap-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
         {companyFollow.map((follow) => {
           // const count = companyJobsCount.filter(
           //   (job) => job.recruiter_id == follow.recruiter_id

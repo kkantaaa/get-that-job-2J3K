@@ -26,19 +26,19 @@ function RecruitLogInInfo() {
     try {
       // const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
       // const result = response.data;
-  
+
       // if (result.exists) {
       //   setError("email", {
       //     type: "manual",
       //     message: "The email is already taken"
       //   });
       // }
-  
+
       // Check if passwords match
       if (data.companypassword !== data.confirmedPassword) {
         setError("confirmedPassword", {
           type: "manual",
-          message: "The confirmed password does not match"
+          message: "The confirmed password does not match",
         });
       } else {
         setRecruiterData({
@@ -46,14 +46,14 @@ function RecruitLogInInfo() {
           email: data.companyemail,
           password: data.companypassword,
         });
-  
+
         navigate("/recruiter/register2");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  
+
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">

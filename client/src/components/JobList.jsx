@@ -65,20 +65,9 @@ const JobList = (props) => {
     const isApplied = appIds.includes(jobId); //set job_id
     if (isApplied) {
       return (
-        <>
-          {/* Temporary */}
-          {/* <p
-            className="hover:text-Pink"
-            onClick={() => navigate(`/user/jobs/${jobId}`)}
-          >
-            Link to detail
-          </p> */}
-          {/* Temporary */}
-
-          <button className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-BackgroundDark rounded-[16px] bg-BackgroundDark text-Gray text-center text-[14px] tracking-[1.25px] font-Inter">
-            APPLIED
-          </button>
-        </>
+        <button className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-BackgroundDark rounded-[16px] bg-BackgroundDark text-Gray text-center text-[14px] tracking-[1.25px] font-Inter">
+          APPLIED
+        </button>
       );
     } else {
       return (
@@ -101,7 +90,7 @@ const JobList = (props) => {
       const results = await axios.get("http://localhost:4000/following/job", {
         params,
       });
-      console.log(results.data.data);
+      // console.log(results.data.data);
       const jobFollowingIds = results.data.data.map((obj) => {
         return obj.job_id;
       });
