@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import cancelIcon from "../images/ApllicationApplyPage/cancel.svg";
 import closedIcon from "../images/ApllicationApplyPage/closed.svg";
 import letterIcon from "../images/ApllicationApplyPage/letter.svg";
 import letterSentIcon from "../images/ApllicationApplyPage/letter-sent.svg";
@@ -20,6 +19,7 @@ import category from "../images/ApllicationApplyPage/category.svg";
 import dollarIcon from "../images/ApllicationApplyPage/dollar.svg";
 import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 import declineIcon from "../images/ApllicationApplyPage/white-decline.svg";
+import reviewIcon from "../images/ApllicationApplyPage/reviewed.svg";
 import moment from "moment";
 import { useAuth } from "@/contexts/authentication";
 
@@ -27,7 +27,6 @@ moment().format();
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-  // const [filterStatus, setFilterStatus] = useState("all");
   const {userData} = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] = useState(applications);
@@ -64,9 +63,9 @@ function TestYourApp() {
     }
   };
 
+  // to update and display
   useEffect(() => {
     getApplication(userData.user.user_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // user filters the applications
@@ -97,7 +96,7 @@ function TestYourApp() {
     } else if (app.application_status === "finished") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
-          <img className="w-[15px] h-[15px]" src={letterSentIcon} />
+          <img className="w-[15px] h-[15px]" src={reviewIcon} />
           <p>Review finished</p>
         </div>
       );
