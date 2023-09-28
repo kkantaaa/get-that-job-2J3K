@@ -3,6 +3,46 @@ import { pool } from "../utils/db_connection.js";
 
 const applyappliRouter = Router();
 
+// สำหรับ professional ใช้ เพื่อดู application ตัวเอง
+// เดี๋ยวถามพี่กัน or กาก้า
+applyappliRouter.get("/myapplication", async (req, res) => {
+  console.log(req);
+  try {
+    // const user_id = 26;
+    const user_id = `${req.query.userId}`;
+    console.log(user_id)
+    if (!user_id) {
+      return res.status(404).json({ error: "Invalid user_id" });
+    }
+
+    let values = []
+    let query = ""
+    
+    query =
+    `
+    SELECT 
+      *
+       FROM application
+       INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
+       INNER JOIN jobs ON application.job_id = jobs.job_id
+       INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+       inner join job_categories on jobs.job_category_id=job_categories.job_category_id
+       inner join job_types on jobs.job_type_id=job_types.job_type_id
+       WHERE application.user_id = $1
+  `;
+
+    values = [user_id]
+    console.log(query, values);
+    const result = await pool.query(query, values);
+
+    return res.json({data: result.rows,});
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 applyappliRouter.post("/:user_Id/job-list/:job_Id", async (req, res) => {
   try {
     const job_Id = req.params.job_Id;
@@ -128,40 +168,6 @@ applyappliRouter.put("/recruiter/:application_id", async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating application status:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// สำหรับ professional ใช้ เพื่อดู application ตัวเอง
-// เดี๋ยวถามพี่กัน or กาก้า
-applyappliRouter.get("/myapplication", async (req, res) => {
-  try {
-    const user_id = `${req.query.userId}`;
-    // const filter = req.query.filter || null; // status query
-    console.log(user_id)
-    if (!user_id) {
-      return res.status(404).json({ error: "Invalid user_id" });
-    }
-
-    let values = []
-    let query = `
-    SELECT 
-      *
-       FROM application
-       INNER JOIN user_profiles ON application.user_id = user_profiles.user_id
-       INNER JOIN jobs ON application.job_id = jobs.job_id
-       INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
-       inner join job_categories on jobs.job_category_id=job_categories.job_category_id
-       inner join job_types on jobs.job_type_id=job_types.job_type_id
-       WHERE application.user_id = $1
-  `;
-
-    values = [user_id]
-    const result = await pool.query(query, values);
-
-    return res.json({data: result.rows,});
-  } catch (error) {
-    console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

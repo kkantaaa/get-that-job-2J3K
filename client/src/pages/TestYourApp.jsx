@@ -47,7 +47,7 @@ function TestYourApp() {
       const results = await axios.get(
         "http://localhost:4000/apply/myapplication", {params,}
       );
-      setApplications(results.data);
+      setApplications(results.data.data);
       console.log("results are", results)
     } catch (error) {
       console.error("Error: unable to load applications", error);
@@ -66,7 +66,7 @@ function TestYourApp() {
   };
 
   useEffect(() => {
-    getApplication();
+    getApplication(userData.user.user_id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,29 +78,30 @@ function TestYourApp() {
     }
   }
 
-  const statusChange = () => {
-    if (applications.application_status === "pending") {
+  const statusChange = (app) => {
+    console.log(app);
+    if (app === "waiting") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={pendingIcon} />
           <p>Waiting for review</p>
         </div>
       );
-    } else if (applications.application_status === "inprogress") {
+    } else if (app === "inprogress") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={letterIcon} />
           <p>Review in progress</p>
         </div>
       );
-    } else if (applications.application_status === "finished") {
+    } else if (app === "finished") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={letterSentIcon} />
           <p>Review finished</p>
         </div>
       );
-    } else if (applications.application_status === "declined") {
+    } else if (app === "declined") {
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={cancelIcon} />
@@ -123,7 +124,7 @@ function TestYourApp() {
 
   return (
     <>
-      <div className="flex flex-row bg-Background">
+      <div className="flex flex-row bg-Background min-h-screen min-w-screen">
         <YourApplicationSideBar />
         <div className="w-full flex justify-center overflow-x-hidden">
           <div className="w-[960px] py-8 space-y-4">
@@ -158,7 +159,7 @@ function TestYourApp() {
                     </Label>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <RadioGroupItem value="pending" id="r2" />
+                    <RadioGroupItem value="waiting" id="r2" />
                     <Label htmlFor="r2" className="text-Gray font-normal">
                       Waiting
                     </Label>
@@ -226,8 +227,8 @@ function TestYourApp() {
                             <div className="mt-[8px] flex flex-row">
                               <img src={dollarIcon} />
                               <p className="ml-[4px]">
-                                {app.salary_min} k
-                              </p>- <p>{app.salary_max} k</p>
+                                {app.salary_min /1000} k
+                              </p>- <p>{app.salary_max /1000} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">
                                 Posted {jobCreatedDate}
