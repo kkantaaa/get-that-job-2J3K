@@ -90,7 +90,7 @@ function TestYourApp() {
     } else if (app.application_status === "inprogress") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
-          <img className="w-[15px] h-[15px]" src={letterIcon} />
+          <img className="w-[15px] h-[15px]" src={letterSentIcon} />
           <p>Review in progress</p>
         </div>
       );
@@ -104,7 +104,7 @@ function TestYourApp() {
     } else if (app.application_status === "declined") {
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
-          <img className="w-[15px] h-[15px]" src={cancelIcon} />
+          <img className="w-[15px] h-[15px]" src={closedIcon} />
           <p>Declined on 28/9/23</p>
         </div>
       );
