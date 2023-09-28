@@ -210,7 +210,9 @@ function ProfessionalProfile() {
     setFormData({ ...formData, user_birthdate: e.target.value });
   }; // birthdate
   const handleLinkedInChange = (e) => {
-    setFormData({ ...formData, user_linkedin: e.target.value });
+    const inputValue = e.target.value;
+    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9-_/]/g, "");
+    setFormData({ ...formData, user_linkedin: sanitizedValue });
   }; // linkedin
   const handleTitleChange = (e) => {
     setFormData({ ...formData, user_title: e.target.value });
@@ -258,7 +260,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="email"
                       value={formData.email}
                       onChange={handleEmailChange}
@@ -283,7 +285,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="px-1 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_name}
                       onChange={handleNameChange}
@@ -309,7 +311,7 @@ function ProfessionalProfile() {
                     <div className="flex items-center">
                       <Textarea
                         {...field}
-                        className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                        className="px-1 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                         type="tel"
                         value={formData.user_phone}
                         onChange={handlePhoneChange}
@@ -345,7 +347,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <input
                       {...field}
-                      className="px-2 w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] active:border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="date"
                       onChange={handleBirthdateChange}
                       value={formattedBirthdate}
@@ -373,10 +375,12 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="w-[380px] h-[60px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start flex-start inline-flex"
                       type="text"
                       value={formData.user_linkedin}
                       onChange={handleLinkedInChange}
+                      style={{ overflow: "hidden" }}
+                      maxLength={85}
                     />
                   )}
                 />
@@ -414,7 +418,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_title}
                       onChangeCapture={handleTitleChange}
@@ -440,13 +444,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      style={{
-                        width: "760px",
-                        height: "256px",
-                        fontSize: "16px",
-                        border: "4px solid pink",
-                        borderRadius: "14px",
-                      }}
+                      className="w-[760px] h-[256px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_experience}
                       onChange={handleExperienceChange}
@@ -472,13 +470,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      style={{
-                        width: "760px",
-                        height: "132px",
-                        fontSize: "16px",
-                        border: "4px solid pink",
-                        borderRadius: "14px",
-                      }}
+                      className="w-[760px] h-[116px] font-[12px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_education}
                       onChange={handleEducationChange}
