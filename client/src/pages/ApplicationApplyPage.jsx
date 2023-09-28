@@ -74,9 +74,10 @@ function ApplicationApplyPage() {
   const createdAt = moment(jobDetail.opened_at).fromNow();
   //back action and jump to send application button>>>>>>>
   const handleBack = (event) => {
+    const job_id = parseInt(jobparams);
     event.preventDefault();
     // !!check team nakub!!
-    navigate("/user/findthatjob");
+    navigate(`/user/jobs/${job_id}`);
   };
 
   const handleSendApplication = () => {
