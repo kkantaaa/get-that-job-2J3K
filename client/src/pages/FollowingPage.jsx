@@ -7,7 +7,6 @@ import JobFollowingList from "@/components/JobFollowList";
 import CompanyFollowingList from "@/components/CompanyFollowList";
 
 function FollowingPage() {
-  const navigate = useNavigate();
   const { userData } = useAuth();
   const [jobFollow, setJobFollow] = useState([]);
   const [companyFollow, setCompanyFollow] = useState([]);
@@ -63,7 +62,7 @@ function FollowingPage() {
             Following
           </div>
           <div className="mb-[16px]">
-            <JobFollowingList data={jobFollow} />
+            <JobFollowingList />
           </div>
         </div>
         <div>

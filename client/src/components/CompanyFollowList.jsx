@@ -108,7 +108,7 @@ const CompanyFollowingList = (props) => {
                       <div className="mx-1">
                         <img src={pinkFollowIcon} alt="Pink Follow Icon" />
                       </div>
-                      <div className="pt-2">FOLLOWING</div>
+                      <div className="pt-2 text-[14px]">FOLLOWING</div>
                     </button>
                   </div>
                   <div className="pl-4">
