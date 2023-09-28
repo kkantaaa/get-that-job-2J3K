@@ -138,11 +138,26 @@ function ProfessionalProfile() {
       if (!formData.user_linkedin.startsWith(validurlPrefix)) {
         return toast.error("Invalid LinkedIn URL");
       }
-      await axios.put(
-        `http://localhost:4000/profile/propro`,
-        updatedProfileData
-      );
-      toast.success("Profile updated successfully");
+      axios
+        .put("http://localhost:4000/profile/propro", updatedProfileData)
+        .then((response) => {
+          toast.success("Profile updated successfully", response.data.message);
+          // console.log("response.data.message:", response.data.message); // leave this log na kub in it's kinda common to get error here
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.error("Server Error:", error.response.status);
+            toast.error("Server Error:", error.response.status);
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+          } else {
+            console.error("Error:", error);
+            toast.error(
+              "There's an error while update profile:",
+              error.response
+            );
+          }
+        });
     } catch (error) {
       toast.error("Error updating profile");
     }
