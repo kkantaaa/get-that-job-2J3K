@@ -35,26 +35,26 @@ const JobFollowingList = () => {
   };
 
   // FOLLOW LOGIC
-  const handleFollow = async (event) => {
-    // event.preventDefault();
-    const userId = userData.user.user_id;
-    const jobId = event;
-    console.log(`user id : ${userId}`);
-    console.log(`job id : ${jobId}`);
-    try {
-      const data = {
-        userId: userId,
-        jobId: jobId,
-      };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
-      await axios.post("http://localhost:4000/following/followjob", data);
-    } catch (error) {
-      console.error("Error: unable to follow the job", error);
-    }
-    // getJobFollowing(userData.user.user_id);
-  };
+  // const handleFollow = async (event) => {
+  //   // event.preventDefault();
+  //   const userId = userData.user.user_id;
+  //   const jobId = event;
+  //   console.log(`user id : ${userId}`);
+  //   console.log(`job id : ${jobId}`);
+  //   try {
+  //     const data = {
+  //       userId: userId,
+  //       jobId: jobId,
+  //     };
+  //     // const params = new URLSearchParams();
+  //     // params.append("userId", userId);
+  //     // params.append("jobId", jobId);
+  //     await axios.post("http://localhost:4000/following/followjob", data);
+  //   } catch (error) {
+  //     console.error("Error: unable to follow the job", error);
+  //   }
+  //   // getJobFollowing(userData.user.user_id);
+  // };
 
   // UNFOLLOW LOGIC
   const handleUnfollow = async (event) => {
@@ -72,7 +72,7 @@ const JobFollowingList = () => {
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
-    getJobFollow(userData.user.user_id);
+    getJobFollow();
   };
 
   // const followButton = (jobId) => {
