@@ -196,7 +196,7 @@ function ApplicationApplyPage() {
                     />
                   </svg>
                   <div>
-                    <p style={{ fontSize: "16px" }}>
+                    <p style={{ fontSize: "24px" }}>
                       {jobDetail.category_name}
                     </p>
                   </div>
