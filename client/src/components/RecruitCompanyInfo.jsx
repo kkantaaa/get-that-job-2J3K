@@ -60,8 +60,8 @@ function RecruitCompanyInfo() {
       console.error("Error during registration", error);
     }
   };
-  
-  const handleFileButtonClick = ()=>{
+
+  const handleFileButtonClick = () => {
     fileInputRef.current.click();
   };
 
@@ -139,31 +139,31 @@ function RecruitCompanyInfo() {
           onClick={handleFileButtonClick}
           className="mt-[8px] p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
         >
-            <img src={FileInputIcon} alt="File Input" />
-            <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px] cursor-pointer">
-              Choose a file
-            </p>
-            <input
-              ref={fileInputRef}
-              className="hidden"
-              name="havefile"
-              type="file"
-              id="havefile"
-              accept=".jpg, .png, .jpeg, .gif"
-              onChange={handleFilePreview}
-            />
+          <img src={FileInputIcon} alt="File Input" />
+          <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px] cursor-pointer">
+            Choose a file
+          </p>
+          <input
+            ref={fileInputRef}
+            className="hidden"
+            name="havefile"
+            type="file"
+            id="havefile"
+            accept=".jpg, .png, .jpeg, .gif"
+            onChange={handleFilePreview}
+          />
         </div>
 
         <div className="mt-[4px]">
-            {file && (
-              <img
-                src={file}
-                alt="Preview"
-                className="mb-4"
-                style={{ maxWidth: "200px" }}
-              />
-            )}
-            </div>
+          {file && (
+            <img
+              src={file}
+              alt="Preview"
+              className="mb-4"
+              style={{ maxWidth: "200px" }}
+            />
+          )}
+        </div>
 
         <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
           Only .jpg, .png, .jpeg, .gif Max size 5MB
