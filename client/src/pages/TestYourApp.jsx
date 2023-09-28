@@ -20,7 +20,6 @@ import category from "../images/ApllicationApplyPage/category.svg";
 import dollarIcon from "../images/ApllicationApplyPage/dollar.svg";
 import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 import declineIcon from "../images/ApllicationApplyPage/white-decline.svg";
-import { useParams } from "react-router-dom";
 import moment from "moment";
 import { useAuth } from "@/contexts/authentication";
 
@@ -29,7 +28,6 @@ moment().format();
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
   // const [filterStatus, setFilterStatus] = useState("all");
-  // const { user_id } = useParams();
   const {userData} = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] = useState(applications);
@@ -54,6 +52,7 @@ function TestYourApp() {
     }
   };
 
+  // user click to decline applications
   const handleDeclinedApplication = async (application_id) => {
     try {
       await axios.put(`http://localhost:4000/apply/${application_id}`, {
@@ -70,6 +69,7 @@ function TestYourApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // user filters the applications
   const handleFilteredApplication = (status) =>{
     if (status === "all") {
       return applications;
@@ -78,34 +78,34 @@ function TestYourApp() {
     }
   }
 
+  // when the applications's status is changed or updated
   const statusChange = (app) => {
-    console.log(app);
-    if (app === "waiting") {
+    if (app.application_status === "waiting") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={pendingIcon} />
           <p>Waiting for review</p>
         </div>
       );
-    } else if (app === "inprogress") {
+    } else if (app.application_status === "inprogress") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={letterIcon} />
           <p>Review in progress</p>
         </div>
       );
-    } else if (app === "finished") {
+    } else if (app.application_status === "finished") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={letterSentIcon} />
           <p>Review finished</p>
         </div>
       );
-    } else if (app === "declined") {
+    } else if (app.application_status === "declined") {
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={cancelIcon} />
-          <p>Declined on {DeclinedDate}</p>
+          <p>Declined on 28/9/23</p>
         </div>
       );
     } else {
@@ -118,9 +118,9 @@ function TestYourApp() {
     }
   };
   
+  // convert date & time
   const jobCreatedDate = moment(applications.opened_at).fromNow();
   const ApplicationSentDate = moment(applications.sent_date).fromNow();
-  const DeclinedDate = moment(applications.sent_date, 'DD-MM-YY');
 
   return (
     <>
@@ -142,11 +142,9 @@ function TestYourApp() {
                 </label>
 
                 <RadioGroup
-                  // value={filterStatus}
                   defaultValue="all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
-                    // setFilterStatus(value);
                     const filteredApplications = handleFilteredApplication(value);
                     setFilteredApplications(filteredApplications);
                   }
@@ -248,7 +246,7 @@ function TestYourApp() {
                               />
                               <p>sent {ApplicationSentDate}</p>
                             </div>
-                            <div>{statusChange()}</div>
+                            <div>{statusChange(app)}</div>
                           </div>
                         </AccordionTrigger>
 
