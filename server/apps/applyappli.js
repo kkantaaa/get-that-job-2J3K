@@ -206,6 +206,46 @@ applyappliRouter.put("/:application_id", async (req, res) => {
   }
 });
 
+//following routers for follow/unfollowing company
+//follow
+applyappliRouter.post("/follow/:user_id/:recruiter_id", async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const recruiter_id = req.params.recruiter_id;
+
+    const follow = await pool.query(
+      "INSERT INTO company_follows (user_id, recruiter_id) VALUES ($1, $2) ",
+      [user_id, recruiter_id]
+    );
+    console.log("follow:", follow.rows[0]);
+    res.json(follow.rows[0]);
+  } catch (error) {
+    console.error("Error following company:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//unfollow
+applyappliRouter.delete(
+  "/unfollow/:user_id/:recruiter_id",
+  async (req, res) => {
+    try {
+      const user_id = req.params.user_id;
+      const recruiter_id = req.params.recruiter_id;
+
+      const unfollow = await pool.query(
+        "DELETE FROM company_follows WHERE user_id = $1 AND recruiter_id = $2",
+        [user_id, recruiter_id]
+      );
+      console.log("unfollow:", unfollow.rows[0]);
+      res.json(unfollow.rows[0]);
+    } catch (error) {
+      console.error("Error unfollowing company:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+);
+
 export default applyappliRouter;
 
 //("/apply/xxxxxxxxx", applyappliRouter);

@@ -75,6 +75,8 @@ function ApplicationApplyPage() {
   }, [jobparams, user_id]);
   // moment
   const createdAt = moment(jobDetail.opened_at).fromNow();
+  //handlers
+  //1
   //back action and jump to send application button>>>>>>>
   const handleBack = (event) => {
     const job_id = parseInt(jobparams);
@@ -82,12 +84,32 @@ function ApplicationApplyPage() {
     // !!check team nakub!!
     navigate(`/user/jobs/${job_id}`);
   };
-
+  //2
   const handleSendApplication = () => {
     const button = document.getElementById("sendApplicationButton");
     button.scrollIntoView({ behavior: "smooth" });
   };
-  //>>>>>>>>>
+  //3
+  const handleFollowButton = () => {
+    console.log("clicked");
+    const user_id = parseInt(userDetail.user_id);
+    const recruiter_id = parseInt(jobDetail.recruiter_id);
+    console.log(jobDetail.recruiter_id);
+    console.log(userDetail.recruiter_id);
+    if (userDetail.recruiter_id !== null) {
+      console.log("same");
+      axios.delete(
+        `http://localhost:4000/apply/unfollow/${user_id}/${recruiter_id}`
+      );
+    } else {
+      console.log("not same");
+      axios.post(
+        `http://localhost:4000/apply/follow/${user_id}/${recruiter_id}`
+      );
+    }
+    window.location.reload();
+  };
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>render>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   return (
     <>
       <div className="bg-Background overflow-x-hidden">
@@ -135,13 +157,21 @@ function ApplicationApplyPage() {
                       {jobDetail.company_name}
                     </div>
                     {jobDetail.recruiter_id == userDetail.recruiter_id && (
-                      <button>
-                        <img src={FollowButton} alt="Following Button" />
+                      <button onClick={handleFollowButton}>
+                        <img
+                          onClick={handleFollowButton}
+                          src={FollowButton}
+                          alt="Following Button"
+                        />
                       </button>
                     )}
                     {jobDetail.recruiter_id !== userDetail.recruiter_id && (
-                      <button>
-                        <img src={FollowButtonG} alt="Follow Button" />
+                      <button onClick={handleFollowButton}>
+                        <img
+                          onClick={handleFollowButton}
+                          src={FollowButtonG}
+                          alt="Follow Button"
+                        />
                       </button>
                     )}
                   </div>
