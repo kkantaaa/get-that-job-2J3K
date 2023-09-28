@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Textarea } from "@/components/ui/textarea";
 //components
-import ProfessionalSidebar from "@/components/ProfessionalSideBar";
+import UserProfileSidebar from "@/components/ProfessionalSideBar/UserProfileSidebar.jsx";
 //import images
 import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
 import SaveChanges from "@/images/ProfesionalProfile/Save Changes.png";
@@ -244,7 +244,7 @@ function ProfessionalProfile() {
   return (
     <>
       <ToastContainer theme="dark" autoClose={3000} limit={3} />
-      <ProfessionalSidebar />
+      <UserProfileSidebar />
       <div style={{ marginLeft: "250px" }}>
         {/* Header -- Profile*/}
         {/* Header -- Profile*/}
