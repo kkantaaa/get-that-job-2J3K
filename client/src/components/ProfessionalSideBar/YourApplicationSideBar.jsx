@@ -23,12 +23,15 @@ export default function YourApplicationSideBar() {
   };
 
   const handleProfilePage = () => {
-    navigate("/user/:user_id/profile");
+    navigate("/user/profile");
   };
 
   return (
     <div className="fixed w-[240px] h-screen bg-BackgroundDark flex flex-col">
-      <div onClick={handleHomePage} className="w-[168px] h-fit px-[16px] py-[32px] cursor-pointer">
+      <div
+        onClick={handleHomePage}
+        className="w-[168px] h-fit px-[16px] py-[32px] cursor-pointer"
+      >
         <img src={Logo} />
       </div>
       <div className="w-full h-fit font-Inter text-DarkGray ">

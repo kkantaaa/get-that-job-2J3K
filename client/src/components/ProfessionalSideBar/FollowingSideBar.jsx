@@ -24,7 +24,7 @@ export default function FindThatJobSideBar() {
   };
 
   const handleProfilePage = () => {
-    navigate("/user/:user_id/profile");
+    navigate("/user/profile");
   };
 
   return (

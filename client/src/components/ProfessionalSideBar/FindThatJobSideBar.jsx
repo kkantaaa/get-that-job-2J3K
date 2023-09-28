@@ -19,7 +19,6 @@ export default function FindThatJobSideBar() {
   };
 
   const handleFollowingPage = () => {
-    // navigate("/user/:user_id/following");
     navigate("/user/following");
   };
 
