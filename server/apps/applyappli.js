@@ -92,7 +92,7 @@ applyappliRouter.get("/u/:user_id", async (req, res) => {
   console.log("user_id:", user_id);
   try {
     const userdata = await pool.query(
-      "SELECT * FROM user_profiles  WHERE user_id = $1",
+      "select * from user_profiles left join company_follows on user_profiles.user_id = company_follows.user_id where user_profiles.user_id =$1",
       [user_id]
     );
     console.log("Application submitted successfully :", userdata.rows[0]);
