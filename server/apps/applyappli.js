@@ -10,16 +10,15 @@ applyappliRouter.get("/myapplication", async (req, res) => {
   try {
     // const user_id = 26;
     const user_id = `${req.query.userId}`;
-    console.log(user_id)
+    console.log(user_id);
     if (!user_id) {
       return res.status(404).json({ error: "Invalid user_id" });
     }
 
-    let values = []
-    let query = ""
-    
-    query =
-    `
+    let values = [];
+    let query = "";
+
+    query = `
     SELECT 
       *
        FROM application
@@ -31,17 +30,16 @@ applyappliRouter.get("/myapplication", async (req, res) => {
        WHERE application.user_id = $1
   `;
 
-    values = [user_id]
+    values = [user_id];
     console.log(query, values);
     const result = await pool.query(query, values);
 
-    return res.json({data: result.rows,});
+    return res.json({ data: result.rows });
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 applyappliRouter.post("/:user_Id/job-list/:job_Id", async (req, res) => {
   try {
@@ -73,7 +71,11 @@ applyappliRouter.get("/:job_id", async (req, res) => {
   const job_id = req.params.job_id;
   try {
     const userdata = await pool.query(
-      "SELECT * FROM jobs INNER JOIN recruiter_informations on jobs.recruiter_id = recruiter_informations.recruiter_id WHERE job_id = $1",
+      "SELECT * FROM jobs " +
+        "INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id " +
+        "INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id " +
+        "INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id " +
+        "WHERE job_id = $1",
       [job_id]
     );
     res.json(userdata.rows[0]);
@@ -90,7 +92,7 @@ applyappliRouter.get("/u/:user_id", async (req, res) => {
   console.log("user_id:", user_id);
   try {
     const userdata = await pool.query(
-      "SELECT * FROM user_profiles  WHERE user_id = $1",
+      "select * from user_profiles left join company_follows on user_profiles.user_id = company_follows.user_id where user_profiles.user_id =$1",
       [user_id]
     );
     console.log("Application submitted successfully :", userdata.rows[0]);
@@ -109,7 +111,7 @@ applyappliRouter.get("/recruiter/:job_id", async (req, res) => {
   try {
     const job_id = req.params.job_id;
     const status = req.query.status || null; // status query
-    
+
     let query = `
     SELECT
     application.job_id,
@@ -140,7 +142,7 @@ applyappliRouter.get("/recruiter/:job_id", async (req, res) => {
       queryParams.push(status);
     }
     query += queryOrder;
-    
+
     const result = await pool.query(query, queryParams);
 
     return res.json(result.rows);
@@ -192,18 +194,57 @@ applyappliRouter.put("/:application_id", async (req, res) => {
         ["declined", new Date(), application_id]
       );
       return res.status(200).json({
-        message: "The application has been successfully declined"
+        message: "The application has been successfully declined",
       });
     } else {
       return res.status(400).json({
-        error: "Failed to decline the application"
+        error: "Failed to decline the application",
       });
     }
-
   } catch (error) {
-    res.status(500).json({error: "Internal Server Error"});
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//following routers for follow/unfollowing company
+//follow
+applyappliRouter.post("/follow/:user_id/:recruiter_id", async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const recruiter_id = req.params.recruiter_id;
+
+    const follow = await pool.query(
+      "INSERT INTO company_follows (user_id, recruiter_id) VALUES ($1, $2) ",
+      [user_id, recruiter_id]
+    );
+    console.log("follow:", follow.rows[0]);
+    res.json(follow.rows[0]);
+  } catch (error) {
+    console.error("Error following company:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//unfollow
+applyappliRouter.delete(
+  "/unfollow/:user_id/:recruiter_id",
+  async (req, res) => {
+    try {
+      const user_id = req.params.user_id;
+      const recruiter_id = req.params.recruiter_id;
+
+      const unfollow = await pool.query(
+        "DELETE FROM company_follows WHERE user_id = $1 AND recruiter_id = $2",
+        [user_id, recruiter_id]
+      );
+      console.log("unfollow:", unfollow.rows[0]);
+      res.json(unfollow.rows[0]);
+    } catch (error) {
+      console.error("Error unfollowing company:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+);
 
 export default applyappliRouter;
 

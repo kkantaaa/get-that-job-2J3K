@@ -1,8 +1,9 @@
 // component and files
-import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
+import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar.jsx";
 import ApplicationApplySection from "@/components/ApplicationApplySection";
 import SendAPPlicationButton from "@/images/ApllicationApplyPage/SendAPPlicationButton.png"; //img
-import FollowButton from "@/images/ApllicationApplyPage/FollowButton.png"; //img
+import FollowButton from "@/images/ApllicationApplyPage/FollowButton.svg"; //img
+import FollowButtonG from "@/images/ApllicationApplyPage/FollowButtonGrey.svg"; //img
 //functions, method and libaries
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -43,23 +44,25 @@ function ApplicationApplyPage() {
     const getJobDetail = async () => {
       try {
         const job_id = parseInt(jobparams);
-         const getcompanyinfo = await axios.get(
+        const getcompanyinfo = await axios.get(
           `http://localhost:4000/apply/${job_id}`
         );
         setJobDetail(getcompanyinfo.data);
-       } catch (error) {
+        // console.log(getcompanyinfo.data); // leave it in case adjust what data to fetch/not fetch
+      } catch (error) {
         console.log(error);
       }
     };
     //1.2
     const getUserDetail = async () => {
       try {
-         const getuserinfo = await axios.get(
+        const getuserinfo = await axios.get(
           `http://localhost:4000/apply/u/${user_id}`
         );
         setUserDetail(getuserinfo.data);
-       } catch (error) {
-        console.log(error);
+        // console.log(getuserinfo.data); // leave it in case adjust what data to fetch/not fetch
+      } catch (error) {
+        // console.log(error);  // leave it cause the catch error can't be empty
       }
     };
     //2
@@ -72,23 +75,46 @@ function ApplicationApplyPage() {
   }, [jobparams, user_id]);
   // moment
   const createdAt = moment(jobDetail.opened_at).fromNow();
+  //handlers
+  //1
   //back action and jump to send application button>>>>>>>
   const handleBack = (event) => {
+    const job_id = parseInt(jobparams);
     event.preventDefault();
     // !!check team nakub!!
-    navigate("/user/findthatjob");
+    navigate(`/user/jobs/${job_id}`);
   };
-
+  //2
   const handleSendApplication = () => {
     const button = document.getElementById("sendApplicationButton");
     button.scrollIntoView({ behavior: "smooth" });
   };
-  //>>>>>>>>>
+  //3
+  const handleFollowButton = () => {
+    console.log("clicked");
+    const user_id = parseInt(userDetail.user_id);
+    const recruiter_id = parseInt(jobDetail.recruiter_id);
+    console.log(jobDetail.recruiter_id);
+    console.log(userDetail.recruiter_id);
+    if (userDetail.recruiter_id !== null) {
+      console.log("same");
+      axios.delete(
+        `http://localhost:4000/apply/unfollow/${user_id}/${recruiter_id}`
+      );
+    } else {
+      console.log("not same");
+      axios.post(
+        `http://localhost:4000/apply/follow/${user_id}/${recruiter_id}`
+      );
+    }
+    window.location.reload();
+  };
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>render>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   return (
     <>
       <div className="bg-Background overflow-x-hidden">
         <div className="flex flex-row font-Inter text-[16px]">
-          <ProfessionalSidebar />
+          <FindThatJobSideBar />
           {
             // application show job + company section
           }
@@ -130,35 +156,23 @@ function ApplicationApplyPage() {
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
                       {jobDetail.company_name}
                     </div>
-                    {jobDetail.is_following == true && (
-                      <svg
-                        width="138"
-                        height="41"
-                        viewBox="0 0 138 41"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          y="0.5"
-                          width="40"
-                          height="40"
-                          rx="20"
-                          fill="#F48FB1"
+                    {jobDetail.recruiter_id == userDetail.recruiter_id && (
+                      <button onClick={handleFollowButton}>
+                        <img
+                          onClick={handleFollowButton}
+                          src={FollowButton}
+                          alt="Following Button"
                         />
-                        <g clipPath="url(#clip0_2_271)">
-                          <path
-                            d="M21 9.5L21.001 12.562C22.7632 12.7848 24.4013 13.5874 25.6572 14.8435C26.9131 16.0996 27.7155 17.7378 27.938 19.5H31V21.5L27.938 21.501C27.7153 23.2631 26.9128 24.901 25.6569 26.1569C24.401 27.4128 22.7631 28.2153 21.001 28.438L21 31.5H19V28.438C17.2378 28.2155 15.5996 27.4131 14.3435 26.1572C13.0874 24.9013 12.2848 23.2632 12.062 21.501L9 21.5V19.5H12.062C12.2846 17.7376 13.0871 16.0993 14.3432 14.8432C15.5993 13.5871 17.2376 12.7846 19 12.562V9.5H21ZM20 14.5C18.4087 14.5 16.8826 15.1321 15.7574 16.2574C14.6321 17.3826 14 18.9087 14 20.5C14 22.0913 14.6321 23.6174 15.7574 24.7426C16.8826 25.8679 18.4087 26.5 20 26.5C21.5913 26.5 23.1174 25.8679 24.2426 24.7426C25.3679 23.6174 26 22.0913 26 20.5C26 18.9087 25.3679 17.3826 24.2426 16.2574C23.1174 15.1321 21.5913 14.5 20 14.5ZM20 18.5C20.5304 18.5 21.0391 18.7107 21.4142 19.0858C21.7893 19.4609 22 19.9696 22 20.5C22 21.0304 21.7893 21.5391 21.4142 21.9142C21.0391 22.2893 20.5304 22.5 20 22.5C19.4696 22.5 18.9609 22.2893 18.5858 21.9142C18.2107 21.5391 18 21.0304 18 20.5C18 19.9696 18.2107 19.4609 18.5858 19.0858C18.9609 18.7107 19.4696 18.5 20 18.5Z"
-                            fill="white"
-                          />
-                        </g>
-                        <path
-                          d="M45.1186 25.5V15.3182H51.4325V16.6406H46.6548V19.7429H50.9801V21.0604H46.6548V25.5H45.1186ZM63.4162 20.4091C63.4162 21.4962 63.2173 22.4309 62.8196 23.2131C62.4219 23.992 61.8767 24.5919 61.1839 25.0128C60.4946 25.4304 59.7107 25.6392 58.8324 25.6392C57.9508 25.6392 57.1636 25.4304 56.4709 25.0128C55.7815 24.5919 55.2379 23.9903 54.8402 23.2081C54.4425 22.4259 54.2436 21.4929 54.2436 20.4091C54.2436 19.322 54.4425 18.389 54.8402 17.6101C55.2379 16.8279 55.7815 16.228 56.4709 15.8104C57.1636 15.3894 57.9508 15.179 58.8324 15.179C59.7107 15.179 60.4946 15.3894 61.1839 15.8104C61.8767 16.228 62.4219 16.8279 62.8196 17.6101C63.2173 18.389 63.4162 19.322 63.4162 20.4091ZM61.8949 20.4091C61.8949 19.5805 61.7607 18.8828 61.4922 18.3161C61.227 17.746 60.8625 17.3151 60.3984 17.0234C59.9377 16.7285 59.4157 16.581 58.8324 16.581C58.2457 16.581 57.7221 16.7285 57.2614 17.0234C56.8007 17.3151 56.4361 17.746 56.1676 18.3161C55.9025 18.8828 55.7699 19.5805 55.7699 20.4091C55.7699 21.2377 55.9025 21.937 56.1676 22.5071C56.4361 23.0739 56.8007 23.5047 57.2614 23.7997C57.7221 24.0914 58.2457 24.2372 58.8324 24.2372C59.4157 24.2372 59.9377 24.0914 60.3984 23.7997C60.8625 23.5047 61.227 23.0739 61.4922 22.5071C61.7607 21.937 61.8949 21.2377 61.8949 20.4091ZM66.5815 25.5V15.3182H68.1177V24.1776H72.7314V25.5H66.5815ZM75.7338 25.5V15.3182H77.2701V24.1776H81.8837V25.5H75.7338ZM93.3342 20.4091C93.3342 21.4962 93.1353 22.4309 92.7376 23.2131C92.3398 23.992 91.7946 24.5919 91.1019 25.0128C90.4125 25.4304 89.6287 25.6392 88.7504 25.6392C87.8687 25.6392 87.0816 25.4304 86.3888 25.0128C85.6995 24.5919 85.1559 23.9903 84.7582 23.2081C84.3604 22.4259 84.1616 21.4929 84.1616 20.4091C84.1616 19.322 84.3604 18.389 84.7582 17.6101C85.1559 16.8279 85.6995 16.228 86.3888 15.8104C87.0816 15.3894 87.8687 15.179 88.7504 15.179C89.6287 15.179 90.4125 15.3894 91.1019 15.8104C91.7946 16.228 92.3398 16.8279 92.7376 17.6101C93.1353 18.389 93.3342 19.322 93.3342 20.4091ZM91.8129 20.4091C91.8129 19.5805 91.6786 18.8828 91.4102 18.3161C91.145 17.746 90.7804 17.3151 90.3164 17.0234C89.8557 16.7285 89.3337 16.581 88.7504 16.581C88.1637 16.581 87.64 16.7285 87.1793 17.0234C86.7186 17.3151 86.354 17.746 86.0856 18.3161C85.8204 18.8828 85.6879 19.5805 85.6879 20.4091C85.6879 21.2377 85.8204 21.937 86.0856 22.5071C86.354 23.0739 86.7186 23.5047 87.1793 23.7997C87.64 24.0914 88.1637 24.2372 88.7504 24.2372C89.3337 24.2372 89.8557 24.0914 90.3164 23.7997C90.7804 23.5047 91.145 23.0739 91.4102 22.5071C91.6786 21.937 91.8129 21.2377 91.8129 20.4091ZM98.37 25.5L95.5462 15.3182H97.1619L99.1456 23.2031H99.2401L101.303 15.3182H102.904L104.967 23.2081H105.062L107.04 15.3182H108.661L105.832 25.5H104.286L102.143 17.8736H102.064L99.9212 25.5H98.37ZM112.848 15.3182V25.5H111.312V15.3182H112.848ZM124.553 15.3182V25.5H123.142L117.966 18.0327H117.872V25.5H116.335V15.3182H117.757L122.938 22.7955H123.032V15.3182H124.553ZM134.935 18.5348C134.839 18.2332 134.71 17.9631 134.547 17.7244C134.388 17.4825 134.198 17.277 133.975 17.108C133.753 16.9356 133.5 16.8047 133.215 16.7152C132.933 16.6257 132.623 16.581 132.285 16.581C131.712 16.581 131.195 16.7285 130.734 17.0234C130.273 17.3184 129.909 17.7509 129.64 18.321C129.375 18.8878 129.243 19.5821 129.243 20.4041C129.243 21.2294 129.377 21.9271 129.645 22.4972C129.914 23.0672 130.282 23.4998 130.749 23.7947C131.216 24.0897 131.748 24.2372 132.345 24.2372C132.898 24.2372 133.381 24.1245 133.792 23.8991C134.206 23.6738 134.526 23.3556 134.751 22.9446C134.98 22.5303 135.094 22.0431 135.094 21.483L135.492 21.5575H132.578V20.2898H136.581V21.4482C136.581 22.3033 136.398 23.0457 136.034 23.6754C135.672 24.3018 135.172 24.7857 134.532 25.1271C133.896 25.4685 133.167 25.6392 132.345 25.6392C131.423 25.6392 130.615 25.4271 129.919 25.0028C129.226 24.5786 128.686 23.977 128.298 23.1982C127.91 22.416 127.716 21.4879 127.716 20.4141C127.716 19.602 127.829 18.8729 128.054 18.2266C128.28 17.5803 128.596 17.0317 129.004 16.581C129.415 16.1269 129.897 15.7805 130.451 15.5419C131.007 15.3 131.616 15.179 132.275 15.179C132.825 15.179 133.337 15.2602 133.811 15.4226C134.289 15.585 134.713 15.8153 135.084 16.1136C135.459 16.4119 135.769 16.7666 136.014 17.1776C136.259 17.5852 136.425 18.0376 136.511 18.5348H134.935Z"
-                          fill="#616161"
-                        />
-                      </svg>
+                      </button>
                     )}
-                    {jobDetail.is_following == false && (
-                      <img src={FollowButton} alt="Follow Button" />
+                    {jobDetail.recruiter_id !== userDetail.recruiter_id && (
+                      <button onClick={handleFollowButton}>
+                        <img
+                          onClick={handleFollowButton}
+                          src={FollowButtonG}
+                          alt="Follow Button"
+                        />
+                      </button>
                     )}
                   </div>
                 </div>
@@ -212,8 +226,8 @@ function ApplicationApplyPage() {
                     />
                   </svg>
                   <div>
-                    <p style={{ fontSize: "16px" }}>
-                      {jobDetail.job_category_id}
+                    <p style={{ fontSize: "24px" }}>
+                      {jobDetail.category_name}
                     </p>
                   </div>
                 </div>
@@ -237,7 +251,7 @@ function ApplicationApplyPage() {
                       fill="#616161"
                     />
                   </svg>
-                  <div>{jobDetail.job_type_id}</div>
+                  <div>{jobDetail.type_name}</div>
                 </div>
               </div>
 
