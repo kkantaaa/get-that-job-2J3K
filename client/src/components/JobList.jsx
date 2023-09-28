@@ -101,6 +101,49 @@ const JobList = (props) => {
     }
   };
 
+  // FOLLOW LOGIC
+  const handleFollow = async (event) => {
+    // event.preventDefault();
+    const userId = userData.user.user_id;
+    const jobId = event;
+    console.log(`user id : ${userId}`);
+    console.log(`job id : ${jobId}`);
+    try {
+      const data = {
+        userId: userId,
+        jobId: jobId,
+      };
+      // const params = new URLSearchParams();
+      // params.append("userId", userId);
+      // params.append("jobId", jobId);
+      await axios.post("http://localhost:4000/following/followjob", data);
+    } catch (error) {
+      console.error("Error: unable to follow the job", error);
+    }
+    getJobFollowing(userData.user.user_id);
+  };
+
+  // UNFOLLOW LOGIC
+  const handleUnfollow = async (event) => {
+    // event.preventDefault();
+    const userId = userData.user.user_id;
+    const jobId = event;
+    try {
+      const data = {
+        userId: userId,
+        jobId: jobId,
+      };
+      // const params = new URLSearchParams();
+      // params.append("userId", userId);
+      // params.append("jobId", jobId);
+      await axios.post("http://localhost:4000/following/unfollowjob", data);
+    } catch (error) {
+      console.error("Error: unable to unfollow the job", error);
+    }
+    getJobFollowing(userData.user.user_id);
+  };
+
+  // FOLLOW LOGIC
   const followButton = (jobId) => {
     const isFollowing = jobFollowingIds.includes(jobId);
     if (isFollowing) {
@@ -109,7 +152,17 @@ const JobList = (props) => {
           <div className="mx-1">
             <img src={pinkFollowIcon} />
           </div>
-          <div className="pt-2 font-Inter">FOLLOWING</div>
+          {/* ใส่  LOGIC สหรับ UNFOLLOW */}
+          <div className="pt-2 font-Inter">
+            <button
+              value={jobId}
+              onClick={(event) => {
+                handleUnfollow(event.target.value); //รับค่า jobId ได้ OK
+              }}
+            >
+              FOLLOWING
+            </button>
+          </div>
         </button>
       );
     } else {
@@ -118,7 +171,17 @@ const JobList = (props) => {
           <div className="mx-0">
             <img src={followIcon} />
           </div>
-          <div className="pt-2 font-Inter">FOLLOW</div>
+          {/* ใส่  LOGIC สหรับ FOLLOW */}
+          <div className="pt-2 font-Inter">
+            <button
+              value={jobId}
+              onClick={(event) => {
+                handleFollow(event.target.value); //รับค่า jobId ได้ OK
+              }}
+            >
+              FOLLOW
+            </button>
+          </div>
         </button>
       );
     }
@@ -126,7 +189,7 @@ const JobList = (props) => {
 
   useEffect(() => {
     getJobs({ keywords, minSalary, maxSalary, category, type });
-  }, [keywords, minSalary, maxSalary, category, type]);
+  }, [keywords, minSalary, maxSalary, category, type, jobFollowingIds]);
 
   useEffect(() => {
     getJobApp(userData.user.user_id);
