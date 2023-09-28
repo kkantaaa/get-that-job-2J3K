@@ -47,6 +47,7 @@ function ApplicationApplyPage() {
           `http://localhost:4000/apply/${job_id}`
         );
         setJobDetail(getcompanyinfo.data);
+        // console.log(getcompanyinfo.data); // leave it in case adjust what data to fetch/not fetch
       } catch (error) {
         console.log(error);
       }
@@ -214,7 +215,7 @@ function ApplicationApplyPage() {
                   </svg>
                   <div>
                     <p style={{ fontSize: "16px" }}>
-                      {jobDetail.job_category_id}
+                      {jobDetail.category_name}
                     </p>
                   </div>
                 </div>
@@ -238,7 +239,7 @@ function ApplicationApplyPage() {
                       fill="#616161"
                     />
                   </svg>
-                  <div>{jobDetail.job_type_id}</div>
+                  <div>{jobDetail.type_name}</div>
                 </div>
               </div>
 
