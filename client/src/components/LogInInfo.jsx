@@ -30,42 +30,10 @@ function LogInInfo() {
 
     try {
       // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       const response = await axios.post(
         `http://localhost:4000/professional?email=${data.email}`);
       const result = response.data.data;
       console.log(result);
-=======
-      const response = await fetch(
-        `http://localhost:4000/professional?email=${data.email}`
-      );
-      const result = await response.json();
->>>>>>> 065952c (fix: api endpoints)
-=======
-      const response = await axios.get(
-=======
-      const response = await axios.post(
->>>>>>> fc75c96 (fix: change methods)
-        `http://localhost:4000/professional?email=${data.email}`);
-      const result = response.data.data;
-      console.log(result);
->>>>>>> 2093af7 (add: edit email validation)
-=======
-      const response = await fetch(
-        `http://localhost:4000/professional?email=${data.email}`
-      );
-      const result = await response.json();
->>>>>>> 0770d0a (add: email validation for professional part)
-=======
-      const response = await axios.get(
-        `http://localhost:4000/professional?email=${data.email}`);
-      const result = response.data.data;
-      console.log(result);
->>>>>>> a157a79 (add: edit email validation)
 
       if (result.exists) {
         setError("email", {
@@ -75,15 +43,7 @@ function LogInInfo() {
       } else if (data.confirmedPassword !== data.password) {
         setError("confirmedPassword", {
           type: "manual",
-<<<<<<< HEAD
-<<<<<<< HEAD
           message: "The confirmed password does not match",
-=======
-          message: "The confirmed Password is not matched",
->>>>>>> 0770d0a (add: email validation for professional part)
-=======
-          message: "The confirmed password does not match",
->>>>>>> 7ed0c9f (fix: api endpoints)
         });
       } else {
         await setUserData({
