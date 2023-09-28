@@ -30,17 +30,17 @@ function LogInInfo() {
 
     try {
       // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
-      const response = await axios.post(
-        `http://localhost:4000/professional?email=${data.email}`);
-      const result = response.data.data;
-      console.log(result);
+      // const response = await axios.post(
+      //   `http://localhost:4000/professional?email=${data.email}`);
+      // const result = response.data.data;
+      // console.log(result);
 
-      if (result.exists) {
-        setError("email", {
-          type: "manual",
-          message: "The email is already taken",
-        });
-      } else if (data.confirmedPassword !== data.password) {
+      // if (result.exists) {
+      //   setError("email", {
+      //     type: "manual",
+      //     message: "The email is already taken",
+      //   });
+    if (data.confirmedPassword !== data.password) {
         setError("confirmedPassword", {
           type: "manual",
           message: "The confirmed password does not match",

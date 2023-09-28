@@ -24,18 +24,18 @@ function RecruitLogInInfo() {
 
     // Check if the email already exists
     try {
-      const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
-      const result = response.data;
+      // const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
+      // const result = response.data;
   
-      if (result.exists) {
-        setError("email", {
-          type: "manual",
-          message: "The email is already taken"
-        });
-      }
+      // if (result.exists) {
+      //   setError("email", {
+      //     type: "manual",
+      //     message: "The email is already taken"
+      //   });
+      // }
   
       // Check if passwords match
-      else if (data.companypassword !== data.confirmedPassword) {
+      if (data.companypassword !== data.confirmedPassword) {
         setError("confirmedPassword", {
           type: "manual",
           message: "The confirmed password does not match"
