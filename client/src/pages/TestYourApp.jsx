@@ -66,6 +66,7 @@ function TestYourApp() {
   // to update and display
   useEffect(() => {
     getApplication(userData.user.user_id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // user filters the applications
@@ -104,7 +105,7 @@ function TestYourApp() {
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={closedIcon} />
-          <p>Declined on 28/9/23</p>
+          <p>Declined on {declinedDate}</p>
         </div>
       );
     } else {
@@ -119,7 +120,9 @@ function TestYourApp() {
   
   // convert date & time
   const jobCreatedDate = moment(applications.opened_at).fromNow();
-  const ApplicationSentDate = moment(applications.sent_date).fromNow();
+  const applicationSentDate = moment(applications.sent_date).fromNow();
+  const declinedDate = moment(applications.sent_date).format('DD-MM-YY');
+
 
   return (
     <>
@@ -225,7 +228,9 @@ function TestYourApp() {
                               <img src={dollarIcon} />
                               <p className="ml-[4px]">
                                 {app.salary_min /1000} k
-                              </p>- <p>{app.salary_max /1000} k</p>
+                              </p> 
+                              <p className="ml-[2px] mr-[2px]">-</p> 
+                              <p>{app.salary_max /1000} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">
                                 Posted {jobCreatedDate}
@@ -243,7 +248,7 @@ function TestYourApp() {
                                 className="w-[15px] h-[15px]"
                                 src={letterIcon}
                               />
-                              <p>sent {ApplicationSentDate}</p>
+                              <p>sent {applicationSentDate}</p>
                             </div>
                             <div>{statusChange(app)}</div>
                           </div>
@@ -280,7 +285,7 @@ function TestYourApp() {
                             ) : (
                               <button
                                 className="flex flex-row justify-center items-center ml-[300px] 
-                            hover:bg-LightPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
+                            hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
                                 onClick={() =>
                                   handleDeclinedApplication(
                                     app.application_id
