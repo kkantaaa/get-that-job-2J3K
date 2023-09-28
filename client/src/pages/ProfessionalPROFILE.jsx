@@ -135,8 +135,7 @@ function ProfessionalProfile() {
         user_education: formData.user_education,
         user_cv: formData.user_cv,
       };
-      console.log("updatedProfileData:", updatedProfileData);
-      if (!formData.user_linkedin.startsWith(validurlPrefix)) {
+         if (!formData.user_linkedin.startsWith(validurlPrefix)) {
         return toast.error("Invalid LinkedIn URL");
       }
       await axios.put(
@@ -192,16 +191,14 @@ function ProfessionalProfile() {
       const findMatchDialUpCountryCode = inputValue.match(/\+(\d{1,3})/);
       if (findMatchDialUpCountryCode) {
         const countryCode = findMatchDialUpCountryCode[1];
-        console.log("countryCode:", findMatchDialUpCountryCode);
-        if (digitslength === 10) {
+         if (digitslength === 10) {
           setSelectedCountry("+" + countryCode.slice(0, 1));
         } else if (digitslength === 11) {
           setSelectedCountry("+" + countryCode.slice(0, 2));
         } else if (digitslength === 12) {
           setSelectedCountry("+" + countryCode.slice(0, 3));
         }
-        console.log("SelectedCountry", selectedCountry);
-      } else {
+       } else {
         setSelectedCountry("");
       }
     }
@@ -209,14 +206,13 @@ function ProfessionalProfile() {
       (country) => country.dial_code === selectedCountry
     );
     setflag(matchedCountry);
-    console.log(flag);
-  }; // phone
+   }; // phone
   const handleBirthdateChange = (e) => {
     setFormData({ ...formData, user_birthdate: e.target.value });
   }; // birthdate
   const handleLinkedInChange = (e) => {
     const inputValue = e.target.value;
-    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9-_/]/g, "");
+    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9-_/:\.\-]/g, "");
     setFormData({ ...formData, user_linkedin: sanitizedValue });
   }; // linkedin
   const handleTitleChange = (e) => {
