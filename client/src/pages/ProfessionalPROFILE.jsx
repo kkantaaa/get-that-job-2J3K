@@ -34,6 +34,8 @@ function ProfessionalProfile() {
   const [fileSelected, setFileSelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [flag, setflag] = useState("");
+  // constant
+  const validurlPrefix = "https://www.linkedin.com/in/";
   // Function to format the date as year-month-day or else it won't work kub
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
@@ -133,7 +135,9 @@ function ProfessionalProfile() {
         user_education: formData.user_education,
         user_cv: formData.user_cv,
       };
-      console.log("updatedProfileData:", updatedProfileData);
+      if (!formData.user_linkedin.startsWith(validurlPrefix)) {
+        return toast.error("Invalid LinkedIn URL");
+      }
       await axios.put(
         `http://localhost:4000/profile/propro`,
         updatedProfileData
@@ -187,7 +191,6 @@ function ProfessionalProfile() {
       const findMatchDialUpCountryCode = inputValue.match(/\+(\d{1,3})/);
       if (findMatchDialUpCountryCode) {
         const countryCode = findMatchDialUpCountryCode[1];
-        console.log("countryCode:", findMatchDialUpCountryCode);
         if (digitslength === 10) {
           setSelectedCountry("+" + countryCode.slice(0, 1));
         } else if (digitslength === 11) {
@@ -195,7 +198,6 @@ function ProfessionalProfile() {
         } else if (digitslength === 12) {
           setSelectedCountry("+" + countryCode.slice(0, 3));
         }
-        console.log("SelectedCountry", selectedCountry);
       } else {
         setSelectedCountry("");
       }
@@ -204,13 +206,14 @@ function ProfessionalProfile() {
       (country) => country.dial_code === selectedCountry
     );
     setflag(matchedCountry);
-    console.log(flag);
   }; // phone
   const handleBirthdateChange = (e) => {
     setFormData({ ...formData, user_birthdate: e.target.value });
   }; // birthdate
   const handleLinkedInChange = (e) => {
-    setFormData({ ...formData, user_linkedin: e.target.value });
+    const inputValue = e.target.value;
+    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9-_/:\.\-]/g, "");
+    setFormData({ ...formData, user_linkedin: sanitizedValue });
   }; // linkedin
   const handleTitleChange = (e) => {
     setFormData({ ...formData, user_title: e.target.value });
@@ -258,7 +261,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="email"
                       value={formData.email}
                       onChange={handleEmailChange}
@@ -283,7 +286,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_name}
                       onChange={handleNameChange}
@@ -309,7 +312,7 @@ function ProfessionalProfile() {
                     <div className="flex items-center">
                       <Textarea
                         {...field}
-                        className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                        className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                         type="tel"
                         value={formData.user_phone}
                         onChange={handlePhoneChange}
@@ -345,7 +348,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <input
                       {...field}
-                      className="px-2 w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] active:border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="date"
                       onChange={handleBirthdateChange}
                       value={formattedBirthdate}
@@ -373,10 +376,12 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="px-2 w-[380px] h-[60px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start flex-start inline-flex"
                       type="text"
                       value={formData.user_linkedin}
                       onChange={handleLinkedInChange}
+                      style={{ overflow: "hidden" }}
+                      maxLength={85}
                     />
                   )}
                 />
@@ -414,7 +419,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[44px] font-[16px] border-[4px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_title}
                       onChangeCapture={handleTitleChange}
@@ -440,13 +445,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      style={{
-                        width: "760px",
-                        height: "256px",
-                        fontSize: "16px",
-                        border: "4px solid pink",
-                        borderRadius: "14px",
-                      }}
+                      className="w-[760px] h-[256px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_experience}
                       onChange={handleExperienceChange}
@@ -472,13 +471,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      style={{
-                        width: "760px",
-                        height: "132px",
-                        fontSize: "16px",
-                        border: "4px solid pink",
-                        borderRadius: "14px",
-                      }}
+                      className="w-[760px] h-[116px] font-[12px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_education}
                       onChange={handleEducationChange}
@@ -511,7 +504,7 @@ function ProfessionalProfile() {
                 {fileSelected && (
                   <div
                     id="selectedFileBox"
-                    className="mt-3 border border-pink-700 p-2 px-1 rounded-3xl text-gray-900 w-[118px] bg-pink-100"
+                    className="mt-3 border border-pink-700 p-2 px-2 rounded-3xl text-gray-900 w-[140px] bg-pink-100"
                   >
                     <span id="selectedFileName">
                       Selected file: {formData.selectedNewFileName}
@@ -523,7 +516,7 @@ function ProfessionalProfile() {
                 <button
                   type="button"
                   onClick={handleSaveChanges}
-                  className="mt-6 "
+                  className="mt-6"
                 >
                   <img src={SaveChanges} alt="SaveChanges button" />
                 </button>
