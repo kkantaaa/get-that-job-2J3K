@@ -1,5 +1,5 @@
 // component and files
-import ProfessionalSidebar from "@/components/ProfessionalSideBar.jsx";
+import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar.jsx";
 import ApplicationApplySection from "@/components/ApplicationApplySection";
 import SendAPPlicationButton from "@/images/ApllicationApplyPage/SendAPPlicationButton.png"; //img
 import FollowButton from "@/images/ApllicationApplyPage/FollowButton.png"; //img
@@ -43,22 +43,22 @@ function ApplicationApplyPage() {
     const getJobDetail = async () => {
       try {
         const job_id = parseInt(jobparams);
-         const getcompanyinfo = await axios.get(
+        const getcompanyinfo = await axios.get(
           `http://localhost:4000/apply/${job_id}`
         );
         setJobDetail(getcompanyinfo.data);
-       } catch (error) {
+      } catch (error) {
         console.log(error);
       }
     };
     //1.2
     const getUserDetail = async () => {
       try {
-         const getuserinfo = await axios.get(
+        const getuserinfo = await axios.get(
           `http://localhost:4000/apply/u/${user_id}`
         );
         setUserDetail(getuserinfo.data);
-       } catch (error) {
+      } catch (error) {
         console.log(error);
       }
     };
@@ -89,7 +89,7 @@ function ApplicationApplyPage() {
     <>
       <div className="bg-Background overflow-x-hidden">
         <div className="flex flex-row font-Inter text-[16px]">
-          <ProfessionalSidebar />
+          <FindThatJobSideBar />
           {
             // application show job + company section
           }
