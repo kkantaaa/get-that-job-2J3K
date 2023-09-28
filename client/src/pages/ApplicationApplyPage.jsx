@@ -59,8 +59,9 @@ function ApplicationApplyPage() {
           `http://localhost:4000/apply/u/${user_id}`
         );
         setUserDetail(getuserinfo.data);
+        // console.log(getuserinfo.data); // leave it in case adjust what data to fetch/not fetch
       } catch (error) {
-        console.log(error);
+        // console.log(error);  // leave it cause the catch error can't be empty
       }
     };
     //2

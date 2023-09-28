@@ -26,8 +26,6 @@ function ApplicationApplySection(pagedata) {
   const { userDetail, jobparams, companyname } = pagedata;
   // useeffect
   useEffect(() => {
-    console.log("userDetail", pagedata);
-    console.log("userDetail", pagedata.userDetail.user_experience);
     setProfessionalExperience(pagedata.userDetail.user_experience);
   }, [pagedata]);
 
