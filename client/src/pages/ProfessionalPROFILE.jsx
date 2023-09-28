@@ -34,6 +34,8 @@ function ProfessionalProfile() {
   const [fileSelected, setFileSelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [flag, setflag] = useState("");
+  // constant
+  const validurlPrefix = "https://www.linkedin.com/in/";
   // Function to format the date as year-month-day or else it won't work kub
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
@@ -134,6 +136,9 @@ function ProfessionalProfile() {
         user_cv: formData.user_cv,
       };
       console.log("updatedProfileData:", updatedProfileData);
+      if (!formData.user_linkedin.startsWith(validurlPrefix)) {
+        return toast.error("Invalid LinkedIn URL");
+      }
       await axios.put(
         `http://localhost:4000/profile/propro`,
         updatedProfileData
