@@ -149,7 +149,7 @@ function CompanyJobPage() {
               <img src={ArrowLeft} alt="arrow-left-black-icon" />
               <p
                 className="uppercase cursor-pointer"
-                // onClick={() => navigate("/user/following")}
+                onClick={() => navigate("/user/following")}
               >
                 Back
               </p>
