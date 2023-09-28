@@ -88,6 +88,7 @@ profileRouter.put("/propro", async (req, res) => {
     const user_id = req.user.user_id;
 
     const {
+      email,
       user_birthdate,
       user_cv,
       user_education,
@@ -123,7 +124,15 @@ profileRouter.put("/propro", async (req, res) => {
         user_id,
       ]
     );
-
+    await pool.query(
+      `
+    UPDATE users
+    SET email = $2,
+    edited_at = now()   
+    WHERE user_id = $1
+     `,
+      [user_id, email]
+    );
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     console.error("Error updating profile:", error);

@@ -50,7 +50,7 @@ applyappliRouter.post("/:user_Id/job-list/:job_Id", async (req, res) => {
     const { currentCV, interestedReason, professionalExperience } = req.body;
     try {
       const userdata = await pool.query(
-        "INSERT INTO application (user_id, job_id, professional_experience, cv, interested_reason, application_status, sent_date) VALUES ($1, $2, $3, $4, $5, 'pending', now()) RETURNING *",
+        "INSERT INTO application (user_id, job_id, professional_experience, cv, interested_reason, application_status, sent_date) VALUES ($1, $2, $3, $4, $5, 'waiting', now()) RETURNING *",
         [user_Id, job_Id, professionalExperience, currentCV, interestedReason]
       );
 
