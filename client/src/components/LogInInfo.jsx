@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
+import axios from "axios";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
@@ -27,22 +28,47 @@ function LogInInfo() {
       password: control._fields.password._f.value,
     });
 
+    try {
+      // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
+<<<<<<< HEAD
+      // const response = await axios.post(
+      //   `http://localhost:4000/professional?email=${data.email}`);
+      // const result = response.data.data;
+      // console.log(result);
+
+      // if (result.exists) {
+      //   setError("email", {
+      //     type: "manual",
+      //     message: "The email is already taken",
+      //   });
     if (data.confirmedPassword !== data.password) {
-      setError("confirmedPassword", {
-        type: "manual",
-        message: "The confirmed Password is not matched",
-      });
-    } else {
-      try {
+=======
+      const response = await axios.post(
+        `http://localhost:4000/professional?email=${data.email}`);
+      const result = response.data.data;
+      console.log(result);
+
+      if (result.exists) {
+        setError("email", {
+          type: "manual",
+          message: "The email is already taken",
+        });
+      } else if (data.confirmedPassword !== data.password) {
+>>>>>>> ec27c0de1645b5926b898f2b78f3bbec8043dd35
+        setError("confirmedPassword", {
+          type: "manual",
+          message: "The confirmed password does not match",
+        });
+      } else {
         await setUserData({
           email: control._fields.email._f.value,
           password: control._fields.password._f.value,
         });
         console.log(data);
         navigate("/user/register2");
-      } catch (error) {
-        console.error("Error during registration", error);
       }
+    } catch (error) {
+      console.error("Error during registration", error);
     }
   };
 
@@ -96,7 +122,10 @@ function LogInInfo() {
               )}
             />
           </label>
-          <div id="password-error" className="text-red-500 text-[10px] uppercase">
+          <div
+            id="password-error"
+            className="text-red-500 text-[10px] uppercase"
+          >
             {errors.password && errors.password.message}
           </div>
         </div>
@@ -125,7 +154,10 @@ function LogInInfo() {
               )}
             />
           </label>
-          <div id="confirmed-password-error" className="text-red-500 text-[10px] uppercase">
+          <div
+            id="confirmed-password-error"
+            className="text-red-500 text-[10px] uppercase"
+          >
             {errors.confirmedPassword && errors.confirmedPassword.message}
           </div>
         </div>

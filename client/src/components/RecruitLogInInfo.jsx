@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
+import axios from "axios";
 
 function RecruitLogInInfo() {
   const navigate = useNavigate();
@@ -18,26 +19,56 @@ function RecruitLogInInfo() {
     console.log("Updated recruiterData:", recruiterData);
   }, [recruiterData]);
 
-  const onSubmit = (data) => {
-    // compare password and confirmed password
+  const onSubmit = async (data) => {
     console.log(data);
-    if (data.companypassword !== data.confirmedPassword) {
-    // set an error if they don't match 
-    setError("confirmedPassword", {
-      type: "manual",
-      message: "The confirmed password does not match"
-    });
-    } else {
-    setRecruiterData({
-      company_name: data.companyname,
-      email: data.companyemail,
-      password: data.companypassword,
-    });
 
-    navigate("/recruiter/register2");
+    // Check if the email already exists
+    try {
+<<<<<<< HEAD
+      // const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
+      // const result = response.data;
+  
+      // if (result.exists) {
+      //   setError("email", {
+      //     type: "manual",
+      //     message: "The email is already taken"
+      //   });
+      // }
+  
+      // Check if passwords match
+      if (data.companypassword !== data.confirmedPassword) {
+=======
+      const response = await axios.post(`http://localhost:4000/recruiter?email=${data.email}`);
+      const result = response.data;
+  
+      if (result.exists) {
+        setError("email", {
+          type: "manual",
+          message: "The email is already taken"
+        });
+      }
+  
+      // Check if passwords match
+      else if (data.companypassword !== data.confirmedPassword) {
+>>>>>>> ec27c0de1645b5926b898f2b78f3bbec8043dd35
+        setError("confirmedPassword", {
+          type: "manual",
+          message: "The confirmed password does not match"
+        });
+      } else {
+        setRecruiterData({
+          company_name: data.companyname,
+          email: data.companyemail,
+          password: data.companypassword,
+        });
+  
+        navigate("/recruiter/register2");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  }
-
+  };
+  
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
