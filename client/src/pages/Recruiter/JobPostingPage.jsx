@@ -67,7 +67,7 @@ function JobPosting() {
     console.log(data);
     try {
       await axios.put(`http://localhost:4000/jobs/${data.job_id}`, data);
-
+      getJobs("all");
       console.log(`Job_id ${data.job_id} have closed`);
     } catch (error) {
       console.error("Error: unable to load jobs", error);
@@ -125,7 +125,7 @@ function JobPosting() {
               </div>
 
               {jobs === null ? (
-                <p className=" text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
+                <p className="h-20 text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
                   Loading jobs. . .
                 </p>
               ) : (

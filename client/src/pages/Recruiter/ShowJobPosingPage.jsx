@@ -39,7 +39,6 @@ function ShowJobPosingPage() {
   const param = useParams();
   const [job, setJob] = useState(null);
   const [candidates, setCandidates] = useState(null);
-  const [status, setStatus] = useState("all");
 
   const formattedDate = (date) => {
     const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
@@ -54,6 +53,7 @@ function ShowJobPosingPage() {
       );
       setJob(jobsResults.data.data);
       console.log("Jobs get successful");
+      console.log(jobsResults.data.data);
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
@@ -66,6 +66,7 @@ function ShowJobPosingPage() {
       );
       setCandidates(candidatesResults.data);
       console.log("Candidates get successful");
+      console.log(candidatesResults.data);
     } catch (error) {
       console.error("Error: unable to load candidates", error);
     }
@@ -124,6 +125,8 @@ function ShowJobPosingPage() {
         `http://localhost:4000/apply/recruiter/${data.application_id}`,
         data
       );
+      getCandidates("all");
+      console.log(`Application_id ${data.application_id} status changed`);
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
@@ -161,7 +164,7 @@ function ShowJobPosingPage() {
             </div>
 
             {job === null ? (
-              <p className=" text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
+              <p className="h-20 text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
                 Loading job. . .
               </p>
             ) : (
@@ -370,10 +373,10 @@ function ShowJobPosingPage() {
                 </label>
 
                 <RadioGroup
-                  defaultValue=""
+                  defaultValue="all"
                   className="flex flex-row space-x-1  font-Inter text-Body2 "
                   onValueChange={(value) => {
-                    setStatus(value);
+                    getCandidates(value);
                   }}
                 >
                   <div className="flex items-center space-x-1">
@@ -404,7 +407,7 @@ function ShowJobPosingPage() {
               </div>
 
               {candidates === null || job === null ? (
-                <p className=" text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
+                <p className="h-20  text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
                   Loading candidates. . .
                 </p>
               ) : (
@@ -414,95 +417,92 @@ function ShowJobPosingPage() {
                   </div>
                   <div className=" w-full h-full ">
                     <Accordion type="single" collapsible className="space-y-4">
-                      {candidates === null ? (
-                        <p className=" text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
-                          Loading job. . .
-                        </p>
-                      ) : (
-                        candidates.map((candidate, candidateKey) => {
-                          return (
-                            <AccordionItem
-                              value={candidate.user_id}
-                              key={candidateKey}
-                              className="space-y-[10px]"
-                            >
-                              <div className="flex flex-row ">
-                                <AccordionTrigger>
-                                  <div className="">
-                                    <div className="w-fit text-Headline6 text-DarkGray font-Montserrat font-medium">
-                                      {candidate.user_name}
-                                    </div>
-                                    <div className=" font-Montserrat font-medium text-Subtitle2 text-Gray tracking-[0.1px] flex flex-row  space-x-1">
-                                      <div className="space-x-1 flex flex-row justify-center items-center">
-                                        <img
-                                          src={linkedin}
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                        <div>{candidate.user_linkedin}</div>
+                      {candidates.map((candidate, candidateKey) => {
+                        return (
+                          <AccordionItem
+                            value={candidate.user_id}
+                            key={candidateKey}
+                            className="space-y-[10px]"
+                          >
+                            <div className="flex flex-row ">
+                              <AccordionTrigger>
+                                <div className="">
+                                  <div className="w-fit text-Headline6 text-DarkGray font-Montserrat font-medium">
+                                    {candidate.user_name}
+                                  </div>
+
+                                  <div className=" font-Montserrat font-medium text-Subtitle2 text-Gray tracking-[0.1px] flex flex-row  space-x-1">
+                                    <div className="space-x-1 flex flex-row justify-center items-center">
+                                      <img
+                                        src={linkedin}
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                      <div className="max-w-[200px] max-h-[20px] overflow-hidden">
+                                        {candidate.user_linkedin}
                                       </div>
                                     </div>
                                   </div>
-                                  <div className=" font-Inter font-normal text-Caption text-LightGray tracking-[0.4px] flex flex-col items-start  space-y-1">
-                                    <div className="space-x-1 flex flex-row">
-                                      <img
-                                        src={mail_line}
-                                        className="w-[15px] h-[15px]"
-                                      />
-                                      <div>{candidate.email}</div>
-                                    </div>
-
-                                    <div className="space-x-1 flex flex-row ">
-                                      <img
-                                        src={phone_line}
-                                        className="w-[15px] h-[15px]"
-                                      />
-                                      <div>{candidate.user_phone}</div>
-                                    </div>
+                                </div>
+                                <div className=" font-Inter font-normal text-Caption text-LightGray tracking-[0.4px] flex flex-col items-start  space-y-1">
+                                  <div className="space-x-1 flex flex-row">
+                                    <img
+                                      src={mail_line}
+                                      className="w-[15px] h-[15px]"
+                                    />
+                                    <div>{candidate.email}</div>
                                   </div>
-                                  Waiting for review
-                                  {candidate.application_status ===
-                                  "waiting" ? (
-                                    <Button
-                                      variant="secondary"
-                                      size="secondary"
-                                      className="font-Inter text-Button font-medium tracking-[1px]"
-                                      onClick={() => {
-                                        changeStatus({
-                                          application_id:
-                                            candidate.application_id,
-                                          application_status: "inprogress",
-                                        });
-                                      }}
-                                    >
-                                      MARK AS STARTED
-                                    </Button>
-                                  ) : candidate.application_status ===
-                                    "inprogress" ? (
-                                    <Button
-                                      variant="secondary"
-                                      size="secondary"
-                                      className="font-Inter text-Button font-medium tracking-[1px]"
-                                      onClick={() => {
-                                        changeStatus({
-                                          application_id:
-                                            candidate.application_id,
-                                          application_status: "finished",
-                                        });
-                                      }}
-                                    >
-                                      MARK AS FINISHED
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      disabled
-                                      variant="disabled"
-                                      size="secondary"
-                                      className="font-Inter text-Button font-medium tracking-[1px]"
-                                    >
-                                      FINISHED
-                                    </Button>
-                                  )}
-                                  {/* <Button>
+
+                                  <div className="space-x-1 flex flex-row ">
+                                    <img
+                                      src={phone_line}
+                                      className="w-[15px] h-[15px]"
+                                    />
+                                    <div>{candidate.user_phone}</div>
+                                  </div>
+                                </div>
+                                Waiting for review
+                                {candidate.application_status === "waiting" ? (
+                                  <Button
+                                    variant="secondary"
+                                    size="secondary"
+                                    className="font-Inter text-Button font-medium tracking-[1px]"
+                                    onClick={() => {
+                                      changeStatus({
+                                        application_id:
+                                          candidate.application_id,
+                                        application_status: "inprogress", //"inprogress",
+                                      });
+                                    }}
+                                  >
+                                    MARK AS STARTED
+                                  </Button>
+                                ) : candidate.application_status ===
+                                  "inprogress" ? (
+                                  <Button
+                                    variant="secondary"
+                                    size="secondary"
+                                    className="font-Inter text-Button font-medium tracking-[1px]"
+                                    onClick={() => {
+                                      changeStatus({
+                                        application_id:
+                                          candidate.application_id,
+                                        application_status: "finished",
+                                      });
+                                    }}
+                                  >
+                                    MARK AS FINISHED
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    disabled
+                                    variant="disabled"
+                                    size="secondary"
+                                    className="font-Inter text-Button font-medium tracking-[1px]"
+                                  >
+                                    FINISHED
+                                  </Button>
+                                )}
+                                {/* <Button>
                                   <Link
                                     to="/recruiter/jobpostings/edit"
 
@@ -545,56 +545,55 @@ function ShowJobPosingPage() {
                                         Edit
                                       </Link>
                                     </Button>*/}
-                                </AccordionTrigger>
+                              </AccordionTrigger>
+                            </div>
+
+                            <AccordionContent>
+                              <div className="space-y-4">
+                                <div className="space-y-2">
+                                  <label className="text-Subtitle1 text-DarkPink font-Montserrat font-normal">
+                                    Professional experience
+                                  </label>
+                                  <div className="text-DarkGray text-Body2 font-Inter font-normal">
+                                    {candidate.professional_experience}
+                                  </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                  <label className="text-Subtitle1 text-DarkPink font-Montserrat font-normal">
+                                    Why are you interested in working at{" "}
+                                    {job[0].company_name}
+                                  </label>
+                                  <div className="text-DarkGray text-Body2 font-Inter font-normal">
+                                    {candidate.interested_reason}
+                                  </div>
+                                </div>
                               </div>
 
-                              <AccordionContent>
-                                <div className="space-y-4">
-                                  <div className="space-y-2">
-                                    <label className="text-Subtitle1 text-DarkPink font-Montserrat font-normal">
-                                      Professional experience
-                                    </label>
-                                    <div className="text-DarkGray text-Body2 font-Inter font-normal">
-                                      {candidate.professional_experience}
-                                    </div>
+                              <div className="w-full  mt-4  flex justify-center items-center ">
+                                <Button
+                                  variant="secondary"
+                                  size="secondary"
+                                  className=" "
+                                  onClick={() => {
+                                    download({
+                                      cv: candidate.cv,
+                                    });
+                                  }}
+                                >
+                                  <div className=" font-Inter text-Button font-medium tracking-[1.25px] space-x-2 flex flex-row ">
+                                    <img
+                                      src={download_line}
+                                      className="w-[24px] h-[24px] "
+                                    />
+                                    <div> DOWNLOAD CV</div>
                                   </div>
-
-                                  <div className="space-y-2">
-                                    <label className="text-Subtitle1 text-DarkPink font-Montserrat font-normal">
-                                      Why are you interested in working at{" "}
-                                      {job[0].company_name}
-                                    </label>
-                                    <div className="text-DarkGray text-Body2 font-Inter font-normal">
-                                      {candidate.interested_reason}
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="w-full  mt-4  flex justify-center items-center ">
-                                  <Button
-                                    variant="secondary"
-                                    size="secondary"
-                                    className=" "
-                                    onClick={() => {
-                                      download({
-                                        cv: candidate.cv,
-                                      });
-                                    }}
-                                  >
-                                    <div className=" font-Inter text-Button font-medium tracking-[1.25px] space-x-2 flex flex-row ">
-                                      <img
-                                        src={download_line}
-                                        className="w-[24px] h-[24px] "
-                                      />
-                                      <div> DOWNLOAD CV</div>
-                                    </div>
-                                  </Button>
-                                </div>
-                              </AccordionContent>
-                            </AccordionItem>
-                          );
-                        })
-                      )}
+                                </Button>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        );
+                      })}
                     </Accordion>
                   </div>
                 </div>

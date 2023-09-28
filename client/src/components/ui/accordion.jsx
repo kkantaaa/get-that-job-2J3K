@@ -13,7 +13,10 @@ const AccordionItem = React.forwardRef(({ className, ...props }, ref) => (
 
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("rounded-lg bg-White p-4 mt-[16px] drop-shadow-[0_2px_5px_rgba(0,0,0,0.20)] ", className)}
+    className={cn(
+      "rounded-lg bg-White p-4 mt-[16px] drop-shadow-[0_2px_5px_rgba(0,0,0,0.20)] ",
+      className
+    )}
     {...props}
   />
 ));
@@ -45,7 +48,7 @@ const AccordionContent = React.forwardRef(
     <AccordionPrimitive.Content
       ref={ref}
       className={cn(
-        "w-[760px] overflow-hidden text-DarkGray text-Body2 font-Inter font-normal transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+        "w-[760px] overflow-hidden text-DarkGray text-Body2 font-Inter font-normal transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down ",
         className
       )}
       {...props}
@@ -71,3 +74,29 @@ export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
           <ChevronDown className="h-6 w-6 shrink-0 transition-transform duration-200 " />
         </div>
       </AccordionPrimitive.Trigger>*/
+
+/*<AccordionPrimitive.Content
+      ref={ref}
+      className={cn(
+        "w-[760px] overflow-hidden text-DarkGray text-Body2 font-Inter font-normal transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down ",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </AccordionPrimitive.Content> */
+
+// <ChevronDown className="h-6 w-6 shrink-0 transition-transform duration-200 " />
+
+/*   <div className="bg-red-400">
+      <AccordionPrimitive.Content
+        ref={ref}
+        className={cn(
+          "w-[760px] overflow-hidden text-DarkGray text-Body2 font-Inter font-normal transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down ",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </AccordionPrimitive.Content>
+    </div> */

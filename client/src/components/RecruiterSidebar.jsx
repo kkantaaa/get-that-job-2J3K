@@ -6,7 +6,7 @@ export default function RecruiterSidebar() {
   const navigate = useNavigate();
   const { logout } = useAuth();
   return (
-    <div className="w-[240px] h-screen bg-BackgroundDark flex flex-col relative">
+    <div className="w-[240px] min-h-screen bg-BackgroundDark flex flex-col relative">
       <div className="w-[168px] h-fit px-[16px] py-[32px]">
         <img src={Logo} />
       </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useAuth } from "@/contexts/authentication";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -32,12 +33,34 @@ import FileInputIcon from "@/images/registration-page/upload-line.svg";
 
 //const navigate = useNavigate();
 
+const validFileExtensions = {
+  image: ["jpg", "gif", "png", "jpeg", "svg", "webp"],
+};
+
+function isValidFileType(fileName, fileType) {
+  return (
+    fileName &&
+    validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
+  );
+}
+
+const MAX_FILE_SIZE = 102400;
+
 const postJobSchema = yup.object({
-  companyLogo: yup.string().required("Company Logo is a required field"),
-  companyEmail: yup.string().required("Company Email is a required field"),
-  companyName: yup.string().required("Company Name is a required field"),
-  companyWebsite: yup.string().required("Company Website is a required field"),
-  aboutCompany: yup
+  company_logo: yup.mixed().required("Required"),
+  /*imgFile: yup.mixed().required("Required")
+  .test("is-valid-type", "Not a valid image type", (value) =>
+      isValidFileType(value && value.name.toLowerCase(), "image")
+    )
+    .test(
+      "is-valid-size",
+      "Max allowed size is 100KB",
+      (value) => value && value.size <= MAX_FILE_SIZE
+    )*/
+  email: yup.string().required("Company Email is a required field"),
+  company_name: yup.string().required("Company Name is a required field"),
+  company_website: yup.string().required("Company Website is a required field"),
+  about_company: yup
     .string()
     .required("Company Description is a required field"),
 });
@@ -45,8 +68,10 @@ const postJobSchema = yup.object({
 function RecruiterProfile() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
   const navigate = useNavigate();
+  const { upload } = useAuth();
   const fileInputRef = useRef(null);
   const [profile, setProfile] = useState(null);
+  const [file, setFile] = useState();
 
   const getProfile = async () => {
     try {
@@ -65,6 +90,14 @@ function RecruiterProfile() {
     fileInputRef.current.click();
   };
 
+  const handleFilePreview = (e) => {
+    if (e.target.files.length > 0) {
+      const fileURL = URL.createObjectURL(e.target.files[0]);
+      setFile(fileURL);
+      console.log(file);
+    }
+  };
+
   useEffect(() => {
     getProfile();
     console.log("profile is", profile);
@@ -74,16 +107,59 @@ function RecruiterProfile() {
     // Render a loading state or a spinner while profile is being fetched
     return <p>Loading profile...</p>;
   }
+  logo: yup.string().required("Company Logo is a required field"),
 */
   const onSubmit = async (data) => {
     try {
-      try {
-        console.log(data);
-        // await axios.put("http://localhost:4000/jobs", data);
-        console.log("Edit profile successful");
-      } catch (error) {
-        console.error("Error: unable to edit", error);
+      console.log("data submit Input", data);
+      console.log("data submit Input", data.company_logo);
+
+      if (data.company_logo !== "") {
+        const img = {
+          fileType: "companyLogo",
+          file: data.company_logo,
+        };
+
+        console.log({ img: img });
+
+        let company_logo_url = await upload(img);
+
+        console.log("image URL", company_logo_url);
+
+        try {
+          const fetchData = {
+            ...data,
+
+            recruiter_id: profile.recruiter_id,
+            company_logo: company_logo_url,
+
+            //company_logo: company_logo,
+          };
+
+          console.log("data before fetching", fetchData);
+          // await axios.put("http://localhost:4000/jobs", data);
+          console.log("Edit profile successful");
+        } catch (error) {
+          console.error("Error: unable to edit", error);
+        }
+      } else {
+        try {
+          const fetchData = {
+            ...data,
+
+            recruiter_id: profile.recruiter_id,
+            company_logo: profile.company_logo,
+            //company_logo: company_logo,
+          };
+
+          console.log("data before fetching", fetchData);
+          // await axios.put("http://localhost:4000/jobs", data);
+          console.log("Edit profile successful");
+        } catch (error) {
+          console.error("Error: unable to edit", error);
+        }
       }
+
       //navigate("/recruiter/jobpostings");
     } catch (error) {
       console.error("Error during edit profile", error);
@@ -114,8 +190,8 @@ function RecruiterProfile() {
                     <div className="w-[300px] space-y-2">
                       <FormField
                         control={form.control}
-                        name="companyLogo"
-                        defaultValue={profile.company_logo}
+                        name="company_logo"
+                        defaultValue=""
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex flex-row items-center space-x-2">
@@ -128,7 +204,10 @@ function RecruiterProfile() {
                               <div className="w-full space-y-1 text-Gray">
                                 <FormLabel>COMPANY LOGO</FormLabel>
                                 <FormControl>
-                                  <div className="w-fit flex flex-row items-center space-x-2">
+                                  <div
+                                    // onClick={handleFileButtonClick}
+                                    className="w-fit flex flex-row items-center space-x-2"
+                                  >
                                     <label
                                       className="w-[134px]  bg-Pink text-white hover:bg-LightPink active:bg-DarkPink h-9 p-2 rounded-lg space-x-2 flex flex-row"
                                       htmlFor="imageInput"
@@ -146,6 +225,14 @@ function RecruiterProfile() {
                                       className="block w-[100px] h-full text-Body2  border-0 p-0  bg-Background file:hidden"
                                       id="imageInput"
                                       accept=".jpg, .png, .jpeg, .gif"
+                                      // onChange={handleFilePreview}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          e.target.files
+                                            ? e.target.files[0]
+                                            : null
+                                        )
+                                      }
                                     />
                                   </div>
                                 </FormControl>
@@ -162,9 +249,63 @@ function RecruiterProfile() {
                         )}
                       />
 
+                      {/*<FormField
+                        control={form.control}
+                        name="imgFile"
+                        defaultValue=""
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex flex-row items-center space-x-2">
+                              <div className="w-full space-y-1 text-Gray">
+                                <FormLabel> Logo</FormLabel>
+                                <FormControl>
+                                  <div
+                                    //onClick={handleFileButtonClick}
+                                    className="w-fit flex flex-row items-center space-x-2"
+                                  >
+                                    <label
+                                      className="w-[134px]  bg-Pink text-white hover:bg-LightPink active:bg-DarkPink h-9 p-2 rounded-lg space-x-2 flex flex-row"
+                                      htmlFor="imageLogo"
+                                    >
+                                      <img
+                                        src={FileInputIcon}
+                                        alt="File Logo"
+                                      />
+                                      <div className="w-[90px] font-Inter font-normal text-Body2 text-White tracking-[0.25px]">
+                                        Choose a file
+                                      </div>
+                                    </label>
+                                    <Input
+                                      type="file"
+                                      className="block w-[100px] h-full text-Body2  border-0 p-0  bg-Background file:hidden"
+                                      id="imageLogo"
+                                      accept=".jpg, .png, .jpeg, .gif"
+                                      // onChange={handleFilePreview}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          e.target.files
+                                            ? e.target.files[0]
+                                            : null
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </FormControl>
+                                <FormDescription>
+                                  <div className="text-LightGray ">
+                                    PNG, JPEC, IMG
+                                  </div>
+                                </FormDescription>
+                              </div>
+                            </div>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      /> */}
                       <FormField
                         control={form.control}
-                        name="companyEmail"
+                        name="email"
                         defaultValue={profile.email}
                         render={({ field }) => (
                           <FormItem>
@@ -182,7 +323,7 @@ function RecruiterProfile() {
                       />
                       <FormField
                         control={form.control}
-                        name="companyName"
+                        name="company_name"
                         defaultValue={profile.company_name}
                         render={({ field }) => (
                           <FormItem>
@@ -198,7 +339,7 @@ function RecruiterProfile() {
 
                       <FormField
                         control={form.control}
-                        name="companyWebsite"
+                        name="company_website"
                         defaultValue={profile.company_website}
                         render={({ field }) => (
                           <FormItem>
@@ -217,7 +358,7 @@ function RecruiterProfile() {
 
                       <FormField
                         control={form.control}
-                        name="aboutCompany"
+                        name="about_company"
                         defaultValue={profile.about_company}
                         render={({ field }) => (
                           <FormItem>
