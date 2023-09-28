@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import cancelIcon from "../images/ApllicationApplyPage/cancel.svg";
 import closedIcon from "../images/ApllicationApplyPage/closed.svg";
 import letterIcon from "../images/ApllicationApplyPage/letter.svg";
 import letterSentIcon from "../images/ApllicationApplyPage/letter-sent.svg";
@@ -20,16 +19,13 @@ import category from "../images/ApllicationApplyPage/category.svg";
 import dollarIcon from "../images/ApllicationApplyPage/dollar.svg";
 import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 import declineIcon from "../images/ApllicationApplyPage/white-decline.svg";
-import { useParams } from "react-router-dom";
+import reviewIcon from "../images/ApllicationApplyPage/reviewed.svg";
 import moment from "moment";
 import { useAuth } from "@/contexts/authentication";
 
-moment().format();
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-  // const [filterStatus, setFilterStatus] = useState("all");
-  // const { user_id } = useParams();
   const {userData} = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] = useState(applications);
@@ -54,6 +50,7 @@ function TestYourApp() {
     }
   };
 
+  // user click to decline applications
   const handleDeclinedApplication = async (application_id) => {
     try {
       await axios.put(`http://localhost:4000/apply/${application_id}`, {
@@ -65,11 +62,13 @@ function TestYourApp() {
     }
   };
 
+  // to update and display
   useEffect(() => {
     getApplication(userData.user.user_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // user filters the applications
   const handleFilteredApplication = (status) =>{
     if (status === "all") {
       return applications;
@@ -78,34 +77,35 @@ function TestYourApp() {
     }
   }
 
+  // when the applications's status is changed or updated
   const statusChange = (app) => {
-    console.log(app);
-    if (app === "waiting") {
+    if (app.application_status === "waiting") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={pendingIcon} />
           <p>Waiting for review</p>
         </div>
       );
-    } else if (app === "inprogress") {
-      return (
-        <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
-          <img className="w-[15px] h-[15px]" src={letterIcon} />
-          <p>Review in progress</p>
-        </div>
-      );
-    } else if (app === "finished") {
+    } else if (app.application_status === "inprogress") {
       return (
         <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={letterSentIcon} />
+          <p>Review in progress</p>
+        </div>
+      );
+    } else if (app.application_status === "finished") {
+      return (
+        <div className="flex flex-col text-Pink w-[80px] h-[47px] items-center">
+          <img className="w-[15px] h-[15px]" src={reviewIcon} />
           <p>Review finished</p>
         </div>
       );
-    } else if (app === "declined") {
+    } else if (app.application_status === "declined") {
+      const declinedDate = moment(app.sent_date).format('DD-MM-YY');
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
-          <img className="w-[15px] h-[15px]" src={cancelIcon} />
-          <p>Declined on {DeclinedDate}</p>
+          <img className="w-[15px] h-[15px]" src={closedIcon} />
+          <p>Declined on {declinedDate}</p>
         </div>
       );
     } else {
@@ -118,9 +118,6 @@ function TestYourApp() {
     }
   };
   
-  const jobCreatedDate = moment(applications.opened_at).fromNow();
-  const ApplicationSentDate = moment(applications.sent_date).fromNow();
-  const DeclinedDate = moment(applications.sent_date, 'DD-MM-YY');
 
   return (
     <>
@@ -142,11 +139,9 @@ function TestYourApp() {
                 </label>
 
                 <RadioGroup
-                  // value={filterStatus}
                   defaultValue="all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
-                    // setFilterStatus(value);
                     const filteredApplications = handleFilteredApplication(value);
                     setFilteredApplications(filteredApplications);
                   }
@@ -228,10 +223,12 @@ function TestYourApp() {
                               <img src={dollarIcon} />
                               <p className="ml-[4px]">
                                 {app.salary_min /1000} k
-                              </p>- <p>{app.salary_max /1000} k</p>
+                              </p> 
+                              <p className="ml-[2px] mr-[2px]">-</p> 
+                              <p>{app.salary_max /1000} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">
-                                Posted {jobCreatedDate}
+                                Posted {moment(app.opened_at).fromNow()}
                               </p>
                             </div>
                           </div>
@@ -246,9 +243,9 @@ function TestYourApp() {
                                 className="w-[15px] h-[15px]"
                                 src={letterIcon}
                               />
-                              <p>sent {ApplicationSentDate}</p>
+                              <p>sent {moment(app.sent_date).fromNow()}</p>
                             </div>
-                            <div>{statusChange()}</div>
+                            <div>{statusChange(app)}</div>
                           </div>
                         </AccordionTrigger>
 
@@ -283,7 +280,7 @@ function TestYourApp() {
                             ) : (
                               <button
                                 className="flex flex-row justify-center items-center ml-[300px] 
-                            hover:bg-LightPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
+                            hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
                                 onClick={() =>
                                   handleDeclinedApplication(
                                     app.application_id
