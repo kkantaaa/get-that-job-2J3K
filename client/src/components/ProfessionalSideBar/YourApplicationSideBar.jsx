@@ -15,11 +15,11 @@ export default function YourApplicationSideBar() {
   };
 
   const handleApplicationPage = () => {
-    navigate("/user/myapplication/:user_id");
+    navigate("/user/myapplication");
   };
 
   const handleFollowingPage = () => {
-    navigate("/user/:user_id/following");
+    navigate("/user/following");
   };
 
   const handleProfilePage = () => {

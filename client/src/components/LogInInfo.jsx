@@ -40,6 +40,7 @@ function LogInInfo() {
       //     type: "manual",
       //     message: "The email is already taken",
       //   });
+      
       if (data.confirmedPassword !== data.password) {
         setError("confirmedPassword", {
           type: "manual",
