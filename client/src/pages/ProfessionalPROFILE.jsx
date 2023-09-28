@@ -135,7 +135,7 @@ function ProfessionalProfile() {
         user_education: formData.user_education,
         user_cv: formData.user_cv,
       };
-         if (!formData.user_linkedin.startsWith(validurlPrefix)) {
+      if (!formData.user_linkedin.startsWith(validurlPrefix)) {
         return toast.error("Invalid LinkedIn URL");
       }
       await axios.put(
@@ -191,14 +191,14 @@ function ProfessionalProfile() {
       const findMatchDialUpCountryCode = inputValue.match(/\+(\d{1,3})/);
       if (findMatchDialUpCountryCode) {
         const countryCode = findMatchDialUpCountryCode[1];
-         if (digitslength === 10) {
+        if (digitslength === 10) {
           setSelectedCountry("+" + countryCode.slice(0, 1));
         } else if (digitslength === 11) {
           setSelectedCountry("+" + countryCode.slice(0, 2));
         } else if (digitslength === 12) {
           setSelectedCountry("+" + countryCode.slice(0, 3));
         }
-       } else {
+      } else {
         setSelectedCountry("");
       }
     }
@@ -206,7 +206,7 @@ function ProfessionalProfile() {
       (country) => country.dial_code === selectedCountry
     );
     setflag(matchedCountry);
-   }; // phone
+  }; // phone
   const handleBirthdateChange = (e) => {
     setFormData({ ...formData, user_birthdate: e.target.value });
   }; // birthdate
@@ -286,7 +286,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="px-1 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                      className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
                       value={formData.user_name}
                       onChange={handleNameChange}
@@ -312,7 +312,7 @@ function ProfessionalProfile() {
                     <div className="flex items-center">
                       <Textarea
                         {...field}
-                        className="px-1 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
+                        className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                         type="tel"
                         value={formData.user_phone}
                         onChange={handlePhoneChange}
@@ -376,7 +376,7 @@ function ProfessionalProfile() {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      className="w-[380px] h-[60px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start flex-start inline-flex"
+                      className="px-2 w-[380px] h-[60px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start flex-start inline-flex"
                       type="text"
                       value={formData.user_linkedin}
                       onChange={handleLinkedInChange}
@@ -504,7 +504,7 @@ function ProfessionalProfile() {
                 {fileSelected && (
                   <div
                     id="selectedFileBox"
-                    className="mt-3 border border-pink-700 p-2 px-1 rounded-3xl text-gray-900 w-[118px] bg-pink-100"
+                    className="mt-3 border border-pink-700 p-2 px-2 rounded-3xl text-gray-900 w-[140px] bg-pink-100"
                   >
                     <span id="selectedFileName">
                       Selected file: {formData.selectedNewFileName}
@@ -516,7 +516,7 @@ function ProfessionalProfile() {
                 <button
                   type="button"
                   onClick={handleSaveChanges}
-                  className="mt-6 "
+                  className="mt-6"
                 >
                   <img src={SaveChanges} alt="SaveChanges button" />
                 </button>
