@@ -221,8 +221,10 @@ const JobList = (props) => {
                       <img className="pr-1" src={jobCategoryIcon} />
                       {job.category_name}
                     </div>
-                    <div className="">{job.job_title}</div>
-                    <div className="text-[15px] text-Gray">
+                    <div className="text-scale-[18px]">
+                      {job.job_title.slice(0, 23)}
+                    </div>
+                    <div className="text-[14px] text-Gray">
                       {job.company_name}
                     </div>
                     <div className="flex flex-row">
