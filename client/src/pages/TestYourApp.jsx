@@ -24,7 +24,7 @@ import moment from "moment";
 import { useAuth } from "@/contexts/authentication";
 
 function TestYourApp() {
-  const [applications, setApplications] = useState([]);
+  const [applications, setApplications] = useState("all");
   const { userData } = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] = useState([]);
