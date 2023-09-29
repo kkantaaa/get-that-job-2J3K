@@ -28,7 +28,11 @@ function PersonalInformation() {
 
   const onSubmit = async (data) => {
     const { name, phone, birthdate, linkedin } = data;
-    //  Validation
+    const isEmpty = Object.values(data).some((value) => value === "");
+    if (isEmpty) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
     const checkNameValid = data.name;
     const checkPhoneStartsWithPlus = data.phone.startsWith("+");
     const checkPhoneStandardLength = /^(\+\d{1,3})?\d{10}$/g.test(data.phone);
@@ -53,7 +57,6 @@ function PersonalInformation() {
         errorMessage:
           "Phone number must have a standard length including the country code.",
       },
-      // Add more validation criteria as needed
     ];
     const hasErrors = validations.some((validation) => validation.condition);
     if (hasErrors) {
@@ -103,7 +106,7 @@ function PersonalInformation() {
             name="name"
             control={control}
             defaultValue=""
-            rules={{ required: "Name is required" }}
+            // rules={{ required: "Name is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] 
@@ -130,7 +133,7 @@ function PersonalInformation() {
             name="phone"
             control={control}
             defaultValue=""
-            rules={{ required: "Phone number is required" }}
+            // rules={{ required: "Phone number is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md 
@@ -157,7 +160,7 @@ function PersonalInformation() {
             name="birthdate"
             control={control}
             defaultValue=""
-            rules={{ required: "Birthdate is required" }}
+            // rules={{ required: "Birthdate is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  
@@ -182,7 +185,7 @@ function PersonalInformation() {
             name="linkedin"
             control={control}
             defaultValue=""
-            rules={{ required: "LinkedIn URL is required" }}
+            // rules={{ required: "LinkedIn URL is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
