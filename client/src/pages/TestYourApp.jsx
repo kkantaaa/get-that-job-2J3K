@@ -62,12 +62,6 @@ function TestYourApp() {
     }
   };
 
-  // to update and display
-  useEffect(() => {
-    getApplication(userData.user.user_id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // user filters the applications
   const handleFilteredApplication = (status) =>{
     if (status === "all") {
@@ -76,6 +70,12 @@ function TestYourApp() {
       return applications.filter((app)=> app.application_status === status);
     }
   }
+
+  // to update and display
+   useEffect(() => {
+    getApplication(userData.user.user_id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // when the applications's status is changed or updated
   const statusChange = (app) => {
@@ -118,7 +118,7 @@ function TestYourApp() {
     }
   };
   
-
+  
   return (
     <>
       <div className="flex flex-row bg-Background min-h-screen min-w-screen">
