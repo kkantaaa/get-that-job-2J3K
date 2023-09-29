@@ -6,16 +6,20 @@ import multer from "multer";
 const registRouter = Router();
 const multerUpload = multer({ dest: "../uploads/" });
 
-// Test database connection
-registRouter.get("/test/get_tabledata", async (req, res) => {
+// fetched user email from "users" table
+registRouter.get("/checkDupEmail", async (req, res) => {
+  const { email } = req.query;
   try {
-    const result = await pool.query("select * from testregist");
-    return res.json({ message: result.rows });
-  } catch (err) {
-    console.error(err);
-    return res
-      .status(500)
-      .json({ message: "Error fetching data from the database" });
+    const result = await pool.query(
+      "SELECT email FROM users WHERE email = $1",
+      [email]
+    );
+    if (result.rowCount > 0) {
+      res.json({ exists: true });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
