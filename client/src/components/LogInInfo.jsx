@@ -1,13 +1,14 @@
 import { useForm, Controller } from "react-hook-form"; //1. นำเข้า React Hook Form, Controller = เพื่อเชื่อมต่อ field ใน input เข้ากับ react hook form
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/contexts/registerContexts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 import axios from "axios";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
   const navigate = useNavigate();
+  const [fetchedemail, setFetchedemail] = useState(null);
 
   // 2. เราจะใช้ useForm(); เพื่อกำหนดค่าต่างๆ และส่งค่าที่จะใช้ในการจัดการ form
   const {
@@ -59,6 +60,14 @@ function LogInInfo() {
     }
   };
 
+  const onChangeEmail = async (e) => {
+    // const response = await axios.get(
+    //   "http://localhost:4000/regist/checkDupEmail",
+    //   {
+    //     params: { email: inputEmail },
+    //   }
+    // );
+  };
   return (
     <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
       <div>
@@ -77,6 +86,7 @@ function LogInInfo() {
                   type="email"
                   placeholder="some.user@mail.com"
                   {...field}
+                  // onChange={onChangeEmail}
                   aria-describedby="email-error"
                 />
               )}
