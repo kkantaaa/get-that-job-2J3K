@@ -9,7 +9,8 @@ const CompanyFollowingList = (props) => {
   const navigate = useNavigate();
   const { userData } = useAuth();
   const [companyJobsCount, setCompanyJobsCount] = useState([]);
-  const companyFollow = props.data;
+  const [companyFollow, setCompanyFollow] = useState([]);
+  // const companyFollow = props.data;
 
   const getCompanyJobsCount = async () => {
     const userId = userData.user.user_id;
@@ -28,32 +29,45 @@ const CompanyFollowingList = (props) => {
     }
   };
 
+  const getCompanyFollow = async (input) => {
+    const userId = input;
+    try {
+      const params = new URLSearchParams();
+      params.append("userId", userId);
+      const results = await axios.get(
+        `http://localhost:4000/following/companyinfo`,
+        {
+          params,
+        }
+      );
+      setCompanyFollow(results.data.data);
+    } catch (error) {
+      console.error("Error: Failed to fetch company following", userId, error);
+    }
+  };
+
+  const handleUnfollow = async (event) => {
+    const userId = userData.user.user_id;
+    const recruiterId = event;
+    try {
+      const data = {
+        userId: userId,
+        recruiterId: recruiterId,
+      };
+      await axios.post("http://localhost:4000/following/unfollowcompany", data);
+    } catch (error) {
+      console.error("Error: unable to unfollow the job", error);
+    }
+    getCompanyFollow(userData.user.user_id);
+  };
+
   useEffect(() => {
     getCompanyJobsCount();
   }, []);
 
-  // console.log("companyJobsCount : ");
-  // console.log(companyJobsCount.filter((job) => job.recruiter_id == 83)[0]); TESTT
-
-  // const counts = companyJobsCount.map((obj) => {
-  //   return obj.job_count;
-  // });
-  // console.log("counts : ");
-  // console.log(counts);
-
-  // {
-  //   companyJobs && companyJobs.length > 0 ? (
-  //     <div className="flex flex-row">
-  //       {
-  //         companyJobsCount.filter(
-  //           (job) => job.recruiter_id == follow.recruiter_id
-  //         )[0].job_count
-  //       }
-  //     </div>
-  //   ) : (
-  //     <div>Loading...</div>
-  //   );
-  // }
+  useEffect(() => {
+    getCompanyFollow();
+  }, [companyFollow]);
 
   return (
     <div className="ml-[120px]">
@@ -104,11 +118,16 @@ const CompanyFollowingList = (props) => {
                 </div>
                 <div className="flex flex-row pb-[16px] text-Gray">
                   <div className="hover:text-Pink">
-                    <button className="flex flex-row font-Inter">
+                    <button
+                      className="flex flex-row font-Inter"
+                      onClick={() => {
+                        handleUnfollow(follow.recruiter_id);
+                      }}
+                    >
                       <div className="mx-1">
                         <img src={pinkFollowIcon} alt="Pink Follow Icon" />
                       </div>
-                      <div className="pt-2">FOLLOWING</div>
+                      <div className="pt-2 text-[14px]">FOLLOWING</div>
                     </button>
                   </div>
                   <div className="pl-4">

@@ -172,4 +172,161 @@ followingRouter.get("/companyjob/:id", async (req, res) => {
   // }
 });
 
+followingRouter.post("/followjob", async (req, res) => {
+  const userid = `${req.body.userId}`;
+  const jobid = `${req.body.jobId}`;
+  console.log(`user id is ${userid}`);
+  console.log(`job id is ${jobid}`);
+  try {
+    // const result = await pool.query(
+    //   `SELECT * FROM job_follows WHERE (user_id = $1) AND (job_id = $2)`,
+    //   [userid, jobid]
+    // );
+    // if (result) {
+    //   return res.status(401).json({
+    //     message: "job already following",
+    //   });
+    // }
+    if (!userid) {
+      return res.status(401).json({
+        message: "no user id please login",
+      });
+    }
+    if (!jobid) {
+      return res.status(401).json({
+        message: "no job id please try again",
+      });
+    }
+
+    await pool.query(
+      `insert into job_follows (user_id, job_id)
+      values ($1, $2)`,
+      [userid, jobid]
+    );
+
+    return res.json({
+      message: "job has been following.",
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
+followingRouter.post("/unfollowjob", async (req, res) => {
+  try {
+    const userid = `${req.body.userId}`;
+    const jobid = `${req.body.jobId}`;
+    console.log(`user id is ${userid}`);
+    console.log(`job id is ${jobid}`);
+
+    if (!userid) {
+      return res.status(401).json({
+        message: "no user id please login",
+      });
+    }
+    if (!jobid) {
+      return res.status(401).json({
+        message: "no job id please try again",
+      });
+    }
+    // const result = await pool.query(
+    //   `SELECT * FROM job_follows WHERE (user_id = $1) AND (job_id = $2)`,
+    //   [userid, jobid]
+    // );
+    // if (!result) {
+    //   return res.status(401).json({
+    //     message: "job already not following",
+    //   });
+    // }
+    // console.log(result);
+
+    await pool.query(
+      `DELETE FROM job_follows
+      WHERE (user_id = $1)
+      AND (job_id = $2)`,
+      [userid, jobid]
+    );
+
+    return res.json({
+      message: "job following has been deleted.",
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
+followingRouter.post("/followcompany", async (req, res) => {
+  const userid = `${req.body.userId}`;
+  const recruiterid = `${req.body.recruiterId}`;
+  console.log(`user id is ${userid}`);
+  console.log(`recruiter id is ${recruiterid}`);
+  try {
+    if (!userid) {
+      return res.status(401).json({
+        message: "user id not found, please login",
+      });
+    }
+
+    if (!recruiterid) {
+      return res.status(401).json({
+        message: "recruiter id not found, please try again",
+      });
+    }
+
+    await pool.query(
+      `insert into company_follows (user_id, recruiter_id)
+      values ($1, $2)`,
+      [userid, recruiterid]
+    );
+
+    return res.json({
+      message: "company has been following.",
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
+followingRouter.post("/unfollowcompany", async (req, res) => {
+  try {
+    const userid = `${req.body.userId}`;
+    const recruiterid = `${req.body.recruiterId}`;
+    console.log(`user id is ${userid}`);
+    console.log(`recruiter id is ${recruiterid}`);
+
+    if (!userid) {
+      return res.status(401).json({
+        message: "user id not found, please login",
+      });
+    }
+
+    if (!recruiterid) {
+      return res.status(401).json({
+        message: "recruiter id not found, please try again",
+      });
+    }
+
+    await pool.query(
+      `DELETE FROM company_follows
+      WHERE (user_id = $1)
+      AND (recruiter_id = $2)`,
+      [userid, recruiterid]
+    );
+
+    return res.json({
+      message: "comapny following has been deleted.",
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
+});
+
 export default followingRouter;
