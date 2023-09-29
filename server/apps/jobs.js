@@ -157,8 +157,8 @@ jobRouter.get("/", async (req, res) => {
       AND (category_name = $2 OR $2 IS NULL)
       AND (type_name = $3 OR $3 IS NULL)
       AND (salary_min >= $4 OR $4 IS NULL)
-      AND (salary_max <= $5 OR $5 IS NULL)`;
-    // AND (closed_at IS NULL)`; //แสดงเฉาพะงานที่ยังไม่ close
+      AND (salary_max <= $5 OR $5 IS NULL)
+      AND (closed_at IS NULL)`; //แสดงเฉาพะงานที่ยังไม่ close
     values = [keywords, category, type, min, max];
 
     const results = await pool.query(query, values);

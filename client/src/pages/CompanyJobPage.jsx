@@ -18,6 +18,7 @@ function CompanyJobPage() {
   const [companyJobs, setCompanyJobs] = useState([]);
   const [appIds, setAppIds] = useState([]);
   const [jobFollowingIds, setJobFollowingIds] = useState([]);
+  const [companyFollowIds, setCompanyFollowIds] = useState([]);
 
   const getCompanyJobs = async () => {
     //
@@ -93,6 +94,48 @@ function CompanyJobPage() {
     }
   };
 
+  // FOLLOW LOGIC
+  const handleFollow = async (event) => {
+    // event.preventDefault();
+    const userId = userData.user.user_id;
+    const jobId = event;
+    console.log(`user id : ${userId}`);
+    console.log(`job id : ${jobId}`);
+    try {
+      const data = {
+        userId: userId,
+        jobId: jobId,
+      };
+      // const params = new URLSearchParams();
+      // params.append("userId", userId);
+      // params.append("jobId", jobId);
+      await axios.post("http://localhost:4000/following/followjob", data);
+    } catch (error) {
+      console.error("Error: unable to follow the job", error);
+    }
+    getJobFollowing(userData.user.user_id);
+  };
+
+  // UNFOLLOW LOGIC
+  const handleUnfollow = async (event) => {
+    // event.preventDefault();
+    const userId = userData.user.user_id;
+    const jobId = event;
+    try {
+      const data = {
+        userId: userId,
+        jobId: jobId,
+      };
+      // const params = new URLSearchParams();
+      // params.append("userId", userId);
+      // params.append("jobId", jobId);
+      await axios.post("http://localhost:4000/following/unfollowjob", data);
+    } catch (error) {
+      console.error("Error: unable to unfollow the job", error);
+    }
+    getJobFollowing(userData.user.user_id);
+  };
+
   const followButton = (jobId) => {
     const isFollowing = jobFollowingIds.includes(jobId);
     if (isFollowing) {
@@ -101,7 +144,16 @@ function CompanyJobPage() {
           <div className="mx-1">
             <img src={pinkFollowIcon} />
           </div>
-          <div className="pt-2 font-Inter">FOLLOWING</div>
+          <div className="pt-2 font-Inter">
+            <button
+              value={jobId}
+              onClick={(event) => {
+                handleUnfollow(event.target.value); //รับค่า jobId ได้ OK
+              }}
+            >
+              FOLLOWING
+            </button>
+          </div>
         </button>
       );
     } else {
@@ -110,15 +162,119 @@ function CompanyJobPage() {
           <div className="mx-0">
             <img src={followIcon} />
           </div>
-          <div className="pt-2 font-Inter">FOLLOW</div>
+          <div className="pt-2 font-Inter">
+            <button
+              value={jobId}
+              onClick={(event) => {
+                handleFollow(event.target.value); //รับค่า jobId ได้ OK
+              }}
+            >
+              FOLLOW
+            </button>
+          </div>
         </button>
       );
     }
   };
 
-  // useEffect(() => {
-  //   getCompanyJobs();
-  // }, []);
+  const getCompanyFollow = async () => {
+    const userId = userData.user.user_id;
+    try {
+      const params = new URLSearchParams();
+      params.append("userId", userId);
+      const results = await axios.get(
+        `http://localhost:4000/following/companyinfo`,
+        {
+          params,
+        }
+      );
+      const companyFollowIds = results.data.data.map((obj) => {
+        return obj.recruiter_id;
+      });
+      setCompanyFollowIds(companyFollowIds);
+    } catch (error) {
+      console.error("Error: Failed to fetch company following", userId, error);
+    }
+  };
+
+  const companyFollowButton = (recruiterId) => {
+    const isFollowing = companyFollowIds.includes(recruiterId);
+    if (isFollowing) {
+      return (
+        <button className="flex flex-row">
+          <div className="mx-1">
+            <img src={pinkFollowIcon} />
+          </div>
+          <div className="pt-2 font-Inter">
+            <button
+              value={recruiterId}
+              onClick={(event) => {
+                handleCompanyUnfollow(event.target.value);
+              }}
+            >
+              FOLLOWING
+            </button>
+          </div>
+        </button>
+      );
+    } else {
+      return (
+        <button className="flex flex-row pr-4">
+          <div className="mx-0">
+            <img src={followIcon} />
+          </div>
+          <div className="pt-2 font-Inter">
+            <button
+              value={recruiterId}
+              onClick={(event) => {
+                handleCompanyFollow(event.target.value);
+              }}
+            >
+              FOLLOW
+            </button>
+          </div>
+        </button>
+      );
+    }
+  };
+
+  // FOLLOW LOGIC
+  const handleCompanyFollow = async (event) => {
+    const userId = userData.user.user_id;
+    const recruiterId = event;
+    console.log(`user id : ${userId}`);
+    console.log(`job id : ${recruiterId}`);
+    try {
+      const data = {
+        userId: userId,
+        recruiterId: recruiterId,
+      };
+      await axios.post("http://localhost:4000/following/followcompany", data);
+    } catch (error) {
+      console.error("Error: unable to follow the company", error);
+    }
+    getCompanyFollow(userData.user.user_id);
+  };
+
+  // UNFOLLOW LOGIC
+  const handleCompanyUnfollow = async (event) => {
+    const userId = userData.user.user_id;
+    const recruiterId = event;
+    try {
+      const data = {
+        userId: userId,
+        recruiterId: recruiterId,
+      };
+      await axios.post("http://localhost:4000/following/unfollowcompany", data);
+    } catch (error) {
+      console.error("Error: unable to unfollow the company", error);
+    }
+    getCompanyFollow(userData.user.user_id);
+  };
+
+  useEffect(() => {
+    getCompanyFollow();
+  }, [companyFollowIds]);
 
   useEffect(() => {
     getCompanyJobs();
@@ -179,11 +335,9 @@ function CompanyJobPage() {
                         <div>Loading...</div>
                       )}
                     </div>
-                    <img
-                      className="w-[138px] h-[40px]"
-                      src={FollowingStatus}
-                      alt="following-button"
-                    />
+                    <div className="text-Gray hover:text-Pink">
+                      {companyFollowButton(recruiter_id)}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -215,7 +369,9 @@ function CompanyJobPage() {
                               <img className="pr-1" src={jobCategoryIcon} />
                               {job.category_name}
                             </div>
-                            <div className="">{job.job_title}</div>
+                            <div className="text-scale-[16px]">
+                              {job.job_title.slice(0, 20)}
+                            </div>
                             <div className="text-[15px] text-Gray">
                               {job.company_name}
                             </div>

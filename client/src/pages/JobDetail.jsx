@@ -137,15 +137,15 @@ function JobDetail() {
   // UNFOLLOW LOGIC
   const handleUnfollow = async (event) => {
     const userId = userData.user.user_id;
-    const jobId = event;
+    const recruiterId = event;
     try {
       const data = {
         userId: userId,
-        jobId: jobId,
+        recruiterId: recruiterId,
       };
-      await axios.post("http://localhost:4000/following/unfollowjob", data);
+      await axios.post("http://localhost:4000/following/unfollowcompany", data);
     } catch (error) {
-      console.error("Error: unable to unfollow the job", error);
+      console.error("Error: unable to unfollow the company", error);
     }
     getCompanyFollow(userData.user.user_id);
   };
@@ -156,7 +156,7 @@ function JobDetail() {
 
   return (
     <>
-      <div className="bg-Background overflow-x-hidden">
+      <div className="bg-Background min-h-screen overflow-x-hidden">
         <div className="flex flex-row font-Inter text-[16px]">
           <FindThatJobSideBar />
 
