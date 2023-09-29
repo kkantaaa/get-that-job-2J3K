@@ -189,7 +189,7 @@ function TestYourApp() {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  {applications.length} Applications found
+                  {filteredApplications.length} Applications found
                 </div>
 
                 {/* ส่วน Accordian */}
