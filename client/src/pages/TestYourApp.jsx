@@ -24,11 +24,11 @@ import moment from "moment";
 import { useAuth } from "@/contexts/authentication";
 
 function TestYourApp() {
-  const [applications, setApplications] = useState("all");
+  const [applications, setApplications] = useState([]);
   const { userData } = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
-  const [filteredApplications, setFilteredApplications] = useState([]);
-  const [selectFilter, setSelectFilter] = useState("all");
+  const [filteredApplications, setFilteredApplications] =
+    useState([]);
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -68,7 +68,6 @@ function TestYourApp() {
   // user filters the applications
 const handleFilteredApplication = (status) => {
   try {
-    console.log("status", status)
     if (status === "all") {
       return applications;
     } else {
@@ -86,18 +85,10 @@ const handleFilteredApplication = (status) => {
 
   // to update and display
   useEffect(() => {
-    const fetchData = async () => {
-      await getApplication(userData.user.user_id);
-      const filteredApps = handleFilteredApplication(selectFilter);
-      setFilteredApplications(filteredApps);
-      console.log("jobs all", applications )
-
-    };
-  
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getApplication(userData.user.user_id);
+    setFilteredApplications(applications);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
 
   // when the applications's status is changed or updated
   const statusChange = (app) => {
@@ -161,11 +152,9 @@ const handleFilteredApplication = (status) => {
 
                 {/* filter the application */}
                 <RadioGroup
-                  defaultValue="all" 
-                  value={selectFilter} // เซตให้เป็นค่าปัจจุบัน
+                  DefaultValue = "all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
-                    setSelectFilter(value);
                     if (value === "declined") {
                       setIsDeclined(true); // ตั้งค่าให้เป็น true เมื่อคลิกปุ่ม "Declined"
                     } else {
