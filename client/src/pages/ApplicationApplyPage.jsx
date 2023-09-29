@@ -91,20 +91,21 @@ function ApplicationApplyPage() {
   };
   //3
   const handleFollowButton = () => {
-    console.log("clicked");
+    // console.log("clicked"); //leave this
     const user_id = parseInt(userDetail.user_id);
-    const recruiter_id = parseInt(jobDetail.recruiter_id);
-    console.log(jobDetail.recruiter_id);
-    console.log(userDetail.recruiter_id);
-    if (userDetail.recruiter_id !== null) {
+    const recruiter_idjob = parseInt(jobDetail.recruiter_id);
+    // console.log("jobDetail.recruiter_id", jobDetail.recruiter_id); //leave this
+    // console.log("userDetail.recruiter_id", userDetail.recruiter_id); //leave this
+    console.log("jobDetail.recruiter_id", jobDetail.recruiter_id);
+    if (userDetail.recruiter_id == jobDetail.recruiter_id) {
       console.log("same");
       axios.delete(
-        `http://localhost:4000/apply/unfollow/${user_id}/${recruiter_id}`
+        `http://localhost:4000/apply/unfollow/${user_id}/${recruiter_idjob}`
       );
     } else {
       console.log("not same");
       axios.post(
-        `http://localhost:4000/apply/follow/${user_id}/${recruiter_id}`
+        `http://localhost:4000/apply/follow/${user_id}/${recruiter_idjob}`
       );
     }
     window.location.reload();
@@ -158,20 +159,12 @@ function ApplicationApplyPage() {
                     </div>
                     {jobDetail.recruiter_id == userDetail.recruiter_id && (
                       <button onClick={handleFollowButton}>
-                        <img
-                          onClick={handleFollowButton}
-                          src={FollowButton}
-                          alt="Following Button"
-                        />
+                        <img src={FollowButton} alt="Following Button" />
                       </button>
                     )}
                     {jobDetail.recruiter_id !== userDetail.recruiter_id && (
                       <button onClick={handleFollowButton}>
-                        <img
-                          onClick={handleFollowButton}
-                          src={FollowButtonG}
-                          alt="Follow Button"
-                        />
+                        <img src={FollowButtonG} alt="Follow Button" />
                       </button>
                     )}
                   </div>
