@@ -4,7 +4,8 @@ import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/authentication";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function PersonalInformation() {
   const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
@@ -27,28 +28,60 @@ function PersonalInformation() {
 
   const onSubmit = async (data) => {
     const { name, phone, birthdate, linkedin } = data;
-    setUserData({...userData,
-      name,
-      phone,
-      birthdate,
-      linkedin
-    });
-
-    try {
-      await setUserData({
-        ...userData,
-      name,
-      phone,
-      birthdate,
-      linkedin,
-      });
-      navigate("/user/register3");
-    } catch (error) {
-      console.error("Error during registration", error);
+    //  Validation
+    const checkNameValid = data.name;
+    const checkPhoneStartsWithPlus = data.phone.startsWith("+");
+    const checkPhoneStandardLength = /^(\+\d{1,3})?\d{10}$/g.test(data.phone);
+    const checkLinkedinStartsWithUrl = data.linkedin.startsWith(
+      "https://www.linkedin.com/in/"
+    );
+    const validations = [
+      {
+        condition: /[^A-Za-z]/.test(checkNameValid),
+        errorMessage: "Name contains non-alphabet characters.",
+      },
+      {
+        condition: !checkPhoneStartsWithPlus,
+        errorMessage: "Phone number must start with a plus sign (+).",
+      },
+      {
+        condition: !checkLinkedinStartsWithUrl,
+        errorMessage: "LinkedIn must start with the LinkedIn URL.",
+      },
+      {
+        condition: !checkPhoneStandardLength,
+        errorMessage:
+          "Phone number must have a standard length including the country code.",
+      },
+      // Add more validation criteria as needed
+    ];
+    const hasErrors = validations.some((validation) => validation.condition);
+    if (hasErrors) {
+      validations
+        .filter((validation) => validation.condition)
+        .forEach((validation) => {
+          toast.error(validation.errorMessage);
+        });
+    } else {
+      setUserData({ ...userData, name, phone, birthdate, linkedin });
+      try {
+        await setUserData({
+          ...userData,
+          name,
+          phone,
+          birthdate,
+          linkedin,
+        });
+        navigate("/user/register3");
+      } catch (error) {
+        console.error("Error during registration", error);
+      }
     }
   };
 
   return (
+    <>
+    <ToastContainer />
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
         <p className="text-[10px] font-normal tracking-[1.5px] uppercase">
@@ -173,6 +206,7 @@ function PersonalInformation() {
         </div>
       </div>
     </form>
+    </>
   );
 }
 
