@@ -63,13 +63,6 @@ function TestYourApp() {
     }
   };
 
-  // to update and display
-  useEffect(() => {
-    getApplication(userData.user.user_id);
-    const initialFilteredApplications = handleFilteredApplication("all");
-    setFilteredApplications(initialFilteredApplications);
-  }, []);
-
   // user filters the applications
   const handleFilteredApplication = (status) => {
     try {
@@ -83,6 +76,13 @@ function TestYourApp() {
       return [];
     }
   };
+
+  // to update and display
+  useEffect(() => {
+    getApplication(userData.user.user_id);
+    const initialFilteredApplications = handleFilteredApplication("all");
+    setFilteredApplications(initialFilteredApplications);
+  }, []);
 
   // when the applications's status is changed or updated
   const statusChange = (app) => {
@@ -146,6 +146,7 @@ function TestYourApp() {
 
                 {/* filter the application */}
                 <RadioGroup
+                  DefaultValue = "all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
                     const filteredApplications =
