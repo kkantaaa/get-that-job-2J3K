@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/contexts/authentication";
 import FollowingSideBar from "@/components/ProfessionalSideBar/FollowingSideBar.jsx";
-import FollowingStatus from "../images/job-detail-page/FollowButton.svg";
 import ArrowLeft from "../images/job-detail-page/arrow-left-black.svg";
 import followIcon from "@/images/getthatjob-page/followIcon.svg";
 import dollarIcon from "@/images/getthatjob-page/dollarIcon.svg";
@@ -95,7 +94,7 @@ function CompanyJobPage() {
   };
 
   // FOLLOW LOGIC
-  const handleFollow = async (event) => {
+  const handleJobFollow = async (event) => {
     // event.preventDefault();
     const userId = userData.user.user_id;
     const jobId = event;
@@ -117,7 +116,7 @@ function CompanyJobPage() {
   };
 
   // UNFOLLOW LOGIC
-  const handleUnfollow = async (event) => {
+  const handleJobUnfollow = async (event) => {
     // event.preventDefault();
     const userId = userData.user.user_id;
     const jobId = event;
@@ -136,7 +135,7 @@ function CompanyJobPage() {
     getJobFollowing(userData.user.user_id);
   };
 
-  const followButton = (jobId) => {
+  const jobFollowButton = (jobId) => {
     const isFollowing = jobFollowingIds.includes(jobId);
     if (isFollowing) {
       return (
@@ -148,7 +147,7 @@ function CompanyJobPage() {
             <button
               value={jobId}
               onClick={(event) => {
-                handleUnfollow(event.target.value); //รับค่า jobId ได้ OK
+                handleJobUnfollow(event.target.value); //รับค่า jobId ได้ OK
               }}
             >
               FOLLOWING
@@ -166,7 +165,7 @@ function CompanyJobPage() {
             <button
               value={jobId}
               onClick={(event) => {
-                handleFollow(event.target.value); //รับค่า jobId ได้ OK
+                handleJobFollow(event.target.value); //รับค่า jobId ได้ OK
               }}
             >
               FOLLOW
@@ -390,7 +389,7 @@ function CompanyJobPage() {
                         </div>
                         <div className="flex flex-row">
                           <div className="text-Gray text-[14px] hover:text-Pink">
-                            {followButton(job.job_id)}
+                            {jobFollowButton(job.job_id)}
                           </div>
                           <div className="pl-4 text-[14px]">
                             {seemoreButton(job.job_id)}

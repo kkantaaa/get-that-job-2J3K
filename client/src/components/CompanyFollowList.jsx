@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/authentication";
 import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 import jobOpeningIcon from "@/images/getthatjob-page/jobOpeningIcon.svg";
 
-const CompanyFollowingList = (props) => {
+const CompanyFollowingList = () => {
   const navigate = useNavigate();
   const { userData } = useAuth();
   const [companyJobsCount, setCompanyJobsCount] = useState([]);
@@ -63,7 +63,7 @@ const CompanyFollowingList = (props) => {
 
   useEffect(() => {
     getCompanyJobsCount();
-  }, []);
+  }, [companyJobsCount]);
 
   useEffect(() => {
     getCompanyFollow();

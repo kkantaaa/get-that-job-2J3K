@@ -49,9 +49,12 @@ function FollowingPage() {
   };
 
   useEffect(() => {
-    getJobFollow(userData.user.user_id);
     getCompanyFollow(userData.user.user_id);
-  }, []);
+  }, [companyFollow]);
+
+  useEffect(() => {
+    getJobFollow(userData.user.user_id);
+  }, [jobFollow]);
 
   return (
     <div className="min-w-screen min-h-screen flex flex-row bg-Background">
@@ -66,7 +69,7 @@ function FollowingPage() {
           </div>
         </div>
         <div>
-          <CompanyFollowingList data={companyFollow} />
+          <CompanyFollowingList />
         </div>
       </h1>
     </div>
