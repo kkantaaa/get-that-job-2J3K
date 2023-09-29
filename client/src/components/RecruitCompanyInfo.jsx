@@ -134,10 +134,12 @@ function RecruitCompanyInfo() {
           Between 100 and 2000 characters
         </p>
 
+        <p className="mt-[8px] uppercase text-DarkGray text-[10px] leading-normal tracking-[1.5px]">Upload the company logo</p>
+
         {/* button */}
         <div
           onClick={handleFileButtonClick}
-          className="mt-[8px] p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
+          className="mt-[4px] p-2 active:bg-DarkPink hover:bg-LightPink flex items-center rounded-[8px] bg-Pink text-white w-[134px] h-[36px] cursor-pointer"
         >
           <img src={FileInputIcon} alt="File Input" />
           <p className="ml-[8px] text-[14px] font-normal leading-normal tracking-[0.25px] cursor-pointer">
