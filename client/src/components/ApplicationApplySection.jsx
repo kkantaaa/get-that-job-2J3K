@@ -217,15 +217,10 @@ function ApplicationApplySection(pagedata) {
               render={({ field }) => (
                 <Textarea
                   {...field}
-                  style={{
-                    width: "900px",
-                    height: "300px",
-                    fontSize: "16px",
-                    border: "4px solid pink",
-                    borderRadius: "14px",
-                  }}
+                  className="w-[900px] h-[300px] text-[17px] border-4 border-[pink] rounded-16 focus:border-pink-300"
                   type="text"
                   id="experience"
+                  placeholder="Position: Web Developer&#10;Company: Futureproof Web Solutions inc.&#10;Duration: January 2020 - January 2999 &#10;&#10;Responsibilities:&#10;Collaborated with back-end developers to integrate front-end and back-end functionalities seamlessly.&#10;&#10;Achievements: Received positive feedback from clients for delivering projects on time and within budget.&#10;&#10;Technologies used:&#10;HTML, CSS, JavaScript, React, Node.js, Express.js, Git, GitHub, Heroku, Vercel, Android, Webflow, Framer, Bootstrap, Tailwind CSS, Material UI, Chakra UI, Sass, jQuery, Next.js, Gatsby, GraphQL, Firebase, Azure, DigitalOcean, Linode and Cloudflare"
                   value={professionalExperience}
                   onChange={(e) => setProfessionalExperience(e.target.value)}
                 />
@@ -255,15 +250,10 @@ function ApplicationApplySection(pagedata) {
               render={({ field }) => (
                 <Textarea
                   {...field}
-                  style={{
-                    width: "900px",
-                    height: "300px",
-                    fontSize: "16px",
-                    border: "4px solid pink",
-                    borderRadius: "14px",
-                  }}
+                  className="w-[900px] h-[300px] text-[17px] border-4 border-[pink] rounded-16 focus:border-pink-300"
                   type="text"
                   id="interestedReason"
+                  placeholder="I am interested in working here and believe it aligns well with my career aspirations and values."
                   value={interestedReason}
                   onChange={(e) => setInterestedReason(e.target.value)}
                   minLength={50}
