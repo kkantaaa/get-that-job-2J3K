@@ -33,17 +33,29 @@ import money_dollar_circle_fill from "@/images/posting-job-page/money_dollar_cir
 
 const postJobSchema = yup.object({
   jobTitle: yup.string().required("JOB TITLE is a required field"),
-  jobCategory: yup.string().required(),
-  jobType: yup.string().required(),
-  salaryRangeMin: yup.number().positive().integer().required(),
+  jobCategory: yup.string().required("JOB CATEGORY is a required field"),
+  jobType: yup.string().required("JOB TYPE is a required field"),
+  salaryRangeMin: yup
+    .number()
+    .positive("SALARY MIN is not a positive number.")
+    .integer()
+    .typeError("SALARY MIN is not a positive number.")
+    .required(),
   salaryRangeMax: yup
     .number()
-    .positive("JOB TITLE is a required field")
+    .positive("SALARY MAX is not a positive number.")
     .integer()
+    .typeError("SALARY MAX is not a positive number.")
     .required(),
-  aboutJobPosition: yup.string().required(),
-  mandatoryRequirement: yup.string().required(),
-  optionalRequirement: yup.string().required(),
+  aboutJobPosition: yup
+    .string()
+    .required("ABOUT THE JOB POSITION is a required field"),
+  mandatoryRequirement: yup
+    .string()
+    .required("MANDATORY REQUIREMENTS is a required field"),
+  optionalRequirement: yup
+    .string()
+    .required("OPTIONAL REQUIREMENTS is a required field"),
 });
 
 function CreateJobPosting() {
@@ -220,7 +232,11 @@ function CreateJobPosting() {
                           <FormItem>
                             <FormLabel></FormLabel>
                             <FormControl>
-                              <Input placeholder="min" {...field}></Input>
+                              <Input
+                                placeholder="min"
+                                className="pl-9 bg-origin-padding bg-[url('@/images/posting-job-page/money_dollar_circle_fill.png')] bg-no-repeat bg-[length:20px_20px] bg-[center_left_8px] "
+                                {...field}
+                              ></Input>
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -229,7 +245,7 @@ function CreateJobPosting() {
                       />
 
                       <hr className="w-[11px] h-[2px] mx-2 rounded-[2px] bg-LightGray" />
-
+                      {/* url('@/images/posting-job-page/money_dollar_circle_fill.png')*/}
                       <FormField
                         control={form.control}
                         name="salaryRangeMax"
@@ -238,7 +254,11 @@ function CreateJobPosting() {
                           <FormItem>
                             <FormLabel></FormLabel>
                             <FormControl>
-                              <Input placeholder="max" {...field} />
+                              <Input
+                                placeholder="max"
+                                className="pl-9 bg-origin-padding bg-[url('@/images/posting-job-page/money_dollar_circle_fill.png')] bg-no-repeat bg-[length:20px_20px] bg-[center_left_8px] "
+                                {...field}
+                              />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
