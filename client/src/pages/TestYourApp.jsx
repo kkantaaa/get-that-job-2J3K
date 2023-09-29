@@ -23,12 +23,12 @@ import reviewIcon from "../images/ApllicationApplyPage/reviewed.svg";
 import moment from "moment";
 import { useAuth } from "@/contexts/authentication";
 
-
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
-  const [filteredApplications, setFilteredApplications] = useState(applications);
+  const [filteredApplications, setFilteredApplications] =
+    useState(applications);
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -39,12 +39,13 @@ function TestYourApp() {
     const userId = input;
     try {
       const params = new URLSearchParams();
-      params.append("userId", userId)
+      params.append("userId", userId);
       const results = await axios.get(
-        "http://localhost:4000/apply/myapplication", {params,}
+        "http://localhost:4000/apply/myapplication",
+        { params }
       );
       setApplications(results.data.data);
-      console.log("results are", results)
+      console.log("results are", results);
     } catch (error) {
       console.error("Error: unable to load applications", error);
     }
@@ -62,20 +63,26 @@ function TestYourApp() {
     }
   };
 
+  // user filters the applications
+  const handleFilteredApplication = (status) => {
+    try {
+      if (status === "all") {
+        return applications;
+      } else {
+        return applications.filter((app) => app.application_status === status);
+      }
+    } catch (error) {
+      console.error("Error: failed to filter your applications", error);
+      return [];
+    }
+  };
+
   // to update and display
   useEffect(() => {
     getApplication(userData.user.user_id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const initialFilteredApplications = handleFilteredApplication("all");
+    setFilteredApplications(initialFilteredApplications);
   }, []);
-
-  // user filters the applications
-  const handleFilteredApplication = (status) =>{
-    if (status === "all") {
-      return applications;
-    } else {
-      return applications.filter((app)=> app.application_status === status);
-    }
-  }
 
   // when the applications's status is changed or updated
   const statusChange = (app) => {
@@ -101,7 +108,7 @@ function TestYourApp() {
         </div>
       );
     } else if (app.application_status === "declined") {
-      const declinedDate = moment(app.sent_date).format('DD-MM-YY');
+      const declinedDate = moment(app.sent_date).format("DD-MM-YY");
       return (
         <div className="flex flex-col text-DarkPink w-[80px] h-[47px] items-center">
           <img className="w-[15px] h-[15px]" src={closedIcon} />
@@ -117,7 +124,6 @@ function TestYourApp() {
       );
     }
   };
-  
 
   return (
     <>
@@ -138,14 +144,15 @@ function TestYourApp() {
                   filter your applications
                 </label>
 
+                {/* filter the application */}
                 <RadioGroup
-                  defaultValue="all"
+                  DefaultValue = "all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
-                    const filteredApplications = handleFilteredApplication(value);
+                    const filteredApplications =
+                      handleFilteredApplication(value);
                     setFilteredApplications(filteredApplications);
-                  }
-                  }
+                  }}
                 >
                   <div className="flex items-center space-x-1">
                     <RadioGroupItem value="all" id="r1" />
@@ -189,7 +196,11 @@ function TestYourApp() {
                 <Accordion type="single" collapsible className="space-y-4">
                   {filteredApplications.map((app, key) => {
                     return (
-                      <AccordionItem value={app.application_id} key={key} application={app}>
+                      <AccordionItem
+                        value={app.application_id}
+                        key={key}
+                        application={app}
+                      >
                         <AccordionTrigger
                           onClick={() => toggleAccordionItem(app)}
                         >
@@ -198,7 +209,10 @@ function TestYourApp() {
                             {/* section 1*/}
                             <div className="font-Montserrat flex flex-row">
                               <div className="w-[59px] h-[59px]">
-                                <img className="rounded-sm" src={app.company_logo} />
+                                <img
+                                  className="rounded-sm"
+                                  src={app.company_logo}
+                                />
                               </div>
                               <div className="flex flex-col ml-[16px] items-start w-[180px] h-[64px]">
                                 <p className="text-DarkGray text-scale-[20px] text-normal leading-[28px] tracking-[0.15px]">
@@ -222,10 +236,10 @@ function TestYourApp() {
                             <div className="mt-[8px] flex flex-row">
                               <img src={dollarIcon} />
                               <p className="ml-[4px]">
-                                {app.salary_min /1000} k
-                              </p> 
-                              <p className="ml-[2px] mr-[2px]">-</p> 
-                              <p>{app.salary_max /1000} k</p>
+                                {app.salary_min / 1000} k
+                              </p>
+                              <p className="ml-[2px] mr-[2px]">-</p>
+                              <p>{app.salary_max / 1000} k</p>
                               <img className="ml-[4px]" src={timeIcon} />
                               <p className="ml-[4px]">
                                 Posted {moment(app.opened_at).fromNow()}
@@ -282,9 +296,7 @@ function TestYourApp() {
                                 className="flex flex-row justify-center items-center ml-[300px] 
                             hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
                                 onClick={() =>
-                                  handleDeclinedApplication(
-                                    app.application_id
-                                  )
+                                  handleDeclinedApplication(app.application_id)
                                 }
                               >
                                 <img src={declineIcon} />
