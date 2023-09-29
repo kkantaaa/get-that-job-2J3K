@@ -22,6 +22,7 @@ function ApplicationApplyPage() {
   const [userDetail, setUserDetail] = useState({});
   const { jobparams } = useParams();
   const [user_id, setuserparams] = useState("");
+  const [followArray, setFollowArray] = useState([]);
   // useEffect
   useEffect(() => {
     //0
@@ -59,8 +60,14 @@ function ApplicationApplyPage() {
         const getuserinfo = await axios.get(
           `http://localhost:4000/apply/u/${user_id}`
         );
-        setUserDetail(getuserinfo.data);
+        setUserDetail(getuserinfo.data[0]);
+        //userDetail
+        //followArray
+        const datatomap = getuserinfo.data;
+        const recruiterIds = datatomap.map((obj) => obj.recruiter_id);
+        setFollowArray(recruiterIds);
         // console.log(getuserinfo.data); // leave it in case adjust what data to fetch/not fetch
+        // console.log("followArray : ", followArray); // leave it in case adjust what data to fetch/not fetch
       } catch (error) {
         // console.log(error);  // leave it cause the catch error can't be empty
       }
@@ -96,20 +103,21 @@ function ApplicationApplyPage() {
     const recruiter_idjob = parseInt(jobDetail.recruiter_id);
     // console.log("jobDetail.recruiter_id", jobDetail.recruiter_id); //leave this
     // console.log("userDetail.recruiter_id", userDetail.recruiter_id); //leave this
-    console.log("jobDetail.recruiter_id", jobDetail.recruiter_id);
-    if (userDetail.recruiter_id == jobDetail.recruiter_id) {
-      console.log("same");
+    if (checkFollow == true) {
+      // console.log("same");// leave this
       axios.delete(
         `http://localhost:4000/apply/unfollow/${user_id}/${recruiter_idjob}`
       );
     } else {
-      console.log("not same");
+      // console.log("not same");//leave this
       axios.post(
         `http://localhost:4000/apply/follow/${user_id}/${recruiter_idjob}`
       );
     }
     window.location.reload();
   };
+  //etc - const for followed recruiter id
+  const checkFollow = followArray.includes(jobDetail.recruiter_id);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>render>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   return (
     <>
@@ -157,12 +165,12 @@ function ApplicationApplyPage() {
                     <div className="font-Montserrat text-[24px] font-normal leading-normal">
                       {jobDetail.company_name}
                     </div>
-                    {jobDetail.recruiter_id == userDetail.recruiter_id && (
+                    {checkFollow == true && (
                       <button onClick={handleFollowButton}>
                         <img src={FollowButton} alt="Following Button" />
                       </button>
                     )}
-                    {jobDetail.recruiter_id !== userDetail.recruiter_id && (
+                    {checkFollow == false && (
                       <button onClick={handleFollowButton}>
                         <img src={FollowButtonG} alt="Follow Button" />
                       </button>
