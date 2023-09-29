@@ -95,8 +95,8 @@ applyappliRouter.get("/u/:user_id", async (req, res) => {
       "select * from user_profiles left join company_follows on user_profiles.user_id = company_follows.user_id where user_profiles.user_id =$1",
       [user_id]
     );
-    console.log("Application submitted successfully :", userdata.rows[0]);
-    res.json(userdata.rows[0]);
+    console.log("get user data successfully :", userdata.rows);
+    res.json(userdata.rows);
   } catch (error) {
     console.error("Error submitting application:", error);
     res
