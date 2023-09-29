@@ -29,6 +29,7 @@ const buttonVariants = cva(
         primary: "h-10 px-[16px] py-[8px] rounded-2xl space-x-2",
         secondary: "h-10 px-[16px] py-[8px] rounded-2xl",
         bare: "h-fit space-x-1",
+        upload: "h-9 p-2 rounded-lg space-x-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",

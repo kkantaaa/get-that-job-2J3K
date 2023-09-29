@@ -99,16 +99,19 @@ function CreateJobPosting() {
     console.log("Types are", types);
   }, []);
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     const updateData = {
       ...data,
-      job_id:param.jobId,
+      job_id: param.jobId,
     };
-    console.log(updateData);
+    console.log(data);
     try {
       try {
         console.log(data);
-        await axios.put(`http://localhost:4000/jobs/${param.jobId}`, updateData);
+        await axios.put(
+          `http://localhost:4000/jobs/${param.jobId}`,
+          updateData
+        );
         console.log("Posting successful");
       } catch (error) {
         console.error("Error: unable to post", error);
@@ -225,7 +228,10 @@ function CreateJobPosting() {
                               </SelectGroup>
                               {types.map((type, key) => {
                                 return (
-                                  <SelectItem value={type.job_type_id} key={key}>
+                                  <SelectItem
+                                    value={type.job_type_id}
+                                    key={key}
+                                  >
                                     {type.type_name}
                                   </SelectItem>
                                 );

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useAuth } from "@/contexts/authentication";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -28,72 +29,140 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import money_dollar_circle_fill from "@/images/posting-job-page/money_dollar_circle_fill.png";
+import FileInputIcon from "@/images/registration-page/upload-line.svg";
 
 //const navigate = useNavigate();
 
+const validFileExtensions = {
+  image: ["jpg", "gif", "png", "jpeg", "svg", "webp"],
+};
+
+function isValidFileType(fileName, fileType) {
+  return (
+    fileName &&
+    validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
+  );
+}
+
+const MAX_FILE_SIZE = 102400;
+
 const postJobSchema = yup.object({
-  jobTitle: yup.string().required("JOB TITLE is a required field"),
-  jobCategory: yup.string().required(),
-  jobType: yup.string().required(),
-  salaryRangeMin: yup.number().positive().integer().required(),
-  salaryRangeMax: yup
-    .number()
-    .positive("JOB TITLE is a required field")
-    .integer()
-    .required(),
-  aboutJobPosition: yup.string().required(),
-  mandatoryRequirement: yup.string().required(),
-  optionalRequirement: yup.string().required(),
+  company_logo: yup.mixed().required("Required"),
+  /*imgFile: yup.mixed().required("Required")
+  .test("is-valid-type", "Not a valid image type", (value) =>
+      isValidFileType(value && value.name.toLowerCase(), "image")
+    )
+    .test(
+      "is-valid-size",
+      "Max allowed size is 100KB",
+      (value) => value && value.size <= MAX_FILE_SIZE
+    )*/
+  email: yup.string().required("Company Email is a required field"),
+  company_name: yup.string().required("Company Name is a required field"),
+  company_website: yup.string().required("Company Website is a required field"),
+  about_company: yup
+    .string()
+    .required("Company Description is a required field"),
 });
 
-function CreateJobPosting() {
+function RecruiterProfile() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
   const navigate = useNavigate();
+  const { upload } = useAuth();
+  const fileInputRef = useRef(null);
+  const [profile, setProfile] = useState(null);
+  const [file, setFile] = useState();
 
-  const [categories, setCategories] = useState([]);
-  const [types, setTypes] = useState([]);
-
-  const getCategories = async () => {
+  const getProfile = async () => {
     try {
-      const results = await axios.get("http://localhost:4000/category");
-      //const categories = results.data.result;
-      setCategories(results.data.result);
-      console.log("Categories get successful");
+      const results = await axios.get(
+        "http://localhost:4000/profile/recruiter"
+      );
+      setProfile(results.data.data[0]);
+      console.log(results.data.data[0]);
+      console.log("Profile get successful");
     } catch (error) {
-      console.error("Error: unable to load categories", error);
+      console.error("Error: unable to load Profile", error);
     }
   };
 
-  const getTypes = async () => {
-    try {
-      const results = await axios.get("http://localhost:4000/type");
-      //const categories = results.data.result;
-      setTypes(results.data.result);
-      console.log("Types get successful");
-    } catch (error) {
-      console.error("Error: unable to load Types", error);
+  const handleFileButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFilePreview = (e) => {
+    if (e.target.files.length > 0) {
+      const fileURL = URL.createObjectURL(e.target.files[0]);
+      setFile(fileURL);
+      console.log(file);
     }
   };
 
   useEffect(() => {
-    getCategories();
-    getTypes();
-    console.log("categories are", categories);
-    console.log("Types are", types);
+    getProfile();
+    console.log("profile is", profile);
   }, []);
 
+  /*if (profile === null) {
+    // Render a loading state or a spinner while profile is being fetched
+    return <p>Loading profile...</p>;
+  }
+  logo: yup.string().required("Company Logo is a required field"),
+*/
   const onSubmit = async (data) => {
     try {
-      try {
-        console.log(data);
-        await axios.post("http://localhost:4000/jobs", data);
-        console.log("Posting successful");
-      } catch (error) {
-        console.error("Error: unable to post", error);
+      console.log("data submit Input", data);
+      console.log("data submit Input", data.company_logo);
+
+      if (data.company_logo !== "") {
+        const img = {
+          fileType: "companyLogo",
+          file: data.company_logo,
+        };
+
+        console.log({ img: img });
+
+        let company_logo_url = await upload(img);
+
+        console.log("image URL", company_logo_url);
+
+        try {
+          const fetchData = {
+            ...data,
+
+            recruiter_id: profile.recruiter_id,
+            company_logo: company_logo_url,
+
+            //company_logo: company_logo,
+          };
+
+          console.log("data before fetching", fetchData);
+          // await axios.put("http://localhost:4000/jobs", data);
+          console.log("Edit profile successful");
+        } catch (error) {
+          console.error("Error: unable to edit", error);
+        }
+      } else {
+        try {
+          const fetchData = {
+            ...data,
+
+            recruiter_id: profile.recruiter_id,
+            company_logo: profile.company_logo,
+            //company_logo: company_logo,
+          };
+
+          console.log("data before fetching", fetchData);
+          // await axios.put("http://localhost:4000/jobs", data);
+          console.log("Edit profile successful");
+        } catch (error) {
+          console.error("Error: unable to edit", error);
+        }
       }
+
       //navigate("/recruiter/jobpostings");
     } catch (error) {
-      console.error("Error during posting job", error);
+      console.error("Error during edit profile", error);
     }
   };
 
@@ -103,124 +172,164 @@ function CreateJobPosting() {
         <RecruiterSidebar />
         <div className="bg-Background w-full flex justify-center">
           <div className="w-[960px] py-8 space-y-4">
-            <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal">
+            <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal tracking-[0.25px]">
               Profile
             </div>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
-              >
-                <div className="PersonalInfo w-full p-2 ">
-                  <div className="text-Headline5 text-DarkGray font-Montserrat font-normal">
-                    Main information
-                  </div>
-                  <div className="w-[300px] ">
-                    <FormField
-                      control={form.control}
-                      name="jobTitle"
-                      defaultValue=""
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>JOB TITLE</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Software engineer" {...field} />
-                          </FormControl>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
 
-                    <FormField
-                      control={form.control}
-                      name="jobCategory"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>JOB CATEGORY</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select or create a category" />
-                              </SelectTrigger>
-                            </FormControl>
-
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Categories</SelectLabel>
-                              </SelectGroup>
-                              {categories.map((category, key) => {
-                                return (
-                                  <SelectItem
-                                    value={category.category_name}
-                                    key={key}
-                                  >
-                                    {category.category_name}
-                                  </SelectItem>
-                                );
-                              })}
-                            </SelectContent>
-                          </Select>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="jobType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>TYPE</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a type" />
-                              </SelectTrigger>
-                            </FormControl>
-
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Types</SelectLabel>
-                              </SelectGroup>
-                              {types.map((type, key) => {
-                                return (
-                                  <SelectItem value={type.type_name} key={key}>
-                                    {type.type_name}
-                                  </SelectItem>
-                                );
-                              })}
-                            </SelectContent>
-                          </Select>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <label
-                      htmlFor="inputLabel"
-                      className="text-DarkGray text-Overline font-Inter font-normal tracking-[1.5px]"
-                    >
-                      SALARY RANGE
-                    </label>
-                    <div className=" w-[231px] flex flex-row items-center ">
+            {profile === null ? (
+              <p className=" text-Headline6 text-DarkGray font-Montserrat font-medium animate-pulse ">
+                Loading profile. . .
+              </p>
+            ) : (
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-2"
+                >
+                  <div className="PersonalInfo w-full p-2 ">
+                    <div className="w-[300px] space-y-2">
                       <FormField
                         control={form.control}
-                        name="salaryRangeMin"
+                        name="company_logo"
                         defaultValue=""
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel></FormLabel>
+                            <div className="flex flex-row items-center space-x-2">
+                              <img
+                                src={profile.company_logo}
+                                alt="Preview"
+                                className="rounded-lg"
+                                style={{ maxWidth: "80px" }}
+                              />
+                              <div className="w-full space-y-1 text-Gray">
+                                <FormLabel>COMPANY LOGO</FormLabel>
+                                <FormControl>
+                                  <div
+                                    // onClick={handleFileButtonClick}
+                                    className="w-fit flex flex-row items-center space-x-2"
+                                  >
+                                    <label
+                                      className="w-[134px]  bg-Pink text-white hover:bg-LightPink active:bg-DarkPink h-9 p-2 rounded-lg space-x-2 flex flex-row"
+                                      htmlFor="imageInput"
+                                    >
+                                      <img
+                                        src={FileInputIcon}
+                                        alt="File Input"
+                                      />
+                                      <div className="w-[90px] font-Inter font-normal text-Body2 text-White tracking-[0.25px]">
+                                        Choose a file
+                                      </div>
+                                    </label>
+                                    <Input
+                                      type="file"
+                                      className="block w-[100px] h-full text-Body2  border-0 p-0  bg-Background file:hidden"
+                                      id="imageInput"
+                                      accept=".jpg, .png, .jpeg, .gif"
+                                      // onChange={handleFilePreview}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          e.target.files
+                                            ? e.target.files[0]
+                                            : null
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </FormControl>
+                                <FormDescription>
+                                  <div className="text-LightGray ">
+                                    PNG, JPEC, IMG
+                                  </div>
+                                </FormDescription>
+                              </div>
+                            </div>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      {/*<FormField
+                        control={form.control}
+                        name="imgFile"
+                        defaultValue=""
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex flex-row items-center space-x-2">
+                              <div className="w-full space-y-1 text-Gray">
+                                <FormLabel> Logo</FormLabel>
+                                <FormControl>
+                                  <div
+                                    //onClick={handleFileButtonClick}
+                                    className="w-fit flex flex-row items-center space-x-2"
+                                  >
+                                    <label
+                                      className="w-[134px]  bg-Pink text-white hover:bg-LightPink active:bg-DarkPink h-9 p-2 rounded-lg space-x-2 flex flex-row"
+                                      htmlFor="imageLogo"
+                                    >
+                                      <img
+                                        src={FileInputIcon}
+                                        alt="File Logo"
+                                      />
+                                      <div className="w-[90px] font-Inter font-normal text-Body2 text-White tracking-[0.25px]">
+                                        Choose a file
+                                      </div>
+                                    </label>
+                                    <Input
+                                      type="file"
+                                      className="block w-[100px] h-full text-Body2  border-0 p-0  bg-Background file:hidden"
+                                      id="imageLogo"
+                                      accept=".jpg, .png, .jpeg, .gif"
+                                      // onChange={handleFilePreview}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          e.target.files
+                                            ? e.target.files[0]
+                                            : null
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </FormControl>
+                                <FormDescription>
+                                  <div className="text-LightGray ">
+                                    PNG, JPEC, IMG
+                                  </div>
+                                </FormDescription>
+                              </div>
+                            </div>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      /> */}
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        defaultValue={profile.email}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>COMPANY EMAIL</FormLabel>
                             <FormControl>
-                              <Input placeholder="min" {...field}></Input>
+                              <Input
+                                placeholder="GET_THAT_JOB@mail.com"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormDescription></FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="company_name"
+                        defaultValue={profile.company_name}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>COMPANY NAME</FormLabel>
+                            <FormControl>
+                              <Input placeholder="GET THAT JOB" {...field} />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -228,17 +337,37 @@ function CreateJobPosting() {
                         )}
                       />
 
-                      <hr className="w-[11px] h-[2px] mx-2 rounded-[2px] bg-LightGray" />
+                      <FormField
+                        control={form.control}
+                        name="company_website"
+                        defaultValue={profile.company_website}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>COMPANY WEBSITE</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="www.getthatjob.com"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormDescription></FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
                       <FormField
                         control={form.control}
-                        name="salaryRangeMax"
-                        defaultValue=""
+                        name="about_company"
+                        defaultValue={profile.about_company}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel></FormLabel>
+                            <FormLabel>ABOUT THE COMPANY</FormLabel>
                             <FormControl>
-                              <Input placeholder="max" {...field} />
+                              <Textarea
+                                placeholder="Descrip the company"
+                                {...field}
+                              />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -247,86 +376,24 @@ function CreateJobPosting() {
                       />
                     </div>
                   </div>
-                </div>
 
-                <div className="ProfessionalInfo w-full p-2 ">
-                  <div className="text-Headline5 text-DarkGray font-Montserrat font-normal">
-                    Additional information
-                  </div>
-                  <div className="w-full ">
-                    <FormField
-                      control={form.control}
-                      name="aboutJobPosition"
-                      defaultValue=""
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>ABOUT THE JOB POSITION</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Describe the main functions and characteristics of your job position"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="mandatoryRequirement"
-                      defaultValue=""
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>MANDATORY REQUIREMENTS</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="List each mandatory requirement in a new line"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="optionalRequirement"
-                      defaultValue=""
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>OPTIONAL REQUIREMENTS</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="List each optional requirement in a new line"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-
-                <Button
-                  type="submit"
-                  className="h-10 w-[153px]"
-                  variant="default"
-                  size="secondary"
-                >
-                  POST THIS JOB
-                </Button>
-              </form>
-            </Form>
+                  <Button
+                    type="submit"
+                    className="h-10 w-fit"
+                    variant="default"
+                    size="secondary"
+                  >
+                    <div className="font-Inter font-medium text-Button text-White tracking-[1.25px]">
+                      UPDATE PROFILE
+                    </div>
+                  </Button>
+                </form>
+              </Form>
+            )}
           </div>
         </div>
       </div>
     </>
   );
 }
-export default CreateJobPosting;
+export default RecruiterProfile;
