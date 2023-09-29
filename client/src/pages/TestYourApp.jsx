@@ -58,30 +58,37 @@ function TestYourApp() {
         status: "declined",
       });
       setIsDeclined(true);
+
+      getApplication(userData.user.user_id);
     } catch (error) {
       console.error("Error: unable to decline applications", error);
     }
   };
 
   // user filters the applications
-  const handleFilteredApplication = (status) => {
-    try {
-      if (status === "all") {
-        return applications;
+const handleFilteredApplication = (status) => {
+  try {
+    if (status === "all") {
+      return applications;
+    } else {
+      if (status === "declined" && isDeclined) {
+        return applications.filter((app) => app.application_status === "declined");
       } else {
         return applications.filter((app) => app.application_status === status);
       }
-    } catch (error) {
-      console.error("Error: failed to filter your applications", error);
-      return [];
     }
-  };
+  } catch (error) {
+    console.error("Error: failed to filter your applications", error);
+    return [];
+  }
+};
 
   // to update and display
   useEffect(() => {
     getApplication(userData.user.user_id);
     const initialFilteredApplications = handleFilteredApplication("all");
     setFilteredApplications(initialFilteredApplications);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // when the applications's status is changed or updated
@@ -149,8 +156,13 @@ function TestYourApp() {
                   DefaultValue = "all"
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
-                    const filteredApplications =
-                      handleFilteredApplication(value);
+                    if (value === "declined") {
+                      setIsDeclined(true); // ตั้งค่าให้เป็น true เมื่อคลิกปุ่ม "Declined"
+                    } else {
+                      setIsDeclined(false); // ตั้งค่าให้เป็น false เมื่อคลิกปุ่มอื่น
+                    }
+                
+                    const filteredApplications = handleFilteredApplication(value);
                     setFilteredApplications(filteredApplications);
                   }}
                 >
