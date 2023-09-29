@@ -114,7 +114,9 @@ function ApplicationApplyPage() {
         `http://localhost:4000/apply/follow/${user_id}/${recruiter_idjob}`
       );
     }
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 280);
   };
   //etc - const for followed recruiter id
   const checkFollow = followArray.includes(jobDetail.recruiter_id);
