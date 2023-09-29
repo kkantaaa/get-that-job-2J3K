@@ -29,6 +29,9 @@ function TestYourApp() {
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] =
     useState([]);
+  const [selectFilter, setSelectFilter] = useState("all"); // ตัวแปร selectFilter เริ่มต้นเป็น "all"
+
+  
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -84,11 +87,31 @@ const handleFilteredApplication = (status) => {
 };
 
   // to update and display
+  // useEffect(() => {
+  //   console.log("all jobs are", applications)
+  //   getApplication(userData.user.user_id);
+  //   setFilteredApplications(applications);
+  // }, []);
+
   useEffect(() => {
-    getApplication(userData.user.user_id);
-    setFilteredApplications(applications);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fetchData = async () => {
+      try {
+        const results = await getApplication(userData.user.user_id);
+        // เมื่อข้อมูลโหลดเสร็จสิ้น
+        setApplications(results.data.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
+  // อัพเดท filteredApplications เมื่อ applications ถูกอัพเดท
+  useEffect(() => {
+    const filteredApps = handleFilteredApplication(selectFilter);
+    setFilteredApplications(filteredApps);
+  }, [applications, selectFilter]);
 
   // when the applications's status is changed or updated
   const statusChange = (app) => {
@@ -153,8 +176,10 @@ const handleFilteredApplication = (status) => {
                 {/* filter the application */}
                 <RadioGroup
                   DefaultValue = "all"
+                  value={selectFilter}
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
+                    setSelectFilter(value); // อัพเดทค่า selectFilter เมื่อผู้ใช้เลือกตัวกรองใหม่
                     if (value === "declined") {
                       setIsDeclined(true); // ตั้งค่าให้เป็น true เมื่อคลิกปุ่ม "Declined"
                     } else {
