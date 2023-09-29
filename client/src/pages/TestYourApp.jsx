@@ -129,7 +129,7 @@ function TestYourApp() {
     <>
       <div className="flex flex-row bg-Background min-h-screen min-w-screen">
         <YourApplicationSideBar />
-        <div className="w-full flex justify-center overflow-x-hidden">
+        <div className="w-full flex ml-[120px] justify-center overflow-x-hidden">
           <div className="w-[960px] py-8 space-y-4">
             <div className="Title text-Headline4 text-DarkGray font-Montserrat font-normal">
               Your applications
@@ -189,7 +189,7 @@ function TestYourApp() {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  {applications.length} Applications found
+                  {filteredApplications.length} Applications found
                 </div>
 
                 {/* ส่วน Accordian */}
