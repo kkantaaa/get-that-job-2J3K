@@ -28,7 +28,7 @@ function TestYourApp() {
   const { userData } = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] =
-    useState(applications);
+    useState([]);
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -86,8 +86,7 @@ const handleFilteredApplication = (status) => {
   // to update and display
   useEffect(() => {
     getApplication(userData.user.user_id);
-    const initialFilteredApplications = handleFilteredApplication("all");
-    setFilteredApplications(initialFilteredApplications);
+    setFilteredApplications(applications);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
