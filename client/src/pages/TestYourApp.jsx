@@ -87,7 +87,6 @@ const handleFilteredApplication = (status) => {
   useEffect(() => {
     getApplication(userData.user.user_id);
     setFilteredApplications(applications);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // when the applications's status is changed or updated
