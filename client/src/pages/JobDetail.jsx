@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 import axios from "axios";
 import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar";
 // import FollowingStatus from "../images/job-detail-page/FollowButton.svg";
@@ -18,7 +18,7 @@ moment().format();
 
 function JobDetail() {
   const navigate = useNavigate();
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const [jobDetail, setJobDetail] = useState([]);
   const [companyFollowIds, setCompanyFollowIds] = useState([]);
   const { job_id } = useParams();
@@ -55,23 +55,17 @@ function JobDetail() {
 
   const createdAt = moment(jobDetail.opened_at).fromNow();
 
-  const getCompanyFollow = async (input) => {
-    const userId = input;
+  const getCompanyFollow = async () => {
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
       const results = await axios.get(
-        `http://localhost:4000/following/companyinfo`,
-        {
-          params,
-        }
+        `http://localhost:4000/following/companyinfo`
       );
       const companyFollowIds = results.data.data.map((obj) => {
         return obj.recruiter_id;
       });
       setCompanyFollowIds(companyFollowIds);
     } catch (error) {
-      console.error("Error: Failed to fetch company following", userId, error);
+      console.error("Error: Failed to fetch company following", error);
     }
   };
 
@@ -118,36 +112,30 @@ function JobDetail() {
 
   // FOLLOW LOGIC
   const handleFollow = async (event) => {
-    const userId = userData.user.user_id;
     const recruiterId = event;
-    console.log(`user id : ${userId}`);
-    console.log(`job id : ${recruiterId}`);
     try {
       const data = {
-        userId: userId,
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/followcompany", data);
     } catch (error) {
       console.error("Error: unable to follow the company", error);
     }
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   };
 
   // UNFOLLOW LOGIC
   const handleUnfollow = async (event) => {
-    const userId = userData.user.user_id;
     const recruiterId = event;
     try {
       const data = {
-        userId: userId,
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/unfollowcompany", data);
     } catch (error) {
       console.error("Error: unable to unfollow the company", error);
     }
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   };
 
   useEffect(() => {

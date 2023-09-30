@@ -27,7 +27,8 @@ followingRouter.get("/job", async (req, res) => {
         INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
         INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
         INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
-        WHERE user_id = $1`;
+        WHERE user_id = $1
+        ORDER BY following_id ASC`;
     values = [userid];
 
     const results = await pool.query(query, values);

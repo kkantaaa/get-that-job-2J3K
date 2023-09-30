@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 import followIcon from "@/images/getthatjob-page/followIcon.svg";
 import dollarIcon from "@/images/getthatjob-page/dollarIcon.svg";
 import typeIcon from "@/images/getthatjob-page/typeIcon.svg";
@@ -10,7 +10,7 @@ import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 
 const JobList = (props) => {
   const navigate = useNavigate();
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [appIds, setAppIds] = useState([]);
   const [jobFollowingIds, setJobFollowingIds] = useState([]);
@@ -41,15 +41,10 @@ const JobList = (props) => {
     }
   };
 
-  const getJobApp = async (input) => {
-    const userId = input;
+  const getJobApp = async () => {
     // console.log(`user id is ${userId}`);
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/jobapp", {
-        params,
-      });
+      const results = await axios.get("http://localhost:4000/jobapp");
 
       const jobIds = results.data.data.map((obj) => {
         return obj.job_id;
@@ -81,15 +76,10 @@ const JobList = (props) => {
     }
   };
 
-  const getJobFollowing = async (input) => {
-    const userId = input;
+  const getJobFollowing = async () => {
     // console.log(`user id is ${userId}`);
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/following/job", {
-        params,
-      });
+      const results = await axios.get("http://localhost:4000/following/job");
       // console.log(results.data.data);
       const jobFollowingIds = results.data.data.map((obj) => {
         return obj.job_id;
@@ -104,13 +94,12 @@ const JobList = (props) => {
   // FOLLOW LOGIC
   const handleFollow = async (event) => {
     // event.preventDefault();
-    const userId = userData.user.user_id;
+    // const userId = userData.user.user_id;
     const jobId = event;
-    console.log(`user id : ${userId}`);
+    // console.log(`user id : ${userId}`);
     console.log(`job id : ${jobId}`);
     try {
       const data = {
-        userId: userId,
         jobId: jobId,
       };
       // const params = new URLSearchParams();
@@ -120,17 +109,15 @@ const JobList = (props) => {
     } catch (error) {
       console.error("Error: unable to follow the job", error);
     }
-    getJobFollowing(userData.user.user_id);
+    getJobFollowing();
   };
 
   // UNFOLLOW LOGIC
   const handleUnfollow = async (event) => {
     // event.preventDefault();
-    const userId = userData.user.user_id;
     const jobId = event;
     try {
       const data = {
-        userId: userId,
         jobId: jobId,
       };
       // const params = new URLSearchParams();
@@ -140,7 +127,7 @@ const JobList = (props) => {
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
-    getJobFollowing(userData.user.user_id);
+    getJobFollowing();
   };
 
   // FOLLOW LOGIC
@@ -192,8 +179,8 @@ const JobList = (props) => {
   }, [keywords, minSalary, maxSalary, category, type, jobFollowingIds]);
 
   useEffect(() => {
-    getJobApp(userData.user.user_id);
-    getJobFollowing(userData.user.user_id);
+    getJobApp();
+    getJobFollowing();
   }, []);
 
   return (

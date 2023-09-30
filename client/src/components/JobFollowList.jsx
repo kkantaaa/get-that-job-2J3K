@@ -55,18 +55,13 @@ const JobFollowingList = () => {
   const handleUnfollow = async (event) => {
     const jobId = event;
     try {
-      // const data = {
-      //   userId: userId,
-      //   jobId: jobId,
-      // };
+      const data = {
+        jobId: jobId,
+      };
       // const params = new URLSearchParams();
       // params.append("userId", userId);
       // params.append("jobId", jobId);
-      const params = new URLSearchParams();
-      params.append("jobId", jobId);
-      await axios.post("http://localhost:4000/following/unfollowjob", {
-        params,
-      });
+      await axios.post("http://localhost:4000/following/unfollowjob", data);
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
