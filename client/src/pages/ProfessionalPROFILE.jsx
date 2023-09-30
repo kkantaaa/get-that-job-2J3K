@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Textarea } from "@/components/ui/textarea";
+import ReactCountryFlag from "react-country-flag";
 //components
 import UserProfileSidebar from "@/components/ProfessionalSideBar/UserProfileSidebar.jsx";
 //import images
@@ -354,8 +355,18 @@ function ProfessionalProfile() {
                         required
                       />
                       {flag ? (
-                        <div className="ml-2 text-neutral-400 text-xs font-normal font-['Inter'] leading-none tracking-wide">
+                        <div className="ml-2 text-neutral-600 text-xs font-normal font-['Inter'] leading-none tracking-wide">
                           {flag.flag}
+                        </div>
+                      ) : null}{" "}
+                      {flag ? (
+                        <div className="ml-2 text-neutral-400 text-xs font-normal font-['Inter'] leading-none tracking-wide">
+                          <ReactCountryFlag
+                            countryCode={flag.code}
+                            style={{
+                              fontSize: "24px",
+                            }}
+                          />
                         </div>
                       ) : null}
                     </div>
