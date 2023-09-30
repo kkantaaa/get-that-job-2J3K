@@ -28,9 +28,9 @@ function FindThatJobPage() {
   return (
     <div className="min-w-screen min-h-screen flex flex-row bg-Background">
       <FindThatJobSideBar />
-      <div className="flex flex-col w-full ml-[240px] mb-12 bg-Background">
+      <div className="flex flex-col w-full ml-[220px] mb-12 bg-Background">
         <div className="w-full pt-8 flex flex-col justify-start items-start">
-          <div className="mb-[16px] ml-[120px] text-DarkGray font-Montserrat text-Headline3 font-light">
+          <div className="mb-[16px] ml-[120px] text-DarkGray font-Montserrat text-Headline4 font-light leading-normal">
             Find that job
           </div>
           <div className="flex flex-col ml-[120px]">

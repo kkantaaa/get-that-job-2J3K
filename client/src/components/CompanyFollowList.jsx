@@ -52,9 +52,9 @@ const CompanyFollowingList = () => {
   }, []);
 
   return (
-    <div className="ml-[120px]">
-      <div className="m-2 text-[18px]">
-        <h2 className="font-Montserrat">
+    <div className="ml-[100px]">
+      <div className="m-2">
+        <h2 className="font-Montserrat text-[20px] text-DarkGray">
           You are following {companyFollow.length} companies
         </h2>
       </div>
@@ -71,7 +71,9 @@ const CompanyFollowingList = () => {
                     <img src={follow.company_logo} alt={follow.company_name} />
                   </div>
                   <div className="flex flex-col p-2">
-                    <div className="text-[20px]">{follow.company_name}</div>
+                    <div className="text-[20px] text-DarkGray">
+                      {follow.company_name}
+                    </div>
                     <div className="flex flex-row pr-1 pt-1 text-LightGray text-[12px] font-Inter">
                       <img
                         className="mr-1"

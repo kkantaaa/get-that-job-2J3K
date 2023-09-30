@@ -174,8 +174,10 @@ const JobList = (props) => {
 
   return (
     <div className="ml-12">
-      <div className="m-2 text-[18px]">
-        <h2 className="font-Montserrat">{jobs.length} jobs for you</h2>
+      <div className="m-2">
+        <h2 className="font-Montserrat text-[20px] text-DarkGray">
+          {jobs.length} jobs for you
+        </h2>
       </div>
       <div className="grid lg:grid-cols-2 gap-2 xl:grid-cols-3 2xl:grid-cols-4">
         {/* ทำเงื่อนไขว่าถ้ามี user_id คู่กับ job_id ในตาราง application ให้ render ปุ่มสีชมพู */}
@@ -196,7 +198,7 @@ const JobList = (props) => {
                       <img className="pr-1" src={jobCategoryIcon} />
                       {job.category_name}
                     </div>
-                    <div className="text-scale-[18px]">
+                    <div className="text-scale-[18px] text-DarkGray">
                       {job.job_title.slice(0, 23)}
                     </div>
                     <div className="text-[14px] text-Gray">

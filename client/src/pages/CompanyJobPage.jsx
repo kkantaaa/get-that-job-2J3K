@@ -243,12 +243,12 @@ function CompanyJobPage() {
         <div className="flex flex-row font-Inter text-[16px]">
           <FollowingSideBar />
 
-          <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
+          <div className="ml-[340px] mt-[32px] wrapper overflow-x-auto">
             {/* BackButton */}
             <div className="flex flex-row">
               <img src={ArrowLeft} alt="arrow-left-black-icon" />
               <p
-                className="uppercase cursor-pointer"
+                className="uppercase cursor-pointer text-Gray"
                 onClick={() => navigate("/user/following")}
               >
                 Back
@@ -269,7 +269,7 @@ function CompanyJobPage() {
                     )}
                   </div>
                   <div className="ml-[16px] flex flex-col">
-                    <div className="font-Montserrat text-[24px] font-normal leading-normal">
+                    <div className="font-Montserrat text-[24px] text-DarkGray font-normal leading-normal">
                       {/* {companyJobs[0].company_name} */}
                       {companyJobs && companyJobs.length > 0 ? (
                         <div className="flex flex-row">
@@ -288,10 +288,10 @@ function CompanyJobPage() {
             </div>
 
             {/* Section 2: Job Rendering */}
-            <div className="">
+            <div className="pt-4 px-2">
               {/* User ID {userData.user.user_id} */}
-              <div className="m-2 text-[18px]">
-                <h2 className="font-Montserrat">
+              <div className="m-2 text-[20px]">
+                <h2 className="font-Montserrat text-DarkGray">
                   {companyJobs.length} jobs for you
                 </h2>
               </div>

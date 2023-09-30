@@ -79,9 +79,9 @@ const JobFollowingList = () => {
   }, []);
 
   return (
-    <div className="ml-[120px]">
-      <div className="m-2 text-[18px]">
-        <h2 className="font-Montserrat">
+    <div className="ml-[100px]">
+      <div className="m-2 text-[20px]">
+        <h2 className="font-Montserrat text-DarkGray">
           You are following {jobFollow.length} jobs
         </h2>
       </div>
@@ -102,7 +102,7 @@ const JobFollowingList = () => {
                       <img className="pr-1" src={jobCategoryIcon} />
                       {job.category_name}
                     </div>
-                    <div className="text-scale-[16px]">
+                    <div className="text-scale-[16px] text-DarkGray">
                       {job.job_title.slice(0, 23)}
                     </div>
                     <div className="text-[14px] text-Gray">

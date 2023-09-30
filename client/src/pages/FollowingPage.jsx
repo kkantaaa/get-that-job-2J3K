@@ -8,7 +8,7 @@ function FollowingPage() {
       <FollowingSideBar />
       <h1 className="ml-[240px] bg-Background">
         <div className="w-full pt-8 flex flex-col justify-start items-start">
-          <div className="mb-[16px] ml-[120px] text-DarkGray font-Montserrat text-Headline3 font-light">
+          <div className="mb-[16px] ml-[100px] text-DarkGray font-Montserrat text-Headline4 font-light leading-normal">
             Following
           </div>
           <div className="mb-[16px]">
