@@ -4,7 +4,8 @@ import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/authentication";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function PersonalInformation() {
   const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
@@ -27,28 +28,77 @@ function PersonalInformation() {
 
   const onSubmit = async (data) => {
     const { name, phone, birthdate, linkedin } = data;
-    setUserData({...userData,
-      name,
-      phone,
-      birthdate,
-      linkedin
-    });
-
-    try {
-      await setUserData({
-        ...userData,
-      name,
-      phone,
-      birthdate,
-      linkedin,
+    const validations = [];
+    //cases
+    if (name) {
+      const checkNameValid = name;
+      validations.push({
+        condition: /[^A-Za-z]/.test(checkNameValid),
+        errorMessage: "Name contains non-alphabet characters.",
       });
-      navigate("/user/register3");
-    } catch (error) {
-      console.error("Error during registration", error);
+    }
+    if (phone) {
+      const checkPhoneStartsWithPlus = phone.startsWith("+");
+      const checkPhoneStandardLength = /^(\+\d{1,3})?\d{10}$/g.test(phone);
+      validations.push(
+        {
+          condition: !checkPhoneStartsWithPlus,
+          errorMessage: "Phone number must start with a plus sign (+).",
+        },
+        {
+          condition: !checkPhoneStandardLength,
+          errorMessage:
+            "Phone number must have a standard length including the country code.",
+        }
+      );
+    }
+    if (linkedin) {
+      const checkLinkedinStartsWithUrl = linkedin.startsWith(
+        "https://www.linkedin.com/in/"
+      );
+      validations.push({
+        condition: !checkLinkedinStartsWithUrl,
+        errorMessage: "LinkedIn must start with the LinkedIn URL.",
+      });
+    }
+    if (birthdate) {
+      const birthdateDate = new Date(birthdate);
+      const now = new Date();
+      if (birthdateDate > now) {
+        validations.push({
+          condition: true,
+          errorMessage: "Birthdate cannot be in the future.",
+        });
+      }
+    }
+    //checking
+    const hasErrors = validations.some((validation) => validation.condition);
+    if (hasErrors) {
+      validations
+        .filter((validation) => validation.condition)
+        .forEach((validation) => {
+          toast.error(validation.errorMessage);
+        });
+    } else {
+      setUserData({ ...userData, name, phone, birthdate, linkedin });
+      try {
+        await setUserData({
+          ...userData,
+          name,
+          phone,
+          birthdate,
+          linkedin,
+        });
+        navigate("/user/register3");
+      } catch (error) {
+        console.error("Error during registration", error);
+      }
     }
   };
 
   return (
+    <>
+    <ToastContainer />
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
         <p className="text-[10px] font-normal tracking-[1.5px] uppercase">
@@ -70,7 +120,7 @@ function PersonalInformation() {
             name="name"
             control={control}
             defaultValue=""
-            rules={{ required: "Name is required" }}
+            // rules={{ required: "Name is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] 
@@ -97,7 +147,7 @@ function PersonalInformation() {
             name="phone"
             control={control}
             defaultValue=""
-            rules={{ required: "Phone number is required" }}
+            // rules={{ required: "Phone number is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md 
@@ -124,7 +174,7 @@ function PersonalInformation() {
             name="birthdate"
             control={control}
             defaultValue=""
-            rules={{ required: "Birthdate is required" }}
+            // rules={{ required: "Birthdate is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  
@@ -149,7 +199,7 @@ function PersonalInformation() {
             name="linkedin"
             control={control}
             defaultValue=""
-            rules={{ required: "LinkedIn URL is required" }}
+            // rules={{ required: "LinkedIn URL is required" }}
             render={({ field }) => (
               <input
                 className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -178,6 +228,7 @@ function PersonalInformation() {
         </div>
       </div>
     </form>
+    </>
   );
 }
 

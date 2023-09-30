@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Textarea } from "@/components/ui/textarea";
+import ReactCountryFlag from "react-country-flag";
 //components
 import UserProfileSidebar from "@/components/ProfessionalSideBar/UserProfileSidebar.jsx";
 //import images
@@ -93,6 +94,16 @@ function ProfessionalProfile() {
   //2. handleSaveChanges
   const handleSaveChanges = async () => {
     try {
+      //
+      if (formData.email.trim() === "") {
+        toast.error("Email cannot be empty");
+      }
+      //
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailRegex.test(formData.email)) {
+        return toast.error("Invalid Email Format");
+      }
+      //
       if (formData.newCv) {
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -123,7 +134,16 @@ function ProfessionalProfile() {
           user_cv: null,
         }));
       }
+      //
+      if (
+        !formData.user_linkedin.startsWith(validurlPrefix) &&
+        formData.user_linkedin.trim() !== ""
+      ) {
+        return toast.error("Invalid LinkedIn URL");
+      }
 
+      //
+      //
       const updatedProfileData = {
         email: formData.email,
         user_name: formData.user_name,
@@ -135,9 +155,6 @@ function ProfessionalProfile() {
         user_education: formData.user_education,
         user_cv: formData.user_cv,
       };
-      if (!formData.user_linkedin.startsWith(validurlPrefix)) {
-        return toast.error("Invalid LinkedIn URL");
-      }
       axios
         .put("http://localhost:4000/profile/propro", updatedProfileData)
         .then((response) => {
@@ -165,11 +182,9 @@ function ProfessionalProfile() {
   //3.handle inputs change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const handleEmailChange = (e) => {
     const inputValue = e.target.value;
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (emailRegex.test(inputValue)) {
-      setFormData({ ...formData, email: inputValue });
-    }
-  }; // email
+    setFormData({ ...formData, email: inputValue });
+  };
+  // email
   const handleNameChange = (e) => {
     const inputValue = e.target.value;
     const alphabetRegex = /^[A-Za-zก-๏\s]+$/;
@@ -278,8 +293,10 @@ function ProfessionalProfile() {
                       {...field}
                       className="w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="email"
+                      placeholder="username@domainname.tld"
                       value={formData.email}
                       onChange={handleEmailChange}
+                      required
                     />
                   )}
                 />
@@ -303,8 +320,10 @@ function ProfessionalProfile() {
                       {...field}
                       className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
+                      placeholder="Codey McWebface/ สมพร นอนเขียนโค้ด"
                       value={formData.user_name}
                       onChange={handleNameChange}
+                      required
                     />
                   )}
                 />
@@ -329,14 +348,25 @@ function ProfessionalProfile() {
                         {...field}
                         className="px-2 w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                         type="tel"
+                        placeholder="+1234567891"
                         value={formData.user_phone}
                         onChange={handlePhoneChange}
                         maxLength={13}
                         required
                       />
                       {flag ? (
-                        <div className="ml-2 text-neutral-400 text-xs font-normal font-['Inter'] leading-none tracking-wide">
+                        <div className="ml-2 text-neutral-600 text-xs font-normal font-['Inter'] leading-none tracking-wide">
                           {flag.flag}
+                        </div>
+                      ) : null}{" "}
+                      {flag ? (
+                        <div className="ml-2 text-neutral-400 text-xs font-normal font-['Inter'] leading-none tracking-wide">
+                          <ReactCountryFlag
+                            countryCode={flag.code}
+                            style={{
+                              fontSize: "24px",
+                            }}
+                          />
                         </div>
                       ) : null}
                     </div>
@@ -370,6 +400,7 @@ function ProfessionalProfile() {
                       placeholder="YYYY-MM-DD"
                       min="1923-01-01"
                       max={today}
+                      required
                     />
                   )}
                 />
@@ -394,6 +425,7 @@ function ProfessionalProfile() {
                       className="px-2 w-[380px] h-[60px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start flex-start inline-flex"
                       type="text"
                       value={formData.user_linkedin}
+                      placeholder="https://www.linkedin.com/in/yourLinkedInProfileSlug"
                       onChange={handleLinkedInChange}
                       style={{ overflow: "hidden" }}
                       maxLength={85}
@@ -436,6 +468,7 @@ function ProfessionalProfile() {
                       {...field}
                       className="w-[380px] h-[44px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
+                      placeholder="Space Software Developer"
                       value={formData.user_title}
                       onChangeCapture={handleTitleChange}
                       maxLength={45}
@@ -462,6 +495,7 @@ function ProfessionalProfile() {
                       {...field}
                       className="w-[760px] h-[256px] font-[16px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
+                      placeholder="Position: Web Developer&#10;Company: Futureproof Web Solutions inc.&#10;Duration: January 2020 - January 2999 &#10;&#10;Responsibilities:&#10;Collaborated with back-end developers to integrate front-end and back-end functionalities seamlessly.&#10;&#10;Achievements: Received positive feedback from clients for delivering projects on time and within budget.&#10;&#10;Technologies used:&#10;HTML, CSS, JavaScript, React, Node.js, Express.js, Git, GitHub, Heroku, Vercel, Android, Webflow, Framer, Bootstrap, Tailwind CSS, Material UI, Chakra UI, Sass, jQuery, Next.js, Gatsby, GraphQL, Firebase, Azure, DigitalOcean, Linode and Cloudflare"
                       value={formData.user_experience}
                       onChange={handleExperienceChange}
                       maxLength={750}
@@ -488,6 +522,7 @@ function ProfessionalProfile() {
                       {...field}
                       className="w-[760px] h-[116px] font-[12px] border-[2px] border-solid border-[pink] rounded-[14px] justify-start items-center gap-2 inline-flex"
                       type="text"
+                      placeholder="-Degree: Bachelor of Computer Science&#10;-Institution: ABC University&#10;-Duration: June 2016 - May 2020&#10;-GPA: 3.9/4.0"
                       value={formData.user_education}
                       onChange={handleEducationChange}
                       maxLength={450}
