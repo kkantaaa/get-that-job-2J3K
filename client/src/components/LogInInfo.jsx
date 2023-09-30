@@ -30,16 +30,20 @@ function LogInInfo() {
       if (emailExists === true) {
         // console.log("exists:" + emailExists); leave this for debugging
         toast.error("The email is already taken");
-      } else {
-        await setUserData({
-          email: control._fields.email._f.value,
-          password: control._fields.password._f.value,
-        });
-        console.log(data);
-        navigate("/user/register2");
+        return;
       }
+      if (data.confirmedPassword !== data.password) {
+        toast.error("Password and password confirmation do not match");
+        return;
+      }
+      await setUserData({
+        email: control._fields.email._f.value,
+        password: control._fields.password._f.value,
+      });
+      navigate("/user/register2");
     } catch (error) {
       console.error("Error during registration", error);
+      toast.error("Error during registration");
     }
   };
 
@@ -97,82 +101,83 @@ function LogInInfo() {
             </div>
           </div>
 
-        <div className="password-input">
-          <label htmlFor="password">
-            <div className="mb-[4px] font-normal tracking-[1.5px]">
-              PASSWORD
-            </div>
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Password is required" }}
-              render={({ field }) => (
-                <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border 
+          <div className="password-input">
+            <label htmlFor="password">
+              <div className="mb-[4px] font-normal tracking-[1.5px]">
+                PASSWORD
+              </div>
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Password is required" }}
+                render={({ field }) => (
+                  <input
+                    className="mb-[16px] flex w-[360px] h-[36px] rounded-md border 
                   border-Pink bg-background p-[8px] text-[14px] 
                   placeholder:text-muted-foreground focus-visible:outline-none"
-                  id="password"
-                  type="password"
-                  placeholder="******"
-                  {...field}
-                  aria-describedby="password-error"
-                />
-              )}
-            />
-          </label>
-          <div
-            id="password-error"
-            className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px] mt-0"
-          >
-            {errors.password && errors.password.message}
-          </div>
-        </div>
-
-        <div className="confirmed-password-input">
-          <label htmlFor="confirmed-password">
-            <div className="mb-[4px] font-normal tracking-[1.5px]">
-              PASSWORD CONFIRMATION
+                    id="password"
+                    type="password"
+                    placeholder="******"
+                    {...field}
+                    aria-describedby="password-error"
+                  />
+                )}
+              />
+            </label>
+            <div
+              id="password-error"
+              className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px] mt-0"
+            >
+              {errors.password && errors.password.message}
             </div>
-            <Controller
-              name="confirmedPassword"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "Password confirmation is required",
-              }}
-              render={({ field }) => (
-                <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background 
+          </div>
+
+          <div className="confirmed-password-input">
+            <label htmlFor="confirmed-password">
+              <div className="mb-[4px] font-normal tracking-[1.5px]">
+                PASSWORD CONFIRMATION
+              </div>
+              <Controller
+                name="confirmedPassword"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: "Password confirmation is required",
+                }}
+                render={({ field }) => (
+                  <input
+                    className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background 
                   p-[8px] text-[14px] placeholder:text-muted-foreground"
-                  id="confirmedpassword"
-                  type="password"
-                  placeholder="******"
-                  {...field}
-                  aria-describedby="confirmed-password-error"
-                />
-              )}
-            />
-          </label>
-          <div
-            id="confirmed-password-error"
-            className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]"
-          >
-            {errors.confirmedPassword && errors.confirmedPassword.message}
+                    id="confirmedpassword"
+                    type="password"
+                    placeholder="******"
+                    {...field}
+                    aria-describedby="confirmed-password-error"
+                  />
+                )}
+              />
+            </label>
+            <div
+              id="confirmed-password-error"
+              className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]"
+            >
+              {errors.confirmedPassword && errors.confirmedPassword.message}
+            </div>
+          </div>
+          <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
+            <button
+              className="flex flex-row"
+              type="submit"
+              disabled={errors.confirmedPassword ? true : false}
+            >
+              <div className="ml-[10px]">NEXT</div>
+              <img src={ArrowRight} />
+            </button>
           </div>
         </div>
-        <div className="ml-[127px] w-[106px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white leading-[24px] font-[500px] text-[14px] tracking-[1.25px]">
-          <button
-            className="flex flex-row"
-            type="submit"
-            disabled={errors.confirmedPassword ? true : false}
-          >
-            <div className="ml-[10px]">NEXT</div>
-            <img src={ArrowRight} />
-          </button>
-        </div>
-      </div>
-    </form></>
+      </form>
+    </>
   );
 }
 
