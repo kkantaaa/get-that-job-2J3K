@@ -11,3 +11,5 @@ npm install @hookform/resolvers yup
 npm i moment
 //toast - kan
 npm i react-toastify
+//react-country-flag
+npm i react-country-flag
