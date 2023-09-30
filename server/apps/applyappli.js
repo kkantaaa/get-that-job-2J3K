@@ -91,20 +91,23 @@ applyappliRouter.get("/:job_id", async (req, res) => {
 });
 
 applyappliRouter.get("/u/:user_id", async (req, res) => {
-  const user_id = req.params.user_id;
-  console.log("user_id:", user_id);
+  // kan - get user data for apply page + follow/unfollow data
   try {
-    const userdata = await pool.query(
-      "select * from user_profiles left join company_follows on user_profiles.user_id = company_follows.user_id where user_profiles.user_id =$1",
-      [user_id]
-    );
-    console.log("get user data successfully :", userdata.rows);
+    const user_id = req.params.user_id;
+    const query = `
+      SELECT * FROM user_profiles
+      LEFT JOIN company_follows USING (user_id)
+      WHERE user_profiles.user_id = $1
+    `;
+    const userdata = await pool.query(query, [user_id]);
+
+    console.log("User data retrieved successfully:", userdata.rows);
     res.json(userdata.rows);
   } catch (error) {
-    console.error("Error submitting application:", error);
+    console.error("Error retrieving user data:", error);
     res
       .status(500)
-      .json({ error: "An error occurred while submitting the application." });
+      .json({ error: "An error occurred while retrieving user data." });
   }
 });
 
