@@ -66,6 +66,7 @@ function TestYourApp() {
         status: "declined",
       });
       setIsDeclined(true); // ตั้งค่าให้เป็น true เมื่อคลิกปุ่ม "Yes" ใน Dialog
+      setConfirmDialogOpen(false); // ปิด dialog
       getApplication(userData.user.user_id);
     } catch (error) {
       console.error("Error: failed to decline the application", error);
@@ -78,15 +79,15 @@ function TestYourApp() {
       if (status === "all") {
         return applications;
       } else {
-        if (status === "declined" && isDeclined) {
-          return applications.filter(
-            (app) => app.application_status === "declined"
-          );
-        } else {
-          return applications.filter(
-            (app) => app.application_status === status
-          );
-        }
+        const filteredApps = applications.filter((app) => {
+          if (status === "declined") {
+            return app.application_status === "declined";
+          } else {
+            return app.application_status === status;
+          }
+        });
+
+        return filteredApps;
       }
     } catch (error) {
       console.error("Error: failed to filter your applications", error);
@@ -318,13 +319,25 @@ function TestYourApp() {
                             </h1>
                             <p className="w-[760px]">{app.interested_reason}</p>
 
-                            {/* dialog pop-up */}
-                            {confirmDialogOpen && !isDeclined && (
+                            {/* declined button */}
+                            {app.application_status === "declined" ? (
+                              <button
+                                className="flex flex-row justify-center items-center ml-[300px] 
+                                w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none"
+                                disabled
+                              >
+                                <img src={declineIcon} />
+                                <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
+                                  declined
+                                </p>
+                              </button>
+                            ) : (
+                              // dialog pop-up
                               <Dialog isOpen={confirmDialogOpen}>
                                 <DialogTrigger
                                   className="flex flex-row justify-center items-center ml-[300px] 
-                            hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink 
-                            bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
+                                  hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink 
+                                  bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
                                 >
                                   <img src={declineIcon} />
                                   <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
@@ -343,9 +356,9 @@ function TestYourApp() {
                                         permanently reject the applicant's
                                         submission.
                                         <br />
-                                        If you decide not to decline the
-                                        application, then click "x" to cancel
-                                        the decline.
+                                        If you choose not to decline the
+                                        application, click the "X" to cancel the
+                                        decline.
                                       </div>
                                       <div className="flex flex-row mt-[10px] justify-center">
                                         <button
@@ -354,29 +367,16 @@ function TestYourApp() {
                                               app.application_id
                                             )
                                           }
-                                          className="ml-[6px] text-White font-bold bg-DarkPink hover:bg-LightPink transition duration-300 
-                                      ease-in-out active:bg-DarkPink rounded-sm w-[116px] h-[40px]"
+                                          className="text-White font-bold bg-DarkPink hover:bg-LightPink transition duration-300 
+                                          ease-in-out active:bg-DarkPink rounded-sm w-[116px] h-[40px]"
                                         >
-                                          Yes
+                                          Yes, I am
                                         </button>
                                       </div>
                                     </DialogDescription>
                                   </DialogHeader>
                                 </DialogContent>
                               </Dialog>
-                            )}
-
-                            {isDeclined && (
-                            <button
-                              className="flex flex-row justify-center items-center ml-[300px] 
-                              w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none"
-                              disabled
-                            >
-                              <img src={declineIcon} />
-                              <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
-                                declined
-                              </p>
-                            </button>
                             )}
                           </div>
                         </AccordionContent>
