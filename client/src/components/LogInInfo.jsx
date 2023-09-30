@@ -60,13 +60,16 @@ function LogInInfo() {
     }
   };
 
-  const onChangeEmail = async (e) => {
-    // const response = await axios.get(
-    //   "http://localhost:4000/regist/checkDupEmail",
-    //   {
-    //     params: { email: inputEmail },
-    //   }
-    // );
+  const fetchEmailFromDatabase = async (enteredEmail) => {
+     try {
+       const response = await axios.post(
+        "http://localhost:4000/regist/checkDupEmail",
+        { email: enteredEmail }
+      );
+       console.log(response.data.exists);
+    } catch (error) {
+      console.error("Error during registration", error);
+    }
   };
   return (
     <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
@@ -88,7 +91,11 @@ function LogInInfo() {
                   type="email"
                   placeholder="some.user@mail.com"
                   {...field}
-                  // onChange={onChangeEmail}
+                  onChange={(e) => {
+                    const enteredEmail = e.target.value;
+                    fetchEmailFromDatabase(enteredEmail);
+                    field.onChange(e);
+                  }}
                   aria-describedby="email-error"
                 />
               )}

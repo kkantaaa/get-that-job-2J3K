@@ -7,17 +7,19 @@ const registRouter = Router();
 const multerUpload = multer({ dest: "../uploads/" });
 
 // fetched user email from "users" table
-registRouter.get("/checkDupEmail", async (req, res) => {
-  const { email } = req.query;
+registRouter.post("/checkDupEmail", async (req, res) => {
   try {
+    const email = req.body.email;
     const result = await pool.query(
       "SELECT email FROM users WHERE email = $1",
       [email]
     );
     if (result.rowCount > 0) {
       res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
     }
-  } catch (error) {
+   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
