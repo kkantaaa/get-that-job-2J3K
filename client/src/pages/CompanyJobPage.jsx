@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { useAuth } from "@/contexts/authentication";
 import FollowingSideBar from "@/components/ProfessionalSideBar/FollowingSideBar.jsx";
 import ArrowLeft from "../images/job-detail-page/arrow-left-black.svg";
 import followIcon from "@/images/getthatjob-page/followIcon.svg";
@@ -12,7 +11,6 @@ import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 
 function CompanyJobPage() {
   const navigate = useNavigate();
-  // const { userData } = useAuth();
   const { recruiter_id } = useParams();
   const [companyJobs, setCompanyJobs] = useState([]);
   const [appIds, setAppIds] = useState([]);
@@ -20,9 +18,7 @@ function CompanyJobPage() {
   const [companyFollowIds, setCompanyFollowIds] = useState([]);
 
   const getCompanyJobs = async () => {
-    //
     try {
-      // console.log(recruiter_id); = 83 รับ recruiter_id มาจากหน้าก่อนหน้า ได้
       const results = await axios.get(
         `http://localhost:4000/following/companyjob/${recruiter_id}`
       );
@@ -67,7 +63,6 @@ function CompanyJobPage() {
   };
 
   const getJobFollowing = async () => {
-    // console.log(`user id is ${userId}`);
     try {
       const results = await axios.get("http://localhost:4000/following/job");
       // console.log(results.data.data);
@@ -88,9 +83,6 @@ function CompanyJobPage() {
       const data = {
         jobId: jobId,
       };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
       await axios.post("http://localhost:4000/following/followjob", data);
     } catch (error) {
       console.error("Error: unable to follow the job", error);
@@ -106,9 +98,6 @@ function CompanyJobPage() {
       const data = {
         jobId: jobId,
       };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
       await axios.post("http://localhost:4000/following/unfollowjob", data);
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
@@ -128,7 +117,7 @@ function CompanyJobPage() {
             <button
               value={jobId}
               onClick={(event) => {
-                handleJobUnfollow(event.target.value); //รับค่า jobId ได้ OK
+                handleJobUnfollow(event.target.value);
               }}
             >
               FOLLOWING
@@ -146,7 +135,7 @@ function CompanyJobPage() {
             <button
               value={jobId}
               onClick={(event) => {
-                handleJobFollow(event.target.value); //รับค่า jobId ได้ OK
+                handleJobFollow(event.target.value);
               }}
             >
               FOLLOW
@@ -243,24 +232,13 @@ function CompanyJobPage() {
 
   useEffect(() => {
     getCompanyFollow();
-  }, [companyFollowIds]);
+  }, []);
 
   useEffect(() => {
     getCompanyJobs();
     getJobApp();
     getJobFollowing();
   }, []);
-
-  // const companyLogo = companyJobs[0].company_logo;
-  // const companyName = companyJobs[0].company_name;
-
-  // {
-  //   companyJobs && companyJobs.length > 0 ? (
-  //     <div className="flex flex-row">{companyJobs[0].company_name}</div>
-  //   ) : (
-  //     <div>Loading...</div>
-  //   );
-  // }
 
   return (
     <>

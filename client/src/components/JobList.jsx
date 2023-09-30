@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { useAuth } from "@/contexts/authentication";
 import followIcon from "@/images/getthatjob-page/followIcon.svg";
 import dollarIcon from "@/images/getthatjob-page/dollarIcon.svg";
 import typeIcon from "@/images/getthatjob-page/typeIcon.svg";
@@ -10,7 +9,6 @@ import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 
 const JobList = (props) => {
   const navigate = useNavigate();
-  // const { userData } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [appIds, setAppIds] = useState([]);
   const [jobFollowingIds, setJobFollowingIds] = useState([]);
@@ -33,8 +31,6 @@ const JobList = (props) => {
         params,
       });
 
-      // console.log("Jobs from server");
-      // console.log(results.data.data);
       setJobs(results.data.data);
     } catch (error) {
       console.error("Error: Failed to fetch jobs data");
@@ -57,7 +53,7 @@ const JobList = (props) => {
   };
 
   const seemoreButton = (jobId) => {
-    const isApplied = appIds.includes(jobId); //set job_id
+    const isApplied = appIds.includes(jobId);
     if (isApplied) {
       return (
         <button className="mr-2 h-[40px] px-[8px] py-[6px] border-2 border-BackgroundDark rounded-[16px] bg-BackgroundDark text-Gray text-center text-[14px] tracking-[1.25px] font-Inter">
@@ -94,7 +90,6 @@ const JobList = (props) => {
   // FOLLOW LOGIC
   const handleFollow = async (event) => {
     // event.preventDefault();
-    // const userId = userData.user.user_id;
     const jobId = event;
     // console.log(`user id : ${userId}`);
     console.log(`job id : ${jobId}`);
@@ -102,9 +97,6 @@ const JobList = (props) => {
       const data = {
         jobId: jobId,
       };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
       await axios.post("http://localhost:4000/following/followjob", data);
     } catch (error) {
       console.error("Error: unable to follow the job", error);
@@ -120,9 +112,6 @@ const JobList = (props) => {
       const data = {
         jobId: jobId,
       };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
       await axios.post("http://localhost:4000/following/unfollowjob", data);
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
@@ -144,7 +133,7 @@ const JobList = (props) => {
             <button
               value={jobId}
               onClick={(event) => {
-                handleUnfollow(event.target.value); //รับค่า jobId ได้ OK
+                handleUnfollow(event.target.value);
               }}
             >
               FOLLOWING
@@ -163,7 +152,7 @@ const JobList = (props) => {
             <button
               value={jobId}
               onClick={(event) => {
-                handleFollow(event.target.value); //รับค่า jobId ได้ OK
+                handleFollow(event.target.value);
               }}
             >
               FOLLOW
@@ -185,7 +174,6 @@ const JobList = (props) => {
 
   return (
     <div className="ml-12">
-      {/* User ID {userData.user.user_id} */}
       <div className="m-2 text-[18px]">
         <h2 className="font-Montserrat">{jobs.length} jobs for you</h2>
       </div>

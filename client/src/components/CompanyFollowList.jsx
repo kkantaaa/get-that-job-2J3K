@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { useAuth } from "@/contexts/authentication";
 import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 import jobOpeningIcon from "@/images/getthatjob-page/jobOpeningIcon.svg";
 
 const CompanyFollowingList = () => {
   const navigate = useNavigate();
-  // const { userData } = useAuth();
   const [companyJobsCount, setCompanyJobsCount] = useState([]);
   const [companyFollow, setCompanyFollow] = useState([]);
-  // const companyFollow = props.data;
 
   const getCompanyJobsCount = async () => {
     try {
@@ -18,6 +15,8 @@ const CompanyFollowingList = () => {
         `http://localhost:4000/following/companycount`
       );
       setCompanyJobsCount(results.data.data);
+      // console.log("company job count : ");
+      // console.log(companyJobsCount);
     } catch (error) {
       console.error("Error: Failed to fetch company following", error);
     }
@@ -41,12 +40,6 @@ const CompanyFollowingList = () => {
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/unfollowcompany", data);
-
-      // const params = new URLSearchParams();
-      // params.append("recruiterId", recruiterId);
-      // await axios.post("http://localhost:4000/following/unfollowcompany", {
-      //   params,
-      // });
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
@@ -55,11 +48,11 @@ const CompanyFollowingList = () => {
 
   useEffect(() => {
     getCompanyJobsCount();
-  }, [companyJobsCount]);
+  }, []);
 
   useEffect(() => {
     getCompanyFollow();
-  }, [companyFollow]);
+  }, []);
 
   return (
     <div className="ml-[120px]">
@@ -70,9 +63,6 @@ const CompanyFollowingList = () => {
       </div>
       <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
         {companyFollow.map((follow) => {
-          // const count = companyJobsCount.filter(
-          //   (job) => job.recruiter_id == follow.recruiter_id
-          // )[0].job_count;
           return (
             <div
               key={follow.recruiter_id}
@@ -96,7 +86,8 @@ const CompanyFollowingList = () => {
                           <div className="flex flex-row">
                             {
                               companyJobsCount.filter(
-                                (job) => job.recruiter_id == follow.recruiter_id
+                                (job) =>
+                                  job.recruiter_id === follow.recruiter_id
                               )[0].job_count
                             }{" "}
                             jobs openings

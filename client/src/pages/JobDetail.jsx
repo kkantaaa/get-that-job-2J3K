@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-// import { useAuth } from "@/contexts/authentication";
 import axios from "axios";
 import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar";
-// import FollowingStatus from "../images/job-detail-page/FollowButton.svg";
 import NavigateLine from "../images/job-detail-page/navigate-line.svg";
 import CategoryIcon from "../images/job-detail-page/category-icon.svg";
 import DollarSign from "../images/job-detail-page/dollarsign.svg";
@@ -18,7 +16,6 @@ moment().format();
 
 function JobDetail() {
   const navigate = useNavigate();
-  // const { userData } = useAuth();
   const [jobDetail, setJobDetail] = useState([]);
   const [companyFollowIds, setCompanyFollowIds] = useState([]);
   const { job_id } = useParams();
@@ -140,7 +137,7 @@ function JobDetail() {
 
   useEffect(() => {
     getCompanyFollow();
-  }, [companyFollowIds]);
+  }, []);
 
   return (
     <>

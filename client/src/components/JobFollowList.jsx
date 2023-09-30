@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { useAuth } from "@/contexts/authentication";
 import dollarIcon from "@/images/getthatjob-page/dollarIcon.svg";
 import typeIcon from "@/images/getthatjob-page/typeIcon.svg";
 import jobCategoryIcon from "@/images/getthatjob-page/jobCategoryIcon.svg";
-import followIcon from "@/images/getthatjob-page/followIcon.svg";
 import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 
 const JobFollowingList = () => {
   const navigate = useNavigate();
-  // const { userData } = useAuth();
   const [appIds, setAppIds] = useState([]);
   const [jobFollow, setJobFollow] = useState([]);
 
@@ -29,28 +26,6 @@ const JobFollowingList = () => {
     }
   };
 
-  // FOLLOW LOGIC
-  // const handleFollow = async (event) => {
-  //   // event.preventDefault();
-  //   const userId = userData.user.user_id;
-  //   const jobId = event;
-  //   console.log(`user id : ${userId}`);
-  //   console.log(`job id : ${jobId}`);
-  //   try {
-  //     const data = {
-  //       userId: userId,
-  //       jobId: jobId,
-  //     };
-  //     // const params = new URLSearchParams();
-  //     // params.append("userId", userId);
-  //     // params.append("jobId", jobId);
-  //     await axios.post("http://localhost:4000/following/followjob", data);
-  //   } catch (error) {
-  //     console.error("Error: unable to follow the job", error);
-  //   }
-  //   // getJobFollowing(userData.user.user_id);
-  // };
-
   // UNFOLLOW LOGIC
   const handleUnfollow = async (event) => {
     const jobId = event;
@@ -58,48 +33,12 @@ const JobFollowingList = () => {
       const data = {
         jobId: jobId,
       };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
       await axios.post("http://localhost:4000/following/unfollowjob", data);
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
     getJobFollow();
   };
-
-  // const followButton = (jobId) => {
-  //   const isFollowing = jobFollow.includes(jobId);
-  //   if (isFollowing) {
-  //     return (
-  //       <button className="flex flex-row">
-  //         <div className="mx-1">
-  //           <img src={pinkFollowIcon} />
-  //         </div>
-  //         {/* ใส่  LOGIC สหรับ UNFOLLOW */}
-  //       </button>
-  //     );
-  //   } else {
-  //     return (
-  //       <button className="flex flex-row pr-4">
-  //         <div className="mx-0">
-  //           <img src={followIcon} />
-  //         </div>
-  //         {/* ใส่  LOGIC สหรับ FOLLOW */}
-  //         <div className="pt-2 font-Inter">
-  //           <button
-  //             value={jobId}
-  //             onClick={(event) => {
-  //               handleFollow(event.target.value); //รับค่า jobId ได้ OK
-  //             }}
-  //           >
-  //             FOLLOW
-  //           </button>
-  //         </div>
-  //       </button>
-  //     );
-  //   }
-  // };
 
   const seemoreButton = (jobId) => {
     const isApplied = appIds.includes(jobId);
@@ -125,11 +64,6 @@ const JobFollowingList = () => {
     // console.log(userId);
     try {
       const results = await axios.get("http://localhost:4000/following/job");
-      //   console.log(results.data.data);
-      //   const followJobIds = results.data.data.map((obj) => {
-      //     return obj.job_id;
-      //   });
-      //   setJobFollow(followJobIds);
       setJobFollow(results.data.data);
     } catch (error) {
       console.error("Error: Failed to fetch job following", error);
@@ -142,7 +76,7 @@ const JobFollowingList = () => {
 
   useEffect(() => {
     getJobFollow();
-  }, [jobFollow]);
+  }, []);
 
   return (
     <div className="ml-[120px]">
