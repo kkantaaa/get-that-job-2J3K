@@ -4,17 +4,19 @@ import { useGlobalContext } from "@/contexts/registerContexts";
 import { useEffect, useState } from "react";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function LogInInfo() {
   const { userData, setUserData } = useGlobalContext();
   const navigate = useNavigate();
-  const [fetchedemail, setFetchedemail] = useState(null);
+  const [emailExists, setEmailExists] = useState(false);
 
   // 2. เราจะใช้ useForm(); เพื่อกำหนดค่าต่างๆ และส่งค่าที่จะใช้ในการจัดการ form
   const {
     handleSubmit, // <- ใช้เพื่อ manage เวลาส่งฟอร์ม
     control, // <- มาจาก controller .ใช้เพื่อเชื่อมต่อกับ field input ใน form
-    setError, // <- function สำหรับจัดการข้อความ error message ที่อยากให้แสดง
+    // setError, // <- function สำหรับจัดการข้อความ error message ที่อยากให้แสดง
     formState: { errors }, // <-  เป็นค่าที่ใช้ในเก็บ error message ที่เรา set ขึ้นมา เวลากรอก form ไม่ครบ
   } = useForm();
 
@@ -24,29 +26,10 @@ function LogInInfo() {
   }, [userData]);
 
   const onSubmit = async (data) => {
-    console.log({
-      email: control._fields.email._f.value,
-      password: control._fields.password._f.value,
-    });
-
     try {
-      // ส่งคำขอไปยังเซิร์ฟเวอร์เพื่อตรวจสอบ email
-      // const response = await axios.post(
-      //   `http://localhost:4000/professional?email=${data.email}`);
-      // const result = response.data.data;
-      // console.log(result);
-
-      // if (result.exists) {
-      //   setError("email", {
-      //     type: "manual",
-      //     message: "The email is already taken",
-      //   });
-      
-      if (data.confirmedPassword !== data.password) {
-        setError("confirmedPassword", {
-          type: "manual",
-          message: "The confirmed password does not match",
-        });
+      if (emailExists === true) {
+        // console.log("exists:" + emailExists); leave this for debugging
+        toast.error("The email is already taken");
       } else {
         await setUserData({
           email: control._fields.email._f.value,
@@ -61,50 +44,58 @@ function LogInInfo() {
   };
 
   const fetchEmailFromDatabase = async (enteredEmail) => {
-     try {
-       const response = await axios.post(
+    try {
+      const response = await axios.post(
         "http://localhost:4000/regist/checkDupEmail",
         { email: enteredEmail }
       );
-       console.log(response.data.exists);
+      setEmailExists(response.data.exists);
     } catch (error) {
       console.error("Error during registration", error);
     }
   };
   return (
-    <form className="font-Inter text-[10px]" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <div className="email-input">
-          <label htmlFor="email">
-            <div className="mb-[4px] font-normal tracking-[1.5px]">EMAIL</div>
-            <Controller
-              name="email"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Email is required" }}
-              render={({ field }) => (
-                <input
-                  className="mb-[16px] flex w-[360px] h-[36px] 
+    <>
+      <ToastContainer />
+      <form
+        className="font-Inter text-[10px]"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div>
+          <div className="email-input">
+            <label htmlFor="email">
+              <div className="mb-[4px] font-normal tracking-[1.5px]">EMAIL</div>
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Email is required" }}
+                render={({ field }) => (
+                  <input
+                    className="mb-[16px] flex w-[360px] h-[36px] 
                   rounded-md border border-Pink bg-background p-[8px] 
                   text-[14px] placeholder:text-muted-foreground"
-                  id="email"
-                  type="email"
-                  placeholder="some.user@mail.com"
-                  {...field}
-                  onChange={(e) => {
-                    const enteredEmail = e.target.value;
-                    fetchEmailFromDatabase(enteredEmail);
-                    field.onChange(e);
-                  }}
-                  aria-describedby="email-error"
-                />
-              )}
-            />
-          </label>
-          <div id="email-error" className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]">
-            {errors.email && errors.email.message}
+                    id="email"
+                    type="email"
+                    placeholder="some.user@mail.com"
+                    {...field}
+                    onChange={(e) => {
+                      const enteredEmail = e.target.value;
+                      fetchEmailFromDatabase(enteredEmail);
+                      field.onChange(e);
+                    }}
+                    aria-describedby="email-error"
+                  />
+                )}
+              />
+            </label>
+            <div
+              id="email-error"
+              className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]"
+            >
+              {errors.email && errors.email.message}
+            </div>
           </div>
-        </div>
 
         <div className="password-input">
           <label htmlFor="password">
