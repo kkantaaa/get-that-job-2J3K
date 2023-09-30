@@ -327,15 +327,17 @@ function TestYourApp() {
                                     Are you sure you want to decline this
                                     application?
                                   </DialogTitle>
-                                  <DialogDescription>
-                                    This action cannot be undone. This will
-                                    permanently delete your account and remove
-                                    your data from our servers.
-                                    <div class="button-container">
-                                      <button>
+                                  <DialogDescription className="mt-[4px] flex flex-col font-Inter justify-center">
+                                    <div className="flex justify-center">
+                                      Declining the application will permanently
+                                      reject the applicant's submission and
+                                      remove their data from our records.
+                                    </div>
+                                    <div className="flex flex-row mt-[6px] justify-center">
+                                      <button className="text-Pink font-bold bg-white rounded-sm w-[116px] h-[40px] border border-Pink">
                                         Yes
                                       </button>
-                                      <button>
+                                      <button className="ml-[6px] text-White font-bold bg-DarkPink rounded-sm w-[116px] h-[40px]">
                                         No
                                       </button>
                                     </div>
