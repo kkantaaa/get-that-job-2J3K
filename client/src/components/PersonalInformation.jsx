@@ -73,7 +73,9 @@ function PersonalInformation() {
             rules={{ required: "Name is required" }}
             render={({ field }) => (
               <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] 
+                rounded-md border border-Pink  bg-background p-[8px] 
+                ring-offset-background placeholder:text-muted-foreground"
                 id="name"
                 name="name"
                 type="text"
@@ -98,7 +100,9 @@ function PersonalInformation() {
             rules={{ required: "Phone number is required" }}
             render={({ field }) => (
               <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md 
+                border border-Pink bg-background p-[8px] ring-offset-background 
+                placeholder:text-muted-foreground"
                 id="phone"
                 name="phoneNumber"
                 type="text"
@@ -123,7 +127,8 @@ function PersonalInformation() {
             rules={{ required: "Birthdate is required" }}
             render={({ field }) => (
               <input
-                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  
+                bg-background p-[8px] ring-offset-background placeholder:text-muted-foreground"
                 id="birthdate"
                 name="birthdate"
                 type="date"
