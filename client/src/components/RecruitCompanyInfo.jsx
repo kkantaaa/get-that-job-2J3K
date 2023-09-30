@@ -95,6 +95,7 @@ function RecruitCompanyInfo() {
               defaultValue=""
               render={({ field }) => (
                 <input
+                  maxLength={2000}
                   className="mb-[16px] flex w-[360px] h-[36px] rounded-md border 
                   border-Pink bg-background p-[8px] text-[14px]
                   placeholder:text-muted-foreground"
@@ -121,6 +122,7 @@ function RecruitCompanyInfo() {
               defaultValue=""
               render={({ field }) => (
                 <input
+                  maxLength={2000}
                   className="flex w-[600px] h-[76px] rounded-md border border-Pink bg-background p-[8px] 
                   text-[14px] placeholder:text-muted-foreground"
                   id="about_company"
@@ -137,7 +139,9 @@ function RecruitCompanyInfo() {
           Between 100 and 2000 characters
         </p>
 
-        <p className="mt-[8px] uppercase text-DarkGray text-[10px] leading-normal tracking-[1.5px]">Upload the company logo</p>
+        <p className="mt-[8px] uppercase text-DarkGray text-[10px] leading-normal tracking-[1.5px]">
+          Upload the company logo
+        </p>
 
         {/* button */}
         <div

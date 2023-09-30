@@ -96,7 +96,7 @@ function ProfessionalInfo() {
                   name="title"
                   className="flex w-[380px] h-[36px] rounded-md border border-Pink 
                   bg-background p-[8px] text-[14px] placeholder-text-muted-foreground 
-                  placeholder-top-0"                 
+                  placeholder-top-0"
                   id="title"
                   type="text"
                   placeholder="Example: Mechanical administrator"
@@ -120,6 +120,7 @@ function ProfessionalInfo() {
               rules={{ required: "Professional experience is required" }}
               render={({ field }) => (
                 <input
+                  maxLength={2000}
                   className="flex w-[600px] h-[76px] rounded-md border border-Pink 
                 bg-background p-[8px] text-[14px] placeholder-text-muted-foreground 
                 placeholder-top-0"
@@ -150,6 +151,7 @@ function ProfessionalInfo() {
               rules={{ required: "Education is required" }}
               render={({ field }) => (
                 <input
+                  maxLength={2000}
                   className="flex w-[600px] h-[76px] rounded-md border border-Pink 
                   bg-background text-lg p-[8px] text-[14px] placeholder-text-muted-foreground 
                   placeholder-top-0"
