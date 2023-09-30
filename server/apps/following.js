@@ -3,12 +3,14 @@ import { pool } from "../utils/db_connection.js";
 import { protect } from "../utils/protect.js";
 
 const followingRouter = Router();
-// jobRouter.use(protect);
+followingRouter.use(protect);
 
 followingRouter.get("/job", async (req, res) => {
   try {
-    const userid = `${req.query.userId}`;
+    // const userid = `${req.query.userId}`;
     // const userid = 26;
+    const userid = req.user.user_id;
+    // console.log(`this is userid from token : ${userid}`);
     if (!userid) {
       return res.status(401).json({
         message: "no userId please login",
@@ -42,8 +44,9 @@ followingRouter.get("/job", async (req, res) => {
 
 followingRouter.get("/companyinfo", async (req, res) => {
   try {
-    // const userid = `${req.query.userId}` || null;
-    const userid = 26;
+    // const userid = `${req.query.userId}`
+    // const userid = 26;
+    const userid = req.user.user_id;
     if (!userid) {
       return res.status(401).json({
         message: "no userId please login",
@@ -75,7 +78,8 @@ followingRouter.get("/companyinfo", async (req, res) => {
 
 followingRouter.get("/companycount", async (req, res) => {
   try {
-    const userid = `${req.query.userId}`;
+    const userid = req.user.user_id;
+    // const userid = `${req.query.userId}`;
     // const userid = 26;
     // const recruiterid = `${req.query.recruiterId}`;
     // const recruiterid = 83;
@@ -173,7 +177,7 @@ followingRouter.get("/companyjob/:id", async (req, res) => {
 });
 
 followingRouter.post("/followjob", async (req, res) => {
-  const userid = `${req.body.userId}`;
+  const userid = req.user.user_id;
   const jobid = `${req.body.jobId}`;
   console.log(`user id is ${userid}`);
   console.log(`job id is ${jobid}`);
@@ -216,7 +220,7 @@ followingRouter.post("/followjob", async (req, res) => {
 
 followingRouter.post("/unfollowjob", async (req, res) => {
   try {
-    const userid = `${req.body.userId}`;
+    const userid = req.user.user_id;
     const jobid = `${req.body.jobId}`;
     console.log(`user id is ${userid}`);
     console.log(`job id is ${jobid}`);
@@ -260,7 +264,7 @@ followingRouter.post("/unfollowjob", async (req, res) => {
 });
 
 followingRouter.post("/followcompany", async (req, res) => {
-  const userid = `${req.body.userId}`;
+  const userid = req.user.user_id;
   const recruiterid = `${req.body.recruiterId}`;
   console.log(`user id is ${userid}`);
   console.log(`recruiter id is ${recruiterid}`);
@@ -295,8 +299,9 @@ followingRouter.post("/followcompany", async (req, res) => {
 
 followingRouter.post("/unfollowcompany", async (req, res) => {
   try {
-    const userid = `${req.body.userId}`;
+    const userid = req.user.user_id;
     const recruiterid = `${req.body.recruiterId}`;
+    // const recruiterid = `${req.query.recruiterId}`;
     console.log(`user id is ${userid}`);
     console.log(`recruiter id is ${recruiterid}`);
 

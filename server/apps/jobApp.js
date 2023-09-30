@@ -3,11 +3,12 @@ import { pool } from "../utils/db_connection.js";
 import { protect } from "../utils/protect.js";
 
 const jobAppRouter = Router();
-// jobAppRouter.use(protect);
+jobAppRouter.use(protect);
 
 jobAppRouter.get("/", async (req, res) => {
   try {
-    const userid = `${req.query.userId}`;
+    // const userid = `${req.query.userId}`;
+    const userid = req.user.user_id;
     if (!userid) {
       return res.status(401).json({
         message: "no userId please login",

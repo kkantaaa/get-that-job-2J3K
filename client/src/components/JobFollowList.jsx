@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 import dollarIcon from "@/images/getthatjob-page/dollarIcon.svg";
 import typeIcon from "@/images/getthatjob-page/typeIcon.svg";
 import jobCategoryIcon from "@/images/getthatjob-page/jobCategoryIcon.svg";
@@ -10,19 +10,14 @@ import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 
 const JobFollowingList = () => {
   const navigate = useNavigate();
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const [appIds, setAppIds] = useState([]);
   const [jobFollow, setJobFollow] = useState([]);
 
-  const getJobApp = async (input) => {
-    const userId = input;
+  const getJobApp = async () => {
     // console.log(`user id is ${userId}`);
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/jobapp", {
-        params,
-      });
+      const results = await axios.get("http://localhost:4000/jobapp");
 
       const jobIds = results.data.data.map((obj) => {
         return obj.job_id;
@@ -58,17 +53,20 @@ const JobFollowingList = () => {
 
   // UNFOLLOW LOGIC
   const handleUnfollow = async (event) => {
-    const userId = userData.user.user_id;
     const jobId = event;
     try {
-      const data = {
-        userId: userId,
-        jobId: jobId,
-      };
+      // const data = {
+      //   userId: userId,
+      //   jobId: jobId,
+      // };
       // const params = new URLSearchParams();
       // params.append("userId", userId);
       // params.append("jobId", jobId);
-      await axios.post("http://localhost:4000/following/unfollowjob", data);
+      const params = new URLSearchParams();
+      params.append("jobId", jobId);
+      await axios.post("http://localhost:4000/following/unfollowjob", {
+        params,
+      });
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
@@ -129,14 +127,9 @@ const JobFollowingList = () => {
   };
 
   const getJobFollow = async () => {
-    const userId = userData.user.user_id;
     // console.log(userId);
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/following/job", {
-        params,
-      });
+      const results = await axios.get("http://localhost:4000/following/job");
       //   console.log(results.data.data);
       //   const followJobIds = results.data.data.map((obj) => {
       //     return obj.job_id;
@@ -144,12 +137,12 @@ const JobFollowingList = () => {
       //   setJobFollow(followJobIds);
       setJobFollow(results.data.data);
     } catch (error) {
-      console.error("Error: Failed to fetch job following", userId, error);
+      console.error("Error: Failed to fetch job following", error);
     }
   };
 
   useEffect(() => {
-    getJobApp(userData.user.user_id);
+    getJobApp();
   }, []);
 
   useEffect(() => {

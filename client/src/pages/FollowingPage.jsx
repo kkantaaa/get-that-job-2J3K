@@ -1,25 +1,20 @@
 import FollowingSideBar from "@/components/ProfessionalSideBar/FollowingSideBar";
-import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 import axios from "axios";
 import JobFollowingList from "@/components/JobFollowList";
 import CompanyFollowingList from "@/components/CompanyFollowList";
 
 function FollowingPage() {
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const [jobFollow, setJobFollow] = useState([]);
   const [companyFollow, setCompanyFollow] = useState([]);
 
-  const getJobFollow = async (input) => {
-    const userId = input;
+  const getJobFollow = async () => {
     // console.log(userId);
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/following/job", {
-        params,
-      });
+      const results = await axios.get("http://localhost:4000/following/job");
       //   console.log(results.data.data);
       //   const followJobIds = results.data.data.map((obj) => {
       //     return obj.job_id;
@@ -27,33 +22,27 @@ function FollowingPage() {
       //   setJobFollow(followJobIds);
       setJobFollow(results.data.data);
     } catch (error) {
-      console.error("Error: Failed to fetch job following", userId, error);
+      console.error("Error: Failed to fetch job following", error);
     }
   };
 
-  const getCompanyFollow = async (input) => {
-    const userId = input;
+  const getCompanyFollow = async () => {
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
       const results = await axios.get(
-        `http://localhost:4000/following/companyinfo`,
-        {
-          params,
-        }
+        `http://localhost:4000/following/companyinfo`
       );
       setCompanyFollow(results.data.data);
     } catch (error) {
-      console.error("Error: Failed to fetch company following", userId, error);
+      console.error("Error: Failed to fetch company following", error);
     }
   };
 
   useEffect(() => {
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   }, [companyFollow]);
 
   useEffect(() => {
-    getJobFollow(userData.user.user_id);
+    getJobFollow();
   }, [jobFollow]);
 
   return (

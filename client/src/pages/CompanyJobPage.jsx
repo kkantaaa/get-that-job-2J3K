@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 import FollowingSideBar from "@/components/ProfessionalSideBar/FollowingSideBar.jsx";
 import ArrowLeft from "../images/job-detail-page/arrow-left-black.svg";
 import followIcon from "@/images/getthatjob-page/followIcon.svg";
@@ -12,7 +12,7 @@ import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 
 function CompanyJobPage() {
   const navigate = useNavigate();
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const { recruiter_id } = useParams();
   const [companyJobs, setCompanyJobs] = useState([]);
   const [appIds, setAppIds] = useState([]);
@@ -33,16 +33,9 @@ function CompanyJobPage() {
     }
   };
 
-  const getJobApp = async (input) => {
-    const userId = input;
-    // console.log(`user id is ${userId}`);
+  const getJobApp = async () => {
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/jobapp", {
-        params,
-      });
-
+      const results = await axios.get("http://localhost:4000/jobapp");
       const jobIds = results.data.data.map((obj) => {
         return obj.job_id;
       });
@@ -73,15 +66,10 @@ function CompanyJobPage() {
     }
   };
 
-  const getJobFollowing = async (input) => {
-    const userId = input;
+  const getJobFollowing = async () => {
     // console.log(`user id is ${userId}`);
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/following/job", {
-        params,
-      });
+      const results = await axios.get("http://localhost:4000/following/job");
       // console.log(results.data.data);
       const jobFollowingIds = results.data.data.map((obj) => {
         return obj.job_id;
@@ -95,14 +83,9 @@ function CompanyJobPage() {
 
   // FOLLOW LOGIC
   const handleJobFollow = async (event) => {
-    // event.preventDefault();
-    const userId = userData.user.user_id;
     const jobId = event;
-    console.log(`user id : ${userId}`);
-    console.log(`job id : ${jobId}`);
     try {
       const data = {
-        userId: userId,
         jobId: jobId,
       };
       // const params = new URLSearchParams();
@@ -112,17 +95,15 @@ function CompanyJobPage() {
     } catch (error) {
       console.error("Error: unable to follow the job", error);
     }
-    getJobFollowing(userData.user.user_id);
+    getJobFollowing();
   };
 
   // UNFOLLOW LOGIC
   const handleJobUnfollow = async (event) => {
     // event.preventDefault();
-    const userId = userData.user.user_id;
     const jobId = event;
     try {
       const data = {
-        userId: userId,
         jobId: jobId,
       };
       // const params = new URLSearchParams();
@@ -132,7 +113,7 @@ function CompanyJobPage() {
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
-    getJobFollowing(userData.user.user_id);
+    getJobFollowing();
   };
 
   const jobFollowButton = (jobId) => {
@@ -177,15 +158,9 @@ function CompanyJobPage() {
   };
 
   const getCompanyFollow = async () => {
-    const userId = userData.user.user_id;
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
       const results = await axios.get(
-        `http://localhost:4000/following/companyinfo`,
-        {
-          params,
-        }
+        `http://localhost:4000/following/companyinfo`
       );
       const companyFollowIds = results.data.data.map((obj) => {
         return obj.recruiter_id;
@@ -239,36 +214,31 @@ function CompanyJobPage() {
 
   // FOLLOW LOGIC
   const handleCompanyFollow = async (event) => {
-    const userId = userData.user.user_id;
     const recruiterId = event;
-    console.log(`user id : ${userId}`);
     console.log(`job id : ${recruiterId}`);
     try {
       const data = {
-        userId: userId,
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/followcompany", data);
     } catch (error) {
       console.error("Error: unable to follow the company", error);
     }
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   };
 
   // UNFOLLOW LOGIC
   const handleCompanyUnfollow = async (event) => {
-    const userId = userData.user.user_id;
     const recruiterId = event;
     try {
       const data = {
-        userId: userId,
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/unfollowcompany", data);
     } catch (error) {
       console.error("Error: unable to unfollow the company", error);
     }
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   };
 
   useEffect(() => {
@@ -277,8 +247,8 @@ function CompanyJobPage() {
 
   useEffect(() => {
     getCompanyJobs();
-    getJobApp(userData.user.user_id);
-    getJobFollowing(userData.user.user_id);
+    getJobApp();
+    getJobFollowing();
   }, []);
 
   // const companyLogo = companyJobs[0].company_logo;
