@@ -194,9 +194,8 @@ function ProfessionalInfo() {
           </div>
         </div>
 
-        <div className="mr-[4px] text-[14px] font-bold text-Gray tracking-[0.25px]">
-          {" "}
-          {fileName}{" "}
+        <div className="mt-[4px] mr-[4px] text-[14px] font-bold text-Pink tracking-[0.25px]">
+          {fileName}
         </div>
 
         <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
