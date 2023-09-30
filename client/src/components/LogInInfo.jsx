@@ -73,7 +73,12 @@ function LogInInfo() {
   };
   return (
     <>
-      <ToastContainer theme="colored" closeOnClick autoClose={2500} />
+      <ToastContainer
+        theme="colored"
+        closeOnClick
+        autoClose={2500}
+        position="bottom-center"
+      />
       <form
         className="font-Inter text-[10px]"
         onSubmit={handleSubmit(onSubmit)}
