@@ -172,7 +172,7 @@ function LogInInfo() {
           </button>
         </div>
       </div>
-    </form>
+    </form></>
   );
 }
 
