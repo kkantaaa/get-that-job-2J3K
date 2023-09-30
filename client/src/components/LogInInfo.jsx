@@ -26,10 +26,23 @@ function LogInInfo() {
   }, [userData]);
 
   const onSubmit = async (data) => {
+    const { email, password } = data;
     try {
+      if (!/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/.test(email)) {
+        toast.error("Invalid email format");
+        return;
+      }
       if (emailExists === true) {
-        // console.log("exists:" + emailExists); leave this for debugging
         toast.error("The email is already taken");
+        return;
+      }
+      if (
+        password.length < 8 ||
+        !/^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~_-]+$/.test(password)
+      ) {
+        toast.error(
+          "Password must be at least 8 characters long and contain only normal password characters"
+        );
         return;
       }
       if (data.confirmedPassword !== data.password) {
@@ -60,7 +73,7 @@ function LogInInfo() {
   };
   return (
     <>
-      <ToastContainer />
+      <ToastContainer theme="colored" closeOnClick autoClose={2500} />
       <form
         className="font-Inter text-[10px]"
         onSubmit={handleSubmit(onSubmit)}
