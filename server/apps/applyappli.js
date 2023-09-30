@@ -42,28 +42,31 @@ applyappliRouter.get("/myapplication", async (req, res) => {
 });
 
 applyappliRouter.post("/:user_Id/job-list/:job_Id", async (req, res) => {
+  //หน้า apply ส่ง application ไปเข้า database application
+  const { user_Id, job_Id } = req.params;
+  const { currentCV, interestedReason, professionalExperience } = req.body;
+
+  const insertQuery = `
+    INSERT INTO application (user_id, job_id, professional_experience, cv, interested_reason, application_status, sent_date)
+    VALUES ($1, $2, $3, $4, $5, 'waiting', now())
+    RETURNING *
+  `;
+
   try {
-    const job_Id = req.params.job_Id;
-    const user_Id = req.params.user_Id;
-    const { currentCV, interestedReason, professionalExperience } = req.body;
-    try {
-      const userdata = await pool.query(
-        "INSERT INTO application (user_id, job_id, professional_experience, cv, interested_reason, application_status, sent_date) VALUES ($1, $2, $3, $4, $5, 'waiting', now()) RETURNING *",
-        [user_Id, job_Id, professionalExperience, currentCV, interestedReason]
-      );
-
-      console.log("Application submitted successfully:", userdata.rows[0]);
-
-      res.json(userdata.rows[0]);
-    } catch (error) {
-      console.error("Error submitting application:", error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while submitting the application." });
-    }
+    const userdata = await pool.query(insertQuery, [
+      user_Id,
+      job_Id,
+      professionalExperience,
+      currentCV,
+      interestedReason,
+    ]);
+    console.log("Application submitted successfully:", userdata.rows[0]);
+    res.json(userdata.rows[0]);
   } catch (error) {
-    console.error("Error processing request:", error);
-    res.status(400).json({ error: "Invalid request data." });
+    console.error("Error submitting application:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while submitting the application." });
   }
 });
 
