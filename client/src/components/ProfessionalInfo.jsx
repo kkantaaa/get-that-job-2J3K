@@ -24,7 +24,7 @@ function ProfessionalInfo() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-      navigate("/user/findthatjob");
+      navigate("/user/login");
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -63,12 +63,12 @@ function ProfessionalInfo() {
     fileInputRef.current.click();
   };
 
-  const handleFilePreview = (e) =>{
-    if (e.target.files.length > 0){
+  const handleFilePreview = (e) => {
+    if (e.target.files.length > 0) {
       setValue("file", e.target.files[0]);
       setFileName(e.target.files[0].name);
     }
-  }
+  };
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
@@ -79,6 +79,7 @@ function ProfessionalInfo() {
         <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">
           but we recommend you to do it now
         </p>
+
         <div className="title-input">
           <label
             htmlFor="title"
@@ -93,7 +94,9 @@ function ProfessionalInfo() {
               render={({ field }) => (
                 <input
                   name="title"
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-[380px] h-[36px] rounded-md border border-Pink 
+                  bg-background p-[8px] text-[14px] placeholder-text-muted-foreground 
+                  placeholder-top-0"
                   id="title"
                   type="text"
                   placeholder="Example: Mechanical administrator"
@@ -117,7 +120,10 @@ function ProfessionalInfo() {
               rules={{ required: "Professional experience is required" }}
               render={({ field }) => (
                 <input
-                  className="flex w-[600px] h-[112px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  maxLength={2000}
+                  className="flex w-[600px] h-[76px] rounded-md border border-Pink 
+                bg-background p-[8px] text-[14px] placeholder-text-muted-foreground 
+                placeholder-top-0"
                   name="jobexp"
                   id="jobexp"
                   type="text"
@@ -145,7 +151,10 @@ function ProfessionalInfo() {
               rules={{ required: "Education is required" }}
               render={({ field }) => (
                 <input
-                  className="flex w-[600px] h-[76px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  maxLength={2000}
+                  className="flex w-[600px] h-[76px] rounded-md border border-Pink 
+                  bg-background text-lg p-[8px] text-[14px] placeholder-text-muted-foreground 
+                  placeholder-top-0"
                   name="education"
                   id="education"
                   type="text"
@@ -156,6 +165,7 @@ function ProfessionalInfo() {
             />
           </label>
         </div>
+
         <p className="mb-[16px] text-[10px] font-normal leading-[16px] tracking-[0.4px]">
           Between 100 and 2000 characters
         </p>
@@ -185,8 +195,10 @@ function ProfessionalInfo() {
             />
           </div>
         </div>
-        
-        <div className="mr-[4px] text-[14px] font-bold text-Gray tracking-[0.25px]"> {fileName} </div>
+
+        <div className="mt-[4px] mr-[4px] text-[14px] font-bold text-Pink tracking-[0.25px]">
+          {fileName}
+        </div>
 
         <p className="text-[10px] font-normal text-LightGray leading-[16px] tracking-[0.4px] uppercase">
           Only .PDF Max size 5MB

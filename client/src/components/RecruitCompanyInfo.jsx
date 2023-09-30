@@ -24,7 +24,7 @@ function RecruitCompanyInfo() {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
-      navigate("/recruiter/jobpostings");
+      navigate("/recruiter/login");
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -95,7 +95,10 @@ function RecruitCompanyInfo() {
               defaultValue=""
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  maxLength={2000}
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border 
+                  border-Pink bg-background p-[8px] text-[14px]
+                  placeholder:text-muted-foreground"
                   id="company_website"
                   name="company_website"
                   type="text"
@@ -119,7 +122,9 @@ function RecruitCompanyInfo() {
               defaultValue=""
               render={({ field }) => (
                 <input
-                  className="flex w-[600px] h-[76px] rounded-md border border-Pink bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  maxLength={2000}
+                  className="flex w-[600px] h-[76px] rounded-md border border-Pink bg-background p-[8px] 
+                  text-[14px] placeholder:text-muted-foreground"
                   id="about_company"
                   name="about_company"
                   type="text"
@@ -134,7 +139,9 @@ function RecruitCompanyInfo() {
           Between 100 and 2000 characters
         </p>
 
-        <p className="mt-[8px] uppercase text-DarkGray text-[10px] leading-normal tracking-[1.5px]">Upload the company logo</p>
+        <p className="mt-[8px] uppercase text-DarkGray text-[10px] leading-normal tracking-[1.5px]">
+          Upload the company logo
+        </p>
 
         {/* button */}
         <div
