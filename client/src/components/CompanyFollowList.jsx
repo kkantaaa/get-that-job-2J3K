@@ -48,9 +48,6 @@ const CompanyFollowingList = () => {
 
   useEffect(() => {
     getCompanyJobsCount();
-  }, []);
-
-  useEffect(() => {
     getCompanyFollow();
   }, []);
 

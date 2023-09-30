@@ -231,12 +231,9 @@ function CompanyJobPage() {
   };
 
   useEffect(() => {
-    getCompanyFollow();
-  }, []);
-
-  useEffect(() => {
-    getCompanyJobs();
     getJobApp();
+    getCompanyJobs();
+    getCompanyFollow();
     getJobFollowing();
   }, []);
 
