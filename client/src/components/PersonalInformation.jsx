@@ -28,36 +28,50 @@ function PersonalInformation() {
 
   const onSubmit = async (data) => {
     const { name, phone, birthdate, linkedin } = data;
-    const isEmpty = Object.values(data).some((value) => value === "");
-    if (isEmpty) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-    const checkNameValid = data.name;
-    const checkPhoneStartsWithPlus = data.phone.startsWith("+");
-    const checkPhoneStandardLength = /^(\+\d{1,3})?\d{10}$/g.test(data.phone);
-    const checkLinkedinStartsWithUrl = data.linkedin.startsWith(
-      "https://www.linkedin.com/in/"
-    );
-    const validations = [
-      {
+    const validations = [];
+    //cases
+    if (name) {
+      const checkNameValid = name;
+      validations.push({
         condition: /[^A-Za-z]/.test(checkNameValid),
         errorMessage: "Name contains non-alphabet characters.",
-      },
-      {
-        condition: !checkPhoneStartsWithPlus,
-        errorMessage: "Phone number must start with a plus sign (+).",
-      },
-      {
+      });
+    }
+    if (phone) {
+      const checkPhoneStartsWithPlus = phone.startsWith("+");
+      const checkPhoneStandardLength = /^(\+\d{1,3})?\d{10}$/g.test(phone);
+      validations.push(
+        {
+          condition: !checkPhoneStartsWithPlus,
+          errorMessage: "Phone number must start with a plus sign (+).",
+        },
+        {
+          condition: !checkPhoneStandardLength,
+          errorMessage:
+            "Phone number must have a standard length including the country code.",
+        }
+      );
+    }
+    if (linkedin) {
+      const checkLinkedinStartsWithUrl = linkedin.startsWith(
+        "https://www.linkedin.com/in/"
+      );
+      validations.push({
         condition: !checkLinkedinStartsWithUrl,
         errorMessage: "LinkedIn must start with the LinkedIn URL.",
-      },
-      {
-        condition: !checkPhoneStandardLength,
-        errorMessage:
-          "Phone number must have a standard length including the country code.",
-      },
-    ];
+      });
+    }
+    if (birthdate) {
+      const birthdateDate = new Date(birthdate);
+      const now = new Date();
+      if (birthdateDate > now) {
+        validations.push({
+          condition: true,
+          errorMessage: "Birthdate cannot be in the future.",
+        });
+      }
+    }
+    //checking
     const hasErrors = validations.some((validation) => validation.condition);
     if (hasErrors) {
       validations
