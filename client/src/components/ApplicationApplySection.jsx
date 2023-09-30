@@ -74,6 +74,8 @@ function ApplicationApplySection(pagedata) {
     <>
       <ToastContainer theme="dark" autoClose={3000} limit={3} />
       <div style={{ marginLeft: "10px", marginTop: "20px" }}>
+        {/*   */}
+        {/* Header */}
         <h1
           className="ml-5 "
           style={{
@@ -84,11 +86,12 @@ function ApplicationApplySection(pagedata) {
         >
           Complete your application
         </h1>
-        {
-          // CV choice section
-        }
+        {/* Header */}
+        {/*   */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
+            {/*  */}
+            {/* form ==> Header */}
             <label
               htmlFor="cvChoice"
               style={{ color: "#373737" }}
@@ -96,7 +99,11 @@ function ApplicationApplySection(pagedata) {
             >
               Send your CV Updated
             </label>
+            {/* form ==> Header */}
+            {/* radios */}
             <div className="ml-5 mt-4">
+              {/*radios  */}
+              {/* radio1 */}
               <label className="mr-10">
                 <Controller
                   name="cvChoice"
@@ -113,12 +120,9 @@ function ApplicationApplySection(pagedata) {
                         const fetchCurrentCV = async () => {
                           try {
                             setCurrentCV(pagedata.userDetail.user_cv);
-                            console.log(
-                              "Current CV fetched and set:",
-                              pagedata.userDetail.user_cv
-                            );
-                          } catch (error) {
-                            console.error("Error fetching current CV:", error);
+                            // console.log("ant:", pagedata.userDetail.user_cv);
+                          } catch {
+                            console.error("ant error:");
                           }
                         };
                         fetchCurrentCV();
@@ -126,8 +130,10 @@ function ApplicationApplySection(pagedata) {
                     />
                   )}
                 />
-                Use Current CV
+                <>Use Current CV</>
               </label>
+              {/* radio1 */}
+              {/* radio2 */}
               <label>
                 <Controller
                   name="cvChoice"
@@ -147,6 +153,8 @@ function ApplicationApplySection(pagedata) {
               </label>
             </div>
           </div>
+          {/* radio2 */}
+          {/* conditional render for uploading new */}
           {showUploadButton && (
             <div className="mt-3 ml-3" style={{ padding: "10px" }}>
               <button
@@ -174,6 +182,8 @@ function ApplicationApplySection(pagedata) {
               </button>
               <br />
               <span className="text-gray-400">Only PDF. Max size 5 MB</span>
+              {/* conditional render for uploading new */}
+              {/* show selected */}
               {currentCV && (
                 <div
                   id="selectedFileBox"
@@ -184,12 +194,16 @@ function ApplicationApplySection(pagedata) {
                   </span>
                 </div>
               )}
+              {/* show selected */}
             </div>
           )}
-          {
-            // User Experience section
-          }
+          {/* cv radios */}
+          {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+          {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+          {/* text input fields */}
           <div style={{ padding: "20px" }}>
+            {/*  */}
+            {/*  */}
             <label htmlFor="experience">
               <span
                 style={{
@@ -210,6 +224,8 @@ function ApplicationApplySection(pagedata) {
                 (TAKEN FROM YOUR PROFILE)
               </span>
             </label>
+            {/*  */}
+            {/*  */}
             <Controller
               name="experience"
               control={control}
@@ -226,10 +242,12 @@ function ApplicationApplySection(pagedata) {
                 />
               )}
             />
+            {/*  */}
+            {/*  */}
           </div>
-          {
-            // Why are you interested section
-          }
+          {/*  */}
+          {/*  */}
+          {/*WHY ARE YOU INTERESTED IN WORKING */}
           <div style={{ padding: "20px" }}>
             <label htmlFor="interestedReason">
               <span
@@ -265,12 +283,16 @@ function ApplicationApplySection(pagedata) {
               Between 50 and 1000 characters.
             </span>
           </div>
-
+          {/*  */}
+          {/*  */}
           <div className="ml-3">
             <button type="submit" id="sendApplicationButton">
               <img src={SendApplicationButton} alt="Send Application Button" />
             </button>
           </div>
+          {/*  */}
+          {/*  */}
+          {/*  */}
         </form>
       </div>
     </>
