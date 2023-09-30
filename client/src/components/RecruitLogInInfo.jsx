@@ -81,7 +81,7 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <div className="text-red-500 text-[10px] uppercase">
+          <div className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]">
             {errors.companyname && errors.companyname.message}
           </div>
         </div>
@@ -110,7 +110,7 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <div className="text-red-500 text-[10px] uppercase">
+          <div className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]">
             {errors.companyemail && errors.companyemail.message}
           </div>
         </div>
@@ -139,7 +139,7 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <div className="text-red-500 text-[10px] uppercase">
+          <div className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]">
             {errors.companypassword && errors.companypassword.message}
           </div>
         </div>
@@ -169,7 +169,7 @@ function RecruitLogInInfo() {
               )}
             />
           </label>
-          <div className="text-red-500 text-[10px] uppercase">
+          <div className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]">
             {errors.confirmedPassword && errors.confirmedPassword.message}
           </div>
         </div>

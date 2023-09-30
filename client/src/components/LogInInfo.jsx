@@ -84,7 +84,7 @@ function LogInInfo() {
               )}
             />
           </label>
-          <div id="email-error" className="text-red-500 text-[10px] uppercase">
+          <div id="email-error" className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]">
             {errors.email && errors.email.message}
           </div>
         </div>
@@ -115,7 +115,7 @@ function LogInInfo() {
           </label>
           <div
             id="password-error"
-            className="text-red-500 text-[10px] uppercase"
+            className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px] mt-0"
           >
             {errors.password && errors.password.message}
           </div>
@@ -148,7 +148,7 @@ function LogInInfo() {
           </label>
           <div
             id="confirmed-password-error"
-            className="text-red-500 text-[10px] uppercase"
+            className="text-red-500 text-[10px] uppercase font-bold tracking-[0.25px]"
           >
             {errors.confirmedPassword && errors.confirmedPassword.message}
           </div>
