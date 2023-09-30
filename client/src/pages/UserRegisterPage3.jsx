@@ -4,9 +4,15 @@ import NavBar from "@/components/NavBar.jsx";
 import StepOne from "../images/registration-page/step-one-dark.svg";
 import StepTwo from "../images/registration-page/step-two-dark.svg";
 import StepThree from "../images/registration-page/step-three-pink.svg";
+import { useNavigate } from "react-router-dom";
 
 
 function UserRegisterPage3() {
+  const navigate = useNavigate();
+
+  function handleNavigate () {
+    navigate("/recruiter/register1");
+  }
   return (
     <>
     <div className="bg-Background min-h-screen flex flex-col">
@@ -20,7 +26,9 @@ function UserRegisterPage3() {
         <div className="w-[115px] h-[2px] bg-Pink mt-[6px]"></div>
         </div>
         <div className="flex flex-col font-Inter text-LightGray">
-        <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]">RECRUITER</h2>
+        <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px]"
+        onClick={handleNavigate}
+        style={{cursor: "pointer"}}>RECRUITER</h2>
         <div className="w-[85px] h-[2px] bg-LightGray mt-[6px]"></div>
         </div>
       </div>
