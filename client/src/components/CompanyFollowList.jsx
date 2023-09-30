@@ -1,86 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "@/contexts/authentication";
 import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 import jobOpeningIcon from "@/images/getthatjob-page/jobOpeningIcon.svg";
 
 const CompanyFollowingList = () => {
   const navigate = useNavigate();
-  const { userData } = useAuth();
   const [companyJobsCount, setCompanyJobsCount] = useState([]);
   const [companyFollow, setCompanyFollow] = useState([]);
-  // const companyFollow = props.data;
 
   const getCompanyJobsCount = async () => {
-    const userId = userData.user.user_id;
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
       const results = await axios.get(
-        `http://localhost:4000/following/companycount`,
-        {
-          params,
-        }
+        `http://localhost:4000/following/companycount`
       );
       setCompanyJobsCount(results.data.data);
+      // console.log("company job count : ");
+      // console.log(companyJobsCount);
     } catch (error) {
       console.error("Error: Failed to fetch company following", error);
     }
   };
 
-  const getCompanyFollow = async (input) => {
-    const userId = input;
+  const getCompanyFollow = async () => {
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
       const results = await axios.get(
-        `http://localhost:4000/following/companyinfo`,
-        {
-          params,
-        }
+        `http://localhost:4000/following/companyinfo`
       );
       setCompanyFollow(results.data.data);
     } catch (error) {
-      console.error("Error: Failed to fetch company following", userId, error);
+      console.error("Error: Failed to fetch company following", error);
     }
   };
 
   const handleUnfollow = async (event) => {
-    const userId = userData.user.user_id;
     const recruiterId = event;
     try {
       const data = {
-        userId: userId,
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/unfollowcompany", data);
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   };
 
   useEffect(() => {
     getCompanyJobsCount();
-  }, [companyJobsCount]);
-
-  useEffect(() => {
     getCompanyFollow();
-  }, [companyFollow]);
+  }, []);
 
   return (
-    <div className="ml-[120px]">
-      <div className="m-2 text-[18px]">
-        <h2 className="font-Montserrat">
+    <div className="ml-[100px]">
+      <div className="m-2">
+        <h2 className="font-Montserrat text-[20px] text-DarkGray">
           You are following {companyFollow.length} companies
         </h2>
       </div>
       <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
         {companyFollow.map((follow) => {
-          // const count = companyJobsCount.filter(
-          //   (job) => job.recruiter_id == follow.recruiter_id
-          // )[0].job_count;
           return (
             <div
               key={follow.recruiter_id}
@@ -92,7 +71,9 @@ const CompanyFollowingList = () => {
                     <img src={follow.company_logo} alt={follow.company_name} />
                   </div>
                   <div className="flex flex-col p-2">
-                    <div className="text-[20px]">{follow.company_name}</div>
+                    <div className="text-[20px] text-DarkGray">
+                      {follow.company_name}
+                    </div>
                     <div className="flex flex-row pr-1 pt-1 text-LightGray text-[12px] font-Inter">
                       <img
                         className="mr-1"
@@ -104,7 +85,8 @@ const CompanyFollowingList = () => {
                           <div className="flex flex-row">
                             {
                               companyJobsCount.filter(
-                                (job) => job.recruiter_id == follow.recruiter_id
+                                (job) =>
+                                  job.recruiter_id === follow.recruiter_id
                               )[0].job_count
                             }{" "}
                             jobs openings

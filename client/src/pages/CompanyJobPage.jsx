@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "@/contexts/authentication";
 import FollowingSideBar from "@/components/ProfessionalSideBar/FollowingSideBar.jsx";
 import ArrowLeft from "../images/job-detail-page/arrow-left-black.svg";
 import followIcon from "@/images/getthatjob-page/followIcon.svg";
@@ -12,7 +11,6 @@ import pinkFollowIcon from "@/images/getthatjob-page/pinkFollowIcon.svg";
 
 function CompanyJobPage() {
   const navigate = useNavigate();
-  const { userData } = useAuth();
   const { recruiter_id } = useParams();
   const [companyJobs, setCompanyJobs] = useState([]);
   const [appIds, setAppIds] = useState([]);
@@ -20,9 +18,7 @@ function CompanyJobPage() {
   const [companyFollowIds, setCompanyFollowIds] = useState([]);
 
   const getCompanyJobs = async () => {
-    //
     try {
-      // console.log(recruiter_id); = 83 รับ recruiter_id มาจากหน้าก่อนหน้า ได้
       const results = await axios.get(
         `http://localhost:4000/following/companyjob/${recruiter_id}`
       );
@@ -33,16 +29,9 @@ function CompanyJobPage() {
     }
   };
 
-  const getJobApp = async (input) => {
-    const userId = input;
-    // console.log(`user id is ${userId}`);
+  const getJobApp = async () => {
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/jobapp", {
-        params,
-      });
-
+      const results = await axios.get("http://localhost:4000/jobapp");
       const jobIds = results.data.data.map((obj) => {
         return obj.job_id;
       });
@@ -73,15 +62,9 @@ function CompanyJobPage() {
     }
   };
 
-  const getJobFollowing = async (input) => {
-    const userId = input;
-    // console.log(`user id is ${userId}`);
+  const getJobFollowing = async () => {
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
-      const results = await axios.get("http://localhost:4000/following/job", {
-        params,
-      });
+      const results = await axios.get("http://localhost:4000/following/job");
       // console.log(results.data.data);
       const jobFollowingIds = results.data.data.map((obj) => {
         return obj.job_id;
@@ -95,44 +78,31 @@ function CompanyJobPage() {
 
   // FOLLOW LOGIC
   const handleJobFollow = async (event) => {
-    // event.preventDefault();
-    const userId = userData.user.user_id;
     const jobId = event;
-    console.log(`user id : ${userId}`);
-    console.log(`job id : ${jobId}`);
     try {
       const data = {
-        userId: userId,
         jobId: jobId,
       };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
       await axios.post("http://localhost:4000/following/followjob", data);
     } catch (error) {
       console.error("Error: unable to follow the job", error);
     }
-    getJobFollowing(userData.user.user_id);
+    getJobFollowing();
   };
 
   // UNFOLLOW LOGIC
   const handleJobUnfollow = async (event) => {
     // event.preventDefault();
-    const userId = userData.user.user_id;
     const jobId = event;
     try {
       const data = {
-        userId: userId,
         jobId: jobId,
       };
-      // const params = new URLSearchParams();
-      // params.append("userId", userId);
-      // params.append("jobId", jobId);
       await axios.post("http://localhost:4000/following/unfollowjob", data);
     } catch (error) {
       console.error("Error: unable to unfollow the job", error);
     }
-    getJobFollowing(userData.user.user_id);
+    getJobFollowing();
   };
 
   const jobFollowButton = (jobId) => {
@@ -147,7 +117,7 @@ function CompanyJobPage() {
             <button
               value={jobId}
               onClick={(event) => {
-                handleJobUnfollow(event.target.value); //รับค่า jobId ได้ OK
+                handleJobUnfollow(event.target.value);
               }}
             >
               FOLLOWING
@@ -165,7 +135,7 @@ function CompanyJobPage() {
             <button
               value={jobId}
               onClick={(event) => {
-                handleJobFollow(event.target.value); //รับค่า jobId ได้ OK
+                handleJobFollow(event.target.value);
               }}
             >
               FOLLOW
@@ -177,15 +147,9 @@ function CompanyJobPage() {
   };
 
   const getCompanyFollow = async () => {
-    const userId = userData.user.user_id;
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
       const results = await axios.get(
-        `http://localhost:4000/following/companyinfo`,
-        {
-          params,
-        }
+        `http://localhost:4000/following/companyinfo`
       );
       const companyFollowIds = results.data.data.map((obj) => {
         return obj.recruiter_id;
@@ -239,58 +203,39 @@ function CompanyJobPage() {
 
   // FOLLOW LOGIC
   const handleCompanyFollow = async (event) => {
-    const userId = userData.user.user_id;
     const recruiterId = event;
-    console.log(`user id : ${userId}`);
     console.log(`job id : ${recruiterId}`);
     try {
       const data = {
-        userId: userId,
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/followcompany", data);
     } catch (error) {
       console.error("Error: unable to follow the company", error);
     }
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   };
 
   // UNFOLLOW LOGIC
   const handleCompanyUnfollow = async (event) => {
-    const userId = userData.user.user_id;
     const recruiterId = event;
     try {
       const data = {
-        userId: userId,
         recruiterId: recruiterId,
       };
       await axios.post("http://localhost:4000/following/unfollowcompany", data);
     } catch (error) {
       console.error("Error: unable to unfollow the company", error);
     }
-    getCompanyFollow(userData.user.user_id);
+    getCompanyFollow();
   };
 
   useEffect(() => {
-    getCompanyFollow();
-  }, [companyFollowIds]);
-
-  useEffect(() => {
+    getJobApp();
     getCompanyJobs();
-    getJobApp(userData.user.user_id);
-    getJobFollowing(userData.user.user_id);
+    getCompanyFollow();
+    getJobFollowing();
   }, []);
-
-  // const companyLogo = companyJobs[0].company_logo;
-  // const companyName = companyJobs[0].company_name;
-
-  // {
-  //   companyJobs && companyJobs.length > 0 ? (
-  //     <div className="flex flex-row">{companyJobs[0].company_name}</div>
-  //   ) : (
-  //     <div>Loading...</div>
-  //   );
-  // }
 
   return (
     <>
@@ -298,12 +243,12 @@ function CompanyJobPage() {
         <div className="flex flex-row font-Inter text-[16px]">
           <FollowingSideBar />
 
-          <div className="ml-[350px] mt-[32px] wrapper overflow-x-auto">
+          <div className="ml-[340px] mt-[32px] wrapper overflow-x-auto">
             {/* BackButton */}
             <div className="flex flex-row">
               <img src={ArrowLeft} alt="arrow-left-black-icon" />
               <p
-                className="uppercase cursor-pointer"
+                className="uppercase cursor-pointer text-Gray"
                 onClick={() => navigate("/user/following")}
               >
                 Back
@@ -324,7 +269,7 @@ function CompanyJobPage() {
                     )}
                   </div>
                   <div className="ml-[16px] flex flex-col">
-                    <div className="font-Montserrat text-[24px] font-normal leading-normal">
+                    <div className="font-Montserrat text-[24px] text-DarkGray font-normal leading-normal">
                       {/* {companyJobs[0].company_name} */}
                       {companyJobs && companyJobs.length > 0 ? (
                         <div className="flex flex-row">
@@ -343,10 +288,10 @@ function CompanyJobPage() {
             </div>
 
             {/* Section 2: Job Rendering */}
-            <div className="">
+            <div className="pt-4 px-2">
               {/* User ID {userData.user.user_id} */}
-              <div className="m-2 text-[18px]">
-                <h2 className="font-Montserrat">
+              <div className="m-2 text-[20px]">
+                <h2 className="font-Montserrat text-DarkGray">
                   {companyJobs.length} jobs for you
                 </h2>
               </div>
