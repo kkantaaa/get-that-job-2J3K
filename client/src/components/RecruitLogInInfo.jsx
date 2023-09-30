@@ -70,7 +70,8 @@ function RecruitLogInInfo() {
               rules={{ required: "Company name is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  
+                  bg-background p-[8px] text-[14px] placeholder:text-muted-foreground"
                   name="companyname"
                   id="companyname"
                   type="text"
@@ -98,7 +99,8 @@ function RecruitLogInInfo() {
               rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  
+                  bg-background p-[8px] text-[14px] placeholder:text-muted-foreground"
                   id="companyemail"
                   name="companyemail"
                   type="email"
@@ -126,7 +128,8 @@ function RecruitLogInInfo() {
               rules={{ required: "Password is required" }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  
+                  bg-background p-[8px] text-[14px] placeholder:text-muted-foreground"
                   id="companypassword"
                   name="companypassword"
                   type="password"
@@ -156,7 +159,8 @@ function RecruitLogInInfo() {
               }}
               render={({ field }) => (
                 <input
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  bg-background p-[8px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border border-Pink  
+                  bg-background p-[8px] text-[14px] placeholder:text-muted-foreground"
                   id="confirmed-password"
                   type="password"
                   placeholder="******"
