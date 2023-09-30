@@ -60,7 +60,7 @@ function TestYourApp() {
     }
   };
 
-  const handleConfirmDecline = async (application_id) =>{
+  const handleConfirmDecline = async (application_id) => {
     try {
       await axios.put(`http://localhost:4000/apply/${application_id}`, {
         status: "declined",
@@ -70,8 +70,8 @@ function TestYourApp() {
     } catch (error) {
       console.error("Error: failed to decline the application", error);
     }
-  }
-  
+  };
+
   // user filters the applications
   const handleFilteredApplication = (status) => {
     try {
@@ -319,40 +319,64 @@ function TestYourApp() {
                             <p className="w-[760px]">{app.interested_reason}</p>
 
                             {/* dialog pop-up */}
-                            {confirmDialogOpen && (
-                            <Dialog isOpen={confirmDialogOpen}>
-                              <DialogTrigger className="flex flex-row justify-center items-center ml-[300px] 
+                            {confirmDialogOpen && !isDeclined && (
+                              <Dialog isOpen={confirmDialogOpen}>
+                                <DialogTrigger
+                                  className="flex flex-row justify-center items-center ml-[300px] 
                             hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink 
-                            bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]">
+                            bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
+                                >
+                                  <img src={declineIcon} />
+                                  <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
+                                    Decline Application
+                                  </p>
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle className="text-DarkPink">
+                                      Are you sure you want to decline this
+                                      application?
+                                    </DialogTitle>
+                                    <DialogDescription className="mt-[4px] flex flex-col font-Inter justify-center">
+                                      <div className="flex text-[12px] text-Gray">
+                                        Declining the application will
+                                        permanently reject the applicant's
+                                        submission.
+                                        <br />
+                                        If you decide not to decline the
+                                        application, then click "x" to cancel
+                                        the decline.
+                                      </div>
+                                      <div className="flex flex-row mt-[10px] justify-center">
+                                        <button
+                                          onClick={() =>
+                                            handleConfirmDecline(
+                                              app.application_id
+                                            )
+                                          }
+                                          className="ml-[6px] text-White font-bold bg-DarkPink hover:bg-LightPink transition duration-300 
+                                      ease-in-out active:bg-DarkPink rounded-sm w-[116px] h-[40px]"
+                                        >
+                                          Yes
+                                        </button>
+                                      </div>
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                </DialogContent>
+                              </Dialog>
+                            )}
+
+                            {isDeclined && (
+                            <button
+                              className="flex flex-row justify-center items-center ml-[300px] 
+                              w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none"
+                              disabled
+                            >
                               <img src={declineIcon} />
                               <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
-                                Decline Application</p></DialogTrigger>
-                              <DialogContent>
-                                <DialogHeader>
-                                  <DialogTitle className="text-Pink">
-                                    Are you sure you want to decline this
-                                    application?
-                                  </DialogTitle>
-                                  <DialogDescription className="mt-[4px] flex flex-col font-Inter justify-center">
-                                    <div className="flex text-[12px] text-Gray">
-                                      Declining the application will permanently
-                                      reject the applicant's submission.
-                                      <br/>
-                                      If you decide not to decline the application,
-                                      then click "x" to cancel the decline.
-                                    </div>
-                                    <div className="flex flex-row mt-[10px] justify-center">
-                                      <button 
-                                      onClick={()=> handleConfirmDecline(app.application_id)}
-                                      className="ml-[6px] text-White font-bold bg-Pink hover:bg-LightPink transition duration-300 
-                                      ease-in-out active:bg-DarkPink rounded-sm w-[116px] h-[40px]">
-                                        Yes
-                                      </button>
-                                    </div>
-                                  </DialogDescription>
-                                </DialogHeader>
-                              </DialogContent>
-                            </Dialog>
+                                declined
+                              </p>
+                            </button>
                             )}
                           </div>
                         </AccordionContent>
