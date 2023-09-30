@@ -318,7 +318,7 @@ function TestYourApp() {
                             </h1>
                             <p className="w-[760px]">{app.interested_reason}</p>
 
-                            {/* ทดสอบ dialog */}
+                            {/* dialog pop-up */}
                             {confirmDialogOpen && (
                             <Dialog isOpen={confirmDialogOpen}>
                               <DialogTrigger className="flex flex-row justify-center items-center ml-[300px] 
@@ -344,7 +344,8 @@ function TestYourApp() {
                                     <div className="flex flex-row mt-[10px] justify-center">
                                       <button 
                                       onClick={()=> handleConfirmDecline(app.application_id)}
-                                      className="ml-[6px] text-White font-bold bg-Pink rounded-sm w-[116px] h-[40px]">
+                                      className="ml-[6px] text-White font-bold bg-Pink hover:bg-LightPink transition duration-300 
+                                      ease-in-out active:bg-DarkPink rounded-sm w-[116px] h-[40px]">
                                         Yes
                                       </button>
                                     </div>
