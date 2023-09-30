@@ -9,6 +9,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import closedIcon from "../images/ApllicationApplyPage/closed.svg";
 import letterIcon from "../images/ApllicationApplyPage/letter.svg";
@@ -27,11 +35,8 @@ function TestYourApp() {
   const [applications, setApplications] = useState([]);
   const { userData } = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
-  const [filteredApplications, setFilteredApplications] =
-    useState([]);
+  const [filteredApplications, setFilteredApplications] = useState([]);
   const [selectFilter, setSelectFilter] = useState("all"); // ตัวแปร selectFilter เริ่มต้นเป็น "all"
-
-  
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -69,29 +74,26 @@ function TestYourApp() {
   };
 
   // user filters the applications
-const handleFilteredApplication = (status) => {
-  try {
-    if (status === "all") {
-      return applications;
-    } else {
-      if (status === "declined" && isDeclined) {
-        return applications.filter((app) => app.application_status === "declined");
+  const handleFilteredApplication = (status) => {
+    try {
+      if (status === "all") {
+        return applications;
       } else {
-        return applications.filter((app) => app.application_status === status);
+        if (status === "declined" && isDeclined) {
+          return applications.filter(
+            (app) => app.application_status === "declined"
+          );
+        } else {
+          return applications.filter(
+            (app) => app.application_status === status
+          );
+        }
       }
+    } catch (error) {
+      console.error("Error: failed to filter your applications", error);
+      return [];
     }
-  } catch (error) {
-    console.error("Error: failed to filter your applications", error);
-    return [];
-  }
-};
-
-  // to update and display
-  // useEffect(() => {
-  //   console.log("all jobs are", applications)
-  //   getApplication(userData.user.user_id);
-  //   setFilteredApplications(applications);
-  // }, []);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -175,7 +177,7 @@ const handleFilteredApplication = (status) => {
 
                 {/* filter the application */}
                 <RadioGroup
-                  DefaultValue = "all"
+                  DefaultValue="all"
                   value={selectFilter}
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
@@ -185,8 +187,9 @@ const handleFilteredApplication = (status) => {
                     } else {
                       setIsDeclined(false); // ตั้งค่าให้เป็น false เมื่อคลิกปุ่มอื่น
                     }
-                
-                    const filteredApplications = handleFilteredApplication(value);
+
+                    const filteredApplications =
+                      handleFilteredApplication(value);
                     setFilteredApplications(filteredApplications);
                   }}
                 >
@@ -225,7 +228,7 @@ const handleFilteredApplication = (status) => {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  {filteredApplications.length} Applications found
+                  {filteredApplications.length} Application(s) found
                 </div>
 
                 {/* ส่วน Accordian */}
@@ -314,6 +317,32 @@ const handleFilteredApplication = (status) => {
                               <b>{app.company_name}</b>
                             </h1>
                             <p className="w-[760px]">{app.interested_reason}</p>
+
+                            {/* ทดสอบ dialog */}
+                            <Dialog>
+                              <DialogTrigger>Confirm Decline</DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>
+                                    Are you sure you want to decline this
+                                    application?
+                                  </DialogTitle>
+                                  <DialogDescription>
+                                    This action cannot be undone. This will
+                                    permanently delete your account and remove
+                                    your data from our servers.
+                                    <div class="button-container">
+                                      <button>
+                                        Yes
+                                      </button>
+                                      <button>
+                                        No
+                                      </button>
+                                    </div>
+                                  </DialogDescription>
+                                </DialogHeader>
+                              </DialogContent>
+                            </Dialog>
 
                             {/* decline button */}
                             {isDeclined ? (
