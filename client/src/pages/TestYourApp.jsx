@@ -9,6 +9,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import closedIcon from "../images/ApllicationApplyPage/closed.svg";
 import letterIcon from "../images/ApllicationApplyPage/letter.svg";
@@ -27,11 +35,9 @@ function TestYourApp() {
   const [applications, setApplications] = useState([]);
   const { userData } = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
-  const [filteredApplications, setFilteredApplications] =
-    useState([]);
+  const [filteredApplications, setFilteredApplications] = useState([]);
   const [selectFilter, setSelectFilter] = useState("all"); // ตัวแปร selectFilter เริ่มต้นเป็น "all"
-
-  
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   const toggleAccordionItem = (app) => {
     app.isOpen = !app.isOpen;
@@ -54,44 +60,40 @@ function TestYourApp() {
     }
   };
 
-  // user click to decline applications
-  const handleDeclinedApplication = async (application_id) => {
+  const handleConfirmDecline = async (application_id) => {
     try {
       await axios.put(`http://localhost:4000/apply/${application_id}`, {
         status: "declined",
       });
-      setIsDeclined(true);
-
+      setIsDeclined(true); // ตั้งค่าให้เป็น true เมื่อคลิกปุ่ม "Yes" ใน Dialog
+      setConfirmDialogOpen(false); // ปิด dialog
       getApplication(userData.user.user_id);
     } catch (error) {
-      console.error("Error: unable to decline applications", error);
+      console.error("Error: failed to decline the application", error);
     }
   };
 
   // user filters the applications
-const handleFilteredApplication = (status) => {
-  try {
-    if (status === "all") {
-      return applications;
-    } else {
-      if (status === "declined" && isDeclined) {
-        return applications.filter((app) => app.application_status === "declined");
+  const handleFilteredApplication = (status) => {
+    try {
+      if (status === "all") {
+        return applications;
       } else {
-        return applications.filter((app) => app.application_status === status);
-      }
-    }
-  } catch (error) {
-    console.error("Error: failed to filter your applications", error);
-    return [];
-  }
-};
+        const filteredApps = applications.filter((app) => {
+          if (status === "declined") {
+            return app.application_status === "declined";
+          } else {
+            return app.application_status === status;
+          }
+        });
 
-  // to update and display
-  // useEffect(() => {
-  //   console.log("all jobs are", applications)
-  //   getApplication(userData.user.user_id);
-  //   setFilteredApplications(applications);
-  // }, []);
+        return filteredApps;
+      }
+    } catch (error) {
+      console.error("Error: failed to filter your applications", error);
+      return [];
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,6 +113,7 @@ const handleFilteredApplication = (status) => {
   useEffect(() => {
     const filteredApps = handleFilteredApplication(selectFilter);
     setFilteredApplications(filteredApps);
+    setConfirmDialogOpen(true);
   }, [applications, selectFilter]);
 
   // when the applications's status is changed or updated
@@ -175,7 +178,7 @@ const handleFilteredApplication = (status) => {
 
                 {/* filter the application */}
                 <RadioGroup
-                  DefaultValue = "all"
+                  DefaultValue="all"
                   value={selectFilter}
                   className="flex flex-row space-x-1 font-normal font-Inter text-Body2 tracking-[o.25px]"
                   onValueChange={(value) => {
@@ -185,8 +188,9 @@ const handleFilteredApplication = (status) => {
                     } else {
                       setIsDeclined(false); // ตั้งค่าให้เป็น false เมื่อคลิกปุ่มอื่น
                     }
-                
-                    const filteredApplications = handleFilteredApplication(value);
+
+                    const filteredApplications =
+                      handleFilteredApplication(value);
                     setFilteredApplications(filteredApplications);
                   }}
                 >
@@ -225,7 +229,7 @@ const handleFilteredApplication = (status) => {
 
               <div className="w-full space-y-2">
                 <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                  {filteredApplications.length} Applications found
+                  {filteredApplications.length} Application(s) found
                 </div>
 
                 {/* ส่วน Accordian */}
@@ -315,11 +319,11 @@ const handleFilteredApplication = (status) => {
                             </h1>
                             <p className="w-[760px]">{app.interested_reason}</p>
 
-                            {/* decline button */}
-                            {isDeclined ? (
+                            {/* declined button */}
+                            {app.application_status === "declined" ? (
                               <button
                                 className="flex flex-row justify-center items-center ml-[300px] 
-                              w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none"
+                                w-[242px] h-[40px] mt-[16px] rounded-[16px] bg-DarkGray pointer-events-none"
                                 disabled
                               >
                                 <img src={declineIcon} />
@@ -328,18 +332,51 @@ const handleFilteredApplication = (status) => {
                                 </p>
                               </button>
                             ) : (
-                              <button
-                                className="flex flex-row justify-center items-center ml-[300px] 
-                            hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
-                                onClick={() =>
-                                  handleDeclinedApplication(app.application_id)
-                                }
-                              >
-                                <img src={declineIcon} />
-                                <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
-                                  decline application
-                                </p>
-                              </button>
+                              // dialog pop-up
+                              <Dialog isOpen={confirmDialogOpen}>
+                                <DialogTrigger
+                                  className="flex flex-row justify-center items-center ml-[300px] 
+                                  hover:bg-LightPink transition duration-300 ease-in-out active:bg-DarkPink 
+                                  bg-DarkPink w-[242px] h-[40px] mt-[16px] rounded-[16px]"
+                                >
+                                  <img src={declineIcon} />
+                                  <p className="ml-[8px] leading-[24px] tracking-[1.25px] uppercase text-white">
+                                    Decline Application
+                                  </p>
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle className="text-DarkPink">
+                                      Are you sure you want to decline this
+                                      application?
+                                    </DialogTitle>
+                                    <DialogDescription className="mt-[4px] flex flex-col font-Inter justify-center">
+                                      <div className="flex text-[12px] text-Gray">
+                                        Declining the application will
+                                        permanently reject the applicant's
+                                        submission.
+                                        <br />
+                                        If you choose not to decline the
+                                        application, click the "X" to cancel the
+                                        decline.
+                                      </div>
+                                      <div className="flex flex-row mt-[10px] justify-center">
+                                        <button
+                                          onClick={() =>
+                                            handleConfirmDecline(
+                                              app.application_id
+                                            )
+                                          }
+                                          className="text-White font-bold bg-DarkPink hover:bg-LightPink transition duration-300 
+                                          ease-in-out active:bg-DarkPink rounded-sm w-[116px] h-[40px]"
+                                        >
+                                          Yes, I am
+                                        </button>
+                                      </div>
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                </DialogContent>
+                              </Dialog>
                             )}
                           </div>
                         </AccordionContent>
