@@ -48,7 +48,8 @@ function isValidFileType(fileName, fileType) {
 const MAX_FILE_SIZE = 102400;
 
 const postJobSchema = yup.object({
-  company_logo: yup.mixed().required("Required"),
+  company_logo: yup.mixed(),
+
   /*imgFile: yup.mixed().required("Required")
   .test("is-valid-type", "Not a valid image type", (value) =>
       isValidFileType(value && value.name.toLowerCase(), "image")
@@ -116,7 +117,7 @@ function RecruiterProfile() {
       console.log("data submit Input", data);
       console.log("data submit Input", data.company_logo);
 
-      if (data.company_logo !== "") {
+      if (data.company_logo !== "" && data.company_logo) {
         const img = {
           fileType: "companyLogo",
           file: data.company_logo,
@@ -139,7 +140,7 @@ function RecruiterProfile() {
           };
 
           console.log("data before fetching", fetchData);
-          await axios.put("http://localhost:4000/profile", fetchData);
+          await axios.put("http://localhost:4000/profile/recruiter", fetchData);
           console.log("Edit profile successful");
           toast({
             description: "Edit profile successful.",
@@ -235,7 +236,7 @@ function RecruiterProfile() {
                                       type="file"
                                       className="block w-[100px] h-full text-Body2  border-0 p-0  bg-Background file:hidden"
                                       id="imageInput"
-                                      accept=".jpg, .png, .jpeg, .gif"
+                                      accept={".jpg, .png, .jpeg, .gif" || null}
                                       // onChange={handleFilePreview}
                                       onChange={(e) =>
                                         field.onChange(
