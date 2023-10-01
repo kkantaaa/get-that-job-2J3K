@@ -80,12 +80,12 @@ const JobFollowingList = () => {
 
   return (
     <div className="ml-[100px]">
-      <div className="m-2 text-[20px]">
-        <h2 className="font-Montserrat text-DarkGray">
+      <div className="m-2">
+        <h2 className="font-Montserrat text-DarkGray text-[20px]">
           You are following {jobFollow.length} jobs
         </h2>
       </div>
-      <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
         {jobFollow.map((job) => {
           return (
             <div

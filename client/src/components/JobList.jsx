@@ -173,13 +173,13 @@ const JobList = (props) => {
   }, []);
 
   return (
-    <div className="ml-12">
+    <div className="ml-[100px]">
       <div className="m-2">
-        <h2 className="font-Montserrat text-[20px] text-DarkGray">
+        <h2 className="font-Montserrat text-DarkGray text-[20px]">
           {jobs.length} jobs for you
         </h2>
       </div>
-      <div className="grid lg:grid-cols-2 gap-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
         {/* ทำเงื่อนไขว่าถ้ามี user_id คู่กับ job_id ในตาราง application ให้ render ปุ่มสีชมพู */}
         {jobs.map((job) => {
           return (
