@@ -305,7 +305,7 @@ function CompanyJobPage() {
                       {/* Job ID {job.job_id} */}
                       <div className="flex flex-col justify-end items-center mx-1">
                         <div className="flex flex-row mt-3">
-                          <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-1 bg-Pink">
+                          <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-[6px]">
                             <img src={job.company_logo} />
                           </div>
                           <div className="flex flex-col py-2">
