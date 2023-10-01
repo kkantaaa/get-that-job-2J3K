@@ -270,52 +270,60 @@ jobRouter.post("/", async (req, res) => {
     });
   }
 });
-
 jobRouter.put("/:job_id", async (req, res) => {
   try {
     // Validate request data (e.g., check if required fields are present)
-
-    const hasClosed = req.body.status === "closed";
-    const updatedJob = {
+    console.log(req.body);
+    const hasClosed = req.body.closed_at === "closed";
+    let updatedJob = {
       ...req.body,
       updated_at: new Date(),
-      closed_at: hasClosed ? new Date() : null,
     };
     const job_id = req.params.job_id;
-
-    const categoryQuery = await pool.query(
-      "SELECT * FROM job_categories WHERE category_name = $1",
-      [updatedJob.category_name]
-    );
-    console.log("Category Query Result:", categoryQuery.rows);
-    if (categoryQuery.rows.length === 0) {
-      return res.status(410).json({ message: "Category not found" });
+    if (req.body.closed_at) {
+      updatedJob={...updatedJob,closed_at: hasClosed ? new Date() : null,}
     }
-
-    const typeQuery = await pool.query(
-      "SELECT * FROM job_types WHERE type_name = $1",
-      [updatedJob.type_name]
-    );
-    console.log("Type Query Result:", typeQuery.rows);
-    if (typeQuery.rows.length === 0) {
-      return res.status(411).json({ message: "Type not found" });
+    if (req.body.category_name) {
+      const categoryQuery = await pool.query(
+        "SELECT * FROM job_categories WHERE category_name = $1",
+        [updatedJob.category_name]
+      );
+      updatedJob = {...updatedJob,job_category_id:parseInt(categoryQuery.rows[0].job_category_id, 10)}
     }
+    if (req.body.type_name) {
+      const typeQuery = await pool.query(
+              "SELECT * FROM job_types WHERE type_name = $1",
+              [updatedJob.type_name]
+            );
+      updatedJob = {...updatedJob,job_type_id:parseInt(typeQuery.rows[0].job_type_id, 10)}
+    }
+    console.log({ updatedJob: updatedJob });
+    const excludedKeys = [
+      "job_id",
+      "company_name",
+      "company_logo",
+      "category_name",
+      "type_name",
+      "total_candidates",
+      "candidates_on_track",
+    ];
 
+    // Generate the SQL query dynamically
+    const query = Object.keys(updatedJob)
+      .filter((key) => !excludedKeys.includes(key)) // Exclude keys in excludedKeys array
+      .map((key, index) => `${key} = $${index + 1}`)
+      .join(", ");
+    console.log({ query: query });
+    const queryParams = Object.keys(updatedJob)
+      .filter((key) => !excludedKeys.includes(key))
+      .map((key) => updatedJob[key]);
+
+    console.log(queryParams);
     await pool.query(
-      "UPDATE jobs SET job_title = $1, job_category_id = $2, job_type_id = $3, salary_min = $4, salary_max = $5, about_job_position = $6, mandatory_requirement = $7, optional_requirement = $8, updated_at = $9, closed_at = $10 WHERE job_id = $11",
-      [
-        updatedJob.job_title,
-        parseInt(categoryQuery.rows[0].job_category_id, 10),
-        parseInt(typeQuery.rows[0].job_type_id, 10),
-        updatedJob.salary_min,
-        updatedJob.salary_max,
-        updatedJob.about_job_position,
-        updatedJob.mandatory_requirement,
-        updatedJob.optional_requirement,
-        updatedJob.updated_at,
-        updatedJob.closed_at,
-        job_id,
-      ]
+      `UPDATE jobs SET ${query} WHERE job_id = $${
+        queryParams.length + 1
+      }::integer`,
+      [...queryParams, job_id]
     );
 
     return res.json({
@@ -328,6 +336,9 @@ jobRouter.put("/:job_id", async (req, res) => {
     });
   }
 });
+
+
+
 /*jobRouter.put("/:job_id", async (req, res) => {
   try {
     // Validate request data (e.g., check if required fields are present)
