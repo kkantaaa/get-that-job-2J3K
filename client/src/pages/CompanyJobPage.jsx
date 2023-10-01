@@ -243,7 +243,7 @@ function CompanyJobPage() {
         <div className="flex flex-row font-Inter text-[16px]">
           <FollowingSideBar />
 
-          <div className="ml-[340px] mt-[32px] wrapper overflow-x-auto">
+          <div className="ml-[340px] mt-[32px] wrapper overflow-x-auto pb-4">
             {/* BackButton */}
             <div className="flex flex-row">
               <img src={ArrowLeft} alt="arrow-left-black-icon" />
@@ -305,16 +305,16 @@ function CompanyJobPage() {
                       {/* Job ID {job.job_id} */}
                       <div className="flex flex-col justify-end items-center mx-1">
                         <div className="flex flex-row mt-3">
-                          <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-4">
+                          <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-[6px]">
                             <img src={job.company_logo} />
                           </div>
-                          <div className="flex flex-col p-2">
+                          <div className="flex flex-col py-2">
                             <div className="flex flex-row w-fit text-[14px] text-LightGray font-Inter">
                               <img className="pr-1" src={jobCategoryIcon} />
                               {job.category_name}
                             </div>
-                            <div className="text-scale-[16px]">
-                              {job.job_title.slice(0, 20)}
+                            <div className="text-scale-[20px] text-DarkGray">
+                              {job.job_title.slice(0, 23)}
                             </div>
                             <div className="text-[15px] text-Gray">
                               {job.company_name}

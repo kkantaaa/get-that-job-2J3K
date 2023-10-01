@@ -80,12 +80,12 @@ const JobFollowingList = () => {
 
   return (
     <div className="ml-[100px]">
-      <div className="m-2 text-[20px]">
-        <h2 className="font-Montserrat text-DarkGray">
+      <div className="m-2">
+        <h2 className="font-Montserrat text-DarkGray text-[20px]">
           You are following {jobFollow.length} jobs
         </h2>
       </div>
-      <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
         {jobFollow.map((job) => {
           return (
             <div
@@ -94,15 +94,15 @@ const JobFollowingList = () => {
             >
               <div className="flex flex-col justify-end items-center mx-1">
                 <div className="flex flex-row mt-3">
-                  <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-4">
+                  <div className="w-[74px] h-[74px] flex shrink-0 bg-white rounded-[8px] justify-center items-center mr-2">
                     <img src={job.company_logo} />
                   </div>
-                  <div className="flex flex-col p-2">
+                  <div className="flex flex-col pr-1 py-2">
                     <div className="flex flex-row w-fit text-[14px] text-LightGray font-Inter">
                       <img className="pr-1" src={jobCategoryIcon} />
                       {job.category_name}
                     </div>
-                    <div className="text-scale-[16px] text-DarkGray">
+                    <div className="text-sclae-[20px] text-DarkGray">
                       {job.job_title.slice(0, 23)}
                     </div>
                     <div className="text-[14px] text-Gray">
