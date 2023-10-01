@@ -121,10 +121,10 @@ function RecruitCompanyInfo() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <input
+                <textarea
                   maxLength={2000}
                   className="flex w-[600px] h-[76px] rounded-md border border-Pink bg-background p-[8px] 
-                  text-[14px] placeholder:text-muted-foreground"
+                  text-[14px] placeholder:text-muted-foreground pb-[50px]"
                   id="about_company"
                   name="about_company"
                   type="text"
