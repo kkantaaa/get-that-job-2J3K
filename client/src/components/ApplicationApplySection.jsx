@@ -64,7 +64,7 @@ function ApplicationApplySection(pagedata) {
       setTimeout(() => {
         toast.success("ส่งใบสมัครเรียบร้อยแล้วค่ะ");
         navigate("/user/findthatjob");
-      }, 3000);
+      }, 500);
     } catch (error) {
       console.error("Error sending application:", error);
     }
