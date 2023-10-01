@@ -25,33 +25,49 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import money_dollar_circle_fill from "@/images/posting-job-page/money_dollar_circle_fill.png";
+import { useToast } from "@/components/ui/use-toast";
 
 //const navigate = useNavigate();
 
 const postJobSchema = yup.object({
   jobTitle: yup.string().required("JOB TITLE is a required field"),
-  jobCategory: yup.string().required(),
-  jobType: yup.string().required(),
-  salaryRangeMin: yup.number().positive().integer().required(),
+  jobCategory: yup.string().required("JOB CATEGORY is a required field"),
+  jobType: yup.string().required("JOB TYPE is a required field"),
+  salaryRangeMin: yup
+    .number()
+    .positive("SALARY MIN is not a positive number.")
+    .integer()
+    .typeError("SALARY MIN is not a positive number.")
+    .required(),
   salaryRangeMax: yup
     .number()
-    .positive("JOB TITLE is a required field")
+    .positive("SALARY MAX is not a positive number.")
     .integer()
+    .typeError("SALARY MAX is not a positive number.")
     .required(),
-  aboutJobPosition: yup.string().required(),
-  mandatoryRequirement: yup.string().required(),
-  optionalRequirement: yup.string().required(),
+  aboutJobPosition: yup
+    .string()
+    .required("ABOUT THE JOB POSITION is a required field"),
+  mandatoryRequirement: yup
+    .string()
+    .required("MANDATORY REQUIREMENTS is a required field"),
+  optionalRequirement: yup
+    .string()
+    .required("OPTIONAL REQUIREMENTS is a required field"),
 });
 
 function CreateJobPosting() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const [categories, setCategories] = useState([]);
   const [types, setTypes] = useState([]);
+  const [newcategory, setNewcategory] = useState("");
 
   const getCategories = async () => {
     try {
@@ -82,16 +98,39 @@ function CreateJobPosting() {
     console.log("Types are", types);
   }, []);
 
+  const createCategory = async () => {
+    try {
+      const capitalizedValue =
+        newcategory.charAt(0).toUpperCase() +
+        newcategory.slice(1).toLowerCase();
+      const fetchCategory = {
+        category_name: capitalizedValue,
+      };
+      console.log(fetchCategory);
+      await axios.post("http://localhost:4000/category", fetchCategory);
+      console.log("Create new category successful");
+      toast({
+        description: "Create new category successful.",
+      });
+      getCategories();
+    } catch (error) {
+      console.error("Error: unable to post", error);
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
       try {
         console.log(data);
         await axios.post("http://localhost:4000/jobs", data);
         console.log("Posting successful");
+        toast({
+          description: "Post job successful.",
+        });
       } catch (error) {
         console.error("Error: unable to post", error);
       }
-      //navigate("/recruiter/jobpostings");
+      navigate("/recruiter/jobpostings");
     } catch (error) {
       console.error("Error during posting job", error);
     }
@@ -152,16 +191,38 @@ function CreateJobPosting() {
                               <SelectGroup>
                                 <SelectLabel>Categories</SelectLabel>
                               </SelectGroup>
-                              {categories.map((category, key) => {
-                                return (
-                                  <SelectItem
-                                    value={category.category_name}
-                                    key={key}
-                                  >
-                                    {category.category_name}
-                                  </SelectItem>
-                                );
-                              })}
+                              <div className="flex flex-row max-w-[282px] pl-5 items-center space-x-2">
+                                <Input
+                                  type="text"
+                                  placeholder="Create a category"
+                                  className="flex-initial w-full"
+                                  value={newcategory}
+                                  onChange={(e) => {
+                                    e.stopPropagation();
+                                    setNewcategory(e.target.value);
+                                    console.log(e.target.value);
+                                  }}
+                                />
+                                <Button
+                                  size="secondary"
+                                  className="flex-initial w-2/5"
+                                  onClick={createCategory}
+                                >
+                                  Create
+                                </Button>
+                              </div>
+                              <ScrollArea className="h-40 w-full ">
+                                {categories.map((category, key) => {
+                                  return (
+                                    <SelectItem
+                                      value={category.category_name}
+                                      key={key}
+                                    >
+                                      {category.category_name}
+                                    </SelectItem>
+                                  );
+                                })}
+                              </ScrollArea>
                             </SelectContent>
                           </Select>
                           <FormDescription></FormDescription>
@@ -190,13 +251,18 @@ function CreateJobPosting() {
                               <SelectGroup>
                                 <SelectLabel>Types</SelectLabel>
                               </SelectGroup>
-                              {types.map((type, key) => {
-                                return (
-                                  <SelectItem value={type.type_name} key={key}>
-                                    {type.type_name}
-                                  </SelectItem>
-                                );
-                              })}
+                              <ScrollArea className="h-40 w-full ">
+                                {types.map((type, key) => {
+                                  return (
+                                    <SelectItem
+                                      value={type.type_name}
+                                      key={key}
+                                    >
+                                      {type.type_name}
+                                    </SelectItem>
+                                  );
+                                })}
+                              </ScrollArea>
                             </SelectContent>
                           </Select>
                           <FormDescription></FormDescription>
@@ -220,7 +286,11 @@ function CreateJobPosting() {
                           <FormItem>
                             <FormLabel></FormLabel>
                             <FormControl>
-                              <Input placeholder="min" {...field}></Input>
+                              <Input
+                                placeholder="min"
+                                className="pl-9 bg-origin-padding bg-[url('@/images/posting-job-page/money_dollar_circle_fill.png')] bg-no-repeat bg-[length:20px_20px] bg-[center_left_8px] "
+                                {...field}
+                              ></Input>
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -229,7 +299,7 @@ function CreateJobPosting() {
                       />
 
                       <hr className="w-[11px] h-[2px] mx-2 rounded-[2px] bg-LightGray" />
-
+                      {/* url('@/images/posting-job-page/money_dollar_circle_fill.png')*/}
                       <FormField
                         control={form.control}
                         name="salaryRangeMax"
@@ -238,7 +308,11 @@ function CreateJobPosting() {
                           <FormItem>
                             <FormLabel></FormLabel>
                             <FormControl>
-                              <Input placeholder="max" {...field} />
+                              <Input
+                                placeholder="max"
+                                className="pl-9 bg-origin-padding bg-[url('@/images/posting-job-page/money_dollar_circle_fill.png')] bg-no-repeat bg-[length:20px_20px] bg-[center_left_8px] "
+                                {...field}
+                              />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
