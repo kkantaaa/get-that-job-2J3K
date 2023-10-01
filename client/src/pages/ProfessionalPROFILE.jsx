@@ -261,7 +261,7 @@ function ProfessionalProfile() {
   return (
     <>
       <form>
-        <ToastContainer theme="dark" autoClose={3000} limit={3} />
+        <ToastContainer theme="dark" autoClose={3000} limit={1} />
         <UserProfileSidebar />
         <div className=" ml-[340px]">
           {/* Header -- Profile*/}
