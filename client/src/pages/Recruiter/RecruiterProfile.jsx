@@ -48,7 +48,8 @@ function isValidFileType(fileName, fileType) {
 const MAX_FILE_SIZE = 102400;
 
 const postJobSchema = yup.object({
-  company_logo: yup.mixed().required("Required"),
+  company_logo: yup.mixed(),
+
   /*imgFile: yup.mixed().required("Required")
   .test("is-valid-type", "Not a valid image type", (value) =>
       isValidFileType(value && value.name.toLowerCase(), "image")
@@ -58,9 +59,13 @@ const postJobSchema = yup.object({
       "Max allowed size is 100KB",
       (value) => value && value.size <= MAX_FILE_SIZE
     )*/
-  email: yup.string().required("Company Email is a required field"),
+  email: yup.string().email().required("Company Email is a required field"),
   company_name: yup.string().required("Company Name is a required field"),
-  company_website: yup.string().required("Company Website is a required field"),
+  company_website: yup
+    .string()
+    .url()
+    .nullable()
+    .required("Company Website is a required field"),
   about_company: yup
     .string()
     .required("Company Description is a required field"),
@@ -116,7 +121,7 @@ function RecruiterProfile() {
       console.log("data submit Input", data);
       console.log("data submit Input", data.company_logo);
 
-      if (data.company_logo !== "") {
+      if (data.company_logo !== "" && data.company_logo) {
         const img = {
           fileType: "companyLogo",
           file: data.company_logo,
@@ -139,7 +144,7 @@ function RecruiterProfile() {
           };
 
           console.log("data before fetching", fetchData);
-          await axios.put("http://localhost:4000/profile", fetchData);
+          await axios.put("http://localhost:4000/profile/recruiter", fetchData);
           console.log("Edit profile successful");
           toast({
             description: "Edit profile successful.",
@@ -202,13 +207,16 @@ function RecruiterProfile() {
                         defaultValue=""
                         render={({ field }) => (
                           <FormItem>
-                            <div className="flex flex-row items-center space-x-2">
-                              <img
-                                src={profile.company_logo}
-                                alt="Preview"
-                                className="rounded-lg"
-                                style={{ maxWidth: "80px" }}
-                              />
+                            <div className="flex flex-row items-center space-x-2 ">
+                              <div className="drop-shadow-little rounded-lg bg-white">
+                                <img
+                                  src={profile.company_logo}
+                                  alt="Preview"
+                                  className="rounded-lg "
+                                  style={{ maxWidth: "80px" }}
+                                />
+                              </div>
+
                               <div className="w-full space-y-1 text-Gray">
                                 <FormLabel>COMPANY LOGO</FormLabel>
                                 <FormControl>
@@ -232,7 +240,7 @@ function RecruiterProfile() {
                                       type="file"
                                       className="block w-[100px] h-full text-Body2  border-0 p-0  bg-Background file:hidden"
                                       id="imageInput"
-                                      accept=".jpg, .png, .jpeg, .gif"
+                                      accept={".jpg, .png, .jpeg, .gif" || null}
                                       // onChange={handleFilePreview}
                                       onChange={(e) =>
                                         field.onChange(

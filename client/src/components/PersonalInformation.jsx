@@ -34,8 +34,8 @@ function PersonalInformation() {
     if (name) {
       const checkNameValid = name;
       validations.push({
-        condition: /[^A-Za-z]/.test(checkNameValid),
-        errorMessage: "Name contains non-alphabet characters.",
+        condition: /[^A-Za-z\s]/.test(checkNameValid),
+        errorMessage: "Name contains non-alphabet characters or spaces.",
       });
     }
     if (phone) {

@@ -116,7 +116,7 @@ function ApplicationApplyPage() {
     }
     setTimeout(() => {
       window.location.reload();
-    }, 280);
+    }, 100);
   };
   //etc - const for followed recruiter id
   const checkFollow = followArray.includes(jobDetail.recruiter_id);
