@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import {
   FormControl,
   FormDescription,
@@ -67,6 +68,7 @@ const postJobSchema = yup.object({
 
 function RecruiterProfile() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
+  const { toast } = useToast();
   const navigate = useNavigate();
   const { upload } = useAuth();
   const fileInputRef = useRef(null);
@@ -137,8 +139,11 @@ function RecruiterProfile() {
           };
 
           console.log("data before fetching", fetchData);
-          // await axios.put("http://localhost:4000/jobs", data);
+          await axios.put("http://localhost:4000/profile", fetchData);
           console.log("Edit profile successful");
+          toast({
+            description: "Edit profile successful.",
+          });
         } catch (error) {
           console.error("Error: unable to edit", error);
         }
@@ -153,8 +158,11 @@ function RecruiterProfile() {
           };
 
           console.log("data before fetching", fetchData);
-          // await axios.put("http://localhost:4000/jobs", data);
+          await axios.put("http://localhost:4000/profile/recruiter", fetchData);
           console.log("Edit profile successful");
+          toast({
+            description: "Edit profile successful.",
+          });
         } catch (error) {
           console.error("Error: unable to edit", error);
         }
