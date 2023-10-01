@@ -24,6 +24,7 @@ function RecruitCompanyInfo() {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
+      window.alert("Registration Complete: Your registration has been successful.");
       navigate("/recruiter/login");
     } catch (error) {
       console.error("Error during registration", error);

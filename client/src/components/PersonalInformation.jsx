@@ -20,6 +20,7 @@ function PersonalInformation() {
     event.preventDefault();
     try {
       await UserRegister(userData);
+      window.alert("Registration Complete: Your registration has been successful.");
       navigate("/user/login");
     } catch (error) {
       console.error("Error during registration", error);

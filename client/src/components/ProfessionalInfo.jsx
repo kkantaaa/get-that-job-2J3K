@@ -24,6 +24,7 @@ function ProfessionalInfo() {
     event.preventDefault();
     try {
       await UserRegister(userData);
+      window.alert("Registration Complete: Your registration has been successful.");
       navigate("/user/login");
     } catch (error) {
       console.error("Error during registration", error);
@@ -53,6 +54,7 @@ function ProfessionalInfo() {
       };
 
       await UserRegister(fetchData);
+      window.alert("Registration Complete: Your registration has been successful.");
       navigate("/user/login");
     } catch (error) {
       console.error("Error during registration", error);
