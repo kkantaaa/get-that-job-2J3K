@@ -61,6 +61,7 @@ function ProfessionalProfile() {
   //useEffect - don't add anthing in that [] na ka
   useEffect(() => {
     getdatafromdatabase();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>handlers
   //1. handleFileInputChange
@@ -242,6 +243,7 @@ function ProfessionalProfile() {
   }; // birthdate
   const handleLinkedInChange = (e) => {
     const inputValue = e.target.value;
+    // eslint-disable-next-line no-useless-escape
     const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9-_/:\.\-]/g, "");
     setFormData({ ...formData, user_linkedin: sanitizedValue });
   }; // linkedin
@@ -258,22 +260,22 @@ function ProfessionalProfile() {
   // return
   return (
     <>
-      <ToastContainer theme="dark" autoClose={3000} limit={3} />
-      <UserProfileSidebar />
-      <div style={{ marginLeft: "250px" }}>
-        {/* Header -- Profile*/}
-        {/* Header -- Profile*/}
-        <h1 className="ml-2 py-3 text-neutral-700 text-[34px] font-normal font-['Montserrat'] tracking-tight">
-          Profile
-        </h1>
-        <div>
-          {/* SubHeader -- Personal information*/}
-          {/* SubHeader -- Personal information*/}
-          <h1 className=" ml-3 w-[944px] text-neutral-900 text-[30px] font-normal font-['Montserrat']">
-            Personal information{" "}
+      <form>
+        <ToastContainer theme="dark" autoClose={3000} limit={3} />
+        <UserProfileSidebar />
+        <div className=" ml-[340px]">
+          {/* Header -- Profile*/}
+          {/* Header -- Profile*/}
+          <h1 className="ml-2 py-3 text-neutral-700 text-[34px] font-normal font-['Montserrat'] tracking-tight">
+            Profile
           </h1>
-          <div className="ml-4">
-            <form>
+          <div>
+            {/* SubHeader -- Personal information*/}
+            {/* SubHeader -- Personal information*/}
+            <h1 className=" ml-3 w-[944px] text-neutral-900 text-[30px] font-normal font-['Montserrat']">
+              Personal information{" "}
+            </h1>
+            <div className="ml-4">
               {/* 1 of 5/Part 1 / Email*/}
               {/* 1 of 5/Part 1 / Email*/}
               <div>
@@ -534,11 +536,11 @@ function ProfessionalProfile() {
               {/*UPLOAD / UPDATE YOUR CV */}
               {/* UPLOAD / UPDATE YOUR CV */}
               {/* UPLOAD / UPDATE YOUR CV */}
-              <div className="mt-2 mr-2">
-                <h1 className="text-neutral-900 text-[12px] font-normal font-['Inter'] uppercase tracking-wider">
-                  UPLOAD / UPDATE YOUR CV
-                </h1>
-                <label htmlFor="fileInput" className="cursor-pointer">
+              <div className="flex items-center mt-3">
+                <label
+                  htmlFor="fileInput"
+                  className="cursor-pointer transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50"
+                >
                   <input
                     type="file"
                     id="fileInput"
@@ -548,33 +550,41 @@ function ProfessionalProfile() {
                   />
                   <img src={ChooseAFile} alt="Choose a file Button" />
                 </label>
-                <span style={{ color: "#8E8E8E" }}>
-                  Only PDF. Max size 5 MB
-                </span>
+                {!fileSelected && (
+                  <div
+                    id="noFileSelectedMessage"
+                    className="ml-5 text-xs rounded-3xl text-gray-500 bg-pink-50 "
+                  >
+                    No file selected.
+                  </div>
+                )}
                 {fileSelected && (
                   <div
                     id="selectedFileBox"
-                    className="mt-3 border border-pink-700 p-2 px-2 rounded-3xl text-gray-900 w-[140px] bg-pink-100"
+                    className="ml-5 text-xs rounded-3xl text-gray-500 bg-pink-50 "
                   >
-                    <span id="selectedFileName">
-                      Selected file: {formData.selectedNewFileName}
-                    </span>
+                    Selected file: {formData.selectedNewFileName}
                   </div>
                 )}
-                {/* SAVE CHANGES button */}
                 <br />
-                <button
-                  type="button"
-                  onClick={handleSaveChanges}
-                  className="mt-6"
-                >
-                  <img src={SaveChanges} alt="SaveChanges button" />
-                </button>
               </div>
-            </form>
+            </div>
+            <div>
+              <p className="mt-3 ml-3  text-[12px] text-neutral-500  font-normal font-['Inter'] leading-none tracking-wide">
+                Only PDF. Max size 5MB
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+        {/* SAVE CHANGES button */}
+        <button
+          type="button"
+          onClick={handleSaveChanges}
+          className="mt-5 ml-[345px] transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50"
+        >
+          <img src={SaveChanges} alt="SaveChanges button" />
+        </button>
+      </form>
     </>
   );
 }

@@ -25,6 +25,25 @@ registRouter.post("/checkDupEmail", async (req, res) => {
   }
 });
 
+// fetched Recuiter email from  table
+registRouter.post("/checkRecruiterDupEmail", async (req, res) => {
+  try {
+    const email = req.body.email;
+    const result = await pool.query(
+      "SELECT email FROM recruiters WHERE email = $1",
+      [email]
+    );
+    if (result.rowCount > 0) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Test insert data to the database
 registRouter.post("/test/post_tabledata", async (req, res) => {
   try {

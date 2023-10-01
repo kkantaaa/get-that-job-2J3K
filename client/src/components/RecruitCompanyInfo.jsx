@@ -6,7 +6,8 @@ import { useAuth } from "@/contexts/authentication";
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 import FileInputIcon from "../images/registration-page/upload-line.svg";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
   const { recruiterData } = useGlobalContext();
@@ -17,8 +18,8 @@ function RecruitCompanyInfo() {
   const [file, setFile] = useState();
 
   useEffect(() => {
-    console.log("Updated RecruiterData:", recruiterData);
-  }, [recruiterData]);
+    // console.log("Updated RecruiterData:", recruiterData);
+  }, []);
 
   const handlerSkip = async (event) => {
     event.preventDefault();
@@ -31,22 +32,27 @@ function RecruitCompanyInfo() {
     }
   };
 
-  console.log(recruiterData);
+  // console.log(recruiterData); ขอ commment out นะครับ - kan
+  //useeffect
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  //onsubmit
   const onSubmit = async (data) => {
-    console.log(data);
-
+    // console.log(data); //ขอ commment out นะครับ - kan
     const img = {
       fileType: "companyLogo",
       file: data.file,
     };
-
-    console.log({ img: img });
+    // console.log({ img: img }); //ขอ commment out นะครับ - kan
     let company_logo = await upload(img);
 
     if (company_logo === undefined) {
       company_logo = null;
     }
-
+    const companyWebsite = data.company_website.trim();
+    if (!isValidWebsite(companyWebsite)) {
+      toast.error("Invalid website format");
+      return;
+    }
     try {
       const fetchData = {
         ...recruiterData,
@@ -71,33 +77,48 @@ function RecruitCompanyInfo() {
       setValue("file", e.target.files[0]);
       const fileURL = URL.createObjectURL(e.target.files[0]);
       setFile(fileURL);
-      console.log(file);
+      // console.log(file); //ขอ commment out นะครับ - kan
     }
   };
-
+  //validation
+  const isValidWebsite = (website) => {
+    const websitePattern =
+      /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+    const thaiEnglishPattern = /^[a-zA-Z0-9ก-๏\s]+$/;
+    const isWebsiteValid = websitePattern.test(website);
+    const isThaiEnglishValid = thaiEnglishPattern.test(website);
+    return isWebsiteValid && isThaiEnglishValid;
+  };
   return (
-    <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
-      <div className="input-container">
-        <p className="text-[10px] font-normal tracking-[1.5px] uppercase">
-          You can complete this information later
-        </p>
-        <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">
-          but we recommend you to do it now
-        </p>
-        <div className="company-website-input">
-          <label
-            htmlFor="company-website"
-            className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
-          >
-            COMPANY WEBSITE
-            <Controller
-              name="company_website"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <input
-                  maxLength={2000}
-                  className="mb-[16px] flex w-[360px] h-[36px] rounded-md border 
+    <>
+      <ToastContainer
+        theme="colored"
+        closeOnClick
+        autoClose={2500}
+        position="bottom-center"
+      />
+      <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
+        <div className="input-container">
+          <p className="text-[10px] font-normal tracking-[1.5px] uppercase">
+            You can complete this information later
+          </p>
+          <p className="mb-[8px] text-[10px] font-normal tracking-[1.5px] uppercase">
+            but we recommend you to do it now
+          </p>
+          <div className="company-website-input">
+            <label
+              htmlFor="company-website"
+              className="mb-[4px] text-[10px] font-normal tracking-[1.5px]"
+            >
+              COMPANY WEBSITE
+              <Controller
+                name="company_website"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <input
+                    maxLength={2000}
+                    className="mb-[16px] flex w-[360px] h-[36px] rounded-md border 
                   border-Pink bg-background p-[8px] text-[14px]
                   placeholder:text-muted-foreground"
                   id="company_website"
@@ -195,19 +216,20 @@ function RecruitCompanyInfo() {
             <button onClick={handlerSkip}>SKIP THIS!</button>
           </div>
 
-          <div className="w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
-            <button
-              className="flex flex-row"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              <div className="ml-[10px]">FINISH</div>
-              <img src={ArrowRight} alt="Next" />
-            </button>
+            <div className="w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
+              <button
+                className="flex flex-row"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                <div className="ml-[10px]">FINISH</div>
+                <img src={ArrowRight} alt="Next" />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

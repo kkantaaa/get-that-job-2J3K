@@ -42,28 +42,31 @@ applyappliRouter.get("/myapplication", async (req, res) => {
 });
 
 applyappliRouter.post("/:user_Id/job-list/:job_Id", async (req, res) => {
+  //หน้า apply ส่ง application ไปเข้า database application
+  const { user_Id, job_Id } = req.params;
+  const { currentCV, interestedReason, professionalExperience } = req.body;
+
+  const insertQuery = `
+    INSERT INTO application (user_id, job_id, professional_experience, cv, interested_reason, application_status, sent_date)
+    VALUES ($1, $2, $3, $4, $5, 'waiting', now())
+    RETURNING *
+  `;
+
   try {
-    const job_Id = req.params.job_Id;
-    const user_Id = req.params.user_Id;
-    const { currentCV, interestedReason, professionalExperience } = req.body;
-    try {
-      const userdata = await pool.query(
-        "INSERT INTO application (user_id, job_id, professional_experience, cv, interested_reason, application_status, sent_date) VALUES ($1, $2, $3, $4, $5, 'waiting', now()) RETURNING *",
-        [user_Id, job_Id, professionalExperience, currentCV, interestedReason]
-      );
-
-      console.log("Application submitted successfully:", userdata.rows[0]);
-
-      res.json(userdata.rows[0]);
-    } catch (error) {
-      console.error("Error submitting application:", error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while submitting the application." });
-    }
+    const userdata = await pool.query(insertQuery, [
+      user_Id,
+      job_Id,
+      professionalExperience,
+      currentCV,
+      interestedReason,
+    ]);
+    console.log("Application submitted successfully:", userdata.rows[0]);
+    res.json(userdata.rows[0]);
   } catch (error) {
-    console.error("Error processing request:", error);
-    res.status(400).json({ error: "Invalid request data." });
+    console.error("Error submitting application:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while submitting the application." });
   }
 });
 
@@ -88,20 +91,23 @@ applyappliRouter.get("/:job_id", async (req, res) => {
 });
 
 applyappliRouter.get("/u/:user_id", async (req, res) => {
-  const user_id = req.params.user_id;
-  console.log("user_id:", user_id);
+  // kan - get user data for apply page + follow/unfollow data
   try {
-    const userdata = await pool.query(
-      "select * from user_profiles left join company_follows on user_profiles.user_id = company_follows.user_id where user_profiles.user_id =$1",
-      [user_id]
-    );
-    console.log("get user data successfully :", userdata.rows);
+    const user_id = req.params.user_id;
+    const query = `
+      SELECT * FROM user_profiles
+      LEFT JOIN company_follows USING (user_id)
+      WHERE user_profiles.user_id = $1
+    `;
+    const userdata = await pool.query(query, [user_id]);
+
+    console.log("User data retrieved successfully:", userdata.rows);
     res.json(userdata.rows);
   } catch (error) {
-    console.error("Error submitting application:", error);
+    console.error("Error retrieving user data:", error);
     res
       .status(500)
-      .json({ error: "An error occurred while submitting the application." });
+      .json({ error: "An error occurred while retrieving user data." });
   }
 });
 
