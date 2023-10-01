@@ -58,7 +58,7 @@ const CompanyFollowingList = () => {
           You are following {companyFollow.length} companies
         </h2>
       </div>
-      <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
         {companyFollow.map((follow) => {
           return (
             <div

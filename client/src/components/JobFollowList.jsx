@@ -85,7 +85,7 @@ const JobFollowingList = () => {
           You are following {jobFollow.length} jobs
         </h2>
       </div>
-      <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
         {jobFollow.map((job) => {
           return (
             <div
