@@ -88,7 +88,7 @@ export default function LoginForm() {
               {errors.password && errors.password.message}
             </span>
             {errorState && (
-              <h1 className="text-red-500">Error: {errorState}</h1>
+              <h1 className="text-red-500">Error : {errorState}</h1>
             )}
           </div>
           <div className="text-right">
