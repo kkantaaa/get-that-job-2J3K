@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "@/components/CSS module/ApplicationApplySection.css";
 //images
 import SendApplicationButton from "@/images/ApllicationApplyPage/SendApplicationButton.png";
 
