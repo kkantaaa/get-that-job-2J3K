@@ -61,6 +61,7 @@ function ProfessionalProfile() {
   //useEffect - don't add anthing in that [] na ka
   useEffect(() => {
     getdatafromdatabase();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>handlers
   //1. handleFileInputChange
@@ -242,6 +243,7 @@ function ProfessionalProfile() {
   }; // birthdate
   const handleLinkedInChange = (e) => {
     const inputValue = e.target.value;
+    // eslint-disable-next-line no-useless-escape
     const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9-_/:\.\-]/g, "");
     setFormData({ ...formData, user_linkedin: sanitizedValue });
   }; // linkedin
