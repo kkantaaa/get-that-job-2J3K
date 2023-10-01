@@ -25,9 +25,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import money_dollar_circle_fill from "@/images/posting-job-page/money_dollar_circle_fill.png";
+import { useToast } from "@/components/ui/use-toast";
 
 //const navigate = useNavigate();
 
@@ -61,9 +63,11 @@ const postJobSchema = yup.object({
 function CreateJobPosting() {
   const form = useForm({ resolver: yupResolver(postJobSchema) });
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const [categories, setCategories] = useState([]);
   const [types, setTypes] = useState([]);
+  const [newcategory, setNewcategory] = useState("");
 
   const getCategories = async () => {
     try {
@@ -94,16 +98,39 @@ function CreateJobPosting() {
     console.log("Types are", types);
   }, []);
 
+  const createCategory = async () => {
+    try {
+      const capitalizedValue =
+        newcategory.charAt(0).toUpperCase() +
+        newcategory.slice(1).toLowerCase();
+      const fetchCategory = {
+        category_name: capitalizedValue,
+      };
+      console.log(fetchCategory);
+      await axios.post("http://localhost:4000/category", fetchCategory);
+      console.log("Create new category successful");
+      toast({
+        description: "Create new category successful.",
+      });
+      getCategories();
+    } catch (error) {
+      console.error("Error: unable to post", error);
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
       try {
         console.log(data);
         await axios.post("http://localhost:4000/jobs", data);
         console.log("Posting successful");
+        toast({
+          description: "Post job successful.",
+        });
       } catch (error) {
         console.error("Error: unable to post", error);
       }
-      //navigate("/recruiter/jobpostings");
+      navigate("/recruiter/jobpostings");
     } catch (error) {
       console.error("Error during posting job", error);
     }
@@ -164,16 +191,38 @@ function CreateJobPosting() {
                               <SelectGroup>
                                 <SelectLabel>Categories</SelectLabel>
                               </SelectGroup>
-                              {categories.map((category, key) => {
-                                return (
-                                  <SelectItem
-                                    value={category.category_name}
-                                    key={key}
-                                  >
-                                    {category.category_name}
-                                  </SelectItem>
-                                );
-                              })}
+                              <div className="flex flex-row max-w-[282px] pl-5 items-center space-x-2">
+                                <Input
+                                  type="text"
+                                  placeholder="Create a category"
+                                  className="flex-initial w-full"
+                                  value={newcategory}
+                                  onChange={(e) => {
+                                    e.stopPropagation();
+                                    setNewcategory(e.target.value);
+                                    console.log(e.target.value);
+                                  }}
+                                />
+                                <Button
+                                  size="secondary"
+                                  className="flex-initial w-2/5"
+                                  onClick={createCategory}
+                                >
+                                  Create
+                                </Button>
+                              </div>
+                              <ScrollArea className="h-40 w-full ">
+                                {categories.map((category, key) => {
+                                  return (
+                                    <SelectItem
+                                      value={category.category_name}
+                                      key={key}
+                                    >
+                                      {category.category_name}
+                                    </SelectItem>
+                                  );
+                                })}
+                              </ScrollArea>
                             </SelectContent>
                           </Select>
                           <FormDescription></FormDescription>
@@ -202,13 +251,18 @@ function CreateJobPosting() {
                               <SelectGroup>
                                 <SelectLabel>Types</SelectLabel>
                               </SelectGroup>
-                              {types.map((type, key) => {
-                                return (
-                                  <SelectItem value={type.type_name} key={key}>
-                                    {type.type_name}
-                                  </SelectItem>
-                                );
-                              })}
+                              <ScrollArea className="h-40 w-full ">
+                                {types.map((type, key) => {
+                                  return (
+                                    <SelectItem
+                                      value={type.type_name}
+                                      key={key}
+                                    >
+                                      {type.type_name}
+                                    </SelectItem>
+                                  );
+                                })}
+                              </ScrollArea>
                             </SelectContent>
                           </Select>
                           <FormDescription></FormDescription>

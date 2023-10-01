@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ChevronLeft, Download } from "lucide-react";
 import RecruiterSidebar from "@/components/RecruiterSidebar.jsx";
+import moment from "moment";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -16,6 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useToast } from "@/components/ui/use-toast";
 import { ChevronDown } from "lucide-react";
 
 import mail_open_line from "@/images/posting-job-page/mail-open-line.png";
@@ -31,12 +33,16 @@ import linkedin from "@/images/posting-job-page/show-job/linkedin-box-line.png";
 import { createClient } from "@supabase/supabase-js";
 import mail_line from "@/images/posting-job-page/show-job/mail-line.png";
 import phone_line from "@/images/posting-job-page/show-job/phone-line.png";
-import pause_circle_line from "@/images/posting-job-page/show-job/pause-circle-line.png";
 import download_line from "@/images/posting-job-page/show-job/download-line.png";
+import letterIcon from "@/images/ApllicationApplyPage/letter.svg";
+import letterSentIcon from "@/images/ApllicationApplyPage/letter-sent.svg";
+import pendingIcon from "@/images/ApllicationApplyPage/pending.svg";
+import reviewIcon from "@/images/ApllicationApplyPage/reviewed.svg";
 
 function ShowJobPosingPage() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const param = useParams();
+  const { toast } = useToast();
   const [job, setJob] = useState(null);
   const [candidates, setCandidates] = useState(null);
 
@@ -125,8 +131,13 @@ function ShowJobPosingPage() {
         `http://localhost:4000/apply/recruiter/${data.application_id}`,
         data
       );
-      getCandidates("all");
       console.log(`Application_id ${data.application_id} status changed`);
+      console.log(data);
+      toast({
+        title: `Candidate: ${data.candidate_name}`,
+        description: "Status changed",
+      });
+      getCandidates("all");
     } catch (error) {
       console.error("Error: unable to load jobs", error);
     }
@@ -184,13 +195,15 @@ function ShowJobPosingPage() {
                                 <div className="w-fit text-Headline6 text-DarkGray font-Montserrat font-medium">
                                   {job.job_title}
                                 </div>
-                                <div className=" font-Inter font-normal text-Caption text-LightGray tracking-[0.4px] flex flex-row space-x-2">
+                                <div className="max-w-[280px] overflow-hidden whitespace-nowrap font-Inter font-normal text-Caption text-LightGray tracking-[0.4px] flex flex-row space-x-2">
                                   <div className="space-x-1 flex flex-row">
                                     <img
                                       src={jobCategoryIcon}
                                       className="w-[15px] h-[15px]"
                                     />
-                                    <div>{job.category_name}</div>
+                                    <div className="max-w-[90px] overflow-hidden whitespace-nowrap">
+                                      {job.category_name}
+                                    </div>
                                   </div>
 
                                   <div className="space-x-1 flex flex-row">
@@ -413,7 +426,7 @@ function ShowJobPosingPage() {
               ) : (
                 <div className="w-full space-y-2">
                   <div className="text-Headline6 text-DarkGray font-Montserrat font-medium">
-                    {candidates.length} jobs posting found
+                    {candidates.length} candidates found
                   </div>
                   <div className=" w-full h-full ">
                     <Accordion type="single" collapsible className="space-y-4">
@@ -437,8 +450,15 @@ function ShowJobPosingPage() {
                                         src={linkedin}
                                         className="w-[18px] h-[18px]"
                                       />
-                                      <div className="max-w-[200px] max-h-[20px] overflow-hidden">
-                                        {candidate.user_linkedin}
+
+                                      <div className="max-w-[200px] max-h-[20px] truncate">
+                                        <a
+                                          href={candidate.user_linkedin}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                        >
+                                          {candidate.user_linkedin}
+                                        </a>
                                       </div>
                                     </div>
                                   </div>
@@ -449,7 +469,14 @@ function ShowJobPosingPage() {
                                       src={mail_line}
                                       className="w-[15px] h-[15px]"
                                     />
-                                    <div>{candidate.email}</div>
+
+                                    <a
+                                      href={`mailto:${candidate.email}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      {candidate.email}
+                                    </a>
                                   </div>
 
                                   <div className="space-x-1 flex flex-row ">
@@ -457,10 +484,78 @@ function ShowJobPosingPage() {
                                       src={phone_line}
                                       className="w-[15px] h-[15px]"
                                     />
-                                    <div>{candidate.user_phone}</div>
+
+                                    <a
+                                      href={`tel:${candidate.user_phone}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      {candidate.user_phone}
+                                    </a>
                                   </div>
                                 </div>
-                                Waiting for review
+
+                                <div className="w-fit h-fit font-Inter font-normal text-Caption text-Gray flex flex-row space-x-1 ">
+                                  <div className="w-20 h-12 flex flex-col items-center ">
+                                    <img
+                                      src={letterIcon}
+                                      className="w-[15px] h-[15px] "
+                                    />
+                                    {/*
+                                      moment(candidate.sent_date).diff(
+                                        this,
+                                        "month"
+                                      ) //number
+                                    */}
+                                    {moment(candidate.sent_date).diff(
+                                      this,
+                                      "month"
+                                    ) > 4
+                                      ? "Sent on" +
+                                        formattedDate(candidate.sent_date)
+                                      : "Sent " +
+                                        moment(candidate.sent_date).fromNow()}
+                                  </div>
+
+                                  {candidate.application_status ===
+                                  "waiting" ? (
+                                    <div className="w-20 h-12 flex flex-col items-center text-Pink">
+                                      <img
+                                        src={pendingIcon}
+                                        alt="SVG_finished_Image"
+                                      />
+                                      Waiting for review
+                                    </div>
+                                  ) : candidate.application_status ===
+                                    "inprogress" ? (
+                                    <div className="w-20 h-12 flex flex-col items-center text-Pink">
+                                      <img
+                                        src={letterSentIcon}
+                                        alt="SVG_finished_Image"
+                                      />
+                                      Review in progress
+                                    </div>
+                                  ) : candidate.application_status ===
+                                    "finished" ? (
+                                    <div className="w-20 h-12 flex flex-col items-center text-Pink">
+                                      <img
+                                        src={reviewIcon}
+                                        alt="SVG_finished_Image"
+                                      />
+                                      Review finished
+                                    </div>
+                                  ) : (
+                                    <div className="w-20 h-12 flex flex-col items-center text-Pink">
+                                      {candidate.application_status}
+                                      <img
+                                        src={pendingIcon}
+                                        alt="SVG_finished_Image"
+                                      />
+                                      Waiting for review
+                                    </div>
+                                  )}
+                                </div>
+
                                 {candidate.application_status === "waiting" ? (
                                   <Button
                                     variant="secondary"
@@ -471,6 +566,7 @@ function ShowJobPosingPage() {
                                         application_id:
                                           candidate.application_id,
                                         application_status: "inprogress", //"inprogress",
+                                        candidate_name: candidate.user_name,
                                       });
                                     }}
                                   >

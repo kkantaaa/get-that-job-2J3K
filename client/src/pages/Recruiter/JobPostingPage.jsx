@@ -148,13 +148,15 @@ function JobPosting() {
                                   <div className="w-fit text-Headline6 text-DarkGray font-Montserrat font-medium">
                                     {job.job_title}
                                   </div>
-                                  <div className=" font-Inter font-normal text-Caption text-LightGray tracking-[0.4px] flex flex-row space-x-2">
-                                    <div className="space-x-1 flex flex-row">
+                                  <div className="max-w-[280px] whitespace-nowrap overflow-hidden font-Inter font-normal text-Caption text-LightGray tracking-[0.4px] flex flex-row space-x-2">
+                                    <div className="space-x-1 flex flex-row ">
                                       <img
                                         src={jobCategoryIcon}
                                         className="w-[15px] h-[15px]"
                                       />
-                                      <div>{job.category_name}</div>
+                                      <div className="max-w-[90px] overflow-hidden whitespace-nowrap ">
+                                        {job.category_name}
+                                      </div>
                                     </div>
 
                                     <div className="space-x-1 flex flex-row">
