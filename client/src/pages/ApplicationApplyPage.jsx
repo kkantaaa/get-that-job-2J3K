@@ -168,18 +168,27 @@ function ApplicationApplyPage() {
                       {jobDetail.company_name}
                     </div>
                     {checkFollow == true && (
-                      <button onClick={handleFollowButton}>
+                      <button
+                        className="transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50 hover:brightness-125"
+                        onClick={handleFollowButton}
+                      >
                         <img src={FollowButton} alt="Following Button" />
                       </button>
                     )}
                     {checkFollow == false && (
-                      <button onClick={handleFollowButton}>
+                      <button
+                        className="transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50 hover:brightness-125"
+                        onClick={handleFollowButton}
+                      >
                         <img src={FollowButtonG} alt="Follow Button" />
                       </button>
                     )}
                   </div>
                 </div>
-                <button onClick={handleSendApplication} className="ml-auto">
+                <button
+                  onClick={handleSendApplication}
+                  className="mt-6 ml-auto transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50 hover:brightness-125"
+                >
                   <img
                     src={SendAPPlicationButton}
                     alt="Send Application Button"
