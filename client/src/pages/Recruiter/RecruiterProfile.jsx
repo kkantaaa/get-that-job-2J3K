@@ -59,9 +59,13 @@ const postJobSchema = yup.object({
       "Max allowed size is 100KB",
       (value) => value && value.size <= MAX_FILE_SIZE
     )*/
-  email: yup.string().required("Company Email is a required field"),
+  email: yup.string().email().required("Company Email is a required field"),
   company_name: yup.string().required("Company Name is a required field"),
-  company_website: yup.string().required("Company Website is a required field"),
+  company_website: yup
+    .string()
+    .url()
+    .nullable()
+    .required("Company Website is a required field"),
   about_company: yup
     .string()
     .required("Company Description is a required field"),
