@@ -202,13 +202,16 @@ function RecruiterProfile() {
                         defaultValue=""
                         render={({ field }) => (
                           <FormItem>
-                            <div className="flex flex-row items-center space-x-2">
-                              <img
-                                src={profile.company_logo}
-                                alt="Preview"
-                                className="rounded-lg"
-                                style={{ maxWidth: "80px" }}
-                              />
+                            <div className="flex flex-row items-center space-x-2 ">
+                              <div className="drop-shadow-little rounded-lg bg-white">
+                                <img
+                                  src={profile.company_logo}
+                                  alt="Preview"
+                                  className="rounded-lg "
+                                  style={{ maxWidth: "80px" }}
+                                />
+                              </div>
+
                               <div className="w-full space-y-1 text-Gray">
                                 <FormLabel>COMPANY LOGO</FormLabel>
                                 <FormControl>
