@@ -27,9 +27,9 @@ function RecruitLogInInfo() {
   const onSubmit = async (data) => {
     const { companyname, companyemail, companypassword } = data;
     try {
-      if (!companyname || /[^A-Za-z0-9\s]/.test(companyname)) {
+      if (!companyname || /[^A-Za-z0-9\s\-_.]/.test(companyname)) {
         toast.error(
-          "Company name should only contain letters and numbers and should not be empty."
+          "Company name should only contain letters, numbers, hyphens, underscores, periods, and should not be empty."
         );
         return;
       }

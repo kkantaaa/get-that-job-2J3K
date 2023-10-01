@@ -84,10 +84,10 @@ function RecruitCompanyInfo() {
   const isValidWebsite = (website) => {
     const websitePattern =
       /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
-    const thaiEnglishPattern = /^[a-zA-Z0-9ก-๏\s]+$/;
+    // const thaiEnglishPattern = /^[a-zA-Z0-9ก-๏\s]+$/;
     const isWebsiteValid = websitePattern.test(website);
-    const isThaiEnglishValid = thaiEnglishPattern.test(website);
-    return isWebsiteValid && isThaiEnglishValid;
+    // const isThaiEnglishValid = thaiEnglishPattern.test(website);
+    return isWebsiteValid  
   };
   return (
     <>
