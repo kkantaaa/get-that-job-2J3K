@@ -6,6 +6,7 @@ import member3 from "@/images/landing-page/member3.png";
 import member4 from "@/images/landing-page/member4.png";
 import Jajha from "@/images/landing-page/member/Jajha.jpg";
 import Jumb from "@/images/landing-page/member/Jumb.jpg";
+import Keng from "@/images/landing-page/member/Keng.jpg";
 import Kaka from "@/images/landing-page/member/kaka.jpg";
 import Keem from "@/images/landing-page/member/Keem.jpg";
 import githubIconButton from "@/images/landing-page/githubIconButton.png";
@@ -148,7 +149,7 @@ function Homepage() {
                 <div className=" w-[240px] mx-[16px] flex flex-col justify-center items-center">
                   <div className="w-[180px] h-[180px] flex flex-col justify-center items-center">
                     <img
-                      src={member3}
+                      src={Keng}
                       className="w-[160px] h-[160px] rounded-full"
                     />
                   </div>
@@ -156,13 +157,21 @@ function Homepage() {
                     Kan.K
                   </div>
                   <div className=" mt-[8px] flex flex-row justify-around">
-                    <a href="" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="https://github.com/KIKantaphong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <img
                         src={githubIconButton}
                         className="w-[40px] h-[40px] mx-[16px] "
                       />
                     </a>
-                    <a href="" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="https://www.linkedin.com/in/kantaphong-kanyaruean-b3b2b3265/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <img
                         src={linkinIconButton}
                         className="w-[40px] h-[40px] mx-[16px] "
