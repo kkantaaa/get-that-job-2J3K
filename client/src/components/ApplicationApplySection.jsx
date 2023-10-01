@@ -7,7 +7,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //images
-import ChooseAFile from "@/images/ApllicationApplyPage/ChooseAFile.png";
 import SendApplicationButton from "@/images/ApllicationApplyPage/SendApplicationButton.png";
 
 //
@@ -37,7 +36,7 @@ function ApplicationApplySection(pagedata) {
   // event handler 2
   const onSubmit = async () => {
     if (!radioTicked) {
-      toast.warning("โปรดเลือก CV ด้วยค่ะ");
+      toast.error("โปรดเลือก CV ด้วยค่ะ");
       return;
     }
     if (!currentCV) {
@@ -45,7 +44,9 @@ function ApplicationApplySection(pagedata) {
       return;
     }
     if (!interestedReason) {
-      toast.error("โปรดกรอก interestedReason ด้วยค่ะ");
+      toast.error(
+        "Please don't forget to share your thoughts on why you're interested in working with this company."
+      );
       return;
     }
     try {
@@ -72,7 +73,7 @@ function ApplicationApplySection(pagedata) {
   // return
   return (
     <>
-      <ToastContainer theme="dark" autoClose={3000} limit={3} />
+      <ToastContainer theme="colored" autoClose={3000} limit={3} />
       <div style={{ marginLeft: "10px", marginTop: "20px" }}>
         {/*   */}
         {/* Header */}
@@ -156,52 +157,51 @@ function ApplicationApplySection(pagedata) {
           {/* radio2 */}
           {/* conditional render for uploading new */}
           {showUploadButton && (
-            <div className="mt-3 ml-3" style={{ padding: "10px" }}>
-              <button
-                htmlFor="fileInput"
-                type="button"
-                onClick={() => {
-                  const fileInput = document.getElementById("fileInput");
-                  fileInput.click();
-                }}
-              >
-                <img src={ChooseAFile} alt="Choose a file Button" />
-                <input
-                  type="file"
-                  id="fileInput"
-                  accept=".pdf"
-                  style={{ display: "none" }}
-                  onClick={(e) => {
-                    const selectedFile = e.target.files[0];
-                    if (selectedFile) {
-                      setCurrentCV(selectedFile);
-                      console.log("Current CV set:", selectedFile);
-                    }
-                  }}
-                />
-              </button>
-              <br />
-              <span className="text-gray-400">Only PDF. Max size 5 MB</span>
-              {/* conditional render for uploading new */}
-              {/* show selected */}
-              {currentCV && (
+            <div className="mt-5 w-60 h-14 flex-col justify-start items-start gap-1 inline-flex">
+              <div className="justify-start items-center gap-2 inline-flex">
                 <div
-                  id="selectedFileBox"
-                  className="mt-7 px-5 border border-pink-300 p-2 rounded-3xl text-gray-600 w-[150px] bg-pink-100"
+                  className="p-4 bg-pink-300 h-[60px] w-[160px] rounded-2xl justify-start items-center gap-2 flex   transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50  "
+                  onClick={() => {
+                    const fileInput = document.getElementById("fileInput");
+                    fileInput.click();
+                  }}
                 >
-                  <span id="selectedFileName">
-                    Selected file: {currentCV.name}
-                  </span>
+                  <div className="justify-center items-center flex">
+                    <div className=" relative"></div>
+                  </div>
+                  <div className="text-white text-[19px] font-normal font-['Inter'] leading-tight tracking-tight">
+                    Choose a file
+                  </div>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept=".pdf"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      const selectedFile = e.target.files[0];
+                      if (selectedFile) {
+                        setCurrentCV(selectedFile);
+                        console.log("Current CV set:", selectedFile);
+                      }
+                    }}
+                  />
                 </div>
-              )}
-              {/* show selected */}
+                <div className="ml-5 w-[380px] text-[16px] bg-pink-50 text-zinc-400 text-sm font-normal font-['Inter'] leading-tight tracking-tight">
+                  {currentCV
+                    ? `Selected file: ${currentCV.name}`
+                    : "No File Chosen"}
+                </div>
+              </div>
+              <div className="mt-2 text-neutral-400 text-xs font-normal font-['Inter'] leading-none tracking-wide">
+                Only PDF. Max size 5MB
+              </div>
             </div>
           )}
           {/* cv radios */}
           {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
           {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
           {/* text input fields */}
-          <div style={{ padding: "20px" }}>
+          <div className=" mt-14">
             {/*  */}
             {/*  */}
             <label htmlFor="experience">
@@ -248,7 +248,7 @@ function ApplicationApplySection(pagedata) {
           {/*  */}
           {/*  */}
           {/*WHY ARE YOU INTERESTED IN WORKING */}
-          <div style={{ padding: "20px" }}>
+          <div className="mt-6">
             <label htmlFor="interestedReason">
               <span
                 style={{
@@ -285,7 +285,7 @@ function ApplicationApplySection(pagedata) {
           </div>
           {/*  */}
           {/*  */}
-          <div className="ml-3">
+          <div className="mt-6  transition-transform transform hover:scale-100 active:scale-90 hover:saturate-50 hover:brightness-125">
             <button type="submit" id="sendApplicationButton">
               <img src={SendApplicationButton} alt="Send Application Button" />
             </button>

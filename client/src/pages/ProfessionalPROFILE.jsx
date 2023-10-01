@@ -537,7 +537,10 @@ function ProfessionalProfile() {
               {/* UPLOAD / UPDATE YOUR CV */}
               {/* UPLOAD / UPDATE YOUR CV */}
               <div className="flex items-center mt-3">
-                <label htmlFor="fileInput" className="cursor-pointer">
+                <label
+                  htmlFor="fileInput"
+                  className="cursor-pointer transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50"
+                >
                   <input
                     type="file"
                     id="fileInput"
@@ -577,7 +580,7 @@ function ProfessionalProfile() {
         <button
           type="button"
           onClick={handleSaveChanges}
-          className="mt-5 ml-[345px]"
+          className="mt-5 ml-[345px] transition-transform transform hover:scale-95 active:scale-90 hover:saturate-50"
         >
           <img src={SaveChanges} alt="SaveChanges button" />
         </button>
