@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/authentication";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   // const navigate = useNavigate();
@@ -59,7 +59,9 @@ export default function LoginForm() {
                 />
               )}
             />
-            <span>{errors.email && errors.email.message}</span>
+            <span className="text-red-500">
+              {errors.email && errors.email.message}
+            </span>
           </div>
           <div className="flex flex-col">
             <label className="w-fit text-[10px]" htmlFor="password">
@@ -82,9 +84,11 @@ export default function LoginForm() {
                 />
               )}
             />
-            <span>{errors.password && errors.password.message}</span>
+            <span className="text-red-500">
+              {errors.password && errors.password.message}
+            </span>
             {errorState && (
-              <h1 className="text-red-500">Error: {errorState}</h1>
+              <h1 className="text-red-500">Error : {errorState}</h1>
             )}
           </div>
           <div className="text-right">

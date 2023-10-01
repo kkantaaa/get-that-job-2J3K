@@ -4,51 +4,162 @@ import { protect } from "../utils/protect.js";
 
 const jobRouter = Router();
 jobRouter.use(protect);
-//***not yet get total cadidates and candidates on track -- joint table with job application
-jobRouter.get("/", async (req, res) => {
-  const result = await pool.query("Select * FROM jobs");
-  return res.json({
-    result: result.rows,
-  });
+
+// get jobs by recruiter id for recruiter role
+jobRouter.get("/recruiter", async (req, res) => {
+  try {
+    const recruiter_id = req.user.recruiter_id;
+    const filter = req.query.filter || null;
+
+    let query = `
+    SELECT
+    jobs.recruiter_id,
+    jobs.job_id,
+    company_name,
+    company_logo,
+    job_title,
+    job_categories.job_category_id,
+    category_name,
+    job_types.job_type_id,
+    type_name,
+    salary_min,
+    salary_max,
+    about_job_position,
+    mandatory_requirement,
+    optional_requirement,
+    opened_at,
+    closed_at,
+    (
+      SELECT COUNT(application_id)
+      FROM application
+      WHERE application.job_id = jobs.job_id
+    ) AS total_candidates,
+    (
+      SELECT COUNT(application_id)
+      FROM application
+      WHERE application.job_id = jobs.job_id
+        AND application_status = 'inprogress'
+    ) AS candidates_on_track
+  FROM
+    jobs
+  INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+  INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+  INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+  WHERE jobs.recruiter_id = $1
+    `;
+    const queryOrder = `ORDER BY closed_at DESC`;
+
+    const values = [recruiter_id];
+
+    if (filter === "closed") {
+      query += " AND closed_at IS NOT NULL ";
+    } else if (filter === "ontrack") {
+      query += ` AND EXISTS (
+        SELECT 1
+        FROM application
+        WHERE application.job_id = jobs.job_id
+          AND application_status = 'inprogress'
+      )`;
+    }
+    console.log(query);
+    query += queryOrder;
+
+    const result = await pool.query(query, values);
+
+    return res.json({
+      data: result.rows,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
 });
 
-jobRouter.get("/:job_id", async (req, res) => {
+jobRouter.get("/recruiter/:job_id", async (req, res) => {
+  const recruiter_id = req.user.recruiter_id;
   const job_id = req.params.job_id;
-  const result = await pool.query("Select * FROM jobs WHERE job_id = $1", [
-    job_id,
-  ]);
-  return res.json({
-    result: result.rows,
-  });
+
+  const query = `SELECT
+  jobs.recruiter_id,
+  jobs.job_id,
+  company_name,
+  company_logo,
+  job_title,
+  category_name,
+  type_name,
+  salary_min,
+  salary_max,
+  about_job_position,
+  mandatory_requirement,
+  optional_requirement,
+  opened_at,
+  closed_at,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+  ) AS total_candidates,
+  (
+    SELECT COUNT(application_id)
+    FROM application
+    WHERE application.job_id = jobs.job_id
+      AND application_status = 'inprogress'
+  ) AS candidates_on_track
+FROM
+  jobs
+INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+WHERE jobs.recruiter_id = $1 AND jobs.job_id = $2;
+`;
+  try {
+    const result = await pool.query(query, [recruiter_id, job_id]);
+
+    return res.json({
+      data: result.rows,
+    });
+  } catch (error) {
+    return res.json({
+      message: `${error}`,
+    });
+  }
 });
-//***
 
 jobRouter.get("/", async (req, res) => {
   try {
+    //comment 5 อันนี้เพื่อ query ใน postman
+    const keywords = `%${req.query.keywords}%` || null;
+    const category = `${req.query.category}` || null;
+    const type = `${req.query.type}` || null;
+    const min = `${req.query.minSalary}` || null;
+    const max = `${req.query.maxSalary}` || null;
+
+    // console.log(`category from server/apps/jobs : ${category}`);
+
+    // uncomment 5 อันนี้เพื่อ query ใน postman
+    // const type = req.query.type || null;
     // const keywords = req.query.keywords || null;
-    const keywords = "%Dev%";
-    const category = req.query.category || null;
-    const type = req.query.type || null;
-    // const minSalary = req.query.minSalary || null;
-    const minSalary = 2000;
-    // const maxSalary = req.query.maxSalary || null;
-    const maxSalary = 4000;
+    // const category = req.query.category || null;
+    // const min = req.query.minSalary || null;
+    // const max = req.query.maxSalary || null;
 
     let query = "";
     let values = [];
 
-    //ยัวไม่ได้เพิ่ม SEARCH BY COMPANY NAME -> link recruiter_id : jobs table to recruiter_profile table
     query = `SELECT *
-    FROM jobs_mock
-    WHERE (job_title ILIKE $1 OR $1 IS NULL)
-    AND (job_category = $2 OR $2 IS NULL)
-    AND (job_type_id = $3 OR $3 IS NULL)
-    AND (salary_min >= $4 OR $4 IS NULL)
-    AND (salary_max <= $5 OR $5 IS NULL)`;
-    values = [keywords, category, type, minSalary, maxSalary];
-
-    // query = `SELECT * FROM jobs_mock WHERE job_title ILIKE $1 AND salary_min >= $2`;
-    // values = [keywords, minSalary];
+    FROM jobs
+    INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+    INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+    INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+    WHERE (job_title ILIKE $1 OR company_name ILIKE $1 OR $1 IS NULL)
+      AND (category_name = $2 OR $2 IS NULL)
+      AND (type_name = $3 OR $3 IS NULL)
+      AND (salary_min >= $4 OR $4 IS NULL)
+      AND (salary_max <= $5 OR $5 IS NULL)
+      AND (closed_at IS NULL)`; //แสดงเฉาพะงานที่ยังไม่ close
+    values = [keywords, category, type, min, max];
 
     const results = await pool.query(query, values);
 
@@ -74,9 +185,14 @@ jobRouter.get("/:id", async (req, res) => {
   let result;
 
   try {
-    result = await pool.query("select * from jobs_mock where job_id=$1", [
-      jobId,
-    ]);
+    result = await pool.query(
+      `select * from jobs
+    INNER JOIN job_categories ON jobs.job_category_id = job_categories.job_category_id
+    INNER JOIN job_types ON jobs.job_type_id = job_types.job_type_id
+    INNER JOIN recruiter_informations ON jobs.recruiter_id = recruiter_informations.recruiter_id
+    where job_id=$1`,
+      [jobId]
+    );
   } catch (error) {
     return res.json({
       message: `${error}`,
@@ -89,22 +205,27 @@ jobRouter.get("/:id", async (req, res) => {
 });
 
 jobRouter.post("/", async (req, res) => {
+  console.log(req);
   const hasClosed = req.body.status === "closed";
+  console.log(req);
+
   try {
     const job = {
-      recruiter_id: req.user.id,
-      job_title: req.body.job_title,
-      category: req.body.category, //use category replace category_name
-      type: req.body.type, //use type replace type_name
-      salary_min: req.body.salary_min,
-      salary_max: req.body.salary_max,
-      about_job_position: req.body.about_job_position,
-      mandatory_requirement: req.body.mandatory_requirement,
-      optional_requirement: req.body.optional_requirement,
+      recruiter_id: req.user.recruiter_id,
+      job_title: req.body.jobTitle,
+      category: req.body.jobCategory, //use category replace category_name
+      type: req.body.jobType, //use type replace type_name
+      salary_min: req.body.salaryRangeMin,
+      salary_max: req.body.salaryRangeMax,
+      about_job_position: req.body.aboutJobPosition,
+      mandatory_requirement: req.body.mandatoryRequirement,
+      optional_requirement: req.body.optionalRequirement,
       opened_at: new Date(),
       updated_at: new Date(),
       closed_at: hasClosed ? new Date() : null,
     };
+
+    console.log(job);
 
     const categoryQuery = await pool.query(
       "SELECT * FROM job_categories WHERE category_name = $1",
@@ -164,7 +285,7 @@ jobRouter.put("/:job_id", async (req, res) => {
 
     const categoryQuery = await pool.query(
       "SELECT * FROM job_categories WHERE category_name = $1",
-      [updatedJob.category] 
+      [updatedJob.category_name]
     );
     console.log("Category Query Result:", categoryQuery.rows);
     if (categoryQuery.rows.length === 0) {
@@ -173,14 +294,13 @@ jobRouter.put("/:job_id", async (req, res) => {
 
     const typeQuery = await pool.query(
       "SELECT * FROM job_types WHERE type_name = $1",
-      [updatedJob.type] 
+      [updatedJob.type_name]
     );
     console.log("Type Query Result:", typeQuery.rows);
     if (typeQuery.rows.length === 0) {
       return res.status(411).json({ message: "Type not found" });
     }
 
-    
     await pool.query(
       "UPDATE jobs SET job_title = $1, job_category_id = $2, job_type_id = $3, salary_min = $4, salary_max = $5, about_job_position = $6, mandatory_requirement = $7, optional_requirement = $8, updated_at = $9, closed_at = $10 WHERE job_id = $11",
       [
@@ -197,7 +317,6 @@ jobRouter.put("/:job_id", async (req, res) => {
         job_id,
       ]
     );
-    
 
     return res.json({
       message: `Job ${job_id} has been updated.`,
@@ -209,7 +328,62 @@ jobRouter.put("/:job_id", async (req, res) => {
     });
   }
 });
+/*jobRouter.put("/:job_id", async (req, res) => {
+  try {
+    // Validate request data (e.g., check if required fields are present)
+    console.log(req.body);
+    const hasClosed = req.body.closed_at === "closed";
+    const updatedJob = {
+      ...req.body,
+      updated_at: new Date(),
+      closed_at: hasClosed ? new Date() : null,
+    };
+    const job_id = req.params.job_id;
 
+    const categoryQuery = await pool.query(
+      "SELECT * FROM job_categories WHERE category_name = $1",
+      [updatedJob.category_name]
+    );
+    console.log("Category Query Result:", categoryQuery.rows);
+    if (categoryQuery.rows.length === 0) {
+      return res.status(410).json({ message: "Category not found" });
+    }
 
+    const typeQuery = await pool.query(
+      "SELECT * FROM job_types WHERE type_name = $1",
+      [updatedJob.type_name]
+    );
+    console.log("Type Query Result:", typeQuery.rows);
+    if (typeQuery.rows.length === 0) {
+      return res.status(411).json({ message: "Type not found" });
+    }
+
+    await pool.query(
+      "UPDATE jobs SET job_title = $1, job_category_id = $2, job_type_id = $3, salary_min = $4, salary_max = $5, about_job_position = $6, mandatory_requirement = $7, optional_requirement = $8, updated_at = $9, closed_at = $10 WHERE job_id = $11",
+      [
+        updatedJob.job_title,
+        parseInt(categoryQuery.rows[0].job_category_id, 10),
+        parseInt(typeQuery.rows[0].job_type_id, 10),
+        updatedJob.salary_min,
+        updatedJob.salary_max,
+        updatedJob.about_job_position,
+        updatedJob.mandatory_requirement,
+        updatedJob.optional_requirement,
+        updatedJob.updated_at,
+        updatedJob.closed_at,
+        job_id,
+      ]
+    );
+
+    return res.json({
+      message: `Job ${job_id} has been updated.`,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(503).json({
+      message: "Error! Please try to update the job again.",
+    });
+  }
+});*/
 
 export default jobRouter;

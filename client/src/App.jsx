@@ -7,15 +7,25 @@ import RecruitRegisterPage1 from "./pages/RecruitRegisterPage1.jsx";
 import RecruitRegisterPage2 from "./pages/RecruitRegisterPage2.jsx";
 import UserLoginPage from "./pages/UserLoginPage.jsx";
 import RecruiterLoginPage from "./pages/RecruiterLoginPage.jsx";
-import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
 import Homepage from "@/pages/HomePage.jsx";
+import JobPosting from "@/pages/Recruiter/JobPostingPage.jsx";
+import EditJobPostingPage from "@/pages/Recruiter/EditJobPostingPage.jsx";
+import ShowJobPosingPage from "@/pages/Recruiter/ShowJobPosingPage.jsx";
+import CreateJobPosting from "@/pages/Recruiter/CreateJobPostingPage.jsx";
+import RecruiterProfile from "@/pages/Recruiter/RecruiterProfile.jsx";
 import FindThatJobPage from "./pages/FindThatJobPage.jsx";
-import JobPostings from "./pages/JobPostingsPage.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
+import FollowingPage from "./pages/FollowingPage.jsx";
+import CompanyJobPage from "./pages/companyJobPage.jsx";
 import "./App.css";
 import { ContextProvider } from "./contexts/registerContexts.jsx";
+import ApplicationApplyPage from "./pages/ApplicationApplyPage.jsx";
+import ProfessionalProfile from "./pages/ProfessionalPROFILE.jsx";
+import TestYourApp from "./pages/TestYourApp.jsx";
 
 function App() {
+  // const auth = useAuth(); // ใช้ useAuth เพื่อเข้าถึงสถานะการลงชื่อเข้าใช้
+
   const NoMatch = () => <h1>Page Not Found.</h1>;
 
   return (
@@ -39,13 +49,57 @@ function App() {
                 path="/recruiter/register2"
                 element={<RecruitRegisterPage2 />}
               />
+
+              {/* Kan, Jumb and JJ's Route */}
               <Route path="/user/findthatjob" element={<FindThatJobPage />} />
-              <Route path="/recruiter/jobpostings" element={<JobPostings />} />
-              <Route path="/user/jobdetail" element={<JobDetail />} />
+              <Route
+                path="/user/jobs/apply/:jobparams"
+                element={<ApplicationApplyPage />}
+              />
+              <Route path="/user/jobs/:job_id" element={<JobDetail />} />
+
+              <Route path="/user/following" element={<FollowingPage />} />
+
+              <Route
+                path="user/companyjob/:recruiter_id"
+                element={<CompanyJobPage />}
+              />
+
+              {/* route for testing */}
+              <Route
+                path="/user/myapplication"
+                element={<TestYourApp />}
+              />
+
+              <Route path="/user/profile" element={<ProfessionalProfile />} />
+              {/* keem and kaka's routes */}
+              <Route path="/recruiter/jobpostings" element={<JobPosting />} />
+
               <Route
                 path="/recruiter/createjobposting"
                 element={<CreateJobPosting />}
               />
+              <Route
+                path="/recruiter/recruiterprofile"
+                element={<RecruiterProfile />}
+              />
+              <Route
+                path="/recruiter/jobpostings/edit/:jobId"
+                element={<EditJobPostingPage />}
+              />
+              <Route
+                path="/recruiter/jobpostings/show/:jobId"
+                element={<ShowJobPosingPage />}
+              />
+
+              {/* เพิ่มเงื่อนไขเพื่อตรวจสอบว่าผู้ใช้ลงชื่อเข้าใช้หรือไม่
+              {auth.isLoggedIn && (
+                <Route
+                  path="/recruiter/createjobposting"
+                  element={<CreateJobPosting />}
+                />
+              )} */}
+
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </ContextProvider>
@@ -54,4 +108,5 @@ function App() {
     </>
   );
 }
+
 export default App;

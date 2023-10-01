@@ -4,6 +4,11 @@ import member1 from "@/images/landing-page/member1.png";
 import member2 from "@/images/landing-page/member2.png";
 import member3 from "@/images/landing-page/member3.png";
 import member4 from "@/images/landing-page/member4.png";
+import Jajha from "@/images/landing-page/member/Jajha.jpg";
+import Jumb from "@/images/landing-page/member/Jumb.jpg";
+import Keng from "@/images/landing-page/member/Keng.jpg";
+import Kaka from "@/images/landing-page/member/kaka.jpg";
+import Keem from "@/images/landing-page/member/Keem.jpg";
 import githubIconButton from "@/images/landing-page/githubIconButton.png";
 import linkinIconButton from "@/images/landing-page/linkinIconButton.png";
 import { Button } from "@/components/ui/button";
@@ -14,7 +19,7 @@ function Homepage() {
   return (
     <>
       <NavBar />
-      <div className="bg-Background h-[833px] py-[10px] flex flex-col justify-center items-center">
+      <div className="bg-Background h-[833px] py-[10px] mt-[64px] flex flex-col justify-center items-center">
         <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline2 font-light">
           The place where
           <br />
@@ -73,76 +78,173 @@ function Homepage() {
               <div className=" h-[273px] flex flex-row justify-center items-center">
                 <div className=" w-[240px] mx-[16px] flex flex-col justify-center items-center">
                   <div className="w-[180px] h-[180px] flex flex-col justify-center items-center">
-                    <img src={member1} className="w-[160px] h-[160px] " />
+                    <img
+                      src={Jajha}
+                      className="w-[160px] h-[160px] rounded-full
+
+"
+                    />
                   </div>
                   <div className="text-black text-Headline5 font-normal font-Montserratflex">
-                    Ruby Ramirez
+                    Jajha.P
                   </div>
                   <div className=" mt-[8px] flex flex-row justify-around">
-                    <img
-                      src={githubIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
-                    />
-                    <img
-                      src={linkinIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
-                    />
+                    <a
+                      href="https://github.com/jashleyx"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={githubIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/patriciasingha"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={linkinIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
                   </div>
                 </div>
 
                 <div className=" w-[240px] mx-[16px] flex flex-col justify-center items-center">
                   <div className="w-[180px] h-[180px] flex flex-col justify-center items-center">
-                    <img src={member2} className="w-[160px] h-[160px] " />
+                    <img
+                      src={Jumb}
+                      className="w-[160px] h-[160px] rounded-full"
+                    />
                   </div>
                   <div className="text-black text-Headline5 font-normal font-Montserratflex">
-                    Javier Escribano
+                    Jumb.K
                   </div>
                   <div className=" mt-[8px] flex flex-row justify-around">
-                    <img
-                      src={githubIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
-                    />
-                    <img
-                      src={linkinIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
-                    />
+                    <a
+                      href="https://github.com/JumbKWC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={githubIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/kritwatchara-wangkhumphai-b2a57b288/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={linkinIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
                   </div>
                 </div>
 
                 <div className=" w-[240px] mx-[16px] flex flex-col justify-center items-center">
                   <div className="w-[180px] h-[180px] flex flex-col justify-center items-center">
-                    <img src={member3} className="w-[160px] h-[160px] " />
+                    <img
+                      src={Keng}
+                      className="w-[160px] h-[160px] rounded-full"
+                    />
                   </div>
                   <div className="text-black text-Headline5 font-normal font-Montserratflex">
-                    Frabcisca Reategui
+                    Kan.K
                   </div>
                   <div className=" mt-[8px] flex flex-row justify-around">
-                    <img
-                      src={githubIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
-                    />
-                    <img
-                      src={linkinIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
-                    />
+                    <a
+                      href="https://github.com/KIKantaphong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={githubIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/kantaphong-kanyaruean-b3b2b3265/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={linkinIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
                   </div>
                 </div>
 
-                <div className="w-[240px] mx-[16px] flex flex-col justify-center items-center">
-                  <img src={member4} className="w-[180px] h-[180px] " />
-
-                  <div className="text-black text-Headline5 font-normal font-Montserratflex">
-                    Rual Rubina
+                <div className=" w-[240px] mx-[16px] flex flex-col justify-center items-center">
+                  <div className="w-[180px] h-[180px] flex flex-col justify-center items-center">
+                    <img
+                      src={Kaka}
+                      className="w-[160px] h-[160px] rounded-full"
+                    />
                   </div>
-                  <div className="mt-[8px] flex flex-row justify-around">
+                  <div className="text-black text-Headline5 font-normal font-Montserratflex">
+                    Kaka.K
+                  </div>
+                  <div className=" mt-[8px] flex flex-row justify-around">
+                    <a
+                      href="https://github.com/kkantaaa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={githubIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
+                    <a
+                      href="www.linkedin.com/in/kanta-vanitchasatit-892165239"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={linkinIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
+                  </div>
+                </div>
+
+                <div className=" w-[240px] mx-[16px] flex flex-col justify-center items-center">
+                  <div className="w-[180px] h-[180px] flex flex-col justify-center items-center">
                     <img
-                      src={githubIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
+                      src={Keem}
+                      className="w-[160px] h-[160px] rounded-full"
                     />
-                    <img
-                      src={linkinIconButton}
-                      className="w-[40px] h-[40px] mx-[16px] "
-                    />
+                  </div>
+                  <div className="text-black text-Headline5 font-normal font-Montserratflex">
+                    Keem.S
+                  </div>
+                  <div className=" mt-[8px] flex flex-row justify-around">
+                    <a
+                      href="https://github.com/MrKeem"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={githubIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/sahapap-samathi-238570226/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={linkinIconButton}
+                        className="w-[40px] h-[40px] mx-[16px] "
+                      />
+                    </a>
                   </div>
                 </div>
               </div>

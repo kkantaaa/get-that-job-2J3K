@@ -22,7 +22,7 @@ categoryRouter.post("/", async (req, res) => {
   }
 });
 categoryRouter.get("/", async (req, res) => {
-    const result = await pool.query("SELECT * FROM job_categories ")
+    const result = await pool.query("SELECT * FROM job_categories ORDER BY category_name ASC ")
     return res.json({
         result: result.rows,
     });

@@ -10,31 +10,36 @@ authRouter.post("/user/login", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const result = await client.query(
-      "SELECT * FROM usertable WHERE email = $1",
-      [email]
-    );
+    const result = await client.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
     const user = result.rows[0];
 
     if (!user) {
-      return res.status(404).json({ message: "user not found" });
+      return res.json({
+        message: "User is not found",
+      });
+      // return res.status(404).json({ message: "User is not found" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(400).json({ message: "password not valid" });
+      return res.json({
+        message: "Password is invalid",
+      });
+      // return res.status(400).json({ message: "Password is invalid" });
     }
 
     const token = jwt.sign(
       {
-        id: user.user_id,
+        user_id: user.user_id,
         email: user.email,
       },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "900000",
-      }
+      process.env.SECRET_KEY
+      // {
+      //   expiresIn: "900000",
+      // }
     );
 
     return res.json({
@@ -53,7 +58,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
   try {
     const client = await pool.connect();
     const result = await client.query(
-      "SELECT * FROM recruitertable WHERE companyemail = $1",
+      "SELECT * FROM recruiters WHERE email = $1",
       [email]
     );
     const recruiter = result.rows[0];
@@ -62,10 +67,7 @@ authRouter.post("/recruiter/login", async (req, res) => {
       return res.status(404).json({ message: "user not found" });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      recruiter.companypassword
-    );
+    const isPasswordValid = await bcrypt.compare(password, recruiter.password);
 
     if (!isPasswordValid) {
       return res.status(400).json({ message: "password not valid" });
@@ -73,13 +75,10 @@ authRouter.post("/recruiter/login", async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: recruiter.recruiter_id,
-        email: recruiter.companyemail,
+        recruiter_id: recruiter.recruiter_id,
+        email: recruiter.email,
       },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "900000",
-      }
+      process.env.SECRET_KEY
     );
 
     return res.json({

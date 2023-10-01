@@ -1,79 +1,135 @@
-import ProfessionalSidebar from "@/components/ProfessionalSidebar.jsx";
-// import searchline from "@/images/findthatjob-page/search-line.png";
+import FindThatJobSideBar from "@/components/ProfessionalSideBar/FindThatJobSideBar.jsx";
+import { CategorySelector } from "@/components/CategorySelector";
+import { TypeSelector } from "@/components/TypeSelector";
+import JobList from "@/components/JobList.jsx";
+import searchIcon from "@/images/getthatjob-page/searchIcon.svg";
+import darkDollarIcon from "@/images/getthatjob-page/darkDollarIcon.svg";
+import { useState } from "react";
 
 function FindThatJobPage() {
+  const [text, setText] = useState("");
+  const [minSalary, setMinSalary] = useState("");
+  const [maxSalary, setMaxSalary] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handleTypeChange = (type) => {
+    setSelectedType(type);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <div className="w-full flex  flex-row justify-spacearound">
-      <ProfessionalSidebar />
-      <div className="w-full px-12 py-6 flex flex-col justify-start items-start">
-        <div className="mb-[16px]  text-DarkGray font-Montserrat text-Headline3 font-light">
-          Find that job
-        </div>
-        <div className="flex flex-col">
-          <label
-            className="w-fit text-[10px] text-LightGray"
-            htmlFor="search-box"
-          >
-            SEARCH BY JOB TITLE OR COMPANY NAME
-          </label>
-          <input
-            className="h-[36px] w-[360px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-            type="text"
-            id="search-input"
-            placeholder="manufacturing, sales, swim"
-          />
-        </div>
-        <div className="flex flew-row">
-          <div className="flex flex-col">
-            <label
-              className="w-fit text-[10px] text-LightGray"
-              htmlFor="search-box"
-            >
-              CATEGORY
-            </label>
-            <input
-              className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-              type="text"
-              id="search-input"
-              placeholder="Select a category"
-            />
+    <div className="min-w-screen min-h-screen flex flex-row bg-Background">
+      <FindThatJobSideBar />
+      <div className="ml-[240px] mb-12 bg-Background">
+        <div className="w-full pt-8 flex flex-col justify-start items-start">
+          <div className="mb-[16px] ml-[100px] text-DarkGray font-Montserrat text-Headline4">
+            {" "}
+            Find that job
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col ml-[100px]">
             <label
               className="w-fit text-[10px] text-LightGray"
               htmlFor="search-box"
             >
-              TYPE
+              SEARCH BY JOB TITLE OR COMPANY NAME
             </label>
-            <input
-              className="h-[36px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-              type="text"
-              id="search-input"
-              placeholder="Select a type"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label
-              className="w-fit text-[10px] text-LightGray"
-              htmlFor="search-box"
-            >
-              SALARY RANGE
-            </label>
-            <div>
+            <div className="relative" onSubmit={handleSubmit}>
               <input
-                className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
+                className="h-[36px] w-[360px] rounded-[8px] text-[14px] pl-[28px] border-solid border-[1px] border-Pink bg-White"
                 type="text"
                 id="search-input"
-                placeholder="min"
+                placeholder="manufacturing, sales, swim"
+                value={text}
+                onChange={(e) => {
+                  setText(e.target.value);
+                }}
               />
-              <input
-                className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[8px] border-solid border-[1px] border-Pink bg-White"
-                type="text"
-                id="search-input"
-                placeholder="max"
-              />
+              <img className="absolute top-2 left-1.5" src={searchIcon} />
             </div>
           </div>
+          <div className="flex flew-row ml-[100px]">
+            <div className="py-2 pr-2 flex flex-col">
+              <label
+                className="w-fit text-[10px] text-LightGray"
+                htmlFor="category-box"
+              >
+                CATEGORY
+              </label>
+              <CategorySelector onCategoryChange={handleCategoryChange} />
+            </div>
+
+            <div className="p-2 flex flex-col">
+              <label
+                className="w-fit text-[10px] text-LightGray"
+                htmlFor="type-box"
+              >
+                TYPE
+              </label>
+              <TypeSelector onTypeChange={handleTypeChange} />
+            </div>
+
+            <div className="p-2 flex flex-col">
+              <label
+                className="w-fit text-[10px] text-LightGray"
+                htmlFor="salary-box"
+              >
+                SALARY RANGE
+              </label>
+              <div className="flex flex-row">
+                <div className="relative">
+                  <input
+                    className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
+                    type="text"
+                    id="min-salary-input"
+                    placeholder="min"
+                    value={minSalary}
+                    onChange={(e) => {
+                      setMinSalary(e.target.value.replace(/[^0-9]/g, ""));
+                    }}
+                  />
+                  <img className="absolute top-2 left-1" src={darkDollarIcon} />
+                </div>
+
+                <span className="p-2 text-LightGray">-</span>
+
+                <div className="relative">
+                  <input
+                    className="h-[36px] w-[102px] rounded-[8px] text-[14px] pl-[26px] border-solid border-[1px] border-Pink bg-White"
+                    type="text"
+                    id="max-salary-input"
+                    placeholder="max"
+                    value={maxSalary}
+                    onChange={(e) => {
+                      setMaxSalary(e.target.value.replace(/[^0-9]/g, ""));
+                    }}
+                  />
+                  <img
+                    className="absolute top-2 left-1"
+                    src={darkDollarIcon}
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <JobList
+            text={text}
+            category={selectedCategory}
+            type={selectedType}
+            minSalary={minSalary}
+            maxSalary={maxSalary}
+          />
         </div>
       </div>
     </div>
