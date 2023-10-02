@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { pool } from "../utils/db_connection.js";
+import { protect } from "../utils/protect.js";
 
 const applyappliRouter = Router();
+applyappliRouter.use(protect);
 
 // สำหรับ professional ใช้ เพื่อดู application ตัวเอง
 // เดี๋ยวถามพี่กัน or กาก้า
@@ -9,7 +11,8 @@ applyappliRouter.get("/myapplication", async (req, res) => {
   console.log(req);
   try {
     // const user_id = 26;
-    const user_id = `${req.query.userId}`;
+    // const user_id = `${req.query.userId}`;
+    const user_id = req.user.user_id;
     console.log(user_id);
     if (!user_id) {
       return res.status(404).json({ error: "Invalid user_id" });

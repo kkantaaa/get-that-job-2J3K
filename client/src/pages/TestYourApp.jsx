@@ -29,11 +29,11 @@ import timeIcon from "../images/ApllicationApplyPage/time-lightgray.svg";
 import declineIcon from "../images/ApllicationApplyPage/white-decline.svg";
 import reviewIcon from "../images/ApllicationApplyPage/reviewed.svg";
 import moment from "moment";
-import { useAuth } from "@/contexts/authentication";
+// import { useAuth } from "@/contexts/authentication";
 
 function TestYourApp() {
   const [applications, setApplications] = useState([]);
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const [isDeclined, setIsDeclined] = useState(false);
   const [filteredApplications, setFilteredApplications] = useState([]);
   const [selectFilter, setSelectFilter] = useState("all"); // ตัวแปร selectFilter เริ่มต้นเป็น "all"
@@ -44,14 +44,10 @@ function TestYourApp() {
     setApplications([...applications]);
   };
 
-  const getApplication = async (input) => {
-    const userId = input;
+  const getApplication = async () => {
     try {
-      const params = new URLSearchParams();
-      params.append("userId", userId);
       const results = await axios.get(
-        "http://localhost:4000/apply/myapplication",
-        { params }
+        "http://localhost:4000/apply/myapplication"
       );
       setApplications(results.data.data);
       console.log("results are", results);
@@ -67,7 +63,7 @@ function TestYourApp() {
       });
       setIsDeclined(true); // ตั้งค่าให้เป็น true เมื่อคลิกปุ่ม "Yes" ใน Dialog
       setConfirmDialogOpen(false); // ปิด dialog
-      getApplication(userData.user.user_id);
+      getApplication();
     } catch (error) {
       console.error("Error: failed to decline the application", error);
     }
@@ -98,14 +94,13 @@ function TestYourApp() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const results = await getApplication(userData.user.user_id);
+        const results = await getApplication();
         // เมื่อข้อมูลโหลดเสร็จสิ้น
         setApplications(results.data.data);
       } catch (error) {
         console.error("Error fetching data", error);
       }
     };
-
     fetchData();
   }, []);
 
