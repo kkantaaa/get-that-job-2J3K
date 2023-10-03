@@ -12,6 +12,7 @@ function RecruitRegisterPage1() {
   };
   return (
     <>
+<<<<<<< HEAD
       <div className="bg-Background min-h-screen flex flex-col">
         <NavBar />
         <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
@@ -40,6 +41,25 @@ function RecruitRegisterPage1() {
               <div className="w-[85px] h-[2px] bg-Pink mt-[6px]"></div>
             </div>
           </div>
+=======
+    <div className="bg-Background min-h-screen flex flex-col">
+    <NavBar/>
+    <div className="flex flex-col ml-[220px] mt-[100px] mr-[776px]">
+      <h1 className="font-Montserrat text-[48px] font-light tracking-tighter leading-normal mb-[16px]"> Good choice!</h1>
+      <p className="font-Montserrat text-[20px] leading-7 font-medium mb-[32px]" >Create a new account as...</p>
+      <div className="flex flex-row">
+        <div className="flex flex-col font-Inter text-LightGray">
+        <h2 className="text-[14px] font-normal leading-5 tracking-[1.25px] mr-[12px]"
+        onClick={handleProfessionalClick}
+        style={{cursor: "pointer"}}>PROFESSIONAL</h2>
+        <div className="w-[115px] h-[2px] bg-LightGray mt-[6px]"></div>
+        </div>
+        <div className="flex flex-col font-Inter">
+        <h2 className="text-[14px] font-medium leading-5 tracking-[1.25px]">RECRUITER</h2>
+        <div className="w-[85px] h-[2px] bg-Pink mt-[6px]"></div>
+        </div>
+      </div>
+>>>>>>> 5fa225a0d23800ac8db504f0a101b4b9ea1cf648
 
           {/* Registration Steps */}
           <div className="flex flex-row mb-[32px] font-Inter">
