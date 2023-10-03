@@ -8,6 +8,9 @@ import ArrowRight from "../images/registration-page/arrow-right.svg";
 import FileInputIcon from "../images/registration-page/upload-line.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Modal from 'react-modal';
+import ConfirmIcon from "../images/registration-page/confirmicon.png";
+
 function RecruitCompanyInfo() {
   const navigate = useNavigate();
   const { recruiterData } = useGlobalContext();
@@ -16,6 +19,7 @@ function RecruitCompanyInfo() {
   const { upload } = useAuth();
   const fileInputRef = useRef(null);
   const [file, setFile] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // console.log("Updated RecruiterData:", recruiterData);
@@ -25,24 +29,21 @@ function RecruitCompanyInfo() {
     event.preventDefault();
     try {
       await RecruiterRegister(recruiterData);
-      window.alert("Registration Complete: Your registration has been successful.");
-      navigate("/recruiter/login");
+      // window.alert("Registration Complete: Your registration has been successful.");
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error during registration", error);
     }
   };
 
-  // console.log(recruiterData); ขอ commment out นะครับ - kan
   //useeffect
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   //onsubmit
   const onSubmit = async (data) => {
-    // console.log(data); //ขอ commment out นะครับ - kan
     const img = {
       fileType: "companyLogo",
       file: data.file,
     };
-    // console.log({ img: img }); //ขอ commment out นะครับ - kan
     let company_logo = await upload(img);
 
     if (company_logo === undefined) {
@@ -62,7 +63,7 @@ function RecruitCompanyInfo() {
       };
 
       await RecruiterRegister(fetchData);
-      navigate("/recruiter/login");
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -77,9 +78,9 @@ function RecruitCompanyInfo() {
       setValue("file", e.target.files[0]);
       const fileURL = URL.createObjectURL(e.target.files[0]);
       setFile(fileURL);
-      // console.log(file); //ขอ commment out นะครับ - kan
     }
   };
+
   //validation
   const isValidWebsite = (website) => {
     const websitePattern =
@@ -89,6 +90,30 @@ function RecruitCompanyInfo() {
     // const isThaiEnglishValid = thaiEnglishPattern.test(website);
     return isWebsiteValid  
   };
+
+  function CustomModal({ isOpen, onRequestClose }) {
+    return (
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        contentLabel="Registration Successful"
+        className="absolute flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg font-Inter"
+        overlayClassName="fixed inset-0 bg-black opacity-70"
+      >
+        <img className="w-8 h-8" src={ConfirmIcon}/>
+        <h2 className="text-[24px] font-semibold mb-4 text-Pink">Registration Successful!</h2>
+        <p className="text-[12px] font-normal text-Gray">You are all set to connect with various potential talents.</p>
+        <button className="mt-[8px] w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-[12px] tracking-[1.25px]" 
+        onClick={onRequestClose}>Let's Start!</button>
+      </Modal>
+    );
+  }
+  
+  const handleCloseModal = ()=>{
+    setIsModalOpen(false);
+    navigate("/recruiter/login");
+  }
+
   return (
     <>
       <ToastContainer
@@ -214,6 +239,7 @@ function RecruitCompanyInfo() {
 
           <div className="text-[14px] mr-[16px] w-[120px] h-[40px] px-[16px] py-[8px] border-2 active:bg-DarkPink hover:bg-LightPink border-Pink rounded-[16px] text-black font-[500px] text-center tracking-[1.25px]">
             <button onClick={handlerSkip}>SKIP THIS!</button>
+            <CustomModal isOpen={isModalOpen} onRequestClose={handleCloseModal}/>
           </div>
 
             <div className="w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-sm tracking-[1.25px]">
@@ -225,6 +251,7 @@ function RecruitCompanyInfo() {
                 <div className="ml-[10px]">FINISH</div>
                 <img src={ArrowRight} alt="Next" />
               </button>
+              <CustomModal isOpen={isModalOpen} onRequestClose={handleCloseModal}/>
             </div>
           </div>
         </div>
