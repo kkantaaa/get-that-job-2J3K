@@ -260,22 +260,22 @@ function ProfessionalProfile() {
   // return
   return (
     <>
-      <form>
+      <form className="min-h-screen bg-Background pb-7">
         <ToastContainer theme="dark" autoClose={3000} limit={1} />
         <UserProfileSidebar />
-        <div className=" ml-[340px]">
+        <div className="ml-[240px] pl-[100px] bg-Background pt-7">
           {/* Header -- Profile*/}
           {/* Header -- Profile*/}
-          <h1 className="ml-2 py-3 text-neutral-700 text-[34px] font-normal font-['Montserrat'] tracking-tight">
+          <h1 className="text-DarkGray text-[34px] pb-[16px] font-normal font-['Montserrat'] tracking-tight">
             Profile
           </h1>
           <div>
             {/* SubHeader -- Personal information*/}
             {/* SubHeader -- Personal information*/}
-            <h1 className=" ml-3 w-[944px] text-neutral-900 text-[30px] font-normal font-['Montserrat']">
+            <h1 className="w-[944px] ml-[8px] text-DarkGray text-[24px] font-normal font-['Montserrat']">
               Personal information{" "}
             </h1>
-            <div className="ml-4">
+            <div className="ml-[8px]">
               {/* 1 of 5/Part 1 / Email*/}
               {/* 1 of 5/Part 1 / Email*/}
               <div>
@@ -441,12 +441,12 @@ function ProfessionalProfile() {
               {/* Professional Profile Header */}
               {/* Professional Profile Header */}
               <div className="mt-4">
-                <h1 className="w-[944px] text-neutral-900 text-[30px] font-normal font-['Montserrat']">
+                <h1 className="w-[944px] text-DarkGray text-[24px] font-normal font-['Montserrat']">
                   Professional information{" "}
                 </h1>
                 {/* Sub Professional Profile Header - Disclaimer */}
                 {/* Sub Professional Profile Header - Disclaimer */}
-                <span className="text-zinc-700 text-[14px] font-normal font-['Inter'] leading-none tracking-wide">
+                <span className="text-Gray text-[14px] font-normal font-['Inter'] leading-none tracking-wide">
                   changes made here will be reflected on your future
                   applications
                 </span>

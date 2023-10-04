@@ -176,7 +176,12 @@ const JobList = (props) => {
     <div className="ml-[100px]">
       <div className="m-2">
         <h2 className="font-Montserrat text-DarkGray text-[20px]">
-          {jobs.length} jobs for you
+          {jobs && jobs.length > 0 ? (
+            <div>{jobs.length} jobs openings</div>
+          ) : (
+            <div>Loading...</div>
+          )}
+          {/* {jobs.length} jobs for you */}
         </h2>
       </div>
       <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
