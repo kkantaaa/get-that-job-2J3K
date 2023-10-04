@@ -55,8 +55,8 @@ function FindThatJobPage() {
               <img className="absolute top-2 left-1.5" src={searchIcon} />
             </div>
           </div>
-          <div className="flex flew-row ml-[100px]">
-            <div className="py-2 pr-2 flex flex-col">
+          <div className="flex flex-col ml-[100px] xl:flex-row">
+            <div className="py-2 pr-4 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
                 htmlFor="category-box"
@@ -66,7 +66,7 @@ function FindThatJobPage() {
               <CategorySelector onCategoryChange={handleCategoryChange} />
             </div>
 
-            <div className="p-2 flex flex-col">
+            <div className="py-2 pr-4 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
                 htmlFor="type-box"
@@ -76,7 +76,7 @@ function FindThatJobPage() {
               <TypeSelector onTypeChange={handleTypeChange} />
             </div>
 
-            <div className="p-2 flex flex-col">
+            <div className="py-2 flex flex-col">
               <label
                 className="w-fit text-[10px] text-LightGray"
                 htmlFor="salary-box"

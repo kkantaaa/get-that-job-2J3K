@@ -55,7 +55,14 @@ const CompanyFollowingList = () => {
     <div className="ml-[100px]">
       <div className="m-2">
         <h2 className="font-Montserrat text-[20px] text-DarkGray">
-          You are following {companyFollow.length} companies
+          {companyFollow ? (
+            <span className="flex flex-row">
+              You are following {companyFollow.length} companies
+            </span>
+          ) : (
+            <div>Loading...</div>
+          )}
+          {/* You are following {companyFollow.length} companies */}
         </h2>
       </div>
       <div className="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">
