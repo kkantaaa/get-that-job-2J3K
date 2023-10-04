@@ -583,6 +583,7 @@ function ShowJobPosingPage() {
                                         application_id:
                                           candidate.application_id,
                                         application_status: "finished",
+                                        candidate_name: candidate.user_name,
                                       });
                                     }}
                                   >
