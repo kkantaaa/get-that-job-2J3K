@@ -116,6 +116,7 @@ function ApplicationApplySection(pagedata) {
                       type="radio"
                       value="useCurrent"
                       id="useCurrent"
+                      className="appearance-none rounded-full w-5 h-5 border-2 border-gray-400 transition-all duration-200 linear mr-1 relative top-1    checked:border-[7px]   checked:border-pink-300  "
                       onChange={() => {
                         handleCVChoiceChange("useCurrent");
                         const fetchCurrentCV = async () => {
@@ -144,6 +145,7 @@ function ApplicationApplySection(pagedata) {
                     <input
                       {...field}
                       type="radio"
+                      className="appearance-none rounded-full w-5 h-5 border-2 border-gray-400 transition-all duration-200 linear mr-1 relative top-1    checked:border-[7px]   checked:border-pink-300  "
                       value="uploadNew"
                       id="uploadNew"
                       onChange={() => handleCVChoiceChange("uploadNew")}

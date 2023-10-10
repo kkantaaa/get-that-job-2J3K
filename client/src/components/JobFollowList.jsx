@@ -82,7 +82,14 @@ const JobFollowingList = () => {
     <div className="ml-[100px]">
       <div className="m-2">
         <h2 className="font-Montserrat text-DarkGray text-[20px]">
-          You are following {jobFollow.length} jobs
+          {jobFollow ? (
+            <span className="flex flex-row">
+              You are following {jobFollow.length} jobs
+            </span>
+          ) : (
+            <div>Loading...</div>
+          )}
+          {/* You are following {jobFollow.length} jobs */}
         </h2>
       </div>
       <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 px-[12px]">

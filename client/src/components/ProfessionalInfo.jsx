@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import ArrowLeft from "../images/registration-page/arrow-left.svg";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 import FileInputIcon from "../images/registration-page/upload-line.svg";
+import Modal from 'react-modal';
+import ConfirmIcon from "../images/registration-page/confirmicon.png";
 
 function ProfessionalInfo() {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ function ProfessionalInfo() {
   const fileInputRef = useRef(null);
   const { upload } = useAuth();
   const [fileName, setFileName] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     console.log("Updated userData:", userData);
@@ -24,8 +27,9 @@ function ProfessionalInfo() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-      window.alert("Registration Complete: Your registration has been successful.");
-      navigate("/user/login");
+      // window.alert("Registration Complete: Your registration has been successful.");
+      setIsModalOpen(true);
+      // navigate("/user/login");
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -54,8 +58,8 @@ function ProfessionalInfo() {
       };
 
       await UserRegister(fetchData);
-      window.alert("Registration Complete: Your registration has been successful.");
-      navigate("/user/login");
+      // window.alert("Registration Complete: Your registration has been successful.");
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -71,6 +75,30 @@ function ProfessionalInfo() {
       setFileName(e.target.files[0].name);
     }
   };
+
+  // eslint-disable-next-line react/prop-types
+  function CustomModal({ isOpen, onRequestClose }) {
+    return (
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        contentLabel="Registration Successful"
+        className="absolute flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg font-Inter"
+        overlayClassName="fixed inset-0 bg-black opacity-70"
+      >
+        <img className="w-8 h-8" src={ConfirmIcon}/>
+        <h2 className="text-[24px] font-semibold mb-4 text-Pink">Registration Successful!</h2>
+        <p className="text-[12px] font-normal text-Gray">You are all set to connect with various jobs and recruiters</p>
+        <button className="mt-[8px] w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-[12px] tracking-[1.25px]" 
+        onClick={onRequestClose}>Let's Start!</button>
+      </Modal>
+    );
+  }
+  
+  const handleCloseModal = ()=>{
+    setIsModalOpen(false);
+    navigate("/user/login");
+  }
 
   return (
     <form className="font-Inter" onSubmit={handleSubmit(onSubmit)}>
@@ -224,6 +252,7 @@ function ProfessionalInfo() {
             <button onClick={handlerSkip} type="button">
               SKIP THIS!
             </button>
+            <CustomModal isOpen={isModalOpen} onRequestClose={handleCloseModal}/>
           </div>
 
           {/* Finish Button */}
@@ -236,6 +265,7 @@ function ProfessionalInfo() {
               <div className="ml-[10px]">FINISH</div>
               <img src={ArrowRight} alt="Finish" />
             </button>
+            <CustomModal isOpen={isModalOpen} onRequestClose={handleCloseModal}/>
           </div>
         </div>
       </div>

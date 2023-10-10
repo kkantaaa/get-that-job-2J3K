@@ -6,11 +6,16 @@ import { useAuth } from "@/contexts/authentication";
 import ArrowRight from "../images/registration-page/arrow-right.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Modal from 'react-modal';
+import ConfirmIcon from "../images/registration-page/confirmicon.png";
+import { useState } from "react";
+
 function PersonalInformation() {
   const { userData, setUserData } = useGlobalContext();
   const {UserRegister} = useAuth();
   const navigate = useNavigate();
   const { handleSubmit, control } = useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     console.log("Updated userData:", userData);
@@ -20,8 +25,9 @@ function PersonalInformation() {
     event.preventDefault();
     try {
       await UserRegister(userData);
-      window.alert("Registration Complete: Your registration has been successful.");
-      navigate("/user/login");
+      // window.alert("Registration Complete: Your registration has been successful.");
+      // navigate("/user/login");
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error during registration", error);
     }
@@ -97,6 +103,30 @@ function PersonalInformation() {
     }
   };
 
+  // eslint-disable-next-line react/prop-types
+  function CustomModal({ isOpen, onRequestClose }) {
+    return (
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        contentLabel="Registration Successful"
+        className="absolute flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg font-Inter"
+        overlayClassName="fixed inset-0 bg-black opacity-70"
+      >
+        <img className="w-8 h-8" src={ConfirmIcon}/>
+        <h2 className="text-[24px] font-semibold mb-4 text-Pink">Registration Successful!</h2>
+        <p className="text-[12px] font-normal text-Gray">You are all set to connect with various jobs and recruiters</p>
+        <button className="mt-[8px] w-[120px] h-[40px] px-[16px] py-[8px] active:bg-DarkPink hover:bg-LightPink bg-Pink rounded-[16px] text-white text-center text-[12px] tracking-[1.25px]" 
+        onClick={onRequestClose}>Let's Start!</button>
+      </Modal>
+    );
+  }
+  
+  const handleCloseModal = ()=>{
+    setIsModalOpen(false);
+    navigate("/user/login");
+  }
+
   return (
     <>
     <ToastContainer />
@@ -163,6 +193,9 @@ function PersonalInformation() {
             )}
           />
         </div>
+        <p className="mb-[4px] text-[14px] font-normal leading-[16px] tracking-[0.4px]">
+        +[country code][number]
+        </p>
 
         <div className="flex flex-col">
           <label
@@ -217,6 +250,7 @@ function PersonalInformation() {
         <div className="flex flex-row">
           <div className="mr-[16px] w-[106px] h-[40px] px-[14px] py-[8px] border-2 active:bg-DarkPink hover:bg-LightPink border-Pink rounded-[16px] text-black text-center text-[14px] font-[500px] tracking-[1.25px]">
             <button onClick={handlerSkip}>SKIP THIS!</button>
+            <CustomModal isOpen={isModalOpen} onRequestClose={handleCloseModal}/>
           </div>
 
           {/* Next Button */}
