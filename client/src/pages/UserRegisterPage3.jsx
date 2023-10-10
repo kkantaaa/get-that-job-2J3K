@@ -16,7 +16,7 @@ function UserRegisterPage3() {
     <>
       <div className="bg-Background min-h-screen flex flex-col">
         <NavBar />
-        <div className="flex flex-col ml-[220px] mt-[96px] mr-[776px]">
+        <div className="flex flex-col ml-[220px] mt-[100px] mr-[776px]">
           <h1 className="font-Montserrat text-[48px] text-DarkGray font-light tracking-tighter leading-normal mb-[16px]">
             {" "}
             Good choice!
